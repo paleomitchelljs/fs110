@@ -16,8 +16,7 @@ To put it on GitHub Pages: push this folder to `main`, then go to **Settings →
 | Drag the neck | Neck angle only |
 | Drag the body up or down | Size. Mass goes with size³, and the default heart rate follows mass |
 | Drag a front foot up | Rears up on the hind legs |
-| Drag the heart up or down | Heart height in the chest |
-| Click the heart | Heart rate +15% (shift-click: −15%) |
+| Click the heart | Heart rate +15% (shift-click: −15%). The heart itself stays put |
 | Drag or scroll any yellow, underlined number | Changes that input |
 | Click a `?` | Shows that answer |
 | Double-click the head (or press D) | Drinks: head down over 3 s, holds 5 s, back up over 3 s |

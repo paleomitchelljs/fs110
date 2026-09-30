@@ -22,7 +22,7 @@
   };
 
   const FRESH = {
-    preset: 'giraffatitan', scale: 1, neckAngle: 60, neckRel: 1, heartRel: 1, curv: 0, pitch: 0, hrMul: 1,
+    preset: 'giraffatitan', scale: 1, neckAngle: 60, neckRel: 1, curv: 0, pitch: 0, hrMul: 1,
     intensity: 1, pHead: 50, pFloor: 100, veinTol: 10, vapor: 47, pumps: [], headFrac: 5,
     air: 30, airP: 1, cartPct: 10, reflexT: 5, reteT: 0, faintP: 40, burstP: 300,
     wallStress: 90, share: 10, avO2: 50, ef: 60, lvStress: 19.3, rho: 1.055,
@@ -35,6 +35,7 @@
   try {
     const saved = JSON.parse(localStorage.getItem(STORE) || 'null');
     if (saved && M.PRESETS[saved.preset]) S = Object.assign(S, saved);
+    delete S.heartRel;                 // the heart no longer moves; drop any old offset
   } catch (e) { /* no storage: start fresh */ }
   if (location.hash === '#all') { S.layers = LAYERS.slice(); S.predict = false; }
   const save = () => { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) { /* ignore */ } };
@@ -45,7 +46,7 @@
   function values(a, over) {
     const v = Object.assign({}, S, over || {});
     v.neckLen = a.neckLen * S.neckRel;
-    v.heartH = a.heartH * S.heartRel;
+    v.heartH = a.heartH;                // fixed in the chest
     v.hr = Math.round(M.defaultHeartRate(a.mass) * S.hrMul);
     v.airAssist = on('air') ? S.airP : 0;
     return v;
@@ -164,9 +165,6 @@
       drink = null;
     } else if (drag.kind === 'body') {
       S.scale = clamp(st.scale * Math.exp(-dy / 260), 0.25, 1.8);
-    } else if (drag.kind === 'heart') {
-      const base = a.heartH / S.heartRel;
-      S.heartRel = clamp(map.wy(p.y) / base, 0.55, a.shoulderH / base);
     } else if (drag.kind === 'foot') {
       S.pitch = Math.round(clamp(st.pitch - dy / 4, 0, 60));
     } else if (drag.kind === 'scrub') {
@@ -244,7 +242,7 @@
     if (S.theme) document.documentElement.setAttribute('data-theme', S.theme); else document.documentElement.removeAttribute('data-theme');
   }
   function setPreset(id) {
-    Object.assign(S, { preset: id, scale: 1, neckAngle: M.PRESETS[id].angle, neckRel: 1, heartRel: 1, curv: 0, pitch: 0, hrMul: 1,
+    Object.assign(S, { preset: id, scale: 1, neckAngle: M.PRESETS[id].angle, neckRel: 1, curv: 0, pitch: 0, hrMul: 1,
       pumps: on('pumps') ? [0, 0.34, 0.67] : [] });
     frame = null; drink = null; brain.P = null; brain.hist = [];
     save(); dirty = true; kick();

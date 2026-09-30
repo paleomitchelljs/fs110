@@ -341,7 +341,7 @@
       hs = big;
     }
     const beat = on('heart') ? 1 + 0.13 * ctx.beat : 1;
-    s += `<g class="h-heart" data-hit="heart"><title>Heart: drag to move, click to speed up (shift-click slows)</title><circle class="hit" cx="${hx}" cy="${hy}" r="${Math.max(18, hs * 0.8)}"/><path class="heart" d="${heartPath(hx, hy, hs * beat)}"/></g>`;
+    s += `<g class="h-heart" data-hit="heart"><title>Heart: click to speed up (shift-click slows)</title><circle class="hit" cx="${hx}" cy="${hy}" r="${Math.max(18, hs * 0.8)}"/><path class="heart" d="${heartPath(hx, hy, hs * beat)}"/></g>`;
 
     // rings for artery walls
     if (on('walls')) {
