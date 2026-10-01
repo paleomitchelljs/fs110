@@ -8,7 +8,7 @@ The source is the revised instructor outline (October 2026). Times, prompts and 
 
 1. The instructor drives and the room talks. It's built for the projector first, but every control also works by touch, so the same URL works on a phone after class. It is not built for 30 laptops clicking at once, because there's no backend on GitHub Pages and per-student sorting eats the clock.
 
-2. The word budget is one prompt line per build, 10 words at most, in the hand font. Card fronts get a picture and at most 5 words, card backs get two short prediction lines, and nothing anywhere is a paragraph. Terms (confounding, Signor–Lipps, best explanation) appear as a small tag *after* the case, never before. That's "work the case first, name the concept second" made literal.
+2. The word budget is one prompt line per build, 10 words at most, and many builds have none: the picture is enough while the instructor talks. Card fronts get a picture and at most 5 words, card backs get two short prediction lines, and nothing anywhere is a paragraph. Terms (confounding, Signor–Lipps, best explanation) appear as a small tag *after* the case, never before. That's "work the case first, name the concept second" made literal.
 
 3. Cards are evidence, not explanation: each card states one observation, and you put it on the balance. Nothing on a card explains anything, because the instructor does that out loud. Anything that only repeats what the instructor will say (the hook's old row of clue cards, for one) stays off the screen.
 
@@ -45,7 +45,7 @@ fs110/
 
 It publishes at `https://paleomitchelljs.github.io/fs110/bones/`, and the sauropod URL doesn't move.
 
-Same stack as the sauropod tool: plain HTML, CSS and JS, Source Sans 3 and Kalam with system fallbacks, and the same whiteboard/chalkboard tokens (copied for now, pulled into a shared `css/tokens.css` if a third tool shows up). All wording lives in `content.js`, so redrafting text never touches layout code.
+Same stack as the sauropod tool: plain HTML, CSS and JS, one typeface, Source Sans 3, with system fallbacks (the sauropod tool's handwritten Kalam read as too casual here), and the same whiteboard/chalkboard tokens (copied for now, pulled into a shared `css/tokens.css` if a third tool shows up). All wording lives in `content.js`, so redrafting text never touches layout code.
 
 ## The frame
 
@@ -121,8 +121,7 @@ Times are a first guess; the clock (C) shows them against the time since you lef
 |---|---|---|---|
 | Title | 0 | | "Reasoning from Bones" and a bone. |
 | Hook | X | Which end is the head? | Cope's 1869 skeleton with no head; the skull floats above it. Drag it to either end; it snaps there, facing out. |
-| | 1 | One of these is wrong. | Cope's 1869 reconstruction (head on the short end) above his corrected 1870 one (head on the long end). Both cut from Cope's plates, public domain. The 1869 skull can still be dragged. |
-| | 2 | How would you check? | |
+| | 1 | | Cope's 1869 reconstruction (head on the short end) above his corrected 1870 one (head on the long end). Both cut from Cope's plates, public domain. No prompt; the instructor asks. The 1869 skull can still be dragged. |
 | Framework | 0 | | HOW DO YOU KNOW?, full screen. |
 | | 1–5 | What exactly is the claim? · What do we see? · What else could do that? · What would tell them apart? · How sure should we be? | One icon per press: Claim, Evidence, Else?, Test, Sure?. They become the rail for every case after. |
 
@@ -192,8 +191,7 @@ Pans: two sketched range charts, drawn the same way (eight bars, sorted, the lin
 | 7 | Now where does that card go? | Back to the balance, the card where the room left it. It moves to the pivot. | Test |
 | 8–9 | | Cards: Dig harder: ranges reach the line · Common plankton end right at the line. | Evidence |
 | 10 | We didn't find it. Why not? | The funnel (below). | Else? |
-| 11 | No keys in the kitchen. What did you learn? | | |
-| 12 | Absence is weak evidence when detection is poor. | The balance again. Tag: Signor–Lipps effect. | |
+| 11 | Absence is weak evidence when detection is poor. | The balance again. Tag: Signor–Lipps effect. | |
 
 | Card | If all at once | If already in decline |
 |---|---|---|
@@ -251,7 +249,7 @@ Pans: *Feathers* and *Collagen*.
 
 | # | Prompt | Stage | Rail |
 |---|---|---|---|
-| 0 | Feathers? Or rotted skin fibers? | Sinosauropteryx photo, zooming to the fuzz along the back. | Claim |
+| 0 | Feathers? Or rotted skin fibers? | Sinosauropteryx photo: head and neck with the dark fringe of filaments. | Claim |
 | 1 | Predict: which way will it tip? | The balance; votes. | Sure? |
 | 2 | | Card: Sinosauropteryx, 1996 · fuzz. Both hypotheses expect it, which is why it started an argument. | Evidence |
 | 3 | Skeptical. What would convince you? | Room list: More specimens · Better preservation · Branching · Many species · Pigment inside · Can't be collagen. | Else? |
@@ -297,7 +295,8 @@ X swaps in the transfer version: *A claim from outside science. Same questions.*
 | Triceratops and Torosaurus skulls | Triceratops case, its pans | two-panel figure supplied by the instructor, cut by `img/make_tritoro.py` | done; source and licence to record |
 | Boundary photo | K–Pg | the instructor's own | done |
 | Boundary clay photo | Case 3 | Wikimedia (Trinidad Lake, Colorado) or own | find |
-| Sinosauropteryx, Caudipteryx, Microraptor, Yutyrannus | Case 4 | Wikimedia; check each license | find |
+| Sinosauropteryx photo | Feathers, build 0 | supplied by the instructor | done; source and licence to record |
+| Caudipteryx, Microraptor, Yutyrannus | Feathers cards, if they get pictures | Wikimedia; check each license | not needed yet |
 | Edmontosaurus vertebra with tooth | Extra | DePalma et al. 2013 figure; check license | find |
 
 Credits go in the readme, not on the slides. If an image ever needs attribution on the page (anything CC BY), it gets a credits key (I).
@@ -317,7 +316,7 @@ These fill the outline's TODOs and the card backs, from memory. None has been ch
 
 ## Build order
 
-Built (October 2026): the deck engine and parts, every case's balance with its cards, Cope's two reconstructions with the draggable skull, the Triceratops and Torosaurus skulls, the boundary photo, and Signor–Lipps (sim and funnel). Everything else on screen is a dashed placeholder box naming the drawing that goes there.
+Built (October 2026): the deck engine and parts, every case's balance with its cards, Cope's two reconstructions with the draggable skull, the Triceratops and Torosaurus skulls, the boundary and Sinosauropteryx photos, and Signor–Lipps (sim and funnel). Everything else on screen is a dashed placeholder box naming the drawing that goes there.
 
 1. Frame and parts: deck engine, rails, eye, keys, saved state; flip card, balance, room list. Done.
 2. Signor–Lipps sim and funnel. Done.

@@ -34,7 +34,7 @@ Space, →, or a clicker's page-down moves one build. The control bar sits top r
 | Triceratops | done: the two skulls at one scale, the growth arrow, the skull pair over each pan (≠ and →), room list, balance |
 | K–Pg | done: your boundary photo, then the balance with asteroid and volcano. The timing chart isn't built (it needs the pulse dates from Schoene et al. and Sprain et al. 2019) |
 | Signor–Lipps | done: balance with the two sketches, dig, sort, true ranges, draggable p, back to the balance, funnel |
-| Feathers | balance and room list work; the photo is a placeholder and the cards have no pictures yet |
+| Feathers | done: the Sinosauropteryx photo, room list, balance; the cards have no pictures |
 | Debrief | prompts only; the concept map is a placeholder |
 | Exit ticket | text works; the QR code is a placeholder |
 
@@ -94,6 +94,8 @@ A thousand animals lived. Each reason the room gives for not finding one becomes
 Both Elasmosaurus figures are Cope's own, public domain, from Wikimedia Commons: the 1869 reconstruction with the head on the tail ([File:Elasmosaurus_Cope.jpg](https://commons.wikimedia.org/wiki/File:Elasmosaurus_Cope.jpg), from Cope 1869, *Trans Am Philos Soc*, via the Biodiversity Heritage Library) and his corrected 1870 version ([File:Elasmosaurus_corrected.jpg](https://commons.wikimedia.org/wiki/File:Elasmosaurus_corrected.jpg)). `img/make_elasmo.py` cuts each figure out of its plate, masks the neighbouring figures, drops the paper so the lines sit on either theme, thickens the lines a little for projection, and cuts the 1869 skull out as its own piece.
 
 The Triceratops and Torosaurus skulls come from a two-panel figure (A and B, one scale bar each, the same length). `img/make_tritoro.py` cuts them apart, removes the panel letters and scale bars, and makes the white background transparent, including the white showing through the frill openings and orbits. They keep the figure's shared scale everywhere they appear. Source and licence: to record here before the site goes public.
+
+The K–Pg boundary photo is the instructor's own. The Sinosauropteryx photo: source and licence to record here before the site goes public.
 
 ## Sources
 

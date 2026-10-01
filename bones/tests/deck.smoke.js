@@ -76,6 +76,7 @@ w.addEventListener('load', async () => {
   const skull = () => here('.el-skull').style.transform;
   check('hook opens on its extra build, skull loose', pos() === '#1' && /translate\(752\.5px, 24px\) scaleX\(1\)/.test(skull()), pos() + ' ' + skull());
   key('ArrowRight'); await wait(5);
+  check('hook has no prompt lines, only the pictures', d.querySelector('.prompt-text').textContent === '');
   check('skull on the tail end, both figures up', /translate\(1350px, 117px\) scaleX\(1\)/.test(skull()) && d.querySelectorAll('.seg:not(.off) .el-fig').length === 2 && !d.querySelector('.seg:not(.off) .el-fig.off'), skull());
 
   /* framework */
@@ -194,8 +195,10 @@ w.addEventListener('load', async () => {
   check('extras off: extra cards leave the pan and the extra builds', /rotate\(-16deg\)/.test(tiltOf(h)) && pos() === '#6.8', tiltOf(h) + ' ' + pos());
   key('x');
 
-  /* feathers: specimens one per build, around the room list */
-  key(']'); for (let i = 0; i < 5; i++) key('ArrowRight');
+  /* feathers: the photo, then specimens one per build, around the room list */
+  key(']'); await wait(10);
+  check('feathers opens on the Sinosauropteryx photo', !!here('img.photo') && /sinosauropteryx\.jpg$/.test(here('img.photo').getAttribute('src')), on());
+  for (let i = 0; i < 5; i++) key('ArrowRight');
   await wait(20);
   h = bal();
   check('feathers: three specimens by build 5', shown(h).join() === 'sino,caud,micro', pos() + ' ' + shown(h).join());

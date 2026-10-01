@@ -1,5 +1,5 @@
-/* Small parts: the title, plain text, placeholders for drawings still to
- * come, name tags, and the framework's five icons. */
+/* Small parts: the title, plain text, a photo, placeholders for drawings
+ * still to come, two pictures side by side, and the framework's five icons. */
 (function () {
   'use strict';
   const D = window.Deck;
@@ -27,12 +27,6 @@
   /* A dashed box saying what drawing goes here. Only in drafts. */
   D.parts.placeholder = function (def, host) {
     host.innerHTML = `<div class="ph">${PENCIL}<span>${D.esc(def.label)}</span></div>`;
-  };
-
-  /* A name tag that drops onto a picture. box is [x, y]. */
-  D.parts.tag = function (def, host) {
-    host.innerHTML = `<span class="nametag">${D.md(def.text)}</span>`;
-    return { show(b, how) { if (how === 'step' || how === 'reveal') D.replay(host, 'play'); } };
   };
 
   /* Two pictures side by side at one shared scale (their px sizes come from the

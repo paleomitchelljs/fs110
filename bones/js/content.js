@@ -45,8 +45,7 @@
       id: 'hook', title: 'Which end is the head?', mins: [0, 3],
       builds: [
         { prompt: 'Which end is the head?', extra: true },
-        { prompt: 'One of these is wrong.' },
-        { prompt: 'How would you check?' }
+        {}
       ],
       items: [{ kind: 'elasmo', box: STAGE, figAt: 1 }]
     },
@@ -147,12 +146,11 @@
         { rail: 'evidence' },
         { rail: 'evidence' },
         { prompt: "We didn't find it. Why not?", rail: 'else' },
-        { prompt: 'No keys in the kitchen. What did you learn?' },
         { prompt: 'Absence is weak evidence when detection is poor.', tag: 'Signor–Lipps effect' }
       ],
       items: [
         {
-          kind: 'balance', id: 'signor', builds: [0, 1, 2, 7, 8, 9, 12], box: FULL, vote: 1,
+          kind: 'balance', id: 'signor', builds: [0, 1, 2, 7, 8, 9, 11], box: FULL, vote: 1,
           pans: [{ text: 'All at once', sketch: 'abrupt' }, { text: 'Already in decline', sketch: 'taper' }],
           cards: [
             { id: 'short', at: 2, text: 'Last fossils fall short of the line', back: ['expected: finds thin out before the end', 'expected'] },
@@ -162,7 +160,7 @@
         },
         { kind: 'signor', id: 'signor', builds: [3, 4, 5, 6], box: FULL, sortAt: 4, truthAt: 5, knobAt: 6 },
         {
-          kind: 'funnel', id: 'funnel', builds: [10, 11], box: FULL,
+          kind: 'funnel', id: 'funnel', builds: [10], box: FULL,
           never: 'Never there',
           gates: [
             { text: 'Not buried', rate: 0.15 },
@@ -219,7 +217,7 @@
         { prompt: 'Confidence should move when evidence moves.' }
       ],
       items: [
-        { kind: 'placeholder', builds: [0], box: [160, 130, 1280, 580], label: 'Sinosauropteryx photo, zooming to the fuzz' },
+        { kind: 'photo', builds: [0], box: [200, 110, 1200, 670], src: 'img/sinosauropteryx.jpg', alt: 'Sinosauropteryx head and neck, with a fringe of dark filaments along the neck and back' },
         {
           kind: 'balance', id: 'feathers', builds: [1, 2, 4, 5, 6, 7, 8], box: FULL, vote: 1,
           pans: [{ text: 'Feathers' }, { text: 'Collagen' }],
