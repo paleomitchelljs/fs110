@@ -25,6 +25,10 @@ const w = dom.window, d = w.document;
 const key = (k, extra) => d.body.dispatchEvent(new w.KeyboardEvent('keydown', Object.assign({ key: k, bubbles: true }, extra)));
 const digit = (n, shift) => key(shift ? '!' : String(n), { code: 'Digit' + n, shiftKey: !!shift });
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+const pos = () => { const p = w.Deck.where(); return '#' + p.s + (p.b ? '.' + p.b : ''); };
+const on = () => [...d.querySelectorAll('.seg:not(.off) .item:not(.off)')].map((e) => e.className.replace('item ', '')).join(', ');
+const here = (sel) => d.querySelector('.seg:not(.off) .item:not(.off)' + (sel ? ' ' + sel : ''));
+const bal = () => d.querySelector('.seg:not(.off) .item-balance:not(.off)');
 /* A mouse pointer event (jsdom has no PointerEvent). */
 function pe(type, x, y) {
   const e = new w.MouseEvent(type, { bubbles: true, clientX: x, clientY: y, button: 0 });
@@ -38,9 +42,10 @@ function place(host, id, x, y) {
   c.dispatchEvent(pe('pointerup', 1, 1));
   host.dispatchEvent(pe('pointerdown', x * S, y * S));
 }
+const LEFT = [300, 300], RIGHT = [1220, 300], PIVOT = [760, 150], FLOOR = [760, 540];
 const tiltOf = (host) => host.querySelector('.bal-beamg').style.transform;
-const pos = () => { const p = w.Deck.where(); return '#' + p.s + (p.b ? '.' + p.b : ''); };
-const on = (sel) => [...d.querySelectorAll('.seg:not(.off) .item:not(.off)')].map((e) => e.className.replace('item ', '')).join(', ');
+const shown = (host) => [...host.querySelectorAll('.card')].filter((c) => c.style.opacity === '1').map((c) => c.dataset.id);
+async function to(s, b) { key(']'); await wait(2); while (w.Deck.where().s < s) { key(']'); await wait(2); } for (let i = 0; i < b; i++) key('ArrowRight'); await wait(20); }
 let checks = 0, fails = 0;
 const check = (name, ok, detail) => { checks++; if (!ok) fails++; console.log(`${ok ? 'ok  ' : 'FAIL'}  ${name}${detail ? '  ' + detail : ''}`); };
 
@@ -51,137 +56,142 @@ w.addEventListener('load', async () => {
   /* forward through everything, logging what is on screen */
   const seen = [];
   let last = '';
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 300; i++) {
     seen.push(pos() + '  ' + on());
     key('ArrowRight');
     await wait(5);
     if (pos() === last) break;
     last = pos();
   }
-  console.log(seen.join('\n'));
-  check('reached the exit ticket', pos().startsWith('#9'), pos());
-
-  /* and back to the start */
-  for (let i = 0; i < 200 && pos() !== '#0'; i++) { key('ArrowLeft'); await wait(2); }
+  if (process.env.VERBOSE) console.log(seen.join('\n'));
+  check('reached the exit ticket', w.Deck.content.segments[w.Deck.where().s].id === 'exit', pos());
+  for (let i = 0; i < 300 && pos() !== '#0'; i++) { key('ArrowLeft'); await wait(2); }
   check('back to the title', pos() === '#0', pos());
 
-  /* answers and extras */
   key('p'); key('x');
-  check('answers on', d.body.classList.contains('answers'));
-  check('extras on', d.body.classList.contains('extras'));
-  key(']'); await wait(5);
-  check('hook starts on its extra build with extras on', pos() === '#1', pos());
+  check('answers and extras on', d.body.classList.contains('answers') && d.body.classList.contains('extras'));
 
-  /* framework: rail appears at build 5, demo card moves to the pivot at 6 */
+  /* hook */
   key(']'); await wait(5);
-  for (let i = 0; i < 5; i++) key('ArrowRight');
-  await wait(30);
-  check('rail shown at framework build 5', !d.querySelector('.rail').classList.contains('off'), pos());
-  check('rail lights Test', d.querySelector('.ri.lit') && d.querySelector('.ri.lit').dataset.k === 'test');
-  const st = () => JSON.parse(JSON.stringify(w.Deck.peek('bal-fw') || {}));
-  check('demo card on the left pan', st().zone && st().zone.ev === 'left', JSON.stringify(st()));
-  key('ArrowRight'); await wait(30);
-  check('demo card on the pivot', st().zone.ev === 'pivot', JSON.stringify(st()));
+  const skull = () => here('.el-skull').style.transform;
+  check('hook opens on its extra build, skull loose', pos() === '#1' && /translate\(752\.5px, 24px\) scaleX\(1\)/.test(skull()), pos() + ' ' + skull());
+  key('ArrowRight'); await wait(5);
+  check('skull on the tail end, both figures up', /translate\(1350px, 117px\) scaleX\(1\)/.test(skull()) && d.querySelectorAll('.seg:not(.off) .el-fig').length === 2 && !d.querySelector('.seg:not(.off) .el-fig.off'), skull());
 
-  /* Case 1 room list: reveal 2, 5, type one, take one back */
-  key(']'); key(']'); await wait(5);
-  key('ArrowRight'); key('ArrowRight'); await wait(5);
-  check('at Case 1 room list', pos() === '#4.2', pos());
+  /* framework */
+  key(']'); await wait(5);
+  check('framework opens on HOW DO YOU KNOW?', /^item-title( play)?$/.test(on()) && /HOW DO YOU KNOW/.test(here().textContent), on());
+  key('ArrowRight'); await wait(5);
+  check('first icon on at build 1', d.querySelectorAll('.seg:not(.off) .bi.on').length === 1);
+  check('rail not up yet', d.querySelector('.rail').classList.contains('off'));
+
+  /* Elasmosaurus on the balance */
+  key(']'); await wait(20);
+  let h = bal();
+  check('elasmo: rail up, Claim lit', !d.querySelector('.rail').classList.contains('off') && d.querySelector('.ri.lit').dataset.k === 'claim');
+  check('elasmo: pans labelled with the two reconstructions', [...h.querySelectorAll('.hyp img')].map((i) => i.getAttribute('src')).join(' ') === 'img/cope-1869.png img/cope-1870.png');
+  digit(1); await wait(2);
+  check('no voting before the predict build', JSON.stringify(w.Deck.peek('bal-elasmo').votes) === '[0,0]');
+  key('ArrowRight'); await wait(5);
+  digit(2); digit(2); digit(2); digit(1); digit(2, true);
+  h.querySelector('.hyp-1').click();
+  check('predict: votes from keys and clicks', JSON.stringify(w.Deck.peek('bal-elasmo').votes) === '[1,3]', JSON.stringify(w.Deck.peek('bal-elasmo').votes));
+  check('votes show as dots', h.querySelectorAll('.hyp-1 .hyp-votes i').length === 3);
+  key('ArrowRight'); await wait(5);
+  check('first card dealt, big, in the tray', shown(h).join() === 'run' && h.querySelector('.card[data-id="run"]').classList.contains('fresh'));
+  digit(1); await wait(2);
+  check('votes frozen after the predict build', JSON.stringify(w.Deck.peek('bal-elasmo').votes) === '[1,3]');
+  place(h, 'run', ...PIVOT); await wait(5);
+  check('a card on the pivot tips nothing', /rotate\(0deg\)/.test(tiltOf(h)), tiltOf(h));
+  key('ArrowRight'); await wait(5);
+  check('next card dealt, the last one no longer big', shown(h).join() === 'run,chevrons' && !h.querySelector('.card[data-id="run"]').classList.contains('fresh'));
+  place(h, 'chevrons', ...RIGHT); await wait(5);
+  check('one card on the right: 4°', /rotate\(4deg\)/.test(tiltOf(h)), tiltOf(h));
+  for (let i = 0; i < 4; i++) key('ArrowRight');
+  await wait(5);
+  place(h, 'famous', ...FLOOR); await wait(5);
+  check('a card on the floor tips nothing', w.Deck.peek('bal-elasmo').zone.famous === 'floor' && /rotate\(4deg\)/.test(tiltOf(h)), tiltOf(h));
+  key('ArrowRight'); await wait(5);
+  check('extra card dealt with extras on', shown(h).includes('lizards'), pos());
+  key('ArrowRight'); key('ArrowRight'); await wait(20);
+  check('reveal: skull slides to the neck', pos() === '#3.10' && /scaleX\(-1\)/.test(skull()), pos() + ' ' + skull());
+  check('Leidy tag with answers', on().includes('item-tag'), on());
+
+  /* valid/sound: the trackway with no tail mark */
+  key(']'); for (let i = 0; i < 4; i++) key('ArrowRight');
+  await wait(10);
+  check('trackway with a tail-drag ghost', !!here('.tw-ghost') && here('.tw').querySelectorAll('.tw-print').length > 4, on());
+
+  /* Triceratops: room list (extra build), then the balance */
+  key(']'); key('ArrowRight'); key('ArrowRight'); await wait(10);
+  check('at the Triceratops room list', on() === 'item-roomlist', pos() + ' ' + on());
   digit(2); digit(5); await wait(5);
   let chips = [...d.querySelectorAll('.seg:not(.off) .item:not(.off) .rl-chip')].map((e) => e.textContent);
   check('two chips, in the order said', chips.join('|') === 'Sex|Squashed in the rock', chips.join('|'));
   key('n'); await wait(10);
   const inp = d.querySelector('.seg:not(.off) .rl-input');
-  check('typing box opened', !!inp);
   inp.value = 'Disease';
   inp.dispatchEvent(new w.KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
   await wait(5);
   digit(2, true); await wait(5);
   chips = [...d.querySelectorAll('.seg:not(.off) .item:not(.off) .rl-chip')].map((e) => e.textContent);
   check('typed item kept, shift-2 took Sex back', chips.join('|') === 'Squashed in the rock|Disease', chips.join('|'));
-  check('reserve has 5 slots + plus', d.querySelectorAll('.seg:not(.off) .item:not(.off) .rl-slot').length === 6);
+  key('ArrowRight'); await wait(10);
+  check('Triceratops balance with word labels', [...bal().querySelectorAll('.hyp-what b')].map((b) => b.textContent).join('|') === 'Two species|One, growing');
 
-  /* Case 1 balance: click a card, then click the right pan */
-  key('ArrowRight'); key('ArrowRight'); await wait(20);
-  check('at Case 1 balance', pos() === '#4.4', pos() + ' ' + on());
-  const host = d.querySelector('.seg:not(.off) .item-balance:not(.off)');
-  const card = host.querySelector('.card[data-id="baby"]');
-  const S = w.Deck.scale;
-  card.dispatchEvent(pe('pointerdown', 10, 10));
-  card.dispatchEvent(pe('pointerup', 10, 10));
-  check('card selected by click', card.classList.contains('sel'));
-  host.dispatchEvent(pe('pointerdown', 1300 * S, 300 * S));
+  /* K–Pg: the cap, and extras */
+  key(']'); for (let i = 0; i < 13; i++) key('ArrowRight');
+  await wait(10);
+  h = bal();
+  check('K–Pg: icons for impact and volcanoes', h.querySelectorAll('.hyp-icon').length === 2);
+  check('all eleven cards dealt by build 13 with extras on', shown(h).length === 11, pos() + ' ' + shown(h).length);
+  for (const id of ['ir', 'qz', 'sph', 'crater', 'line', 'age']) place(h, id, ...LEFT);
   await wait(5);
-  const tric = w.Deck.peek('bal-tric');
-  check('card placed on the right pan', tric.zone.baby === 'right', JSON.stringify(tric.zone));
-  check('beam tilts 4° toward it', /rotate\(4deg\)/.test(tiltOf(host)), tiltOf(host));
-  place(host, 'common', 760, 150); await wait(5);
-  check('a card on the pivot tips nothing', w.Deck.peek('bal-tric').zone.common === 'pivot' && /rotate\(4deg\)/.test(tiltOf(host)), tiltOf(host));
-  place(host, 'texture', 760, 540); await wait(5);
-  check('a card on the floor tips nothing', w.Deck.peek('bal-tric').zone.texture === 'floor' && /rotate\(4deg\)/.test(tiltOf(host)), tiltOf(host));
+  check('six on one pan: tilt stops at 20°', /rotate\(-20deg\)/.test(tiltOf(h)), tiltOf(h));
+  key('x'); await wait(5);
+  check('extras off: extra cards leave the pan and the extra builds', /rotate\(-16deg\)/.test(tiltOf(h)) && pos() === '#6.8', tiltOf(h) + ' ' + pos());
+  key('x');
 
-  /* confidence: 1–5 keys */
-  key('ArrowRight'); await wait(5);
-  digit(3); digit(3); digit(4); digit(4, true); digit(5);
-  const conf = w.Deck.peek('conf-tric');
-  check('confidence tallies', JSON.stringify(conf.r1) === '[0,0,2,0,1]', JSON.stringify(conf.r1));
-  check('mean shown', /mean 3\.7/.test(d.querySelector('.seg:not(.off) .conf-mean').textContent), d.querySelector('.seg:not(.off) .conf-mean').textContent);
-
-  /* Case 2 */
-  key(']'); await wait(5);
-  digit(2); digit(2); digit(1);
-  check('picker votes', JSON.stringify(w.Deck.peek('pick-signor-pick').votes) === '[1,2,0]');
+  /* Signor–Lipps: the ambiguous card, the dig, then back to the balance */
+  key(']'); await wait(10);
+  h = bal();
+  check('Signor–Lipps: the two hypotheses as sorted sketches', h.querySelectorAll('.hyp .sketch').length === 2);
+  key('ArrowRight'); key('ArrowRight'); await wait(10);
+  place(h, 'short', ...RIGHT); await wait(5);
+  check('"fall short" placed on a slow fade', w.Deck.peek('bal-signor').zone.short === 'right');
   key('ArrowRight'); await wait(4500);
-  const sg = d.querySelector('.seg:not(.off) .item-signor');
+  const sg = here('.sg').parentNode;
   const dotsOn = sg.querySelectorAll('.sg-dot.on').length;
   const wantDots = w.Sim.draws(w.Sim.SEED).reduce((n, row) => n + w.Sim.finds(row, 0.08).length, 0);
   check('dig shows every find at p = 0.08', dotsOn === wantDots, `${dotsOn} of ${wantDots}`);
-  check('pinned prediction is B', /B/.test(sg.querySelector('.sg-pin').textContent));
   key('ArrowRight'); await wait(20);
-  check('sorted at build 2', sg.classList.contains('sorted'));
+  check('sorted', sg.classList.contains('sorted'));
   key('ArrowRight'); await wait(20);
-  check('truth shown at build 3 (answers on)', sg.classList.contains('show-truth'));
+  check('true ranges (answers on)', sg.classList.contains('show-truth'));
+  key('ArrowRight'); key('ArrowUp'); key('ArrowUp'); await wait(20);
+  check('p up to 0.10, more finds', w.Deck.peek('signor').p === 0.1 && sg.querySelectorAll('.sg-dot.on').length > dotsOn);
   key('ArrowRight'); await wait(20);
-  key('ArrowUp'); key('ArrowUp'); await wait(20);
-  check('p up to 0.10', w.Deck.peek('signor').p === 0.1, String(w.Deck.peek('signor').p));
-  const dots10 = sg.querySelectorAll('.sg-dot.on').length;
-  check('raising p adds finds', dots10 > dotsOn, `${dotsOn} -> ${dots10}`);
-  sg.querySelector('.sg-pre[data-p="0.2"]').click(); await wait(10);
-  check('preset 0.20', w.Deck.peek('signor').p === 0.2);
-
-  /* funnel */
-  key('ArrowRight'); await wait(20);
-  check('funnel on screen', on().includes('item-funnel'), on());
+  h = bal();
+  check('back on the balance, the card where we left it', w.Deck.peek('bal-signor').zone.short === 'right' && /rotate\(4deg\)/.test(tiltOf(h)), tiltOf(h));
+  place(h, 'short', ...PIVOT); await wait(5);
+  check('moved to the pivot: level', /rotate\(0deg\)/.test(tiltOf(h)), tiltOf(h));
+  key('ArrowRight'); key('ArrowRight'); key('ArrowRight'); await wait(20);
+  check('funnel', on().includes('item-funnel'), pos() + ' ' + on());
   digit(3); digit(2); digit(6); digit(1); await wait(1500);
   const counts = [...d.querySelectorAll('.seg:not(.off) .fn-count b')].map((e) => e.textContent);
   const heads = [...d.querySelectorAll('.seg:not(.off) .fn-head')].sort((a, b) => parseFloat(a.style.left) - parseFloat(b.style.left)).map((e) => e.textContent);
   check('gates in funnel order, not the order said', heads.join('|') === 'Not buried|Destroyed since|Not recognized', heads.join('|'));
-  check('counts fall through the gates', counts.length === 4 && +counts[0].replace(',', '') === 1000 && counts.every((c, i) => i === 0 || +c <= +counts[i - 1].replace(',', '')), counts.join(' → '));
-  check('never-there lane shown', !!d.querySelector('.seg:not(.off) .fn-never'));
-  digit(4); digit(5); await wait(1500);
-  const final = [...d.querySelectorAll('.seg:not(.off) .fn-count b')].map((e) => e.textContent);
-  console.log('      all five gates: ' + final.join(' → '));
+  check('counts fall through the gates', counts.length === 4 && counts[0] === '1,000' && counts.every((c, i) => i === 0 || +c.replace(',', '') <= +counts[i - 1].replace(',', '')), counts.join(' → '));
+  check('never-there lane', !!d.querySelector('.seg:not(.off) .fn-never'));
 
-  /* K–Pg pile: deal two, extras add five */
-  key(']'); key('ArrowRight'); await wait(20);
-  const kh = d.querySelector('.seg:not(.off) .item-balance:not(.off)');
-  check('K–Pg pile shows 11 with extras on', kh.querySelector('.pile').textContent === '11', kh.querySelector('.pile').textContent);
-  key('d'); key('d'); await wait(5);
-  check('dealt two to the tray', Object.values(w.Deck.peek('bal-kpg').zone).filter((z) => z === 'tray').length === 2);
-  key('d', { shiftKey: true }); await wait(5);
-  for (const id of ['ir', 'qz', 'sph', 'crater', 'line', 'age']) place(kh, id, 300, 300);
-  await wait(5);
-  check('six on one pan: tilt stops at 20°', /rotate\(-20deg\)/.test(tiltOf(kh)), tiltOf(kh));
-  check('extras off: extra cards leave the pan', (key('x'), /rotate\(-16deg\)/.test(tiltOf(kh))), tiltOf(kh));
-
-  /* feathers: specimens arrive one per build */
-  key(']'); for (let i = 0; i < 5; i++) key('ArrowRight'); await wait(20);
-  const fh = d.querySelector('.seg:not(.off) .item-balance:not(.off)');
-  const visible = [...fh.querySelectorAll('.card')].filter((c) => c.style.opacity === '1').map((c) => c.dataset.id);
-  check('three specimens by build 5', visible.join(',') === 'sino,caud,micro', pos() + ' ' + visible.join(','));
+  /* feathers: specimens one per build, around the room list */
+  key(']'); for (let i = 0; i < 5; i++) key('ArrowRight');
+  await wait(20);
+  h = bal();
+  check('feathers: three specimens by build 5', shown(h).join() === 'sino,caud,micro', pos() + ' ' + shown(h).join());
 
   /* focus and flip */
-  fh.querySelector('.card[data-id="caud"] .card-flip').click(); await wait(400);
+  h.querySelector('.card[data-id="caud"] .card-flip').click(); await wait(400);
   const big = d.querySelector('.focus .big');
   check('card opens big and turns over', big && big.classList.contains('flipped'));
   key('Escape'); await wait(300);
@@ -189,7 +199,7 @@ w.addEventListener('load', async () => {
 
   /* reset */
   const r = d.querySelector('#reset'); r.click(); r.click(); await wait(20);
-  check('reset clears state and goes home', pos() === '#0' && Object.keys((w.Deck.peek('bal-tric') || {}).zone || {}).length === 0 && !d.body.classList.contains('answers'), pos());
+  check('reset clears state and goes home', pos() === '#0' && Object.keys((w.Deck.peek('bal-elasmo') || {}).zone || {}).length === 0 && !d.body.classList.contains('answers'), pos());
 
   console.log(errors.length ? '\nERRORS:\n' + errors.join('\n') : '\nno script errors');
   console.log(`${checks - fails}/${checks} checks passed`);

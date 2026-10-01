@@ -1,6 +1,10 @@
 /* Every word on screen, every card, every list item. Edit wording here;
  * nothing in this file touches layout.
  *
+ * Every case runs the same way on the balance: two hypotheses, the room
+ * predicts (votes), evidence is dealt one card per build, you place each
+ * card, then talk about where it tipped.
+ *
  * A segment is a list of builds (one press each) and a list of items.
  * Build fields:
  *   prompt   the one line at the bottom. ~~struck~~ and *stressed* work.
@@ -14,12 +18,18 @@
  *   at/until first build it shows on / first build it's gone (default: all)
  *   builds   or an explicit list of builds
  *   extra    only with extras on;  ans  only with answers shown
+ * Balance fields: pans (two hypotheses: text, plus img/sketch/icon), vote (the
+ * predict build), cards (text, back: what each hypothesis expects, at: the
+ * build it's dealt on).
  * Card backs are drafts. Check each against the papers (SPEC.md).
  */
 (function (root) {
   'use strict';
 
   const FULL = [40, 100, 1520, 690];
+  const STAGE = [0, 100, 1600, 690];
+  const range = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => a + i);
+  const PREDICT = 'Predict: which way will it tip?';
 
   const segments = [
     {
@@ -29,59 +39,71 @@
     },
 
     {
-      id: 'hook', title: 'The head on the wrong end', mins: [0, 7],
+      id: 'hook', title: 'Which end is the head?', mins: [0, 3],
       builds: [
         { prompt: 'Which end is the head?', extra: true },
         { prompt: 'One of these is wrong.' },
-        { prompt: 'How would you check?' },
-        {},
-        { prompt: 'Does a famous name change the evidence?' },
-        { eye: true },
-        { prompt: '~~Who said it?~~ What would let us check it?' },
-        {}
+        { prompt: 'How would you check?' }
       ],
-      items: [
-        { kind: 'placeholder', at: 0, until: 1, box: [160, 180, 1280, 420], label: 'headless skeleton; drag the skull to either end' },
-        { kind: 'placeholder', at: 1, until: 7, box: [160, 110, 1280, 215], label: "Cope's 1869 plate" },
-        { kind: 'placeholder', at: 1, until: 7, box: [160, 345, 1280, 215], label: 'modern skeletal' },
-        { kind: 'placeholder', at: 5, until: 7, box: [560, 160, 480, 110], label: 'skull slides to the neck end' },
-        { kind: 'tag', at: 4, until: 7, box: [1190, 124], text: 'E. D. Cope, 1869' },
-        { kind: 'tag', at: 5, until: 7, ans: true, box: [1190, 359], text: 'J. Leidy, 1870' },
-        {
-          kind: 'cards', at: 3, until: 7, box: [160, 600, 1280, 150], labels: ['Neck', 'Tail'],
-          cards: [
-            { id: 'joint', text: 'Skull joint', back: ['…', '…'] },
-            { id: 'chev', text: 'Chevrons', back: ['…', '…'] },
-            { id: 'ribs', text: 'Ribs', back: ['…', '…'] },
-            { id: 'facets', text: 'Facet direction', back: ['…', '…'] }
-          ]
-        },
-        { kind: 'title', at: 7, box: [100, 250, 1400, 400], text: 'HOW DO YOU KNOW?', plain: true }
-      ]
+      items: [{ kind: 'elasmo', box: STAGE, figAt: 1 }]
     },
 
     {
-      id: 'framework', title: 'How do you know?', mins: [7, 12], railFrom: 5,
+      id: 'framework', title: 'How do you know?', mins: [3, 7],
       builds: [
+        {},
         { prompt: 'What exactly is the claim?' },
         { prompt: 'What do we see?' },
         { prompt: 'What else could do that?' },
         { prompt: 'What would tell them apart?' },
-        { prompt: 'How sure should we be?' },
-        { prompt: 'Fits mine?', rail: 'test' },
-        { prompt: 'Or fits mine *better*?', rail: 'test' }
+        { prompt: 'How sure should we be?' }
       ],
       items: [
-        { kind: 'icons', until: 5, box: [100, 220, 1400, 380] },
-        {
-          kind: 'balance', id: 'fw', at: 5, box: FULL, labels: ['My idea', 'The other idea'], rightAt: 6,
-          cards: [{ id: 'ev', text: 'The evidence', back: ['fits', 'fits'], place: { 5: 'left', 6: 'pivot' } }]
-        }
+        { kind: 'title', builds: [0], box: [100, 250, 1400, 400], text: 'HOW DO YOU KNOW?', plain: true },
+        { kind: 'icons', at: 1, from: 1, box: [100, 220, 1400, 380] }
       ]
     },
 
     {
-      id: 'argument', title: 'Valid vs. sound', mins: [12, 18],
+      id: 'elasmo', title: 'Head or tail?', mins: [7, 16],
+      builds: [
+        { prompt: 'Head on the short end, or the long end?', rail: 'claim' },
+        { prompt: PREDICT, rail: 'sure' },
+        { rail: 'evidence' },
+        { rail: 'evidence' },
+        { rail: 'evidence' },
+        { rail: 'evidence' },
+        { rail: 'evidence' },
+        { prompt: 'Does a famous name change the evidence?', rail: 'evidence' },
+        { rail: 'evidence', extra: true },
+        { prompt: 'Which cards did the tipping?', rail: 'test' },
+        { eye: true },
+        { prompt: '~~Who said it?~~ What would let us check it?' }
+      ],
+      items: [
+        {
+          kind: 'balance', id: 'elasmo', until: 10, box: FULL, vote: 1,
+          pans: [
+            { text: 'Head on the short end', img: 'img/cope-1869.png', w: 520 },
+            { text: 'Head on the long end', img: 'img/cope-1870.png', w: 520 }
+          ],
+          cards: [
+            { id: 'run', at: 2, text: 'One very long run of vertebrae', back: ['expected: a long tail', 'expected: a long neck'] },
+            { id: 'chevrons', at: 3, text: 'Chevrons under the short end', back: ['not expected: chevrons sit under tails', 'expected: the short end is the tail'] },
+            { id: 'facets', at: 4, text: 'Joint facets face the long end', back: ['not expected: the front faces the head', 'expected'] },
+            { id: 'ribs', at: 5, text: 'Neck-style ribs along the long run', back: ['not expected', 'expected'] },
+            { id: 'atlas', at: 6, text: 'Atlas and axis at the long end', back: ['not expected', 'expected: the skull sits on them'] },
+            { id: 'famous', at: 7, text: 'A famous expert drew it', back: ['says nothing about the bones', 'says nothing about the bones'] },
+            { id: 'lizards', at: 8, extra: true, text: 'Lizards have long tails', back: ['makes it seem likely', 'says nothing about this animal'] }
+          ]
+        },
+        { kind: 'elasmo', builds: [10, 11], box: STAGE, figAt: 0, slideAt: 10 },
+        { kind: 'tag', builds: [10, 11], ans: true, box: [70, 166], text: 'J. Leidy, 1870' }
+      ]
+    },
+
+    {
+      id: 'argument', title: 'Valid vs. sound', mins: [16, 20],
       builds: [
         { prompt: 'If these were true, would this have to be?', rail: 'claim' },
         { prompt: 'Are they true?', rail: 'evidence' },
@@ -92,62 +114,111 @@
         { extra: true, tag: 'validity is shape, not truth' }
       ],
       items: [
-        { kind: 'placeholder', box: [200, 140, 1200, 560], label: 'premise tiles, Follows and True lamps, trackway' }
+        { kind: 'placeholder', builds: [0, 1, 2, 3, 5, 6], box: [200, 140, 1200, 560], label: 'premise tiles, Follows and True lamps' },
+        { kind: 'trackway', builds: [4], box: [100, 240, 1400, 360], trails: [{ y: 180, step: 300 }], tail: true }
       ]
     },
 
     {
-      id: 'tric', title: 'Triceratops or Torosaurus?', mins: [18, 30],
+      id: 'tric', title: 'Triceratops or Torosaurus?', mins: [20, 30],
       builds: [
         { prompt: 'Two species?', rail: 'claim' },
-        { prompt: "What's different?", rail: 'evidence' },
-        { prompt: 'Different skulls. Why else?', rail: 'else' },
-        { prompt: 'Same bones. Two stories.', rail: 'else' },
-        { prompt: 'Expected by one story, not the other?', rail: 'test' },
-        { prompt: 'How sure?', rail: 'sure' },
+        { prompt: 'Or one animal, growing?', rail: 'else' },
+        { prompt: 'Different skulls. Why else?', rail: 'else', extra: true },
+        { prompt: PREDICT, rail: 'sure' },
+        ...range(4, 9).map(() => ({ rail: 'evidence' })),
+        { prompt: 'Close call. What would settle it?', rail: 'test' },
         { prompt: 'Growth can masquerade as species.', tag: 'confounding' }
       ],
       items: [
-        { kind: 'placeholder', until: 2, box: [160, 140, 1280, 560], label: 'two skulls; callouts on build 2' },
+        { kind: 'placeholder', builds: [0], box: [160, 140, 1280, 560], label: 'two skulls: Triceratops, Torosaurus' },
+        { kind: 'placeholder', builds: [1], box: [160, 140, 1280, 560], label: 'growth morph: drag the frill to age the skull' },
         {
           kind: 'roomlist', id: 'tric-why', builds: [2], box: [200, 130, 1200, 640],
           items: ['Age', 'Sex', 'Just variation', 'Where it lived', 'Squashed in the rock', 'Evolution']
         },
-        { kind: 'placeholder', builds: [3], box: [160, 140, 1280, 560], label: 'growth morph: drag the frill to age the skull; one row or two' },
         {
-          kind: 'balance', id: 'tric', builds: [4, 6], box: FULL, labels: ['Two species', 'One, growing'],
+          kind: 'balance', id: 'tric', at: 3, box: FULL, vote: 3,
+          pans: [{ text: 'Two species' }, { text: 'One, growing' }],
           cards: [
-            { id: 'baby', text: 'Baby Torosaurus', back: ['should turn up somewhere', "can't exist"] },
-            { id: 'texture', text: 'Bone texture', back: ['some Torosaurus could be young', 'every Torosaurus is old'] },
-            { id: 'where', text: "Where they're found", back: ['Torosaurus could live alone', 'never without Triceratops'] },
-            { id: 'common', text: 'How common', back: ['rare species: fine', 'few reach old age: fine'] },
-            { id: 'between', text: 'In-between skulls', back: ['few, as variation', 'many'] }
+            { id: 'nobaby', at: 4, text: 'No baby Torosaurus found', back: ['possible: a rare animal, rarer young', 'expected: Torosaurus is the adult'] },
+            { id: 'oldfrill', at: 5, text: 'Torosaurus frills look old', back: ['possible: adults look adult', 'expected: the oldest stage'] },
+            { id: 'young', at: 6, text: 'Some Torosaurus not fully grown', back: ['expected', "not expected: it's the oldest stage"] },
+            { id: 'rare', at: 7, text: 'Torosaurus is much rarer', back: ['fine: a rare species', 'fine: few live that long'] },
+            { id: 'between', at: 8, text: 'Few in-between skulls', back: ['expected', 'not expected: growth passes through them'] },
+            { id: 'south', at: 9, text: "Torosaurus where Triceratops isn't", back: ['possible: different ranges', 'not expected: same animal, same places'] }
           ]
-        },
-        { kind: 'confidence', id: 'tric', round: 1, builds: [5], box: [300, 140, 1000, 600] }
+        }
       ]
     },
 
     {
-      id: 'signor', title: 'The dwindling dinosaurs', mins: [30, 42],
+      id: 'kpg', title: 'What ended the dinosaurs?', mins: [30, 40],
       builds: [
-        { prompt: 'Everything dies at once. What do the fossils show?', rail: 'claim' },
+        { prompt: 'Something big happened 66 million years ago.', rail: 'claim' },
+        { prompt: 'An impact, or volcanoes?', rail: 'else' },
+        { prompt: PREDICT, rail: 'sure' },
+        ...range(3, 8).map(() => ({ rail: 'evidence' })),
+        ...range(9, 13).map(() => ({ rail: 'evidence', extra: true })),
+        { prompt: 'Hard to explain without an impact? Without volcanoes?', rail: 'test' },
+        { prompt: 'What changed minds?' },
+        { prompt: 'Both happened. How much did each matter?' },
+        { prompt: "The best explanation predicts what the others can't.", tag: 'inference to the best explanation' }
+      ],
+      items: [
+        { kind: 'placeholder', builds: [0], box: [160, 130, 1280, 560], label: 'boundary clay photo' },
+        {
+          kind: 'balance', id: 'kpg', builds: range(1, 14).concat([17]), box: FULL, vote: 2,
+          pans: [{ text: 'Impact', icon: 'impact' }, { text: 'Volcanoes', icon: 'volcano' }],
+          cards: [
+            { id: 'ir', at: 3, text: 'Iridium spike', back: ['expected: asteroids are iridium-rich', 'a little, maybe'] },
+            { id: 'qz', at: 4, text: 'Shocked quartz', back: ['expected', "no: eruptions don't reach the pressure"] },
+            { id: 'sph', at: 5, text: 'Glass spherules', back: ['expected: melted ejecta', 'volcanic glass exists, wrong chemistry'] },
+            { id: 'crater', at: 6, text: 'A 180 km crater', back: ['expected', 'no'] },
+            { id: 'lava', at: 7, text: 'Huge lava flows, India', back: ['not predicted', 'expected'] },
+            { id: 'climate', at: 8, text: 'Climate changed', back: ['expected', 'expected'] },
+            { id: 'line', at: 9, extra: true, text: 'Extinction right at the line', back: ['expected: sudden', 'only if a pulse hit then'] },
+            { id: 'hg', at: 10, extra: true, text: 'Mercury spike', back: ['not predicted', 'expected'] },
+            { id: 'warm', at: 11, extra: true, text: 'Warming before the line', back: ['not predicted', 'expected'] },
+            { id: 'tsunami', at: 12, extra: true, text: 'Tsunami beds, Gulf coast', back: ['expected near the crater', 'no'] },
+            { id: 'age', at: 13, extra: true, text: 'Crater age = boundary age', back: ['expected', 'a coincidence'] }
+          ]
+        },
+        { kind: 'placeholder', builds: [15], box: [160, 140, 1280, 560], label: 'timeline: 1980 iridium → 2019 Deccan timing' },
+        { kind: 'placeholder', builds: [16], box: [160, 140, 1280, 560], label: 'timing chart: Deccan pulses (Schoene / Sprain 2019) and the impact' }
+      ]
+    },
+
+    {
+      id: 'signor', title: 'The dwindling dinosaurs', mins: [40, 52],
+      builds: [
+        { prompt: 'All at once, or a slow fade?', rail: 'claim' },
+        { prompt: PREDICT, rail: 'sure' },
         { rail: 'evidence' },
-        { prompt: 'Gradual decline?', rail: 'claim' },
-        { eye: true, rail: 'else' },
+        { prompt: 'Suppose all 20 die at the line.', rail: 'test' },
+        { prompt: 'Does that look sudden?', rail: 'test' },
+        { eye: true, rail: 'test' },
         { prompt: 'What if fossils were easier to find?', rail: 'test' },
+        { prompt: 'Now where does that card go?', rail: 'test' },
+        { rail: 'evidence' },
+        { rail: 'evidence' },
         { prompt: "We didn't find it. Why not?", rail: 'else' },
         { prompt: 'No keys in the kitchen. What did you learn?' },
         { prompt: 'Absence is weak evidence when detection is poor.', tag: 'Signor–Lipps effect' }
       ],
       items: [
         {
-          kind: 'picker', id: 'signor-pick', builds: [0], box: [120, 150, 1360, 580],
-          options: [{ key: 'A', sketch: 'abrupt' }, { key: 'B', sketch: 'taper' }, { key: 'C', sketch: 'scatter' }]
+          kind: 'balance', id: 'signor', builds: [0, 1, 2, 7, 8, 9, 12], box: FULL, vote: 1,
+          pans: [{ text: 'All at once', sketch: 'abrupt' }, { text: 'A slow fade', sketch: 'taper' }],
+          cards: [
+            { id: 'short', at: 2, text: 'Last fossils fall short of the line', back: ['expected: finds thin out before the end', 'expected'] },
+            { id: 'harder', at: 8, text: 'Dig harder: ranges reach the line', back: ['expected', 'not expected: they were already gone'] },
+            { id: 'plankton', at: 9, text: 'Common plankton end right at the line', back: ['expected: common fossils turn up to the end', 'not expected'] }
+          ]
         },
-        { kind: 'signor', id: 'signor', builds: [1, 2, 3, 4, 7], box: FULL, picker: 'signor-pick', sortAt: 2, truthAt: 3, knobAt: 4 },
+        { kind: 'signor', id: 'signor', builds: [3, 4, 5, 6], box: FULL, sortAt: 4, truthAt: 5, knobAt: 6 },
         {
-          kind: 'funnel', id: 'funnel', builds: [5, 6], box: FULL,
+          kind: 'funnel', id: 'funnel', builds: [10, 11], box: FULL,
           never: 'Never there',
           gates: [
             { text: 'Not buried', rate: 0.15 },
@@ -161,80 +232,37 @@
     },
 
     {
-      id: 'kpg', title: 'What ended the dinosaurs?', mins: [42, 54],
-      builds: [
-        { prompt: 'Something big happened 66 million years ago.', rail: 'claim' },
-        { prompt: 'Which pan?', rail: 'test' },
-        { prompt: 'Hard to explain without an impact?', rail: 'test' },
-        { prompt: 'Hard to explain without volcanoes?', rail: 'test' },
-        { prompt: 'What changed minds?' },
-        { prompt: 'Both happened. How much did each matter?' },
-        { prompt: 'How sure?', rail: 'sure' },
-        { prompt: "The best explanation predicts what the others can't.", tag: 'inference to the best explanation' }
-      ],
-      items: [
-        { kind: 'placeholder', builds: [0], box: [160, 130, 1280, 520], label: 'boundary clay photo' },
-        { kind: 'tag', builds: [0], box: [420, 680], text: 'Impact' },
-        { kind: 'tag', builds: [0], box: [960, 680], text: 'Volcanoes' },
-        {
-          kind: 'balance', id: 'kpg', builds: [1, 2, 3, 7], box: FULL, labels: ['Impact', 'Volcanoes'], pile: true,
-          cards: [
-            { id: 'ir', text: 'Iridium spike', back: ['expected: asteroids are iridium-rich', 'a little, maybe'] },
-            { id: 'qz', text: 'Shocked quartz', back: ['expected', "no: eruptions don't reach the pressure"] },
-            { id: 'sph', text: 'Glass spherules', back: ['expected: melted ejecta', 'volcanic glass exists, wrong chemistry'] },
-            { id: 'crater', text: 'A 180 km crater', back: ['expected', 'no'] },
-            { id: 'lava', text: 'Huge lava flows, India', back: ['not predicted', 'expected'] },
-            { id: 'climate', text: 'Climate changed', back: ['expected', 'expected'] },
-            { id: 'line', extra: true, text: 'Extinction right at the line', back: ['expected: sudden', 'only if a pulse hit then'] },
-            { id: 'hg', extra: true, text: 'Mercury spike', back: ['not predicted', 'expected'] },
-            { id: 'warm', extra: true, text: 'Warming before the line', back: ['not predicted', 'expected'] },
-            { id: 'tsunami', extra: true, text: 'Tsunami beds, Gulf coast', back: ['expected near the crater', 'no'] },
-            { id: 'age', extra: true, text: 'Crater age = boundary age', back: ['expected', 'a coincidence'] }
-          ]
-        },
-        { kind: 'placeholder', builds: [4], box: [160, 140, 1280, 560], label: 'timeline: 1980 iridium → 2019 Deccan timing' },
-        { kind: 'placeholder', builds: [5], box: [160, 140, 1280, 560], label: 'timing chart: Deccan pulses (Schoene / Sprain 2019) and the impact' },
-        { kind: 'confidence', id: 'kpg', round: 1, builds: [6], box: [300, 140, 1000, 600] }
-      ]
-    },
-
-    {
-      id: 'feathers', title: 'Feathered dinosaurs', mins: [54, 62],
+      id: 'feathers', title: 'Feathered dinosaurs', mins: [52, 60],
       builds: [
         { prompt: 'Feathers? Or rotted skin fibers?', rail: 'claim' },
-        { prompt: 'How sure, from this alone?', rail: 'sure' },
+        { prompt: PREDICT, rail: 'sure' },
+        { rail: 'evidence' },
         { prompt: 'Skeptical. What would convince you?', rail: 'else' },
-        { rail: 'evidence' },
-        { rail: 'evidence' },
-        { rail: 'evidence' },
-        { rail: 'evidence' },
-        { rail: 'evidence' },
-        { prompt: 'Now?', rail: 'sure' },
+        ...range(4, 7).map(() => ({ rail: 'evidence' })),
         { prompt: 'Confidence should move when evidence moves.' }
       ],
       items: [
         { kind: 'placeholder', builds: [0], box: [160, 130, 1280, 580], label: 'Sinosauropteryx photo, zooming to the fuzz' },
-        { kind: 'confidence', id: 'feathers', round: 1, builds: [1], box: [300, 140, 1000, 600] },
         {
-          kind: 'roomlist', id: 'feathers-convince', builds: [2], box: [200, 130, 1200, 640],
-          items: ['More specimens', 'Better preservation', 'Branching', 'Many species', 'Pigment inside', "Can't be collagen"]
-        },
-        {
-          kind: 'balance', id: 'feathers', at: 3, until: 8, box: FULL, labels: ['Feathers', 'Collagen'],
+          kind: 'balance', id: 'feathers', builds: [1, 2, 4, 5, 6, 7, 8], box: FULL, vote: 1,
+          pans: [{ text: 'Feathers' }, { text: 'Collagen' }],
           cards: [
-            { id: 'sino', at: 3, text: 'Sinosauropteryx', sub: '1996 · fuzz', back: ['expected', 'expected'] },
+            { id: 'sino', at: 2, text: 'Sinosauropteryx', sub: '1996 · fuzz', back: ['expected', 'expected'] },
             { id: 'caud', at: 4, text: 'Caudipteryx', sub: '1998 · vaned feathers', back: ['expected', "collagen can't make vanes"] },
             { id: 'micro', at: 5, text: 'Microraptor', sub: '2003 · four wings', back: ['expected', 'no'] },
             { id: 'pigment', at: 6, text: 'Sinosauropteryx', sub: '2010 · pigment inside', back: ['expected', 'no pigment bodies in collagen'] },
             { id: 'yut', at: 7, text: 'Yutyrannus', sub: '2012 · big, fuzzy', back: ['expected in more groups', 'also possible'] }
           ]
         },
-        { kind: 'confidence', id: 'feathers', round: 2, at: 8, box: [300, 140, 1000, 600] }
+        {
+          kind: 'roomlist', id: 'feathers-convince', builds: [3], box: [200, 130, 1200, 640],
+          items: ['More specimens', 'Better preservation', 'Branching', 'Many species', 'Pigment inside', "Can't be collagen"]
+        }
       ]
     },
 
     {
-      id: 'debrief', title: 'How do you know?', mins: [62, 68],
+      id: 'debrief', title: 'How do you know?', mins: [60, 68],
       builds: [
         {},
         { prompt: 'Which case caught a mistake?' },
@@ -272,8 +300,7 @@
       { key: 'sure', label: 'Sure?' }
     ],
     railTitle: 'How do you know?',
-    railFrom: 'framework',
-    confidence: { low: 'unsure', high: 'sure', mean: 'mean' },
+    railFrom: 'elasmo',
     funnel: { lived: 'Lived', found: 'found', madeUp: 'made-up rates' },
     signor: { boundary: 'K–Pg', taxa: 'taxa', chance: 'chance per level' },
     segments

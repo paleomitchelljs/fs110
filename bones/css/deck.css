@@ -159,13 +159,6 @@ div.lines { padding: 0; }
 }
 .card-flip svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
-.cardrow { display: flex; justify-content: center; align-items: center; gap: 40px; height: 100%; }
-.cardrow .card { position: relative; width: 230px; height: 112px; cursor: pointer; }
-.cardrow .card-face b { font-size: 30px; }
-.cardrow.play .card { animation: rise 0.4s ease both; }
-.cardrow.play .card:nth-child(2) { animation-delay: 0.1s; }
-.cardrow.play .card:nth-child(3) { animation-delay: 0.2s; }
-.cardrow.play .card:nth-child(4) { animation-delay: 0.3s; }
 
 /* a card opened big */
 .focus { position: absolute; inset: 0; z-index: 50; display: grid; place-items: center; background: var(--veil); opacity: 0; transition: opacity 0.25s; }
@@ -204,13 +197,24 @@ div.lines { padding: 0; }
 .bal-label { font: 700 36px var(--font-hand); fill: var(--ink); transition: opacity 0.4s; }
 .still .bal-beamg, .still .bal-pan, .still .card { transition: none !important; }
 .choosing { cursor: pointer; }
-.pile {
-  position: absolute; left: 20px; top: 0; width: 170px; height: 96px; cursor: pointer;
-  border: 2px solid var(--ink-2); border-radius: 12px; color: var(--ink-2); font: 700 34px var(--font-ui);
-  background: repeating-linear-gradient(45deg, var(--board-2) 0 10px, var(--card) 10px 20px);
-  box-shadow: 4px 4px 0 -2px var(--card), 4px 4px 0 0 var(--ink-2), 8px 8px 0 -2px var(--card), 8px 8px 0 0 var(--ink-2);
+.card.fresh { z-index: 5; box-shadow: 0 0 0 5px var(--accent-soft), 0 8px 22px rgba(0, 0, 0, 0.18); }
+/* the two hypotheses, above their pans */
+.hyp {
+  position: absolute; top: 0; width: 560px; height: 104px; padding: 0; cursor: default;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px;
+  border: 0; background: none; color: var(--ink);
 }
-.pile[hidden] { display: none; }
+.hyp-what { display: grid; place-items: center; border-radius: 10px; }
+.hyp-what b { font: 700 42px/1.05 var(--font-hand); }
+.hyp-what img { display: block; }
+.hyp-what .sketch { width: 120px; height: 80px; }
+.hyp-icon { width: 72px; height: 72px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.voting .hyp { cursor: pointer; }
+.voting .hyp:hover .hyp-what { outline: 3px dashed var(--accent-ink); outline-offset: 6px; }
+.hyp-votes { display: flex; align-items: center; gap: 5px; min-height: 18px; }
+.hyp-votes i { width: 16px; height: 16px; border-radius: 50%; background: var(--accent); border: 2px solid var(--outline); }
+.hyp-votes i:last-of-type { animation: pop 0.25s ease both; }
+.hyp-votes b { margin-left: 6px; font: 700 22px var(--font-ui); }
 
 /* ---------- lists from the room ---------- */
 .rl-list {
@@ -234,35 +238,27 @@ div.lines { padding: 0; }
   font: 700 40px var(--font-hand); color: var(--ink); background: var(--card); border: 2px dashed var(--accent-ink); border-radius: 16px;
 }
 
-/* ---------- confidence ---------- */
-.conf { position: absolute; left: 0; top: 0; overflow: visible; }
-.conf-base { stroke: var(--ink-2); stroke-width: 3; }
-.conf-col { cursor: pointer; }
-.conf-hit { fill: transparent; }
-.conf-col:hover .conf-hit { fill: var(--accent-soft); }
-.conf-bar, .conf-ghost { transform-box: fill-box; transform-origin: 50% 100%; vector-effect: non-scaling-stroke; transition: transform 0.35s cubic-bezier(0.3, 1.3, 0.5, 1); }
-.conf-bar { fill: var(--accent); stroke: var(--outline); stroke-width: 3; }
-.conf-ghost { fill: none; stroke: var(--ink-2); stroke-width: 3; stroke-dasharray: 9 7; }
-.conf-n { font: 700 34px var(--font-ui); fill: var(--ink); }
-.conf-k { font: 700 52px var(--font-hand); fill: var(--ink); }
-.conf-end { font: 700 30px var(--font-hand); fill: var(--muted); }
-.conf-mean { font: 600 32px var(--font-ui); fill: var(--ink-2); font-variant-numeric: tabular-nums; }
-
-/* ---------- prediction picker ---------- */
-.pick { display: flex; justify-content: center; gap: 50px; height: 100%; }
-.pick-opt {
-  flex: 1 1 0; max-width: 410px; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 20px 20px 10px;
-  cursor: pointer; color: var(--ink); background: var(--card); border: 3px solid var(--rule); border-radius: 22px; transition: border-color 0.2s;
-}
-.pick-opt.lead { border-color: var(--accent-ink); }
-.pick-opt .sketch { width: 100%; height: auto; }
-.pick-opt b { font: 700 58px/1 var(--font-hand); }
-.pick-dots { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; max-width: 270px; min-height: 22px; }
-.pick-dots i { width: 20px; height: 20px; border-radius: 50%; background: var(--accent); border: 2px solid var(--outline); }
-.pick-dots i:last-child { animation: pop 0.25s ease both; }
-.pick-n { min-height: 42px; font: 700 34px var(--font-ui); }
+/* ---------- sketches of range charts (Signor–Lipps hypotheses) ---------- */
 .sketch .sk-zero { stroke: var(--critical); stroke-width: 4; stroke-dasharray: 10 8; }
 .sketch .sk-bar { stroke: var(--ink); stroke-width: 10; stroke-linecap: round; }
+
+/* ---------- hook: Cope's two Elasmosaurus ---------- */
+/* Line art is ink on transparent; on the chalkboard it turns to chalk. */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ink-img { filter: invert(0.92); } }
+:root[data-theme="dark"] .ink-img { filter: invert(0.92); }
+.el-fig { position: absolute; user-select: none; pointer-events: none; transition: opacity 0.5s; }
+.el-fig.off { opacity: 0; }
+.el-skull { position: absolute; left: 0; top: 0; cursor: grab; touch-action: none; user-select: none; transition: transform 0.3s ease; }
+.el-skull.slide { transition: transform 1.8s cubic-bezier(0.45, 0, 0.25, 1); }
+.el-skull.dragging { transition: none; cursor: grabbing; }
+
+/* ---------- framework: trackways ---------- */
+.tw { position: absolute; left: 0; top: 0; overflow: visible; }
+.tw-print { fill: var(--ink); stroke: var(--ink); stroke-width: 7; stroke-linecap: round; }
+.tw-print.play { animation: pop 0.25s ease both; }
+.tw-ghost { fill: none; stroke: var(--critical); stroke-width: 5; stroke-dasharray: 14 12; opacity: 0; }
+.tw-ghost.play { animation: ghost 3.6s 2.2s ease both; }
+@keyframes ghost { 0% { opacity: 0; } 20%, 55% { opacity: 0.9; } 100% { opacity: 0; } }
 
 /* ---------- Case 2: Signor–Lipps ---------- */
 .sg { position: absolute; left: 0; top: 0; overflow: visible; }
@@ -287,8 +283,6 @@ div.lines { padding: 0; }
 .divplay .sg-divline { stroke-dasharray: 3000; animation: draw 1.8s 0.4s ease both; }
 .sg-divtrue { fill: none; stroke: var(--critical); stroke-width: 3; stroke-dasharray: 10 8; }
 .sg-divlab { font: 700 30px var(--font-hand); fill: var(--muted); }
-.sg-pinbox { fill: var(--card); stroke: var(--rule); stroke-width: 2; }
-.sg-pink { font: 700 32px var(--font-hand); fill: var(--accent-ink); }
 .sg-knob { position: absolute; left: 100px; top: 636px; display: flex; align-items: center; gap: 12px; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
 .knob .sg-knob { opacity: 1; pointer-events: auto; }
 .sg-klab { font: 700 30px var(--font-hand); color: var(--muted); }

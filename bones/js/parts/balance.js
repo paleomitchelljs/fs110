@@ -1,11 +1,10 @@
-/* The balance: one pan per hypothesis. Drop a card on a pan and the beam tips
- * toward it; a card both hypotheses expect goes on the pivot and tips
- * nothing; a card that says little goes on the floor. Every card weighs the
- * same: 4° of tilt per card of difference, never more than 20°.
- *
- * Cards start in the tray along the bottom, or in a face-down pile you click
- * to deal (pile: true), or arrive on a given build (card.at). card.place
- * {build: zone} moves a card by script, for demonstrations.
+/* The balance, which every case runs on. Two hypotheses, one per pan, each
+ * shown above its pan as a picture, a sketch, an icon or words. On the
+ * predict build the room votes (click a hypothesis, or press 1 or 2) and the
+ * votes stay up as dots. Then evidence arrives one card per build (card.at)
+ * and you place it: a pan if one hypothesis expects it and the other doesn't,
+ * the pivot if both expect it (it tips nothing), the floor if it says little.
+ * Every card weighs the same: 4° per card of difference, never more than 20°.
  *
  * Drag a card, or click it and then click where it goes. */
 (function () {
@@ -14,20 +13,28 @@
 
   const DEG = 4, MAX = 20;
   const G = {                      // geometry, in the item's own pixels (box 1520 × 690)
-    pivotY: 210, half: 400, chain: 80, panW: 520, pivotZone: 120,
+    pivotY: 250, half: 360, chain: 70, panW: 460, pivotZone: 120,
     ground: 500, floorY: 506, trayY: 594,
-    cw: 170, ch: 96, onPan: 0.9, onFloor: 0.8
+    cw: 170, ch: 96, onPan: 0.8, onFloor: 0.8, fresh: 1.3
   };
   const tilt = (L, R) => D.clamp(DEG * (R - L), -MAX, MAX);
 
+  /* What sits above a pan: a picture, a sketch, an icon, or words. */
+  function headHTML(p) {
+    if (p.img) return `<img class="ink-img" src="${D.esc(p.img)}" alt="${D.esc(p.text)}" style="width:${p.w}px" draggable="false">`;
+    if (p.sketch) return `<svg class="sketch" viewBox="0 0 300 200" width="150" height="100" role="img" aria-label="${D.esc(p.text)}">${D.sketches[p.sketch]()}</svg>`;
+    if (p.icon) return `<svg class="hyp-icon" viewBox="0 0 24 24" width="84" height="84" role="img" aria-label="${D.esc(p.text)}">${D.hypIcons[p.icon]}</svg>`;
+    return `<b>${D.md(p.text)}</b>`;
+  }
+
   D.parts.balance = function (def, host) {
-    const w = def.box[2], cx = w / 2;
-    const st = () => D.get('bal-' + def.id, () => ({ zone: {}, order: {}, n: 0 }));
+    const w = def.box[2], cx = w / 2, labels = def.pans.map((p) => p.text);
+    const st = () => D.get('bal-' + def.id, () => ({ zone: {}, order: {}, n: 0, votes: [0, 0] }));
     let b = 0, sel = null, drag = null;
 
     /* ---------- drawing ---------- */
     const svg = D.svg('svg', { class: 'bal', viewBox: `0 0 ${w} ${def.box[3]}`, width: w, height: def.box[3] }, host);
-    D.svg('line', { class: 'bal-ground', x1: 0, x2: w, y1: G.ground, y2: G.ground }, svg);
+    const ground = D.svg('line', { class: 'bal-ground', x1: 0, x2: w, y1: G.ground, y2: G.ground }, svg);
     D.svg('path', { class: 'bal-post', d: `M${cx} ${G.pivotY}V${G.ground - 24}M${cx - 70} ${G.ground}L${cx} ${G.ground - 30}L${cx + 70} ${G.ground}Z` }, svg);
     const beam = D.svg('g', { class: 'bal-beamg' }, svg);
     D.svg('rect', { class: 'bal-beam', x: cx - G.half - 10, y: G.pivotY - 7, width: 2 * G.half + 20, height: 14, rx: 7 }, beam);
@@ -35,29 +42,24 @@
     D.svg('circle', { class: 'bal-cap', cx, cy: G.pivotY, r: 13 }, svg);
     const pans = [0, 1].map((i) => {
       const g = D.svg('g', { class: 'bal-pan pan-' + i }, svg);
-      const chains = D.svg('path', { class: 'bal-chain' }, g);
-      const pan = D.svg('path', { class: 'bal-dish', d: `M${-G.panW / 2} 0Q0 34 ${G.panW / 2} 0Z` }, g);
-      const label = D.svg('text', { class: 'bal-label', x: 0, y: 56, 'text-anchor': 'middle' }, g);
-      label.textContent = def.labels[i];
-      return { g, chains, pan, label };
+      D.svg('path', { class: 'bal-chain', d: `M${-G.panW / 2 + 20} 0L0 ${-G.chain}L${G.panW / 2 - 20} 0` }, g);
+      D.svg('path', { class: 'bal-dish', d: `M${-G.panW / 2} 0Q0 34 ${G.panW / 2} 0Z` }, g);
+      const head = D.el('button', 'hyp hyp-' + i, host, `<span class="hyp-what">${headHTML(def.pans[i])}</span><span class="hyp-votes"></span>`);
+      head.type = 'button';
+      head.style.left = (cx + (i ? 1 : -1) * G.half - 280) + 'px';
+      head.addEventListener('click', (e) => { head.blur(); vote(i, e.shiftKey ? -1 : 1); });
+      head.addEventListener('contextmenu', (e) => { e.preventDefault(); vote(i, -1); });
+      return { g, head };
     });
-    const pile = D.el('button', 'pile', host);
-    pile.type = 'button'; pile.title = 'Deal a card (D). Shift: deal them all';
-    pile.style.transform = `translate(0px, ${G.trayY}px)`;
 
     /* ---------- cards ---------- */
     const cards = def.cards.map((c) => {
-      const e = D.card(c, def.labels, host);
+      const e = D.card(c, labels, host);
       e.addEventListener('pointerdown', (ev) => grab(ev, c, e));
       return { c, e };
     });
     const zoneOf = (c) => st().zone[c.id];
-    function inPlay(c) {
-      if (c.extra && !D.flags.extras) return false;
-      if (c.at != null && b < c.at) return false;
-      if (def.pile && c.at == null) return zoneOf(c) && zoneOf(c) !== 'pile';
-      return true;
-    }
+    const inPlay = (c) => !(c.extra && !D.flags.extras) && (c.at == null || b >= c.at);
     function setZone(c, z) {
       const s = st();
       if (s.zone[c.id] === z) return;
@@ -74,41 +76,54 @@
       beam.style.transform = `rotate(${a}deg)`;
       beam.style.transformOrigin = `${cx}px ${G.pivotY}px`;
       const ends = [-1, 1].map((sg) => ({ x: cx + sg * G.half * Math.cos(r), y: G.pivotY + sg * G.half * Math.sin(r) }));
-      pans.forEach((p, i) => {
-        const e = ends[i], py = e.y + G.chain;
-        p.g.style.transform = `translate(${e.x}px, ${py}px)`;
-        p.chains.setAttribute('d', `M${-G.panW / 2 + 20} 0L0 ${-G.chain}L${G.panW / 2 - 20} 0`);
-        p.label.style.opacity = i === 1 && def.rightAt != null && b < def.rightAt ? 0 : 1;
-      });
+      pans.forEach((p, i) => { p.g.style.transform = `translate(${ends[i].x}px, ${ends[i].y + G.chain}px)`; });
       const put = (k, x, y, sc, rot) => {
         k.e.style.opacity = 1; k.e.style.pointerEvents = '';
+        k.e.classList.toggle('fresh', sc === G.fresh);
         if (k === drag) return;
         k.e.style.transform = `translate(${x - G.cw / 2}px, ${y - G.ch / 2}px) rotate(${rot || 0}deg) scale(${sc})`;
       };
       /* pans: rows of three, stacking upward from the dish */
       ['left', 'right'].forEach((z, i) => {
-        const e = ends[i], py = e.y + G.chain, cw = G.cw * G.onPan + 8, chh = G.ch * G.onPan + 6;
+        const e = ends[i], py = e.y + G.chain, cw = G.cw * G.onPan + 6, chh = G.ch * G.onPan + 6;
         by[z].forEach((k, j) => {
           const row = Math.floor(j / 3), inRow = Math.min(3, by[z].length - row * 3), col = j % 3;
-          put(k, e.x + (col - (inRow - 1) / 2) * cw, py - 8 - chh / 2 - row * chh, G.onPan);
+          put(k, e.x + (col - (inRow - 1) / 2) * cw, py - 6 - chh / 2 - row * chh, G.onPan);
         });
       });
-      by.pivot.forEach((k, j) => put(k, cx + (j % 2 ? 7 : -7), G.pivotY - 18 - G.ch * G.onPan / 2 - j * 44, G.onPan, j % 2 ? 2 : -2));
+      by.pivot.forEach((k, j) => put(k, cx + (j % 2 ? 7 : -7), G.pivotY - 18 - G.ch * G.onPan / 2 - j * 40, G.onPan, j % 2 ? 2 : -2));
       const fstep = by.floor.length > 1 ? Math.min(150, (w - 220) / (by.floor.length - 1)) : 0;
       by.floor.forEach((k, j) => put(k, 110 + j * fstep, G.floorY + G.ch * G.onFloor / 2, G.onFloor, j % 2 ? 2.5 : -2.5));
-      const left = def.pile ? 210 : 0, room = w - left, n = by.tray.length;
-      const step = n > 1 ? Math.min(G.cw + 14, (room - G.cw) / (n - 1)) : 0, x0 = left + (room - (n - 1) * step) / 2;
-      by.tray.forEach((k, j) => put(k, x0 + j * step, G.trayY + G.ch / 2, 1));
+      /* tray: the card dealt on this build sits bigger, so everyone can read it */
+      const n = by.tray.length, step = n > 1 ? Math.min(G.cw * G.fresh + 16, (w - G.cw) / (n - 1)) : 0, x0 = (w - (n - 1) * step) / 2;
+      by.tray.forEach((k, j) => {
+        const fresh = k.c.at === b;
+        put(k, x0 + j * step, G.trayY + G.ch / 2 - (fresh ? 22 : 0), fresh ? G.fresh : 1);
+      });
       cards.filter((k) => !inPlay(k.c)).forEach((k) => {
-        k.e.style.opacity = 0; k.e.style.pointerEvents = 'none';
-        k.e.style.transform = `translate(${10}px, ${G.trayY}px) scale(0.9)`;
+        k.e.style.opacity = 0; k.e.style.pointerEvents = 'none'; k.e.classList.remove('fresh');
+        k.e.style.transform = `translate(${cx - G.cw / 2}px, ${G.trayY + 40}px) scale(0.5)`;
       });
       shelf.classList.toggle('used', by.pivot.length > 0);
-      const waiting = def.pile ? cards.filter((k) => k.c.at == null && (!k.c.extra || D.flags.extras) && (!zoneOf(k.c) || zoneOf(k.c) === 'pile')).length : 0;
-      pile.hidden = !waiting;
-      pile.textContent = waiting ? String(waiting) : '';
       cards.forEach((k) => k.e.classList.toggle('sel', k === sel));
       host.classList.toggle('choosing', !!sel);
+      drawVotes();
+    }
+
+    /* ---------- the room's prediction ---------- */
+    const voting = () => def.vote != null && b === def.vote;
+    function vote(i, d) {
+      if (!voting()) return;
+      const v = st().votes;
+      v[i] = Math.max(0, v[i] + d);
+      D.save(); drawVotes();
+    }
+    function drawVotes() {
+      const v = st().votes, shown = def.vote != null && b >= def.vote;
+      host.classList.toggle('voting', voting());
+      pans.forEach((p, i) => {
+        p.head.querySelector('.hyp-votes').innerHTML = shown && v[i] ? '<i></i>'.repeat(Math.min(v[i], 30)) + `<b>${v[i]}</b>` : '';
+      });
     }
 
     /* Which zone a point (item pixels) falls in. */
@@ -122,7 +137,7 @@
       pans[0].g.classList.toggle('hot', z === 'left');
       pans[1].g.classList.toggle('hot', z === 'right');
       shelf.classList.toggle('hot', z === 'pivot');
-      svg.querySelector('.bal-ground').classList.toggle('hot', z === 'floor');
+      ground.classList.toggle('hot', z === 'floor');
     }
 
     /* ---------- dragging and clicking ---------- */
@@ -155,7 +170,7 @@
     }
     /* With a card chosen, a click anywhere else on the balance puts it there. */
     host.addEventListener('pointerdown', (ev) => {
-      if (!sel || ev.target.closest('.card, .pile')) return;
+      if (!sel || ev.target.closest('.card, .hyp')) return;
       const p = D.local(host, ev);
       setZone(sel.c, zoneAt(p.x, p.y));
       sel = null; layout();
@@ -166,42 +181,21 @@
       hot(zoneAt(p.x, p.y));
     });
 
-    function deal(all) {
-      for (const k of cards) {
-        if (k.c.at != null || (k.c.extra && !D.flags.extras)) continue;
-        if (zoneOf(k.c) && zoneOf(k.c) !== 'pile') continue;
-        setZone(k.c, 'tray');
-        if (!all) break;
-      }
-      layout();
-    }
-    pile.addEventListener('click', (ev) => { pile.blur(); deal(ev.shiftKey); });
-
-    /* Scripted moves: the latest place{} entry at or before this build wins. */
-    function script() {
-      for (const k of cards) {
-        if (!k.c.place) continue;
-        const keys = Object.keys(k.c.place).map(Number).filter((x) => x <= b);
-        if (keys.length) setZone(k.c, k.c.place[Math.max(...keys)]);
-      }
-    }
-
     D.on('extras', () => layout());
     return {
-      show(nb, how) {
+      show(nb) {
         const first = !host.classList.contains('live');
         b = nb; host.classList.add('live');
         if (first) { host.classList.add('still'); layout(); void host.offsetWidth; host.classList.remove('still'); }
-        if (how === 'step' && cards.some((k) => k.c.place)) requestAnimationFrame(() => { script(); layout(); });
-        else { script(); layout(); }
+        layout();
       },
       hide() { sel = null; host.classList.remove('live'); },
       key(e) {
         if (e.key === 'Escape' && sel) { sel = null; hot(null); layout(); return true; }
-        if (e.key.toLowerCase() === 'f' && sel && D.flags.answers) { D.focus(sel.c, def.labels, true); return true; }
-        if (e.key.toLowerCase() === 'd' && def.pile) { deal(e.shiftKey); return true; }
+        if (e.key.toLowerCase() === 'f' && sel && D.flags.answers) { D.focus(sel.c, labels, true); return true; }
         return false;
       },
+      digit(n, shift) { if (n === 1 || n === 2) vote(n - 1, shift ? -1 : 1); },
       reset() { sel = null; drag = null; layout(); }
     };
   };

@@ -1,4 +1,4 @@
-/* Case 2. Twenty taxa, every one alive from level −50 until it dies at 0.
+/* Signor–Lipps. Twenty taxa, every one alive from level −50 until it dies at 0.
  * Each level gives up a fossil with chance p. Dig upward and the last find of
  * almost every taxon lands below 0; sort them and the record looks like a slow
  * decline. The eye shows the true ranges. Drag p and the gaps shrink.
@@ -9,7 +9,7 @@
   'use strict';
   const D = window.Deck, Sim = window.Sim, T = window.BONES.signor;
 
-  /* Sketches for the prediction picker: eight range bars and the line at 0. */
+  /* The two hypotheses, drawn the same way: eight range bars, sorted, and the line at 0. */
   function sketch(ends) {
     const x0 = 40, dx = 220 / (ends.length - 1);
     return '<line class="sk-zero" x1="16" x2="284" y1="34" y2="34"/>' +
@@ -17,7 +17,6 @@
   }
   D.sketches.abrupt = () => sketch([0, 0, 0, 0, 0, 0, 0, 0]);
   D.sketches.taper = () => sketch([126, 108, 90, 72, 54, 36, 18, 2]);
-  D.sketches.scatter = () => sketch([70, 4, 118, 30, 140, 12, 88, 50]);
 
   const P_MIN = 0.01, P_MAX = 0.6, PRESETS = [0.03, 0.08, 0.2, 0.5];
   const DIG_MS = 4000, REDIG_MS = 1500;
@@ -56,9 +55,6 @@
     D.svg('path', { class: 'sg-divtrue truth', d: `M${DIV_X + 20 * DIV_S} ${y(-50)}V${y(0)}` }, div);
     const divArea = D.svg('path', { class: 'sg-divarea' }, div);
     const divLine = D.svg('path', { class: 'sg-divline' }, div);
-
-    /* the room's prediction, pinned top right */
-    const pin = D.svg('g', { class: 'sg-pin', transform: 'translate(1398 0)' }, svg);
 
     /* p controls */
     const knob = D.el('div', 'sg-knob', host);
@@ -159,16 +155,6 @@
       paint();
       stopDig = D.tween(ms, (k) => { dig = Sim.BOTTOM - 0.5 + k * (1 - Sim.BOTTOM); paint(); }, () => { stopDig = null; dig = 0.5; paint(); });
     }
-    function drawPin() {
-      const k = D.picked(def.picker);
-      pin.innerHTML = '';
-      if (k === null) return;
-      const pick = D.content.segments.flatMap((s) => s.items).find((it) => it.kind === 'picker' && it.id === def.picker);
-      const o = pick.options[k];
-      pin.innerHTML = `<rect class="sg-pinbox" x="0" y="0" width="122" height="96" rx="10"/>` +
-        `<svg x="6" y="12" width="110" height="74" viewBox="0 0 300 200" class="sketch">${D.sketches[o.sketch]()}</svg>` +
-        `<text class="sg-pink" x="114" y="30" text-anchor="end">${D.esc(o.key)}</text>`;
-    }
 
     rebuild();
     pEl.textContent = st().p.toFixed(2);
@@ -187,7 +173,6 @@
         else if (firstTime) { dig = 0.5; paint(); }
         if (flags.sorted !== before.sorted || firstTime) place(flags.sorted);
         if (flags.sorted && !before.sorted && how === 'step') D.replay(host, 'divplay');
-        drawPin();
       },
       hide() { shown = false; if (stopDig) { stopDig(); stopDig = null; dig = 0.5; paint(); } },
       key(e) {

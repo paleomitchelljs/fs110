@@ -1,5 +1,5 @@
 /* Small parts: the title, plain text, placeholders for drawings still to
- * come, name tags, the framework's five icons, and a row of flip cards. */
+ * come, name tags, and the framework's five icons. */
 (function () {
   'use strict';
   const D = window.Deck;
@@ -30,7 +30,13 @@
     return { show(b, how) { if (how === 'step' || how === 'reveal') D.replay(host, 'play'); } };
   };
 
-  /* The five framework questions, one more per build. The newest one is lit. */
+  /* Pictures for hypotheses that have no picture of their own (24 × 24, stroked). */
+  D.hypIcons = {
+    impact: '<circle cx="16" cy="8" r="4.5"/><path d="M12.6 11.4 3 21M10.5 7.5 5 13M16.5 12.6 11 18"/>',
+    volcano: '<path d="M2 21h20l-6.5-11h-7z"/><path d="M10 10l2-2.5 2 2.5M12 5V2.5M8.5 4.5 7 3M15.5 4.5 17 3"/>'
+  };
+
+  /* The five framework questions, one more per build from def.from. The newest one is lit. */
   D.parts.icons = function (def, host) {
     const rail = D.content.rail;
     host.innerHTML = '<div class="bigicons">' + rail.map((r) =>
@@ -38,24 +44,14 @@
     const icons = host.querySelectorAll('.bi');
     return {
       show(b, how) {
+        const n = b - (def.from || 0);
         icons.forEach((e, k) => {
           const was = e.classList.contains('on');
-          e.classList.toggle('on', k <= b);
-          e.classList.toggle('lit', k === b);
-          if (!was && k <= b && how === 'step') D.replay(e, 'play');
+          e.classList.toggle('on', k <= n);
+          e.classList.toggle('lit', k === n);
+          if (!was && k <= n && how === 'step') D.replay(e, 'play');
         });
       }
     };
-  };
-
-  /* A row of cards to turn over; no sorting. Click one to see it big. */
-  D.parts.cards = function (def, host) {
-    const row = D.el('div', 'cardrow', host);
-    def.cards.forEach((c) => {
-      const e = D.card(c, def.labels, row);
-      e.classList.add('static');
-      e.addEventListener('click', () => D.focus(c, def.labels, false));
-    });
-    return { show(b, how) { if (how === 'step') D.replay(row, 'play'); } };
   };
 })();
