@@ -18,7 +18,7 @@ The source is the revised instructor outline (October 2026). Times, prompts and 
 
 6. Every case runs the same way, on a balance. Two hypotheses, one per pan, each shown above its pan as a picture where there is one (Cope's 1869 and 1870 reconstructions, two sketched range charts, an asteroid and a volcano). The room predicts by voting, and the votes stay up as dots under each hypothesis. Then the evidence is dealt one card per press, and each card goes where the room argues it belongs: on a pan if one hypothesis expects it and the other doesn't, on the pivot if both expect it (it tips nothing), on the floor if it says little either way. Then you talk about where it tipped and why. That's the outline's A/B/C sort laid out in space, with the tilt as live feedback, and it's the same object six times, so students learn the object once and spend the rest of the class on the evidence.
 
-7. The cases run from clear to unclear. Elasmosaurus settles hard on one side. Feathers starts ambiguous (the 1996 fuzz fits both) and ends on one side as specimens pile up. Triceratops/Torosaurus splits and doesn't settle. Impact vs. volcanoes leans one way, but on a question of how much each mattered rather than which happened. The decline case is the most ambiguous and closes the class: its cards come out level, and the simulation shows that the best-looking evidence for a decline ("Last fossils fall short of the line") is what a sudden extinction produces too. Spinosaurus, where good evidence lands on both pans, runs last if there's time.
+7. The cases run from clear to unclear. Elasmosaurus settles hard on one side. Feathers starts ambiguous (the 1996 fuzz fits both) and ends on one side as specimens pile up. Triceratops/Torosaurus splits and doesn't settle. Impact vs. volcanoes leans one way, but on a question of how much each mattered rather than which happened. The decline case is the most ambiguous and closes the class: its cards come out level, and the simulation shows that the best-looking evidence for a decline ("Last fossils fall short of the line") is what a sudden extinction produces too. Spinosaurus, where good evidence lands on both pans, ends the class if there's time.
 
 8. Lists fill from the room. Each list has its items preloaded and hidden, and when a student says one, you tap it (or press its number) and it drops in. Things the room says that aren't preloaded go in with N, type, Enter. The list ends up in the order *this* class produced it.
 
@@ -178,8 +178,7 @@ Pictures: one Triceratops and one Torosaurus skull, cut from a two-panel figure 
 | X | Different skulls. Why else? | Room list: Age · Sex · Just variation · Where it lived · Squashed in the rock · Evolution. | Else? |
 | 3 | Predict: which way will it tip? | Votes. | Sure? |
 | 4–9 | | One card per press (below). | Evidence |
-| 10 | Close call. What would settle it? | | Test |
-| 11 | Growth can masquerade as species. | Tag: confounding. | |
+| 10 | Growth can masquerade as species. | Tag: confounding. | |
 
 | Card | If two species | If one, growing |
 |---|---|---|
@@ -265,9 +264,9 @@ What the sim should show (computed, 51 levels):
 
 Any one dig will wander around these. The default seed is picked so the first dig in class looks typical (median gap 8), not like a fluke. JS can't reproduce R's `set.seed(202)` draws, so the R code stays in the readme as the appendix and the deck uses its own seeded generator (mulberry32).
 
-### Did Spinosaurus hunt underwater? (60–68, if there's time)
+### Did Spinosaurus hunt underwater? (60–75, if there's time)
 
-Last, if there's time; `]` skips straight to the exit ticket. Chosen because the evidence conflicts. Since 2014 two camps have read the same animal in opposite directions, and several of the cards are disputed in their own right. Placed by their backs, the cards leave the scale level: the honest answer is that nobody knows yet, and the useful question is what would settle it.
+Last, and the end of the class, if there's time. Chosen because the evidence conflicts. Since 2014 two camps have read the same animal in opposite directions, and several of the cards are disputed in their own right. Placed by their backs, the cards leave the scale level: the honest answer is that nobody knows yet, and the useful question is what would settle it.
 
 Pans: *Swam after prey* and *Waded at the edge* (words until there are pictures).
 
@@ -288,16 +287,6 @@ Pans: *Swam after prey* and *Waded at the edge* (words until there are pictures)
 | Long jaws, cone-shaped teeth | expected: a fish eater | expected: a fish eater (pivot) |
 
 Two cards carry their own fights. The bone-density argument (Fabbri et al. 2022) was challenged on method (Myhrvold et al. 2024), and whether the tail could drive it through water is disputed (Ibrahim et al. 2020; Sereno et al. 2022). If a student wants to move one of those cards on exactly those grounds, the case is working.
-
-### Exit ticket (68–75)
-
-Three lines and a QR code to wherever responses get collected. The deck collects nothing.
-
-1. A testable dinosaur claim. What would raise your confidence? Lower it?
-2. Another explanation for that evidence.
-3. One thing about how scientists decide.
-
-X swaps in the transfer version: *A claim from outside science. Same questions.*
 
 ### Extras (X, or `#extras`)
 
@@ -339,13 +328,13 @@ These fill the outline's TODOs and the card backs, from memory. None has been ch
 
 ## Build order
 
-Built (October 2026): the deck engine and parts, every case's balance with its cards, Cope's two reconstructions with the draggable skull, the Triceratops and Torosaurus skulls, the boundary and Sinosauropteryx photos, and Signor–Lipps (sim and funnel). Everything else on screen is a dashed placeholder box naming the drawing that goes there.
+Built (October 2026): the deck engine and parts, every case's balance with its cards, Cope's two reconstructions with the draggable skull, the Triceratops and Torosaurus skulls, the boundary and Sinosauropteryx photos, and Signor–Lipps (sim and funnel). Nothing on screen is a placeholder.
 
 1. Frame and parts: deck engine, rails, eye, keys, saved state; flip card, balance, room list. Done.
 2. Signor–Lipps sim and funnel. Done.
 3. Every case on the balance, Elasmosaurus pictures and skull, Triceratops skulls, boundary photo. Done.
 4. Drawings: the premise tiles and lamps; hypothesis pictures for feathers; photos for K–Pg and feathers.
-5. Feathers, Spinosaurus, exit ticket. Done except the exit ticket's QR code.
+5. Feathers and Spinosaurus. Done. (The exit ticket is gone: the class ends on Spinosaurus.)
 6. Extras. Printable case cards (a print stylesheet built from `content.js`: one page per case, the five prompts with blanks, no answers). A presenter window (second window kept in sync over BroadcastChannel, with the outline's notes and the clock).
 
 ## Tests

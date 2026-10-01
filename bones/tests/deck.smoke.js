@@ -65,7 +65,7 @@ w.addEventListener('load', async () => {
     last = pos();
   }
   if (process.env.VERBOSE) console.log(seen.join('\n'));
-  check('reached the exit ticket', w.Deck.content.segments[w.Deck.where().s].id === 'exit', pos());
+  check('the deck ends on Spinosaurus', w.Deck.content.segments[w.Deck.where().s].id === 'spino' && w.Deck.content.segments.at(-1).id === 'spino', pos());
   for (let i = 0; i < 300 && pos() !== '#0'; i++) { key('ArrowLeft'); await wait(2); }
   check('back to the title', pos() === '#0', pos());
 
@@ -233,8 +233,6 @@ w.addEventListener('load', async () => {
   check('placed by their backs, the scale ends level', /rotate\(0deg\)/.test(tiltOf(h)), tiltOf(h));
   key('ArrowRight'); await wait(5);
   check('closing prompt', d.querySelector('.prompt-text').textContent === 'Evidence pulls both ways. What would settle it?');
-  key(']'); await wait(5);
-  check('then the exit ticket', w.Deck.content.segments[w.Deck.where().s].id === 'exit', pos());
 
   /* reset */
   const r = d.querySelector('#reset'); r.click(); r.click(); await wait(20);

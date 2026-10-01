@@ -139,7 +139,6 @@
         { prompt: 'Different skulls. Why else?', rail: 'else', extra: true },
         { prompt: PREDICT, rail: 'sure' },
         ...range(4, 9).map(() => ({ rail: 'evidence' })),
-        { prompt: 'Close call. What would settle it?', rail: 'test' },
         { prompt: 'Growth can masquerade as species.', tag: 'confounding' }
       ],
       items: [
@@ -245,7 +244,7 @@
     },
 
     {
-      id: 'spino', title: 'Did Spinosaurus hunt underwater?', mins: [60, 68],
+      id: 'spino', title: 'Did Spinosaurus hunt underwater?', mins: [60, 75],
       builds: [
         { prompt: 'Did Spinosaurus hunt underwater?', rail: 'claim' },
         { prompt: PREDICT, rail: 'sure' },
@@ -265,19 +264,6 @@
             { id: 'jaws', at: 7, text: 'Long jaws, cone-shaped teeth', back: ['expected: a fish eater', 'expected: a fish eater'] }
           ]
         }
-      ]
-    },
-
-    {
-      id: 'exit', title: 'Exit ticket', mins: [68, 75],
-      builds: [{}, { extra: true }],
-      items: [
-        {
-          kind: 'text', until: 1, box: [140, 170, 1000, 520], numbered: true,
-          lines: ['A testable dinosaur claim. What would raise your confidence? Lower it?', 'Another explanation for that evidence.', 'One thing about how scientists decide.']
-        },
-        { kind: 'text', builds: [1], extra: true, box: [140, 300, 1000, 200], lines: ['A claim from outside science. Same questions.'] },
-        { kind: 'placeholder', box: [1180, 250, 300, 300], label: 'QR code: response form' }
       ]
     }
   ];

@@ -1,20 +1,13 @@
-/* Small parts: the title, plain text, a photo, placeholders for drawings
- * still to come, two pictures side by side, and the framework's five icons. */
+/* Small parts: the title, a photo, two pictures side by side, and the
+ * framework's five icons. */
 (function () {
   'use strict';
   const D = window.Deck;
 
   const BONE = '<img class="bone ink-img" src="img/bone.png" alt="" draggable="false">';
-  const PENCIL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-5L16 4l4 4L9 19z"/><path d="M14 6l4 4"/></svg>';
 
   D.parts.title = function (def, host) {
     host.innerHTML = (def.plain ? '' : BONE) + `<div class="title-text">${D.md(def.text)}</div>`;
-    return { show(b, how) { if (how === 'step') D.replay(host, 'play'); } };
-  };
-
-  D.parts.text = function (def, host) {
-    const tag = def.numbered ? 'ol' : 'div';
-    host.innerHTML = `<${tag} class="lines">` + def.lines.map((l) => `<${def.numbered ? 'li' : 'p'}>${D.md(l)}</${def.numbered ? 'li' : 'p'}>`).join('') + `</${tag}>`;
     return { show(b, how) { if (how === 'step') D.replay(host, 'play'); } };
   };
 
@@ -23,11 +16,6 @@
   D.parts.photo = function (def, host) {
     host.innerHTML = `<figure class="photo-fig"><img class="photo" src="${D.esc(def.src)}" alt="${D.esc(def.alt || '')}" draggable="false">` +
       (def.credit ? `<figcaption>${D.esc(def.credit)}</figcaption>` : '') + '</figure>';
-  };
-
-  /* A dashed box saying what drawing goes here. Only in drafts. */
-  D.parts.placeholder = function (def, host) {
-    host.innerHTML = `<div class="ph">${PENCIL}<span>${D.esc(def.label)}</span></div>`;
   };
 
   /* Two pictures side by side at one shared scale (their px sizes come from the
