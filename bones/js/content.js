@@ -30,6 +30,9 @@
   const STAGE = [0, 100, 1600, 690];
   const range = (a, b) => Array.from({ length: b - a + 1 }, (_, i) => a + i);
   const PREDICT = 'Predict: which way will it tip?';
+  /* One figure, one scale: these px sizes are the skulls as cut by img/make_tritoro.py. */
+  const TRI = { src: 'img/triceratops.png', w: 343, h: 210, caption: 'Triceratops' };
+  const TORO = { src: 'img/torosaurus.png', w: 409, h: 232, caption: 'Torosaurus' };
 
   const segments = [
     {
@@ -65,7 +68,7 @@
     },
 
     {
-      id: 'elasmo', title: 'Head or tail?', mins: [7, 16],
+      id: 'elasmo', title: 'Head or tail?', mins: [7, 15],
       builds: [
         { prompt: 'Head on the short end, or the long end?', rail: 'claim' },
         { prompt: PREDICT, rail: 'sure' },
@@ -74,15 +77,13 @@
         { rail: 'evidence' },
         { rail: 'evidence' },
         { rail: 'evidence' },
-        { prompt: 'Does a famous name change the evidence?', rail: 'evidence' },
+        { rail: 'evidence' },
         { rail: 'evidence', extra: true },
-        { prompt: 'Which cards did the tipping?', rail: 'test' },
-        { eye: true },
-        { prompt: '~~Who said it?~~ What would let us check it?' }
+        { prompt: 'Which cards did the tipping?', rail: 'test' }
       ],
       items: [
         {
-          kind: 'balance', id: 'elasmo', until: 10, box: FULL, vote: 1,
+          kind: 'balance', id: 'elasmo', box: FULL, vote: 1,
           pans: [
             { text: 'Head on the short end', img: 'img/cope-1869.png', w: 520 },
             { text: 'Head on the long end', img: 'img/cope-1870.png', w: 520 }
@@ -96,31 +97,12 @@
             { id: 'famous', at: 7, text: 'A famous expert drew it', back: ['says nothing about the bones', 'says nothing about the bones'] },
             { id: 'lizards', at: 8, extra: true, text: 'Lizards have long tails', back: ['makes it seem likely', 'says nothing about this animal'] }
           ]
-        },
-        { kind: 'elasmo', builds: [10, 11], box: STAGE, figAt: 0, slideAt: 10 },
-        { kind: 'tag', builds: [10, 11], ans: true, box: [70, 166], text: 'J. Leidy, 1870' }
+        }
       ]
     },
 
     {
-      id: 'argument', title: 'Valid vs. sound', mins: [16, 20],
-      builds: [
-        { prompt: 'If these were true, would this have to be?', rail: 'claim' },
-        { prompt: 'Are they true?', rail: 'evidence' },
-        { tag: 'valid · sound' },
-        { prompt: 'Same two questions.', rail: 'claim' },
-        { prompt: "Where's the tail mark?", rail: 'evidence' },
-        { prompt: 'Wrong conclusion? Check the premises.' },
-        { extra: true, tag: 'validity is shape, not truth' }
-      ],
-      items: [
-        { kind: 'placeholder', builds: [0, 1, 2, 3, 5, 6], box: [200, 140, 1200, 560], label: 'premise tiles, Follows and True lamps' },
-        { kind: 'trackway', builds: [4], box: [100, 240, 1400, 360], trails: [{ y: 180, step: 300 }], tail: true }
-      ]
-    },
-
-    {
-      id: 'tric', title: 'Triceratops or Torosaurus?', mins: [20, 30],
+      id: 'tric', title: 'Triceratops or Torosaurus?', mins: [15, 26],
       builds: [
         { prompt: 'Two species?', rail: 'claim' },
         { prompt: 'Or one animal, growing?', rail: 'else' },
@@ -131,68 +113,30 @@
         { prompt: 'Growth can masquerade as species.', tag: 'confounding' }
       ],
       items: [
-        { kind: 'placeholder', builds: [0], box: [160, 140, 1280, 560], label: 'two skulls: Triceratops, Torosaurus' },
-        { kind: 'placeholder', builds: [1], box: [160, 140, 1280, 560], label: 'growth morph: drag the frill to age the skull' },
+        { kind: 'pair', builds: [0, 1], box: STAGE, imgs: [TRI, TORO], scale: 1.4, base: 510, arrowAt: 1 },
         {
           kind: 'roomlist', id: 'tric-why', builds: [2], box: [200, 130, 1200, 640],
           items: ['Age', 'Sex', 'Just variation', 'Where it lived', 'Squashed in the rock', 'Evolution']
         },
         {
           kind: 'balance', id: 'tric', at: 3, box: FULL, vote: 3,
-          pans: [{ text: 'Two species' }, { text: 'One, growing' }],
+          pans: [{ text: 'Two species', pair: [TRI, TORO], join: '≠' }, { text: 'One, growing', pair: [TRI, TORO], join: '→' }],
           cards: [
             { id: 'nobaby', at: 4, text: 'No baby Torosaurus found', back: ['possible: a rare animal, rarer young', 'expected: Torosaurus is the adult'] },
             { id: 'oldfrill', at: 5, text: 'Torosaurus frills look old', back: ['possible: adults look adult', 'expected: the oldest stage'] },
-            { id: 'young', at: 6, text: 'Some Torosaurus not fully grown', back: ['expected', "not expected: it's the oldest stage"] },
+            { id: 'young', at: 6, text: 'Subadult Torosaurus specimens', back: ['expected', "not expected: it's the oldest stage"] },
             { id: 'rare', at: 7, text: 'Torosaurus is much rarer', back: ['fine: a rare species', 'fine: few live that long'] },
             { id: 'between', at: 8, text: 'Few in-between skulls', back: ['expected', 'not expected: growth passes through them'] },
-            { id: 'south', at: 9, text: "Torosaurus where Triceratops isn't", back: ['possible: different ranges', 'not expected: same animal, same places'] }
+            { id: 'south', at: 9, text: 'Torosaurus without Triceratops', back: ['possible: different ranges', 'not expected: same animal, same places'] }
           ]
         }
       ]
     },
 
     {
-      id: 'kpg', title: 'What ended the dinosaurs?', mins: [30, 40],
+      id: 'signor', title: 'Were dinosaurs in decline before their extinction?', mins: [26, 39],
       builds: [
-        { prompt: 'Something big happened 66 million years ago.', rail: 'claim' },
-        { prompt: 'An impact, or volcanoes?', rail: 'else' },
-        { prompt: PREDICT, rail: 'sure' },
-        ...range(3, 8).map(() => ({ rail: 'evidence' })),
-        ...range(9, 13).map(() => ({ rail: 'evidence', extra: true })),
-        { prompt: 'Hard to explain without an impact? Without volcanoes?', rail: 'test' },
-        { prompt: 'What changed minds?' },
-        { prompt: 'Both happened. How much did each matter?' },
-        { prompt: "The best explanation predicts what the others can't.", tag: 'inference to the best explanation' }
-      ],
-      items: [
-        { kind: 'placeholder', builds: [0], box: [160, 130, 1280, 560], label: 'boundary clay photo' },
-        {
-          kind: 'balance', id: 'kpg', builds: range(1, 14).concat([17]), box: FULL, vote: 2,
-          pans: [{ text: 'Impact', icon: 'impact' }, { text: 'Volcanoes', icon: 'volcano' }],
-          cards: [
-            { id: 'ir', at: 3, text: 'Iridium spike', back: ['expected: asteroids are iridium-rich', 'a little, maybe'] },
-            { id: 'qz', at: 4, text: 'Shocked quartz', back: ['expected', "no: eruptions don't reach the pressure"] },
-            { id: 'sph', at: 5, text: 'Glass spherules', back: ['expected: melted ejecta', 'volcanic glass exists, wrong chemistry'] },
-            { id: 'crater', at: 6, text: 'A 180 km crater', back: ['expected', 'no'] },
-            { id: 'lava', at: 7, text: 'Huge lava flows, India', back: ['not predicted', 'expected'] },
-            { id: 'climate', at: 8, text: 'Climate changed', back: ['expected', 'expected'] },
-            { id: 'line', at: 9, extra: true, text: 'Extinction right at the line', back: ['expected: sudden', 'only if a pulse hit then'] },
-            { id: 'hg', at: 10, extra: true, text: 'Mercury spike', back: ['not predicted', 'expected'] },
-            { id: 'warm', at: 11, extra: true, text: 'Warming before the line', back: ['not predicted', 'expected'] },
-            { id: 'tsunami', at: 12, extra: true, text: 'Tsunami beds, Gulf coast', back: ['expected near the crater', 'no'] },
-            { id: 'age', at: 13, extra: true, text: 'Crater age = boundary age', back: ['expected', 'a coincidence'] }
-          ]
-        },
-        { kind: 'placeholder', builds: [15], box: [160, 140, 1280, 560], label: 'timeline: 1980 iridium → 2019 Deccan timing' },
-        { kind: 'placeholder', builds: [16], box: [160, 140, 1280, 560], label: 'timing chart: Deccan pulses (Schoene / Sprain 2019) and the impact' }
-      ]
-    },
-
-    {
-      id: 'signor', title: 'The dwindling dinosaurs', mins: [40, 52],
-      builds: [
-        { prompt: 'All at once, or a slow fade?', rail: 'claim' },
+        { prompt: 'Were dinosaurs in decline before their extinction?', rail: 'claim' },
         { prompt: PREDICT, rail: 'sure' },
         { rail: 'evidence' },
         { prompt: 'Suppose all 20 die at the line.', rail: 'test' },
@@ -209,7 +153,7 @@
       items: [
         {
           kind: 'balance', id: 'signor', builds: [0, 1, 2, 7, 8, 9, 12], box: FULL, vote: 1,
-          pans: [{ text: 'All at once', sketch: 'abrupt' }, { text: 'A slow fade', sketch: 'taper' }],
+          pans: [{ text: 'All at once', sketch: 'abrupt' }, { text: 'Already in decline', sketch: 'taper' }],
           cards: [
             { id: 'short', at: 2, text: 'Last fossils fall short of the line', back: ['expected: finds thin out before the end', 'expected'] },
             { id: 'harder', at: 8, text: 'Dig harder: ranges reach the line', back: ['expected', 'not expected: they were already gone'] },
@@ -232,7 +176,40 @@
     },
 
     {
-      id: 'feathers', title: 'Feathered dinosaurs', mins: [52, 60],
+      id: 'kpg', title: 'What ended the dinosaurs?', mins: [39, 50],
+      builds: [
+        { prompt: 'Something big happened 66 million years ago.', rail: 'claim' },
+        { prompt: 'An impact, or volcanoes?', rail: 'else' },
+        { prompt: PREDICT, rail: 'sure' },
+        ...range(3, 8).map(() => ({ rail: 'evidence' })),
+        ...range(9, 13).map(() => ({ rail: 'evidence', extra: true })),
+        { prompt: 'Hard to explain without an impact? Without volcanoes?', rail: 'test' },
+        { prompt: "The best explanation predicts what the others can't.", tag: 'inference to the best explanation' }
+      ],
+      items: [
+        { kind: 'photo', builds: [0], box: [200, 110, 1200, 670], src: 'img/kpg-boundary.jpg', alt: 'A finger pointing at the thin pale K–Pg boundary layer in an outcrop' },
+        {
+          kind: 'balance', id: 'kpg', at: 1, box: FULL, vote: 2,
+          pans: [{ text: 'Impact', icon: 'impact' }, { text: 'Volcanoes', icon: 'volcano' }],
+          cards: [
+            { id: 'ir', at: 3, text: 'Iridium spike', back: ['expected: asteroids are iridium-rich', 'a little, maybe'] },
+            { id: 'qz', at: 4, text: 'Shocked quartz', back: ['expected', "no: eruptions don't reach the pressure"] },
+            { id: 'sph', at: 5, text: 'Glass spherules', back: ['expected: melted ejecta', 'volcanic glass exists, wrong chemistry'] },
+            { id: 'crater', at: 6, text: 'A 180 km crater', back: ['expected', 'no'] },
+            { id: 'lava', at: 7, text: 'Huge lava flows, India', back: ['not predicted', 'expected'] },
+            { id: 'climate', at: 8, text: 'Climate changed', back: ['expected', 'expected'] },
+            { id: 'line', at: 9, extra: true, text: 'Extinction right at the line', back: ['expected: sudden', 'only if a pulse hit then'] },
+            { id: 'hg', at: 10, extra: true, text: 'Mercury spike', back: ['not predicted', 'expected'] },
+            { id: 'warm', at: 11, extra: true, text: 'Warming before the line', back: ['not predicted', 'expected'] },
+            { id: 'tsunami', at: 12, extra: true, text: 'Tsunami beds, Gulf coast', back: ['expected near the crater', 'no'] },
+            { id: 'age', at: 13, extra: true, text: 'Crater age = boundary age', back: ['expected', 'a coincidence'] }
+          ]
+        },
+      ]
+    },
+
+    {
+      id: 'feathers', title: 'Feathered dinosaurs', mins: [50, 60],
       builds: [
         { prompt: 'Feathers? Or rotted skin fibers?', rail: 'claim' },
         { prompt: PREDICT, rail: 'sure' },

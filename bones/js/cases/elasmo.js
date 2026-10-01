@@ -1,11 +1,10 @@
 /* The hook. Cope's 1869 Elasmosaurus (head on the tail) above his corrected
  * 1870 one, both cut from his plates (public domain; img/make_elasmo.py).
  * The 1869 skull is its own piece: drag it to either end and it snaps there,
- * facing out. On the reveal build it slides from the tail to the neck.
+ * facing out.
  *
  * Builds (from the item def): before figAt, the 1869 skeleton alone with the
- * skull loose above it; from figAt, both figures; from slideAt (answers on),
- * the skull at the neck. */
+ * skull loose above it; from figAt, both figures, skull where Cope put it. */
 (function () {
   'use strict';
   const D = window.Deck;
@@ -38,9 +37,8 @@
     };
     let at = null;
     const move = (x, y, flip) => { skull.style.transform = `translate(${x}px, ${y}px) scaleX(${flip ? -1 : 1})`; };
-    function put(name, slow) {
+    function put(name) {
       at = name;
-      skull.classList.toggle('slide', !!slow);
       const s = slots[name];
       move(s.x, s.y, s.flip);
     }
@@ -49,7 +47,7 @@
       ev.preventDefault();
       skull.setPointerCapture(ev.pointerId);
       const s = slots[at], p0 = D.local(host, ev);
-      skull.classList.remove('slide'); skull.classList.add('dragging');
+      skull.classList.add('dragging');
       const drag = (m) => { const p = D.local(host, m); move(s.x + p.x - p0.x, s.y + p.y - p0.y, s.flip); };
       const drop = (u) => {
         skull.removeEventListener('pointermove', drag); skull.removeEventListener('pointerup', drop); skull.removeEventListener('pointercancel', drop);
@@ -61,13 +59,9 @@
     });
 
     return {
-      show(b, how) {
+      show(b) {
         later.classList.toggle('off', b < def.figAt);
-        const want = b < def.figAt ? 'loose' : b >= def.slideAt && D.flags.answers ? 'neck' : 'tail';
-        if (want === 'neck' && at !== 'neck' && (how === 'step' || how === 'reveal')) {
-          put('tail'); void skull.offsetWidth;           // start from Cope's spot, then slide
-          put('neck', true);
-        } else put(want);
+        put(b < def.figAt ? 'loose' : 'tail');
       },
       reset() { put('tail'); }
     };

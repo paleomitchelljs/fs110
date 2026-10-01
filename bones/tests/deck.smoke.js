@@ -113,17 +113,21 @@ w.addEventListener('load', async () => {
   check('a card on the floor tips nothing', w.Deck.peek('bal-elasmo').zone.famous === 'floor' && /rotate\(4deg\)/.test(tiltOf(h)), tiltOf(h));
   key('ArrowRight'); await wait(5);
   check('extra card dealt with extras on', shown(h).includes('lizards'), pos());
-  key('ArrowRight'); key('ArrowRight'); await wait(20);
-  check('reveal: skull slides to the neck', pos() === '#3.10' && /scaleX\(-1\)/.test(skull()), pos() + ' ' + skull());
-  check('Leidy tag with answers', on().includes('item-tag'), on());
+  key('ArrowRight'); await wait(10);
+  check('Elasmosaurus ends on the discussion, no famous-name line, no reveal', pos() === '#3.9' && d.querySelector('.prompt-text').textContent === 'Which cards did the tipping?' &&
+    !w.Deck.content.segments[3].builds.some((x) => /famous name|Who said it/.test(x.prompt || '')), pos());
 
-  /* valid/sound: the trackway with no tail mark */
-  key(']'); for (let i = 0; i < 4; i++) key('ArrowRight');
-  await wait(10);
-  check('trackway with a tail-drag ghost', !!here('.tw-ghost') && here('.tw').querySelectorAll('.tw-print').length > 4, on());
-
-  /* Triceratops: room list (extra build), then the balance */
-  key(']'); key('ArrowRight'); key('ArrowRight'); await wait(10);
+  /* Triceratops comes straight after: the two skulls, the growth arrow, room list (extra build), then the balance */
+  key('ArrowRight'); await wait(10);
+  check('next press goes straight to Triceratops', w.Deck.content.segments[w.Deck.where().s].id === 'tric', pos());
+  check('Triceratops opens on the two skulls, captioned', d.querySelectorAll('.seg:not(.off) .pair-img').length === 2 &&
+    [...d.querySelectorAll('.seg:not(.off) .pair-cap')].map((c) => c.textContent).join('|') === 'Triceratops|Torosaurus');
+  check('no growth arrow yet', !here('.pair-arrow').classList.contains('on'));
+  key('ArrowRight'); await wait(10);
+  check('growth arrow on "one animal, growing?"', here('.pair-arrow').classList.contains('on'));
+  const toro = [...d.querySelectorAll('.seg:not(.off) .pair-img')].map((i) => parseFloat(i.style.height));
+  check('skulls at one scale (Torosaurus 232/210 the height of Triceratops)', Math.abs(toro[1] / toro[0] - 232 / 210) < 0.01, toro.join(' vs '));
+  key('ArrowRight'); await wait(10);
   check('at the Triceratops room list', on() === 'item-roomlist', pos() + ' ' + on());
   digit(2); digit(5); await wait(5);
   let chips = [...d.querySelectorAll('.seg:not(.off) .item:not(.off) .rl-chip')].map((e) => e.textContent);
@@ -137,28 +141,19 @@ w.addEventListener('load', async () => {
   chips = [...d.querySelectorAll('.seg:not(.off) .item:not(.off) .rl-chip')].map((e) => e.textContent);
   check('typed item kept, shift-2 took Sex back', chips.join('|') === 'Squashed in the rock|Disease', chips.join('|'));
   key('ArrowRight'); await wait(10);
-  check('Triceratops balance with word labels', [...bal().querySelectorAll('.hyp-what b')].map((b) => b.textContent).join('|') === 'Two species|One, growing');
-
-  /* K–Pg: the cap, and extras */
-  key(']'); for (let i = 0; i < 13; i++) key('ArrowRight');
-  await wait(10);
-  h = bal();
-  check('K–Pg: icons for impact and volcanoes', h.querySelectorAll('.hyp-icon').length === 2);
-  check('all eleven cards dealt by build 13 with extras on', shown(h).length === 11, pos() + ' ' + shown(h).length);
-  for (const id of ['ir', 'qz', 'sph', 'crater', 'line', 'age']) place(h, id, ...LEFT);
-  await wait(5);
-  check('six on one pan: tilt stops at 20°', /rotate\(-20deg\)/.test(tiltOf(h)), tiltOf(h));
-  key('x'); await wait(5);
-  check('extras off: extra cards leave the pan and the extra builds', /rotate\(-16deg\)/.test(tiltOf(h)) && pos() === '#6.8', tiltOf(h) + ' ' + pos());
-  key('x');
+  check('Triceratops pans labelled with the skull pair: ≠ and →', [...bal().querySelectorAll('.hyp-pair b')].map((b) => b.textContent).join('|') === '≠|→' &&
+    bal().querySelectorAll('.hyp-pair img').length === 4);
+  check('the subadult card has its new wording', w.Deck.content.segments[4].items.some((it) => it.cards && it.cards.some((c) => c.text === 'Subadult Torosaurus specimens')));
 
   /* Signor–Lipps: the ambiguous card, the dig, then back to the balance */
   key(']'); await wait(10);
   h = bal();
+  check('Signor–Lipps comes before K–Pg and opens on its question', w.Deck.content.segments[w.Deck.where().s].id === 'signor' &&
+    d.querySelector('.prompt-text').textContent === 'Were dinosaurs in decline before their extinction?', pos());
   check('Signor–Lipps: the two hypotheses as sorted sketches', h.querySelectorAll('.hyp .sketch').length === 2);
   key('ArrowRight'); key('ArrowRight'); await wait(10);
   place(h, 'short', ...RIGHT); await wait(5);
-  check('"fall short" placed on a slow fade', w.Deck.peek('bal-signor').zone.short === 'right');
+  check('"fall short" placed on "already in decline"', w.Deck.peek('bal-signor').zone.short === 'right');
   key('ArrowRight'); await wait(4500);
   const sg = here('.sg').parentNode;
   const dotsOn = sg.querySelectorAll('.sg-dot.on').length;
@@ -183,6 +178,21 @@ w.addEventListener('load', async () => {
   check('gates in funnel order, not the order said', heads.join('|') === 'Not buried|Destroyed since|Not recognized', heads.join('|'));
   check('counts fall through the gates', counts.length === 4 && counts[0] === '1,000' && counts.every((c, i) => i === 0 || +c.replace(',', '') <= +counts[i - 1].replace(',', '')), counts.join(' → '));
   check('never-there lane', !!d.querySelector('.seg:not(.off) .fn-never'));
+
+  /* K–Pg: the cap, and extras */
+  key(']'); await wait(10);
+  check('K–Pg opens on the boundary photo', !!here('img.photo') && /kpg-boundary\.jpg$/.test(here('img.photo').getAttribute('src')), on());
+  for (let i = 0; i < 13; i++) key('ArrowRight');
+  await wait(10);
+  h = bal();
+  check('K–Pg: icons for impact and volcanoes', h.querySelectorAll('.hyp-icon').length === 2);
+  check('all eleven cards dealt by build 13 with extras on', shown(h).length === 11, pos() + ' ' + shown(h).length);
+  for (const id of ['ir', 'qz', 'sph', 'crater', 'line', 'age']) place(h, id, ...LEFT);
+  await wait(5);
+  check('six on one pan: tilt stops at 20°', /rotate\(-20deg\)/.test(tiltOf(h)), tiltOf(h));
+  key('x'); await wait(5);
+  check('extras off: extra cards leave the pan and the extra builds', /rotate\(-16deg\)/.test(tiltOf(h)) && pos() === '#6.8', tiltOf(h) + ' ' + pos());
+  key('x');
 
   /* feathers: specimens one per build, around the room list */
   key(']'); for (let i = 0; i < 5; i++) key('ArrowRight');

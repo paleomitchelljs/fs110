@@ -2,19 +2,19 @@
 
 A 75-minute FS110 session as a clickable deck. One question runs the whole class: how do you know? The page carries almost no words, because the talking happens in the room. `SPEC.md` has the full plan; this file covers running it.
 
-Every case runs the same way, on a balance. Two hypotheses sit above two pans. The room predicts (votes). The evidence arrives one card per press, and each card goes where the room argues it belongs: on a pan if only that hypothesis expects it, on the pivot if both do (it tips nothing), on the floor if it says little. Then you talk about where it tipped. The cases, in order: Elasmosaurus (head or tail?), Triceratops or Torosaurus, impact or volcanoes, and Signor–Lipps (all at once, or a slow fade?), then feathers.
+Every case runs the same way, on a balance. Two hypotheses sit above two pans. The room predicts (votes). The evidence arrives one card per press, and each card goes where the room argues it belongs: on a pan if only that hypothesis expects it, on the pivot if both do (it tips nothing), on the floor if it says little. Then you talk about where it tipped. The cases, in order: Elasmosaurus (head or tail?), Triceratops or Torosaurus, Signor–Lipps (were dinosaurs in decline before their extinction?), impact or volcanoes, then feathers.
 
 ## Running it
 
 Open `index.html` in a browser. No build step, no install, no server, and it works offline (fonts fall back to system ones). If Pages is already serving the sauropod tool from the repo root, this folder shows up at `https://paleomitchelljs.github.io/fs110/bones/` once it's pushed to `main`, with no settings change.
 
-Everything you do on the page (votes, where each card went, room lists, the dig) is saved in the browser. **Between sections, start over**: the circular arrow, clicked twice. That clears every vote and sort and goes back to the title.
+Everything you do on the page (votes, where each card went, room lists, the dig) survives a reload, but a new tab starts clean, so the next section gets an empty board. To clear it without a new tab: the circular arrow, clicked twice. Only the whiteboard/chalkboard choice is remembered between visits.
 
 ## In class
 
 Space, →, or a clicker's page-down moves one build. The control bar sits top right and fades out when the mouse is still. `?` shows every key.
 
-- **P** shows answers: card backs, Cope's skull sliding to the neck, the true ranges in the dig. A build that needs them shows a pulsing eye on the prompt line; click it or press P.
+- **P** shows answers: card backs and the true ranges in the dig. A build that needs them shows a pulsing eye on the prompt line; click it or press P.
 - **X** turns on extra builds and extra cards (the headless-skeleton opener, "Lizards have long tails", the "why else?" list for Triceratops, the five extra K–Pg cards, the transfer version of the exit ticket).
 - On a predict build, press 1 or 2 once per hand (or click a hypothesis). Shift takes one back. Votes freeze once you move on and stay up as dots.
 - Drag a card, or click it and then click where it goes (a clicker can't drag). The card just dealt sits bigger in the tray until it's placed.
@@ -23,23 +23,22 @@ Space, →, or a clicker's page-down moves one build. The control bar sits top r
 - On the hook, Cope's skull can be dragged to either end of his 1869 skeleton; it snaps there and faces out.
 - **B** blanks the screen; any key brings it back. **C** shows a clock against the outline's timeline.
 
-`#7` in the address opens segment 7 (count from 0: title, hook, framework, Elasmosaurus, valid/sound, Triceratops, K–Pg, Signor–Lipps, feathers, debrief, exit). `#7.3` opens its fourth build. `#all` opens with answers and extras on.
+`#5` in the address opens segment 5 (count from 0: title, hook, framework, Elasmosaurus, Triceratops, Signor–Lipps, K–Pg, feathers, debrief, exit). `#5.3` opens its fourth build. `#all` opens with answers and extras on.
 
 ## What's built
 
 | Segment | State |
 |---|---|
 | Title, hook, framework | done: Cope's 1869 and 1870 reconstructions, the draggable skull, HOW DO YOU KNOW?, the five questions |
-| Elasmosaurus | done: the balance with the two reconstructions over the pans, seven cards, the skull sliding to the neck, the strike-through |
-| Valid vs. sound | the trackway with no tail mark works; tiles and lamps are a placeholder |
-| Triceratops | balance and room list work; the two skulls and the growth morph are placeholders, and the pans are words until they exist |
-| K–Pg | balance with asteroid and volcano works; boundary photo, timeline and timing chart are placeholders |
+| Elasmosaurus | done: the balance with the two reconstructions over the pans, seven cards, then straight on to Triceratops |
+| Triceratops | done: the two skulls at one scale, the growth arrow, the skull pair over each pan (≠ and →), room list, balance |
+| K–Pg | done: your boundary photo, then the balance with asteroid and volcano. The timing chart isn't built (it needs the pulse dates from Schoene et al. and Sprain et al. 2019) |
 | Signor–Lipps | done: balance with the two sketches, dig, sort, true ranges, draggable p, back to the balance, funnel |
 | Feathers | balance and room list work; the photo is a placeholder and the cards have no pictures yet |
 | Debrief | prompts only; the concept map is a placeholder |
 | Exit ticket | text works; the QR code is a placeholder |
 
-Placeholders are dashed boxes naming what goes there. All the wording, cards and list items live in `js/content.js`. **Every card back is a draft**; check each against the papers before class (SPEC.md lists them). The Elasmosaurus anatomy cards especially: they're drafted from general plesiosaur anatomy, not from the type specimen, and which feature Leidy actually used is still to check.
+Placeholders are dashed boxes naming what goes there. All the wording, cards and list items live in `js/content.js`. **Every card back is a draft**; check each against the papers before class (SPEC.md lists them). The Elasmosaurus anatomy cards especially: they're drafted from general plesiosaur anatomy, not from the type specimen.
 
 ## Signor–Lipps, the dig
 
@@ -93,6 +92,8 @@ A thousand animals lived. Each reason the room gives for not finding one becomes
 ## Images
 
 Both Elasmosaurus figures are Cope's own, public domain, from Wikimedia Commons: the 1869 reconstruction with the head on the tail ([File:Elasmosaurus_Cope.jpg](https://commons.wikimedia.org/wiki/File:Elasmosaurus_Cope.jpg), from Cope 1869, *Trans Am Philos Soc*, via the Biodiversity Heritage Library) and his corrected 1870 version ([File:Elasmosaurus_corrected.jpg](https://commons.wikimedia.org/wiki/File:Elasmosaurus_corrected.jpg)). `img/make_elasmo.py` cuts each figure out of its plate, masks the neighbouring figures, drops the paper so the lines sit on either theme, thickens the lines a little for projection, and cuts the 1869 skull out as its own piece.
+
+The Triceratops and Torosaurus skulls come from a two-panel figure (A and B, one scale bar each, the same length). `img/make_tritoro.py` cuts them apart, removes the panel letters and scale bars, and makes the white background transparent, including the white showing through the frill openings and orbits. They keep the figure's shared scale everywhere they appear. Source and licence: to record here before the site goes public.
 
 ## Sources
 

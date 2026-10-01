@@ -1,6 +1,6 @@
 # Reasoning from Bones: build spec
 
-A 75-minute FS110 session as a clickable deck, built to run on the projector and still work on a phone afterward. The rules are the sauropod tool's rules: static files, no build step, opens offline, almost no words on screen. The difference is sequence. This one moves through ten segments after the title, so it needs a deck engine, but inside each segment the diagram is still the thing you grab.
+A 75-minute FS110 session as a clickable deck, built to run on the projector and still work on a phone afterward. The rules are the sauropod tool's rules: static files, no build step, opens offline, almost no words on screen. The difference is sequence. This one moves through nine segments after the title, so it needs a deck engine, but inside each segment the diagram is still the thing you grab.
 
 The source is the revised instructor outline (October 2026). Times, prompts and cases come from it. Where the deck departs from it, the reason is written next to the change.
 
@@ -8,7 +8,7 @@ The source is the revised instructor outline (October 2026). Times, prompts and 
 
 1. The instructor drives and the room talks. It's built for the projector first, but every control also works by touch, so the same URL works on a phone after class. It is not built for 30 laptops clicking at once, because there's no backend on GitHub Pages and per-student sorting eats the clock.
 
-2. The word budget is one prompt line per build, 10 words at most, in the hand font. Card fronts get a picture and at most 5 words, card backs get two short prediction lines, and nothing anywhere is a paragraph. Terms (valid, confounding, Signor–Lipps) appear as a small tag *after* the case, never before. That's "work the case first, name the concept second" made literal.
+2. The word budget is one prompt line per build, 10 words at most, in the hand font. Card fronts get a picture and at most 5 words, card backs get two short prediction lines, and nothing anywhere is a paragraph. Terms (confounding, Signor–Lipps, best explanation) appear as a small tag *after* the case, never before. That's "work the case first, name the concept second" made literal.
 
 3. Cards are evidence, not explanation: each card states one observation, and you put it on the balance. Nothing on a card explains anything, because the instructor does that out loud. Anything that only repeats what the instructor will say (the hook's old row of clue cards, for one) stays off the screen.
 
@@ -18,7 +18,7 @@ The source is the revised instructor outline (October 2026). Times, prompts and 
 
 6. Every case runs the same way, on a balance. Two hypotheses, one per pan, each shown above its pan as a picture where there is one (Cope's 1869 and 1870 reconstructions, two sketched range charts, an asteroid and a volcano). The room predicts by voting, and the votes stay up as dots under each hypothesis. Then the evidence is dealt one card per press, and each card goes where the room argues it belongs: on a pan if one hypothesis expects it and the other doesn't, on the pivot if both expect it (it tips nothing), on the floor if it says little either way. Then you talk about where it tipped and why. That's the outline's A/B/C sort laid out in space, with the tilt as live feedback, and it's the same object five times, so students learn the object once and spend the rest of the class on the evidence.
 
-7. At least one card per case is ambiguous on purpose. The clearest is Signor–Lipps: "Last fossils fall short of the line" looks like evidence for a slow fade until the simulation shows a sudden extinction produces it too, and the card moves to the pivot. Triceratops/Torosaurus is ambiguous as a whole: the cards split and the scale doesn't settle it, which is the honest state of the question.
+7. At least one card per case is ambiguous on purpose. The clearest is Signor–Lipps: "Last fossils fall short of the line" looks like evidence for a decline until the simulation shows a sudden extinction produces it too, and the card moves to the pivot. Triceratops/Torosaurus is ambiguous as a whole: the cards split and the scale doesn't settle it, which is the honest state of the question.
 
 8. Lists fill from the room. Each list has its items preloaded and hidden, and when a student says one, you tap it (or press its number) and it drops in. Things the room says that aren't preloaded go in with N, type, Enter. The list ends up in the order *this* class produced it.
 
@@ -37,7 +37,7 @@ fs110/
     js/content.js        every word on screen, every card, every list item
     js/deck.js           segments, builds, keys, rails, eye, clock, saved state
     js/parts/*.js        card, basic, balance, roomlist
-    js/cases/*.js        elasmo, trackway, signor, funnel (to come: growth morph, premise tiles, concept map)
+    js/cases/*.js        elasmo, signor, funnel (to come: concept map)
     js/sim.js            Signor–Lipps sampler, no DOM
     img/                 photos + credits.json
     tests/sim.test.js    node bones/tests/sim.test.js
@@ -86,7 +86,7 @@ Same stack as the sauropod tool: plain HTML, CSS and JS, Source Sans 3 and Kalam
 
 Presentation clickers send PageDown and PageUp, and they can't drag, so every drag has a click path too: click the card, then click where it goes. On a phone, swipe for builds, tap-tap for drags.
 
-`#4` opens segment 4. `#all` opens with answers shown and extras on (same as the sauropod tool). Sorts, tallies and room items are saved per segment in localStorage, inside try/catch, and the page behaves the same if storage is blocked. Reset clears them. `prefers-reduced-motion` skips every animation to its end state.
+`#4` opens segment 4. `#all` opens with answers shown and extras on (same as the sauropod tool). Votes, card placements, room lists and position are kept in sessionStorage: a reload in the middle of class keeps them, and a new tab (the next section, the next day) starts clean. Only the theme is remembered across visits. Everything sits inside try/catch, and the page behaves the same if storage is blocked. Reset clears it all. `prefers-reduced-motion` skips every animation to its end state.
 
 ## Parts used more than once
 
@@ -135,11 +135,9 @@ Pans: the 1869 picture (*Head on the short end*) and the 1870 picture (*Head on 
 | 0 | Head on the short end, or the long end? | The balance, empty. | Claim |
 | 1 | Predict: which way will it tip? | Votes. | Sure? |
 | 2–6 | | One card per press: One very long run of vertebrae · Chevrons under the short end · Joint facets face the long end · Neck-style ribs along the long run · Atlas and axis at the long end. | Evidence |
-| 7 | Does a famous name change the evidence? | Card: A famous expert drew it. (Its place is the floor; the room should get there.) | Evidence |
+| 7 | | Card: A famous expert drew it. (Its place is the floor; the room should get there.) | Evidence |
 | X | | Card: Lizards have long tails. | Evidence |
-| 9 | Which cards did the tipping? | | Test |
-| 10 ◉ | | Both reconstructions again. Cope's skull slides from the short end to the long end and turns to face out. Tag: J. Leidy, 1870. | |
-| 11 | ~~Who said it?~~ What would let us check it? | The strike-through animates. | |
+| 9 | Which cards did the tipping? | The next press goes straight to Triceratops. | Test |
 
 | Card | If head on the short end | If head on the long end |
 |---|---|---|
@@ -151,32 +149,16 @@ Pans: the 1869 picture (*Head on the short end*) and the 1870 picture (*Head on 
 | A famous expert drew it | says nothing about the bones | says nothing about the bones (floor) |
 | Lizards have long tails (X) | makes it seem likely | says nothing about this animal |
 
-The anatomy on these cards is a draft for the instructor to fix: which features Elasmosaurus actually preserves, and which one Leidy used.
+The anatomy on these cards is a draft for the instructor to fix: which features Elasmosaurus actually preserves.
 
-### Valid vs. sound (16–20)
+### Triceratops or Torosaurus? (15–26)
 
-Stage: three tiles (P1, P2, C) and two lamps, *Follows* and *True*. Click a premise to mark it true or false. *True* lights only when both premises are true. *Follows* never changes, whatever you click.
-
-| # | Prompt | Stage |
-|---|---|---|
-| 0 | If these were true, would this have to be? | All dinosaurs are green. / T. rex is a dinosaur. / So T. rex is green. *Follows* lit. |
-| 1 | Are they true? | Room votes; instructor clicks the premises. |
-| 2 | | The lamps get their names: *valid*, and a bracket around both: *sound*. |
-| 3 | Same two questions. | Tiles swap: All reptiles sprawl, move slowly and drag their tails. / Dinosaurs are reptiles. / So dinosaurs sprawl, move slowly and drag their tails. |
-| 4 | Where's the tail mark? | A trackway: prints step in one at a time, then a dashed line shows where a dragging tail would have scraped, and fades. (Built.) |
-| 5 | Wrong conclusion? Check the premises. | |
-| X | | P1's "All" becomes "Some". *Follows* goes dark. Validity is about shape, not truth. |
-
-P2 is true however first-years define reptile (birds included or not), so the whole failure sits in P1. Students have to find *which* premise broke, which is the better exercise. This segment isn't in the standard format; it's the one place the deck checks reasoning rather than weighing evidence.
-
-### Triceratops or Torosaurus? (20–30)
-
-Pans: *Two species* and *One, growing* (words until the skull drawings exist).
+Pictures: one Triceratops and one Torosaurus skull, cut from a two-panel figure at a single shared scale (`img/make_tritoro.py`). Pans: the same pair, small, with ≠ between them (*Two species*) or → (*One, growing*).
 
 | # | Prompt | Stage | Rail |
 |---|---|---|---|
-| 0 | Two species? | Two skulls side by side. | Claim |
-| 1 | Or one animal, growing? | Growth morph (below). | Else? |
+| 0 | Two species? | The two skulls side by side at the same scale, captioned *Triceratops* and *Torosaurus*. | Claim |
+| 1 | Or one animal, growing? | A curved arrow draws itself from the Triceratops skull to the Torosaurus skull. | Else? |
 | X | Different skulls. Why else? | Room list: Age · Sex · Just variation · Where it lived · Squashed in the rock · Evolution. | Else? |
 | 3 | Predict: which way will it tip? | Votes. | Sure? |
 | 4–9 | | One card per press (below). | Evidence |
@@ -187,55 +169,22 @@ Pans: *Two species* and *One, growing* (words until the skull drawings exist).
 |---|---|---|
 | No baby Torosaurus found | possible: a rare animal, rarer young | expected: Torosaurus is the adult |
 | Torosaurus frills look old | possible: adults look adult | expected: the oldest stage |
-| Some Torosaurus not fully grown | expected | not expected: it's the oldest stage |
+| Subadult Torosaurus specimens | expected | not expected: it's the oldest stage |
 | Torosaurus is much rarer | fine: a rare species | fine: few live that long (pivot) |
 | Few in-between skulls | expected | not expected: growth passes through them |
-| Torosaurus where Triceratops isn't | possible: different ranges | not expected: same animal, same places |
+| Torosaurus without Triceratops | possible: different ranges | not expected: same animal, same places |
 
 Drafts: check each against what Scannella & Horner (2010) and Longrich & Field (2012) argued, and whether southern *Torosaurus* material still counts. "No baby Torosaurus found" is an absence card on purpose; Signor–Lipps comes back to it. No build says which story won.
 
-#### Growth morph
+### Were dinosaurs in decline before their extinction? Signor–Lipps (26–39)
 
-One schematic skull, side view. Drag the frill edge outward to age it: juvenile Triceratops → adult Triceratops → Torosaurus. Six shape parameters ride on that one age value: frill length, frill thickness, frill holes, horn angle (back-curved to forward), frill-edge spikes (pointed to flat), overall size. A toggle rearranges the same five skulls into one row or two. Nothing else changes. It's a cartoon of growth, not a reconstruction of any specimen; the readme says so.
-
-### What ended the dinosaurs? (30–40)
-
-Pans: an asteroid icon (*Impact*) and a volcano icon (*Volcanoes*).
+Pans: two sketched range charts, drawn the same way (eight bars, sorted, the line at 0). *All at once*: every bar reaches the line. *Already in decline*: a staircase. (The outline's third prediction, "no predictable pattern", is gone: sorted, random last finds make a staircase, which is the point of the case, so it was never a separate answer.)
 
 | # | Prompt | Stage | Rail |
 |---|---|---|---|
-| 0 | Something big happened 66 million years ago. | Photo of the boundary clay. | Claim |
-| 1 | An impact, or volcanoes? | The balance, empty. | Else? |
-| 2 | Predict: which way will it tip? | Votes. | Sure? |
-| 3–8 | | One card per press: Iridium spike · Shocked quartz · Glass spherules · A 180 km crater · Huge lava flows, India · Climate changed. | Evidence |
-| X | | Five more: Extinction right at the line · Mercury spike · Warming before the line · Tsunami beds, Gulf coast · Crater age = boundary age. | Evidence |
-| 14 | Hard to explain without an impact? Without volcanoes? | | Test |
-| 15 | What changed minds? | Timeline fills one press at a time: 1980 iridium · 1984 shocked quartz · 1990 glass spherules, Haiti · 1991 the crater · 2010 big review · 2013 crater and boundary dated · 2019 Deccan timing, two answers. | |
-| 16 | Both happened. How much did each matter? | Timing chart (below). | |
-| 17 | The best explanation predicts what the others can't. | The balance again. Tag: inference to the best explanation. | |
-
-| Card | If impact | If volcanoes |
-|---|---|---|
-| Iridium spike | expected: asteroids are iridium-rich | a little, maybe |
-| Shocked quartz | expected | no: eruptions don't reach the pressure |
-| Glass spherules | expected: melted ejecta | volcanic glass exists, wrong chemistry |
-| A 180 km crater | expected | no |
-| Huge lava flows, India | not predicted | expected |
-| Climate changed | expected | expected (pivot) |
-
-#### Timing chart
-
-The x-axis runs roughly 66.4 to 65.6 million years. A vertical line for the impact and boundary. Deccan eruption pulses as bars, with a toggle between the Schoene et al. (2019) and Sprain et al. (2019) versions. Draw the bars from those papers' figures. Timing is the evidence that ought to separate the two causes, and at this resolution it's contested, which is a better ending than "impact won."
-
-### The dwindling dinosaurs: Signor–Lipps (40–52)
-
-Pans: two sketched range charts, drawn the same way (eight bars, sorted, the line at 0). *All at once*: every bar reaches the line. *A slow fade*: a staircase. (The outline's third prediction, "no predictable pattern", is gone: sorted, random last finds make a staircase, which is the point of the case, so it was never a separate answer.)
-
-| # | Prompt | Stage | Rail |
-|---|---|---|---|
-| 0 | All at once, or a slow fade? | The balance, empty. | Claim |
+| 0 | Were dinosaurs in decline before their extinction? | The balance, empty. | Claim |
 | 1 | Predict: which way will it tip? | Votes. | Sure? |
-| 2 | | Card: Last fossils fall short of the line. Most rooms put it on *A slow fade*. | Evidence |
+| 2 | | Card: Last fossils fall short of the line. Most rooms put it on *Already in decline*. | Evidence |
 | 3 | Suppose all 20 die at the line. | Stratigraphic column: 20 taxa, levels −50 to 0, red dashed line at 0. One press digs upward in about 4 s; finds pop in as dots. Each taxon's last find gets a tick. | Test |
 | 4 | Does that look sudden? | Columns re-sort by last find, and the staircase appears. Side panel: number of taxa seen at or above each level. It dwindles toward the line. | Test |
 | 5 ◉ | | True ranges draw in, faint, and every one reaches 0. | Test |
@@ -246,7 +195,7 @@ Pans: two sketched range charts, drawn the same way (eight bars, sorted, the lin
 | 11 | No keys in the kitchen. What did you learn? | | |
 | 12 | Absence is weak evidence when detection is poor. | The balance again. Tag: Signor–Lipps effect. | |
 
-| Card | If all at once | If a slow fade |
+| Card | If all at once | If already in decline |
 |---|---|---|
 | Last fossils fall short of the line | expected: finds thin out before the end | expected (pivot, once the sim has run) |
 | Dig harder: ranges reach the line | expected | not expected: they were already gone |
@@ -269,7 +218,34 @@ What the sim should show (computed, 51 levels):
 
 Any one dig will wander around these. The default seed is picked so the first dig in class looks typical (median gap 8), not like a fluke. JS can't reproduce R's `set.seed(202)` draws, so the R code stays in the readme as the appendix and the deck uses its own seeded generator (mulberry32).
 
-### Feathered dinosaurs (52–60)
+### What ended the dinosaurs? (39–50)
+
+Pans: an asteroid icon (*Impact*) and a volcano icon (*Volcanoes*).
+
+| # | Prompt | Stage | Rail |
+|---|---|---|---|
+| 0 | Something big happened 66 million years ago. | The instructor's photo of the boundary in outcrop, a finger on the pale layer. | Claim |
+| 1 | An impact, or volcanoes? | The balance, empty. | Else? |
+| 2 | Predict: which way will it tip? | Votes. | Sure? |
+| 3–8 | | One card per press: Iridium spike · Shocked quartz · Glass spherules · A 180 km crater · Huge lava flows, India · Climate changed. | Evidence |
+| X | | Five more: Extinction right at the line · Mercury spike · Warming before the line · Tsunami beds, Gulf coast · Crater age = boundary age. | Evidence |
+| 14 | Hard to explain without an impact? Without volcanoes? | | Test |
+| 15 | The best explanation predicts what the others can't. | Tag: inference to the best explanation. | |
+
+| Card | If impact | If volcanoes |
+|---|---|---|
+| Iridium spike | expected: asteroids are iridium-rich | a little, maybe |
+| Shocked quartz | expected | no: eruptions don't reach the pressure |
+| Glass spherules | expected: melted ejecta | volcanic glass exists, wrong chemistry |
+| A 180 km crater | expected | no |
+| Huge lava flows, India | not predicted | expected |
+| Climate changed | expected | expected (pivot) |
+
+#### Not built: a timing chart
+
+Deccan eruption pulses against the impact, roughly 66.4 to 65.6 million years, with a toggle between the Schoene et al. (2019) and Sprain et al. (2019) versions. Timing is the evidence that ought to separate the two causes, and at this resolution it's contested. It needs the pulse dates read off those papers' figures before it can be drawn; until then the case ends on the balance.
+
+### Feathered dinosaurs (50–60)
 
 Pans: *Feathers* and *Collagen*.
 
@@ -290,7 +266,7 @@ The pigment card has its own skeptics (some "melanosomes" elsewhere turned out t
 |---|---|---|
 | 0 | | The concept map frame: HOW DO YOU KNOW? → claim · evidence · alternatives → discriminating test → update confidence. |
 | 1–4 | Which case caught a mistake? · Which pattern came from how we looked? · Which needed competing explanations? · Where could reasonable people disagree? | Each case's thumbnail docks at the node it worked; click thumbnails to light them, more than one can light. |
-| 5 | | Terms appear around the edges: valid · sound · sampling bias · confounding · best explanation. |
+| 5 | | Terms appear around the edges: sampling bias · confounding · best explanation. |
 | 6 | Not "believe scientists." Check, compare, test, update. | The board students photograph. |
 
 Falsifiable is on the outline's vocabulary list, but no core case teaches it (it lives in the healed-bite extra). It only goes on the map if that extra ran.
@@ -318,8 +294,8 @@ X swaps in the transfer version: *A claim from outside science. Same questions.*
 | Asset | Where it's used | Source | Status |
 |---|---|---|---|
 | Cope's 1869 and corrected 1870 Elasmosaurus | Hook, Elasmosaurus pans | Cope's plates, public domain, via Wikimedia Commons; cut by `img/make_elasmo.py` | done |
-| Triceratops / Torosaurus skulls | Case 1 | draw (morphable) | draw |
-| Trackway | Valid/sound | drawn in SVG | done |
+| Triceratops and Torosaurus skulls | Triceratops case, its pans | two-panel figure supplied by the instructor, cut by `img/make_tritoro.py` | done; source and licence to record |
+| Boundary photo | K–Pg | the instructor's own | done |
 | Boundary clay photo | Case 3 | Wikimedia (Trinidad Lake, Colorado) or own | find |
 | Sinosauropteryx, Caudipteryx, Microraptor, Yutyrannus | Case 4 | Wikimedia; check each license | find |
 | Edmontosaurus vertebra with tooth | Extra | DePalma et al. 2013 figure; check license | find |
@@ -330,24 +306,23 @@ Credits go in the readme, not on the slides. If an image ever needs attribution 
 
 These fill the outline's TODOs and the card backs, from memory. None has been checked against the paper yet.
 
-- Davidson JP (2002) Bonehead mistakes: the background in scientific literature and illustrations for Edward Drinker Cope's first presentation of *Elasmosaurus platyurus*. *Proc Acad Nat Sci Philadelphia* 152: 215–240. The Leidy 1870 tag comes from the same story. The Elasmosaurus card backs (chevrons, facets, ribs, atlas–axis) are the least certain item on this list.
+- Davidson JP (2002) Bonehead mistakes: the background in scientific literature and illustrations for Edward Drinker Cope's first presentation of *Elasmosaurus platyurus*. *Proc Acad Nat Sci Philadelphia* 152: 215–240. The Elasmosaurus card backs (chevrons, facets, ribs, atlas–axis) are the least certain item on this list.
 - Longrich NR, Field DJ (2012) *Torosaurus* is not *Triceratops*: ontogeny in chasmosaurine ceratopsids as a case study in dinosaur taxonomy. *PLoS ONE* 7: e32623.
 - Marshall CR, Ward PD (1996) Sudden and gradual molluscan extinctions in the latest Cretaceous of western European Tethys. *Science* 274: 1360–1363.
 - Scannella JB, Horner JR (2010) *Torosaurus* Marsh 1891, is *Triceratops* Marsh 1889 (Ceratopsidae: Chasmosaurinae): synonymy through ontogeny. *J Vertebr Paleontol* 30: 1157–1168.
-- Case 3 timeline: Alvarez et al. 1980; Bohor et al. 1984 (shocked quartz, *Science*); Hildebrand et al. 1991 (Chicxulub, *Geology*); Schulte et al. 2010; Renne et al. 2013 (*Science*, 66.043 Ma); Izett 1990 or Sigurdsson et al. 1991 for the Haiti spherules; Schoene et al. 2019 and Sprain et al. 2019 (same issue of *Science*, disagreeing on when Deccan's big pulses fell); Hull et al. 2020 (*Science*, most Deccan outgassing before the boundary).
+- K–Pg cards, and the timing chart if it gets built: Alvarez et al. 1980; Bohor et al. 1984 (shocked quartz, *Science*); Hildebrand et al. 1991 (Chicxulub, *Geology*); Schulte et al. 2010; Renne et al. 2013 (*Science*, 66.043 Ma); Izett 1990 or Sigurdsson et al. 1991 for the Haiti spherules; Schoene et al. 2019 and Sprain et al. 2019 (same issue of *Science*, disagreeing on when Deccan's big pulses fell); Hull et al. 2020 (*Science*, most Deccan outgassing before the boundary).
 - Case 4: Chen, Dong & Zhen 1998 (Sinosauropteryx, *Nature*; announced 1996); Lingham-Soliar et al. 2007 (collagen, *Proc R Soc B*); Ji et al. 1998 (Caudipteryx, *Nature*); Xu et al. 2003 (Microraptor, *Nature*); Zhang et al. 2010 (melanosomes, *Nature*); Xu et al. 2012 (Yutyrannus, *Nature*).
 - The mercury-spike card needs its own source before it's used.
-- Trackways: tail-drag traces are rare. If one ends up on a card, cite it.
 - Nanotyrannus and Zanno & Napoli: nothing here depends on them.
 
 ## Build order
 
-Built (October 2026): the deck engine and parts, every case's balance with its cards, Cope's two reconstructions with the moving skull, the trackway, and Signor–Lipps (sim and funnel). Everything else on screen is a dashed placeholder box naming the drawing that goes there.
+Built (October 2026): the deck engine and parts, every case's balance with its cards, Cope's two reconstructions with the draggable skull, the Triceratops and Torosaurus skulls, the boundary photo, and Signor–Lipps (sim and funnel). Everything else on screen is a dashed placeholder box naming the drawing that goes there.
 
 1. Frame and parts: deck engine, rails, eye, keys, saved state; flip card, balance, room list. Done.
 2. Signor–Lipps sim and funnel. Done.
-3. Every case on the balance, Elasmosaurus pictures and skull, trackway. Done.
-4. Drawings: Triceratops/Torosaurus skulls and the growth morph; the premise tiles and lamps; hypothesis pictures for Triceratops and feathers.
+3. Every case on the balance, Elasmosaurus pictures and skull, Triceratops skulls, boundary photo. Done.
+4. Drawings: the premise tiles and lamps; hypothesis pictures for feathers; photos for K–Pg and feathers.
 5. Feathers, concept map, exit ticket.
 6. Extras. Printable case cards (a print stylesheet built from `content.js`: one page per case, the five prompts with blanks, no answers). A presenter window (second window kept in sync over BroadcastChannel, with the outline's notes and the clock).
 

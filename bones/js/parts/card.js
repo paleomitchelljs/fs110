@@ -20,6 +20,26 @@
     return e;
   };
 
+  /* Shrink a card's words until they fit, for wording that's grown too long.
+   * Needs the card laid out, so it runs when the balance first shows (and
+   * again once the hand font has loaded). */
+  D.fitCard = function (e) {
+    const face = e.querySelector('.card-face'), b = face && face.querySelector('b');
+    if (!b) return;
+    const cs = getComputedStyle(e);
+    const roomH = e.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    const roomW = e.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    const over = () => face.offsetHeight > roomH + 1 || b.scrollWidth > roomW + 1;
+    const fit = () => {
+      b.style.fontSize = '';
+      if (!roomH) return;                         // not laid out (hidden): leave it
+      let size = parseFloat(getComputedStyle(b).fontSize) || 24;
+      while (over() && size > 17) { size -= 1; b.style.fontSize = size + 'px'; }
+    };
+    fit();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  };
+
   let open = null;
   function close() {
     if (!open) return;

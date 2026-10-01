@@ -1,8 +1,10 @@
 /* The deck: a fixed 1600 × 900 stage scaled to the window, segments made of
  * builds (one press each), and items that show for a range of builds. Parts
  * (js/parts, js/cases) register a factory under Deck.parts[kind]; content.js
- * says which items go where. Saved state lives in localStorage and the page
- * works the same without it.
+ * says which items go where. Votes, card placements, lists and position live
+ * in sessionStorage: they survive a reload mid-class, and a new tab starts
+ * clean. Only the theme is remembered across visits. The page works the same
+ * with no storage at all.
  *
  * A part factory gets (def, host, seg) and returns any of:
  *   show(build, how)   how: 'step' (forward one), 'back', 'jump', 'reveal' (answers just shown), 'flag'
@@ -14,7 +16,7 @@
  */
 (function (root) {
   'use strict';
-  const W = 1600, H = 900, STORE = 'bones-v1';
+  const W = 1600, H = 900, STORE = 'bones-v2', THEME = 'bones-theme';
   const $ = (s) => document.querySelector(s);
   const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -104,13 +106,20 @@
   const fresh = () => ({ pos: { s: 0, b: 0 }, answers: false, extras: false, theme: null, clock: false, started: null, parts: {} });
   let S = fresh();
   try {
-    const saved = JSON.parse(localStorage.getItem(STORE) || 'null');
+    localStorage.removeItem('bones-v1');          // older versions kept everything across visits
+    const saved = JSON.parse(sessionStorage.getItem(STORE) || 'null');
     if (saved && saved.pos) S = Object.assign(fresh(), saved);
+    S.theme = localStorage.getItem(THEME) || null;
   } catch (e) { /* no storage: start fresh */ }
   let saveTimer = 0;
   Deck.save = () => {
     clearTimeout(saveTimer);
-    saveTimer = setTimeout(() => { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) { /* ignore */ } }, 150);
+    saveTimer = setTimeout(() => {
+      try {
+        sessionStorage.setItem(STORE, JSON.stringify(S));
+        if (S.theme) localStorage.setItem(THEME, S.theme); else localStorage.removeItem(THEME);
+      } catch (e) { /* ignore */ }
+    }, 150);
   };
   /* A part's saved state, made on first use. Fetch it fresh each time: reset replaces it. */
   Deck.get = (id, make) => S.parts[id] || (S.parts[id] = make());

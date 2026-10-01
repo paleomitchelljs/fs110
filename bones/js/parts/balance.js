@@ -13,14 +13,19 @@
 
   const DEG = 4, MAX = 20;
   const G = {                      // geometry, in the item's own pixels (box 1520 × 690)
-    pivotY: 250, half: 360, chain: 70, panW: 460, pivotZone: 120,
-    ground: 500, floorY: 506, trayY: 594,
-    cw: 170, ch: 96, onPan: 0.8, onFloor: 0.8, fresh: 1.3
+    pivotY: 250, half: 360, chain: 70, panW: 500, pivotZone: 110,
+    ground: 494, floorY: 500, trayY: 584,
+    cw: 200, ch: 104, onPan: 0.8, onFloor: 0.8, fresh: 1.2
   };
   const tilt = (L, R) => D.clamp(DEG * (R - L), -MAX, MAX);
 
-  /* What sits above a pan: a picture, a sketch, an icon, or words. */
+  /* What sits above a pan: a picture, a pair of pictures, a sketch, an icon, or words. */
   function headHTML(p) {
+    if (p.pair) {
+      const k = 72 / Math.max(...p.pair.map((m) => m.h));            // one scale for both
+      const img = (m) => `<img src="${D.esc(m.src)}" alt="${D.esc(m.caption || '')}" style="width:${m.w * k}px;height:${m.h * k}px" draggable="false">`;
+      return `<span class="hyp-pair" aria-label="${D.esc(p.text)}">${img(p.pair[0])}<b>${D.esc(p.join)}</b>${img(p.pair[1])}</span>`;
+    }
     if (p.img) return `<img class="ink-img" src="${D.esc(p.img)}" alt="${D.esc(p.text)}" style="width:${p.w}px" draggable="false">`;
     if (p.sketch) return `<svg class="sketch" viewBox="0 0 300 200" width="150" height="100" role="img" aria-label="${D.esc(p.text)}">${D.sketches[p.sketch]()}</svg>`;
     if (p.icon) return `<svg class="hyp-icon" viewBox="0 0 24 24" width="84" height="84" role="img" aria-label="${D.esc(p.text)}">${D.hypIcons[p.icon]}</svg>`;
@@ -98,7 +103,7 @@
       const n = by.tray.length, step = n > 1 ? Math.min(G.cw * G.fresh + 16, (w - G.cw) / (n - 1)) : 0, x0 = (w - (n - 1) * step) / 2;
       by.tray.forEach((k, j) => {
         const fresh = k.c.at === b;
-        put(k, x0 + j * step, G.trayY + G.ch / 2 - (fresh ? 22 : 0), fresh ? G.fresh : 1);
+        put(k, x0 + j * step, G.trayY + G.ch / 2 - (fresh ? 18 : 0), fresh ? G.fresh : 1);
       });
       cards.filter((k) => !inPlay(k.c)).forEach((k) => {
         k.e.style.opacity = 0; k.e.style.pointerEvents = 'none'; k.e.classList.remove('fresh');
@@ -186,7 +191,10 @@
       show(nb) {
         const first = !host.classList.contains('live');
         b = nb; host.classList.add('live');
-        if (first) { host.classList.add('still'); layout(); void host.offsetWidth; host.classList.remove('still'); }
+        if (first) {
+          host.classList.add('still'); layout(); void host.offsetWidth; host.classList.remove('still');
+          cards.forEach((k) => D.fitCard(k.e));
+        }
         layout();
       },
       hide() { sel = null; host.classList.remove('live'); },
