@@ -6,7 +6,7 @@ Every case runs the same way, on a balance. Two hypotheses sit above two pans. T
 
 ## Running it
 
-Open `index.html` in a browser. No build step, no install, no server, and it works offline (fonts fall back to system ones). If Pages is already serving the sauropod tool from the repo root, this folder shows up at `https://paleomitchelljs.github.io/fs110/bones/` once it's pushed to `main`, with no settings change.
+Open `index.html` in a browser. No build step, no install, no server, and it works offline (fonts fall back to system ones). On GitHub Pages it's at `https://paleomitchelljs.github.io/fs110/bones/`, one tile on the FS110 landing page; the repo's top-level readme covers publishing.
 
 Everything you do on the page (votes, where each card went, room lists, the dig) survives a reload, but a new tab starts clean, so the next section gets an empty board. To clear it without a new tab: the circular arrow, clicked twice. Only the whiteboard/chalkboard choice is remembered between visits.
 

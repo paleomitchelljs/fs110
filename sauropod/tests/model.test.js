@@ -1,5 +1,5 @@
 /* Checks the model against numbers in the papers it is built from.
- * Run with:  node tests/model.test.js   (no dependencies) */
+ * Run with:  node sauropod/tests/model.test.js   (no dependencies) */
 'use strict';
 const M = require('../js/model.js');
 

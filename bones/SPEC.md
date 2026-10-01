@@ -28,7 +28,8 @@ The source is the revised instructor outline (October 2026). Times, prompts and 
 
 ```
 fs110/
-  index.html …           sauropod tool, unchanged
+  index.html             landing page: a tile for each tool
+  sauropod/ …            the neck-posture tool
   bones/
     index.html
     SPEC.md              this file
@@ -43,7 +44,7 @@ fs110/
     tests/sim.test.js    node bones/tests/sim.test.js
 ```
 
-It publishes at `https://paleomitchelljs.github.io/fs110/bones/`, and the sauropod URL doesn't move.
+It publishes at `https://paleomitchelljs.github.io/fs110/bones/`; the sauropod tool is at `/fs110/sauropod/`, and the site root is a landing page linking both.
 
 Same stack as the sauropod tool: plain HTML, CSS and JS, one typeface, Source Sans 3, with system fallbacks (the sauropod tool's handwritten Kalam read as too casual here), and the same whiteboard/chalkboard tokens (copied for now, pulled into a shared `css/tokens.css` if a third tool shows up). All wording lives in `content.js`, so redrafting text never touches layout code.
 
