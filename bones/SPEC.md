@@ -119,7 +119,7 @@ Times are a first guess; the clock (C) shows them against the time since you lef
 
 | Seg | # | Prompt | Stage |
 |---|---|---|---|
-| Title | 0 | | "Reasoning from Bones" and a bone. |
+| Title | 0 | | "Reasoning from Bones" under a line drawing of a bone (supplied by the instructor). |
 | Hook | 0 | Which end is the head? | Cope's 1869 skeleton with no head, the skull floating above it. You drag the skull on; it snaps to whichever end you drop it near, facing out. |
 | | 1 | | Cut to Cope's 1869 reconstruction (head on the short end) above his corrected 1870 one (head on the long end), with Cope's skull back where he put it. Both cut from Cope's plates, public domain. No prompt; the instructor asks. |
 | Framework | 0 | | HOW DO YOU KNOW?, full screen. |

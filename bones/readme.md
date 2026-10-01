@@ -95,7 +95,7 @@ Both Elasmosaurus figures are Cope's own, public domain, from Wikimedia Commons:
 
 The Triceratops and Torosaurus skulls come from a two-panel figure (A and B, one scale bar each, the same length). `img/make_tritoro.py` cuts them apart, removes the panel letters and scale bars, and makes the white background transparent, including the white showing through the frill openings and orbits. They keep the figure's shared scale everywhere they appear. Source and licence: to record here before the site goes public.
 
-The K–Pg boundary photo is the instructor's own. The decline figure is Condamine et al. 2021, *Nature Communications* ([doi:10.1038/s41467-021-23754-0](https://doi.org/10.1038/s41467-021-23754-0)), open access under CC BY 4.0, credited on the slide. The Sinosauropteryx photo: source and licence to record here before the site goes public.
+The bone on the title card and the K–Pg boundary photo are the instructor's own. The decline figure is Condamine et al. 2021, *Nature Communications* ([doi:10.1038/s41467-021-23754-0](https://doi.org/10.1038/s41467-021-23754-0)), open access under CC BY 4.0, credited on the slide. The Sinosauropteryx photo: source and licence to record here before the site goes public.
 
 ## Sources
 

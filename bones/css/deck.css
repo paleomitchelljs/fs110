@@ -105,7 +105,7 @@ body:not(.answers) .ans-only { display: none !important; }
 /* ---------- basic parts ---------- */
 .item-title { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px; }
 .title-text { font: 700 100px/1.05 var(--font-ui); letter-spacing: -0.01em; text-align: center; }
-.bone { width: 300px; fill: var(--hide-far); }
+.bone { display: block; height: 280px; width: auto; user-select: none; }
 .item-title.play .title-text { animation: rise 0.6s ease both; }
 
 .lines { margin: 0; padding: 0 0 0 1.3em; font: 600 44px/1.25 var(--font-ui); }

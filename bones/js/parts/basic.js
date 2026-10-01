@@ -4,8 +4,7 @@
   'use strict';
   const D = window.Deck;
 
-  const BONE = '<svg class="bone" viewBox="0 0 200 60" aria-hidden="true"><circle cx="20" cy="17" r="14"/><circle cx="20" cy="43" r="14"/>' +
-    '<circle cx="180" cy="17" r="14"/><circle cx="180" cy="43" r="14"/><rect x="20" y="20" width="160" height="20" rx="3"/></svg>';
+  const BONE = '<img class="bone ink-img" src="img/bone.png" alt="" draggable="false">';
   const PENCIL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1-5L16 4l4 4L9 19z"/><path d="M14 6l4 4"/></svg>';
 
   D.parts.title = function (def, host) {

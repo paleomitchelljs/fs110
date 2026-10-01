@@ -52,6 +52,7 @@ const check = (name, ok, detail) => { checks++; if (!ok) fails++; console.log(`$
 w.addEventListener('load', async () => {
   await wait(50);
   check('deck started', !!w.Deck && d.querySelector('.seg') !== null, pos());
+  check('title card shows the bone drawing', !!here('img.bone') && here('img.bone').getAttribute('src') === 'img/bone.png');
 
   /* forward through everything, logging what is on screen */
   const seen = [];
