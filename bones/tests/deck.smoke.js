@@ -71,10 +71,10 @@ w.addEventListener('load', async () => {
   key('p'); key('x');
   check('answers and extras on', d.body.classList.contains('answers') && d.body.classList.contains('extras'));
 
-  /* hook */
+  /* hook: opens on Cope's headless skeleton; you drag the skull on; then the two reconstructions */
   key(']'); await wait(5);
   const skull = () => here('.el-skull').style.transform;
-  check('hook opens on its extra build, skull loose', pos() === '#1' && /translate\(752\.5px, 24px\) scaleX\(1\)/.test(skull()), pos() + ' ' + skull());
+  check('hook opens headless, skull loose (not an extra build)', pos() === '#1' && !w.Deck.content.segments[1].builds[0].extra && /translate\(752\.5px, 24px\) scaleX\(1\)/.test(skull()), pos() + ' ' + skull());
   key('ArrowRight'); await wait(5);
   check('hook has no prompt lines, only the pictures', d.querySelector('.prompt-text').textContent === '');
   check('skull on the tail end, both figures up', /translate\(1350px, 117px\) scaleX\(1\)/.test(skull()) && d.querySelectorAll('.seg:not(.off) .el-fig').length === 2 && !d.querySelector('.seg:not(.off) .el-fig.off'), skull());
@@ -118,9 +118,25 @@ w.addEventListener('load', async () => {
   check('Elasmosaurus ends on the discussion, no famous-name line, no reveal', pos() === '#3.9' && d.querySelector('.prompt-text').textContent === 'Which cards did the tipping?' &&
     !w.Deck.content.segments[3].builds.some((x) => /famous name|Who said it/.test(x.prompt || '')), pos());
 
-  /* Triceratops comes straight after: the two skulls, the growth arrow, room list (extra build), then the balance */
+  /* feathers comes straight after Elasmosaurus: the photo, then specimens one per build */
   key('ArrowRight'); await wait(10);
-  check('next press goes straight to Triceratops', w.Deck.content.segments[w.Deck.where().s].id === 'tric', pos());
+  check('next press goes straight to feathers', w.Deck.content.segments[w.Deck.where().s].id === 'feathers', pos());
+  check('feathers opens on the Sinosauropteryx photo', !!here('img.photo') && /sinosauropteryx\.jpg$/.test(here('img.photo').getAttribute('src')), on());
+  for (let i = 0; i < 5; i++) key('ArrowRight');
+  await wait(20);
+  h = bal();
+  check('feathers: Sinosauropteryx, the lizard card, then Caudipteryx by build 5', shown(h).join() === 'sino,lizards,caud', pos() + ' ' + shown(h).join());
+
+  /* focus and flip */
+  h.querySelector('.card[data-id="caud"] .card-flip').click(); await wait(400);
+  const big = d.querySelector('.focus .big');
+  check('card opens big and turns over', big && big.classList.contains('flipped'));
+  key('Escape'); await wait(300);
+  check('escape closes it', !d.querySelector('.focus'));
+
+  /* Triceratops: the two skulls, the growth arrow, room list (extra build), then the balance */
+  key(']'); await wait(10);
+  check('Triceratops follows feathers', w.Deck.content.segments[w.Deck.where().s].id === 'tric', pos());
   check('Triceratops opens on the two skulls, captioned', d.querySelectorAll('.seg:not(.off) .pair-img').length === 2 &&
     [...d.querySelectorAll('.seg:not(.off) .pair-cap')].map((c) => c.textContent).join('|') === 'Triceratops|Torosaurus');
   check('no growth arrow yet', !here('.pair-arrow').classList.contains('on'));
@@ -144,44 +160,11 @@ w.addEventListener('load', async () => {
   key('ArrowRight'); await wait(10);
   check('Triceratops pans labelled with the skull pair: ≠ and →', [...bal().querySelectorAll('.hyp-pair b')].map((b) => b.textContent).join('|') === '≠|→' &&
     bal().querySelectorAll('.hyp-pair img').length === 4);
-  check('the subadult card has its new wording', w.Deck.content.segments[4].items.some((it) => it.cards && it.cards.some((c) => c.text === 'Subadult Torosaurus specimens')));
-
-  /* Signor–Lipps: the ambiguous card, the dig, then back to the balance */
-  key(']'); await wait(10);
-  h = bal();
-  check('Signor–Lipps comes before K–Pg and opens on its question', w.Deck.content.segments[w.Deck.where().s].id === 'signor' &&
-    d.querySelector('.prompt-text').textContent === 'Were dinosaurs in decline before their extinction?', pos());
-  check('Signor–Lipps: the two hypotheses as sorted sketches', h.querySelectorAll('.hyp .sketch').length === 2);
-  key('ArrowRight'); key('ArrowRight'); await wait(10);
-  place(h, 'short', ...RIGHT); await wait(5);
-  check('"fall short" placed on "already in decline"', w.Deck.peek('bal-signor').zone.short === 'right');
-  key('ArrowRight'); await wait(4500);
-  const sg = here('.sg').parentNode;
-  const dotsOn = sg.querySelectorAll('.sg-dot.on').length;
-  const wantDots = w.Sim.draws(w.Sim.SEED).reduce((n, row) => n + w.Sim.finds(row, 0.08).length, 0);
-  check('dig shows every find at p = 0.08', dotsOn === wantDots, `${dotsOn} of ${wantDots}`);
-  key('ArrowRight'); await wait(20);
-  check('sorted', sg.classList.contains('sorted'));
-  key('ArrowRight'); await wait(20);
-  check('true ranges (answers on)', sg.classList.contains('show-truth'));
-  key('ArrowRight'); key('ArrowUp'); key('ArrowUp'); await wait(20);
-  check('p up to 0.10, more finds', w.Deck.peek('signor').p === 0.1 && sg.querySelectorAll('.sg-dot.on').length > dotsOn);
-  key('ArrowRight'); await wait(20);
-  h = bal();
-  check('back on the balance, the card where we left it', w.Deck.peek('bal-signor').zone.short === 'right' && /rotate\(4deg\)/.test(tiltOf(h)), tiltOf(h));
-  place(h, 'short', ...PIVOT); await wait(5);
-  check('moved to the pivot: level', /rotate\(0deg\)/.test(tiltOf(h)), tiltOf(h));
-  key('ArrowRight'); key('ArrowRight'); key('ArrowRight'); await wait(20);
-  check('funnel', on().includes('item-funnel'), pos() + ' ' + on());
-  digit(3); digit(2); digit(6); digit(1); await wait(1500);
-  const counts = [...d.querySelectorAll('.seg:not(.off) .fn-count b')].map((e) => e.textContent);
-  const heads = [...d.querySelectorAll('.seg:not(.off) .fn-head')].sort((a, b) => parseFloat(a.style.left) - parseFloat(b.style.left)).map((e) => e.textContent);
-  check('gates in funnel order, not the order said', heads.join('|') === 'Not buried|Destroyed since|Not recognized', heads.join('|'));
-  check('counts fall through the gates', counts.length === 4 && counts[0] === '1,000' && counts.every((c, i) => i === 0 || +c.replace(',', '') <= +counts[i - 1].replace(',', '')), counts.join(' → '));
-  check('never-there lane', !!d.querySelector('.seg:not(.off) .fn-never'));
+  check('the subadult card has its new wording', w.Deck.content.segments.find((x) => x.id === 'tric').items.some((it) => it.cards && it.cards.some((c) => c.text === 'Subadult Torosaurus specimens')));
 
   /* K–Pg: the cap, and extras */
   key(']'); await wait(10);
+  check('K–Pg follows Triceratops', w.Deck.content.segments[w.Deck.where().s].id === 'kpg', pos());
   check('K–Pg opens on the boundary photo', !!here('img.photo') && /kpg-boundary\.jpg$/.test(here('img.photo').getAttribute('src')), on());
   for (let i = 0; i < 13; i++) key('ArrowRight');
   await wait(10);
@@ -195,20 +178,62 @@ w.addEventListener('load', async () => {
   check('extras off: extra cards leave the pan and the extra builds', /rotate\(-16deg\)/.test(tiltOf(h)) && pos() === '#6.8', tiltOf(h) + ' ' + pos());
   key('x');
 
-  /* feathers: the photo, then specimens one per build, around the room list */
+  /* the decline case: the figure, six cards, the dig, re-weigh, the funnel, the figure again */
   key(']'); await wait(10);
-  check('feathers opens on the Sinosauropteryx photo', !!here('img.photo') && /sinosauropteryx\.jpg$/.test(here('img.photo').getAttribute('src')), on());
-  for (let i = 0; i < 5; i++) key('ArrowRight');
-  await wait(20);
+  check('the decline case follows K–Pg and opens on the Condamine figure with its credit', w.Deck.content.segments[w.Deck.where().s].id === 'signor' &&
+    /condamine2021-fig\.jpg$/.test(here('img.photo').getAttribute('src')) && /CC BY 4\.0/.test(here('figcaption').textContent) &&
+    d.querySelector('.prompt-text').textContent === 'Were dinosaurs in decline before their extinction?', pos());
+  key('ArrowRight'); await wait(10);
   h = bal();
-  check('feathers: three specimens by build 5', shown(h).join() === 'sino,caud,micro', pos() + ' ' + shown(h).join());
+  check('the two hypotheses as sorted sketches', h.querySelectorAll('.hyp .sketch').length === 2);
+  for (let i = 0; i < 6; i++) key('ArrowRight');
+  await wait(10);
+  check('six cards dealt', shown(h).length === 6, pos() + ' ' + shown(h).join());
+  place(h, 'short', ...RIGHT); place(h, 'rates', ...RIGHT); place(h, 'herbivores', ...RIGHT);
+  place(h, 'below', ...LEFT); place(h, 'hellcreek', ...LEFT); place(h, 'rock', ...PIVOT); await wait(5);
+  check('as a room might place them first: leaning to decline', /rotate\(4deg\)/.test(tiltOf(h)), tiltOf(h));
+  key('ArrowRight'); await wait(4500);
+  const sg = here('.sg').parentNode;
+  const dotsOn = sg.querySelectorAll('.sg-dot.on').length;
+  const wantDots = w.Sim.draws(w.Sim.SEED).reduce((n, row) => n + w.Sim.finds(row, 0.08).length, 0);
+  check('dig shows every find at p = 0.08', dotsOn === wantDots, `${dotsOn} of ${wantDots}`);
+  key('ArrowRight'); await wait(20);
+  check('sorted', sg.classList.contains('sorted'));
+  key('ArrowRight'); await wait(20);
+  check('true ranges (answers on)', sg.classList.contains('show-truth'));
+  key('ArrowRight'); key('ArrowUp'); key('ArrowUp'); await wait(20);
+  check('p up to 0.10, more finds', w.Deck.peek('signor').p === 0.1 && sg.querySelectorAll('.sg-dot.on').length > dotsOn);
+  key('ArrowRight'); await wait(20);
+  h = bal();
+  check('back on the balance, the cards where we left them', w.Deck.peek('bal-signor').zone.short === 'right' && /rotate\(4deg\)/.test(tiltOf(h)), tiltOf(h));
+  place(h, 'short', ...PIVOT); await wait(5);
+  check('"fall short" moved to the pivot: placed by their backs, level', /rotate\(0deg\)/.test(tiltOf(h)), tiltOf(h));
+  key('ArrowRight'); await wait(20);
+  check('funnel', on().includes('item-funnel'), pos() + ' ' + on());
+  digit(3); digit(2); digit(6); digit(1); await wait(1500);
+  const counts = [...d.querySelectorAll('.seg:not(.off) .fn-count b')].map((e) => e.textContent);
+  const heads = [...d.querySelectorAll('.seg:not(.off) .fn-head')].sort((a, b) => parseFloat(a.style.left) - parseFloat(b.style.left)).map((e) => e.textContent);
+  check('gates in funnel order, not the order said', heads.join('|') === 'Not buried|Destroyed since|Not recognized', heads.join('|'));
+  check('counts fall through the gates', counts.length === 4 && counts[0] === '1,000' && counts.every((c, i) => i === 0 || +c.replace(',', '') <= +counts[i - 1].replace(',', '')), counts.join(' → '));
+  check('never-there lane', !!d.querySelector('.seg:not(.off) .fn-never'));
+  key('ArrowRight'); key('ArrowRight'); await wait(20);
+  check('closes on the figure again', !!here('img.photo') && /condamine/.test(here('img.photo').getAttribute('src')) && d.querySelector('.prompt-text').textContent === '', pos());
 
-  /* focus and flip */
-  h.querySelector('.card[data-id="caud"] .card-flip').click(); await wait(400);
-  const big = d.querySelector('.focus .big');
-  check('card opens big and turns over', big && big.classList.contains('flipped'));
-  key('Escape'); await wait(300);
-  check('escape closes it', !d.querySelector('.focus'));
+  /* Spinosaurus: the last case, where the cards pull both ways */
+  key(']'); await wait(10);
+  h = bal();
+  check('Spinosaurus comes last, after the decline case; no debrief', w.Deck.content.segments[w.Deck.where().s].id === 'spino' && !w.Deck.content.segments.some((x) => x.id === 'debrief'), pos());
+  key('ArrowRight'); digit(1); digit(2); digit(2);
+  for (let i = 0; i < 6; i++) key('ArrowRight');
+  await wait(10);
+  check('six cards dealt', shown(h).length === 6, pos() + ' ' + shown(h).join());
+  place(h, 'dense', ...LEFT); place(h, 'tail', ...LEFT); place(h, 'floats', ...RIGHT); place(h, 'sail', ...RIGHT);
+  place(h, 'isotopes', ...PIVOT); place(h, 'jaws', ...PIVOT); await wait(5);
+  check('placed by their backs, the scale ends level', /rotate\(0deg\)/.test(tiltOf(h)), tiltOf(h));
+  key('ArrowRight'); await wait(5);
+  check('closing prompt', d.querySelector('.prompt-text').textContent === 'Evidence pulls both ways. What would settle it?');
+  key(']'); await wait(5);
+  check('then the exit ticket', w.Deck.content.segments[w.Deck.where().s].id === 'exit', pos());
 
   /* reset */
   const r = d.querySelector('#reset'); r.click(); r.click(); await wait(20);

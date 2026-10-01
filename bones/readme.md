@@ -2,7 +2,7 @@
 
 A 75-minute FS110 session as a clickable deck. One question runs the whole class: how do you know? The page carries almost no words, because the talking happens in the room. `SPEC.md` has the full plan; this file covers running it.
 
-Every case runs the same way, on a balance. Two hypotheses sit above two pans. The room predicts (votes). The evidence arrives one card per press, and each card goes where the room argues it belongs: on a pan if only that hypothesis expects it, on the pivot if both do (it tips nothing), on the floor if it says little. Then you talk about where it tipped. The cases, in order: Elasmosaurus (head or tail?), Triceratops or Torosaurus, Signor–Lipps (were dinosaurs in decline before their extinction?), impact or volcanoes, then feathers.
+Every case runs the same way, on a balance. Two hypotheses sit above two pans. The room predicts (votes). The evidence arrives one card per press, and each card goes where the room argues it belongs: on a pan if only that hypothesis expects it, on the pivot if both do (it tips nothing), on the floor if it says little. Then you talk about where it tipped. The cases run from clear to unclear: Elasmosaurus (head or tail?), feathers, Triceratops or Torosaurus, impact or volcanoes, and the closer, "Were dinosaurs in decline before their extinction?" (Signor–Lipps). Spinosaurus (did it hunt underwater?) runs last if there's time; `]` skips it.
 
 ## Running it
 
@@ -15,15 +15,15 @@ Everything you do on the page (votes, where each card went, room lists, the dig)
 Space, →, or a clicker's page-down moves one build. The control bar sits top right and fades out when the mouse is still. `?` shows every key.
 
 - **P** shows answers: card backs and the true ranges in the dig. A build that needs them shows a pulsing eye on the prompt line; click it or press P.
-- **X** turns on extra builds and extra cards (the headless-skeleton opener, "Lizards have long tails", the "why else?" list for Triceratops, the five extra K–Pg cards, the transfer version of the exit ticket).
+- **X** turns on extra builds and extra cards ("Lizards have long tails" for Elasmosaurus, the "why else?" list for Triceratops, the five extra K–Pg cards, the transfer version of the exit ticket).
 - On a predict build, press 1 or 2 once per hand (or click a hypothesis). Shift takes one back. Votes freeze once you move on and stay up as dots.
 - Drag a card, or click it and then click where it goes (a clicker can't drag). The card just dealt sits bigger in the tray until it's placed.
 - With P on, the round button on a card's corner opens it big and turns it over: what each hypothesis expects.
 - In a room list, tap a numbered slot when a student says the thing (or press the number). N types in something you didn't preload. Shift takes one back.
-- On the hook, Cope's skull can be dragged to either end of his 1869 skeleton; it snaps there and faces out.
+- The hook opens on Cope's 1869 skeleton with no head. Drag the skull on: it snaps to whichever end you drop it near and faces out. The next press cuts to his two reconstructions.
 - **B** blanks the screen; any key brings it back. **C** shows a clock against the outline's timeline.
 
-`#5` in the address opens segment 5 (count from 0: title, hook, framework, Elasmosaurus, Triceratops, Signor–Lipps, K–Pg, feathers, debrief, exit). `#5.3` opens its fourth build. `#all` opens with answers and extras on.
+`#5` in the address opens segment 5 (count from 0: title, hook, framework, Elasmosaurus, feathers, Triceratops, K–Pg, decline, Spinosaurus, exit). `#5.3` opens its fourth build. `#all` opens with answers and extras on.
 
 ## What's built
 
@@ -33,9 +33,9 @@ Space, →, or a clicker's page-down moves one build. The control bar sits top r
 | Elasmosaurus | done: the balance with the two reconstructions over the pans, seven cards, then straight on to Triceratops |
 | Triceratops | done: the two skulls at one scale, the growth arrow, the skull pair over each pan (≠ and →), room list, balance |
 | K–Pg | done: your boundary photo, then the balance with asteroid and volcano. The timing chart isn't built (it needs the pulse dates from Schoene et al. and Sprain et al. 2019) |
-| Signor–Lipps | done: balance with the two sketches, dig, sort, true ranges, draggable p, back to the balance, funnel |
-| Feathers | done: the Sinosauropteryx photo, room list, balance; the cards have no pictures |
-| Debrief | prompts only; the concept map is a placeholder |
+| Decline (Signor–Lipps) | done: the Condamine et al. figure, balance with six cards that come out level, dig, sort, true ranges, draggable p, back to the balance, funnel, the figure again |
+| Feathers | done: the Sinosauropteryx photo, room list, balance with the lizard card and four specimens; the cards have no pictures |
+| Spinosaurus | done: balance with six cards that leave it near level; the pans are words until there are pictures |
 | Exit ticket | text works; the QR code is a placeholder |
 
 Placeholders are dashed boxes naming what goes there. All the wording, cards and list items live in `js/content.js`. **Every card back is a draft**; check each against the papers before class (SPEC.md lists them). The Elasmosaurus anatomy cards especially: they're drafted from general plesiosaur anatomy, not from the type specimen.
@@ -95,7 +95,7 @@ Both Elasmosaurus figures are Cope's own, public domain, from Wikimedia Commons:
 
 The Triceratops and Torosaurus skulls come from a two-panel figure (A and B, one scale bar each, the same length). `img/make_tritoro.py` cuts them apart, removes the panel letters and scale bars, and makes the white background transparent, including the white showing through the frill openings and orbits. They keep the figure's shared scale everywhere they appear. Source and licence: to record here before the site goes public.
 
-The K–Pg boundary photo is the instructor's own. The Sinosauropteryx photo: source and licence to record here before the site goes public.
+The K–Pg boundary photo is the instructor's own. The decline figure is Condamine et al. 2021, *Nature Communications* ([doi:10.1038/s41467-021-23754-0](https://doi.org/10.1038/s41467-021-23754-0)), open access under CC BY 4.0, credited on the slide. The Sinosauropteryx photo: source and licence to record here before the site goes public.
 
 ## Sources
 

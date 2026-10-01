@@ -117,7 +117,9 @@ div.lines { padding: 0; }
 .item-text.play li:nth-child(2) { animation-delay: 0.15s; }
 .item-text.play li:nth-child(3) { animation-delay: 0.3s; }
 
-.photo { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 14px; user-select: none; }
+.photo-fig { margin: 0; height: 100%; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.photo { display: block; width: 100%; flex: 1 1 auto; min-height: 0; object-fit: contain; border-radius: 14px; user-select: none; }
+.photo-fig figcaption { flex: none; font: 400 19px var(--font-ui); color: var(--muted); }
 .ph {
   width: 100%; height: 100%; padding: 20px; border: 3px dashed var(--rule); border-radius: 18px;
   display: flex; align-items: center; justify-content: center; gap: 12px; text-align: center;

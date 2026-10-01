@@ -19,9 +19,11 @@
     return { show(b, how) { if (how === 'step') D.replay(host, 'play'); } };
   };
 
-  /* A photo, as large as fits the box, not cropped. */
+  /* A photo or figure, as large as fits the box, not cropped. A published
+   * figure carries its credit underneath, small. */
   D.parts.photo = function (def, host) {
-    host.innerHTML = `<img class="photo" src="${D.esc(def.src)}" alt="${D.esc(def.alt || '')}" draggable="false">`;
+    host.innerHTML = `<figure class="photo-fig"><img class="photo" src="${D.esc(def.src)}" alt="${D.esc(def.alt || '')}" draggable="false">` +
+      (def.credit ? `<figcaption>${D.esc(def.credit)}</figcaption>` : '') + '</figure>';
   };
 
   /* A dashed box saying what drawing goes here. Only in drafts. */

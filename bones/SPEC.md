@@ -12,13 +12,13 @@ The source is the revised instructor outline (October 2026). Times, prompts and 
 
 3. Cards are evidence, not explanation: each card states one observation, and you put it on the balance. Nothing on a card explains anything, because the instructor does that out loud. Anything that only repeats what the instructor will say (the hook's old row of clue cards, for one) stays off the screen.
 
-4. Answers hide behind the eye (same button and key as the sauropod tool). Card backs, the Elasmosaurus reveal and the true ranges in the sim all stay hidden until it's pressed. Anything on GitHub Pages is public (the page source, this file, and the repo itself, since free Pages needs a public repo). So "hidden" means hidden from casual clicking, not secret. If the cases get reused for graded work, the card backs move to `answers.local.js`, which is listed in `.gitignore` and loaded by a `<script>` tag (a `fetch` of JSON fails from `file://`). Present from the local copy, and the published site has fronts only.
+4. Answers hide behind the eye (same button and key as the sauropod tool). Card backs and the true ranges in the sim stay hidden until it's pressed. Anything on GitHub Pages is public (the page source, this file, and the repo itself, since free Pages needs a public repo). So "hidden" means hidden from casual clicking, not secret. If the cases get reused for graded work, the card backs move to `answers.local.js`, which is listed in `.gitignore` and loaded by a `<script>` tag (a `fetch` of JSON fails from `file://`). Present from the local copy, and the published site has fronts only.
 
 5. Almost everything is drawn as SVG and animated in JS, not shipped as GIFs. It stays sharp on a projector, follows the whiteboard/chalkboard theme, weighs kilobytes, and you can pause it, step it or drag it. A GIF can do none of that. Photos only where the real fossil is the point.
 
-6. Every case runs the same way, on a balance. Two hypotheses, one per pan, each shown above its pan as a picture where there is one (Cope's 1869 and 1870 reconstructions, two sketched range charts, an asteroid and a volcano). The room predicts by voting, and the votes stay up as dots under each hypothesis. Then the evidence is dealt one card per press, and each card goes where the room argues it belongs: on a pan if one hypothesis expects it and the other doesn't, on the pivot if both expect it (it tips nothing), on the floor if it says little either way. Then you talk about where it tipped and why. That's the outline's A/B/C sort laid out in space, with the tilt as live feedback, and it's the same object five times, so students learn the object once and spend the rest of the class on the evidence.
+6. Every case runs the same way, on a balance. Two hypotheses, one per pan, each shown above its pan as a picture where there is one (Cope's 1869 and 1870 reconstructions, two sketched range charts, an asteroid and a volcano). The room predicts by voting, and the votes stay up as dots under each hypothesis. Then the evidence is dealt one card per press, and each card goes where the room argues it belongs: on a pan if one hypothesis expects it and the other doesn't, on the pivot if both expect it (it tips nothing), on the floor if it says little either way. Then you talk about where it tipped and why. That's the outline's A/B/C sort laid out in space, with the tilt as live feedback, and it's the same object six times, so students learn the object once and spend the rest of the class on the evidence.
 
-7. At least one card per case is ambiguous on purpose. The clearest is Signor–Lipps: "Last fossils fall short of the line" looks like evidence for a decline until the simulation shows a sudden extinction produces it too, and the card moves to the pivot. Triceratops/Torosaurus is ambiguous as a whole: the cards split and the scale doesn't settle it, which is the honest state of the question.
+7. The cases run from clear to unclear. Elasmosaurus settles hard on one side. Feathers starts ambiguous (the 1996 fuzz fits both) and ends on one side as specimens pile up. Triceratops/Torosaurus splits and doesn't settle. Impact vs. volcanoes leans one way, but on a question of how much each mattered rather than which happened. The decline case is the most ambiguous and closes the class: its cards come out level, and the simulation shows that the best-looking evidence for a decline ("Last fossils fall short of the line") is what a sudden extinction produces too. Spinosaurus, where good evidence lands on both pans, runs last if there's time.
 
 8. Lists fill from the room. Each list has its items preloaded and hidden, and when a student says one, you tap it (or press its number) and it drops in. Things the room says that aren't preloaded go in with N, type, Enter. The list ends up in the order *this* class produced it.
 
@@ -37,7 +37,7 @@ fs110/
     js/content.js        every word on screen, every card, every list item
     js/deck.js           segments, builds, keys, rails, eye, clock, saved state
     js/parts/*.js        card, basic, balance, roomlist
-    js/cases/*.js        elasmo, signor, funnel (to come: concept map)
+    js/cases/*.js        elasmo, signor, funnel
     js/sim.js            Signor–Lipps sampler, no DOM
     img/                 photos + credits.json
     tests/sim.test.js    node bones/tests/sim.test.js
@@ -120,12 +120,12 @@ Times are a first guess; the clock (C) shows them against the time since you lef
 | Seg | # | Prompt | Stage |
 |---|---|---|---|
 | Title | 0 | | "Reasoning from Bones" and a bone. |
-| Hook | X | Which end is the head? | Cope's 1869 skeleton with no head; the skull floats above it. Drag it to either end; it snaps there, facing out. |
-| | 1 | | Cope's 1869 reconstruction (head on the short end) above his corrected 1870 one (head on the long end). Both cut from Cope's plates, public domain. No prompt; the instructor asks. The 1869 skull can still be dragged. |
+| Hook | 0 | Which end is the head? | Cope's 1869 skeleton with no head, the skull floating above it. You drag the skull on; it snaps to whichever end you drop it near, facing out. |
+| | 1 | | Cut to Cope's 1869 reconstruction (head on the short end) above his corrected 1870 one (head on the long end), with Cope's skull back where he put it. Both cut from Cope's plates, public domain. No prompt; the instructor asks. |
 | Framework | 0 | | HOW DO YOU KNOW?, full screen. |
 | | 1–5 | What exactly is the claim? · What do we see? · What else could do that? · What would tell them apart? · How sure should we be? | One icon per press: Claim, Evidence, Else?, Test, Sure?. They become the rail for every case after. |
 
-### Elasmosaurus on the balance (7–16)
+### Elasmosaurus on the balance (7–14)
 
 Pans: the 1869 picture (*Head on the short end*) and the 1870 picture (*Head on the long end*).
 
@@ -136,7 +136,7 @@ Pans: the 1869 picture (*Head on the short end*) and the 1870 picture (*Head on 
 | 2–6 | | One card per press: One very long run of vertebrae · Chevrons under the short end · Joint facets face the long end · Neck-style ribs along the long run · Atlas and axis at the long end. | Evidence |
 | 7 | | Card: A famous expert drew it. (Its place is the floor; the room should get there.) | Evidence |
 | X | | Card: Lizards have long tails. | Evidence |
-| 9 | Which cards did the tipping? | The next press goes straight to Triceratops. | Test |
+| 9 | Which cards did the tipping? | The next press goes straight to feathers. | Test |
 
 | Card | If head on the short end | If head on the long end |
 |---|---|---|
@@ -150,7 +150,23 @@ Pans: the 1869 picture (*Head on the short end*) and the 1870 picture (*Head on 
 
 The anatomy on these cards is a draft for the instructor to fix: which features Elasmosaurus actually preserves.
 
-### Triceratops or Torosaurus? (15–26)
+### Feathered dinosaurs (14–21)
+
+Pans: *Feathers* and *Collagen*.
+
+| # | Prompt | Stage | Rail |
+|---|---|---|---|
+| 0 | Feathers? Or rotted skin fibers? | Sinosauropteryx photo: head and neck with the dark fringe of filaments. | Claim |
+| 1 | Predict: which way will it tip? | The balance; votes. | Sure? |
+| 2 | | Card: Sinosauropteryx, 1996 · fuzz. Both hypotheses expect it, which is why it started an argument. | Evidence |
+| 3 | Skeptical. What would convince you? | Room list: More specimens · Better preservation · Branching · Many species · Pigment inside · Can't be collagen. | Else? |
+| 4 | | Card: Fuzz on dinosaurs, not on lizards. If the halo were rotted collagen, lizards in the same beds should have one too: they have collagen in their skin. | Evidence |
+| 5–8 | | One specimen per press: Caudipteryx 1998 (vaned feathers) · Microraptor 2003 (four wings) · Sinosauropteryx 2010 (pigment inside) · Yutyrannus 2012 (big, fuzzy). | Evidence |
+| 9 | Confidence should move when evidence moves. | The votes from build 1 against where the scale ended up. | |
+
+The pigment card has its own skeptics (some "melanosomes" elsewhere turned out to be microbes; Moyer et al. 2014). If a student pushes on it, that's the same move one level down. The readme mentions it; the slide doesn't.
+
+### Triceratops or Torosaurus? (21–30)
 
 Pictures: one Triceratops and one Torosaurus skull, cut from a two-panel figure at a single shared scale (`img/make_tritoro.py`). Pans: the same pair, small, with ≠ between them (*Two species*) or → (*One, growing*).
 
@@ -175,48 +191,7 @@ Pictures: one Triceratops and one Torosaurus skull, cut from a two-panel figure 
 
 Drafts: check each against what Scannella & Horner (2010) and Longrich & Field (2012) argued, and whether southern *Torosaurus* material still counts. "No baby Torosaurus found" is an absence card on purpose; Signor–Lipps comes back to it. No build says which story won.
 
-### Were dinosaurs in decline before their extinction? Signor–Lipps (26–39)
-
-Pans: two sketched range charts, drawn the same way (eight bars, sorted, the line at 0). *All at once*: every bar reaches the line. *Already in decline*: a staircase. (The outline's third prediction, "no predictable pattern", is gone: sorted, random last finds make a staircase, which is the point of the case, so it was never a separate answer.)
-
-| # | Prompt | Stage | Rail |
-|---|---|---|---|
-| 0 | Were dinosaurs in decline before their extinction? | The balance, empty. | Claim |
-| 1 | Predict: which way will it tip? | Votes. | Sure? |
-| 2 | | Card: Last fossils fall short of the line. Most rooms put it on *Already in decline*. | Evidence |
-| 3 | Suppose all 20 die at the line. | Stratigraphic column: 20 taxa, levels −50 to 0, red dashed line at 0. One press digs upward in about 4 s; finds pop in as dots. Each taxon's last find gets a tick. | Test |
-| 4 | Does that look sudden? | Columns re-sort by last find, and the staircase appears. Side panel: number of taxa seen at or above each level. It dwindles toward the line. | Test |
-| 5 ◉ | | True ranges draw in, faint, and every one reaches 0. | Test |
-| 6 | What if fossils were easier to find? | Drag p (a yellow number, as in the sauropod tool), or ↑ ↓. Presets 0.03 · 0.08 · 0.20 · 0.50. Dice re-digs. | Test |
-| 7 | Now where does that card go? | Back to the balance, the card where the room left it. It moves to the pivot. | Test |
-| 8–9 | | Cards: Dig harder: ranges reach the line · Common plankton end right at the line. | Evidence |
-| 10 | We didn't find it. Why not? | The funnel (below). | Else? |
-| 11 | Absence is weak evidence when detection is poor. | The balance again. Tag: Signor–Lipps effect. | |
-
-| Card | If all at once | If already in decline |
-|---|---|---|
-| Last fossils fall short of the line | expected: finds thin out before the end | expected (pivot, once the sim has run) |
-| Dig harder: ranges reach the line | expected | not expected: they were already gone |
-| Common plankton end right at the line | expected: common fossils turn up to the end | not expected |
-
-The "dig harder" card is Marshall & Ward (1996): more intensive collecting of ammonites in the Basque sections pushed several ranges up to the boundary. The plankton card leans on the planktonic foraminifera record; Keller's gradualist reading of it is the counterargument, and worth having ready.
-
-#### The funnel
-
-Room list as a funnel, left to right. A column of 1000 dots (Lived); each reason the room gives becomes a gate, and the dots that pass fly on to the next column. Not buried · Destroyed since · Rock not exposed · Nobody looked · Not recognized take their places in that order whatever order they're said in; typed reasons join the end at 50%. Rates are draggable and marked *made-up rates*. "Never there" isn't a gate: it gets its own empty lane underneath that ends at 0, next to the main lane's handful (3 with the default rates).
-
-What the sim should show (computed, 51 levels):
-
-| p | median gap below 0 | mean gap | taxa 10+ levels short | of 20, never found |
-|---|---|---|---|---|
-| 0.03 | 22 | 18.7 | 74% | 4.2 |
-| 0.08 | 8 | 10.8 | 43% | 0.3 |
-| 0.20 | 3 | 4.0 | 11% | 0 |
-| 0.50 | 0 | 1.0 | 0% | 0 |
-
-Any one dig will wander around these. The default seed is picked so the first dig in class looks typical (median gap 8), not like a fluke. JS can't reproduce R's `set.seed(202)` draws, so the R code stays in the readme as the appendix and the deck uses its own seeded generator (mulberry32).
-
-### What ended the dinosaurs? (39–50)
+### What ended the dinosaurs? (30–39)
 
 Pans: an asteroid icon (*Impact*) and a volcano icon (*Volcanoes*).
 
@@ -243,31 +218,75 @@ Pans: an asteroid icon (*Impact*) and a volcano icon (*Volcanoes*).
 
 Deccan eruption pulses against the impact, roughly 66.4 to 65.6 million years, with a toggle between the Schoene et al. (2019) and Sprain et al. (2019) versions. Timing is the evidence that ought to separate the two causes, and at this resolution it's contested. It needs the pulse dates read off those papers' figures before it can be drawn; until then the case ends on the balance.
 
-### Feathered dinosaurs (50–60)
+### Were dinosaurs in decline before their extinction? Signor–Lipps (39–60)
 
-Pans: *Feathers* and *Collagen*.
+The closer, and the most ambiguous case. It opens on the claim itself: Condamine et al. (2021, *Nature Communications*, CC BY 4.0), where extinction overtakes speciation in the last ~10 million years of the Cretaceous. The figure fills the stage with its credit underneath, and it comes back as the last build.
+
+Pans: two sketched range charts, drawn the same way (eight bars, sorted, the line at 0). *All at once*: every bar reaches the line. *Already in decline*: a staircase. (The outline's third prediction, "no predictable pattern", is gone: sorted, random last finds make a staircase, which is the point of the case, so it was never a separate answer.)
 
 | # | Prompt | Stage | Rail |
 |---|---|---|---|
-| 0 | Feathers? Or rotted skin fibers? | Sinosauropteryx photo: head and neck with the dark fringe of filaments. | Claim |
+| 0 | Were dinosaurs in decline before their extinction? | The Condamine et al. figure, credited. | Claim |
 | 1 | Predict: which way will it tip? | The balance; votes. | Sure? |
-| 2 | | Card: Sinosauropteryx, 1996 · fuzz. Both hypotheses expect it, which is why it started an argument. | Evidence |
-| 3 | Skeptical. What would convince you? | Room list: More specimens · Better preservation · Branching · Many species · Pigment inside · Can't be collagen. | Else? |
-| 4–7 | | One specimen per press: Caudipteryx 1998 (vaned feathers) · Microraptor 2003 (four wings) · Sinosauropteryx 2010 (pigment inside) · Yutyrannus 2012 (big, fuzzy). | Evidence |
-| 8 | Confidence should move when evidence moves. | The votes from build 1 against where the scale ended up. | |
+| 2–7 | | One card per press (below). Most rooms put "Last fossils fall short of the line" on *Already in decline*. | Evidence |
+| 8 | Suppose all 20 die at the line. | Stratigraphic column: 20 taxa, levels −50 to 0, red dashed line at 0. One press digs upward in about 4 s; finds pop in as dots. Each taxon's last find gets a tick. | Test |
+| 9 | Does that look sudden? | Columns re-sort by last find, and the staircase appears. Side panel: number of taxa seen at or above each level. It dwindles toward the line. | Test |
+| 10 ◉ | | True ranges draw in, faint, and every one reaches 0. | Test |
+| 11 | What if fossils were easier to find? | Drag p (a yellow number, as in the sauropod tool), or ↑ ↓. Presets 0.03 · 0.08 · 0.20 · 0.50. Dice re-digs. | Test |
+| 12 | Now where do the cards go? | Back to the balance, cards where the room left them. "Fall short" moves to the pivot; the rate-model card may get argued down too. | Test |
+| 13 | We didn't find it. Why not? | The funnel (below). | Else? |
+| 14 | Absence is weak evidence when detection is poor. | The balance again. Tag: Signor–Lipps effect. | |
+| 15 | | The Condamine et al. figure again. | |
 
-The pigment card has its own skeptics (some "melanosomes" elsewhere turned out to be microbes; Moyer et al. 2014). If a student pushes on it, that's the same move one level down. The readme mentions it; the slide doesn't.
-
-### Debrief: how do you know? (60–68)
-
-| # | Prompt | Stage |
+| Card | If all at once | If already in decline |
 |---|---|---|
-| 0 | | The concept map frame: HOW DO YOU KNOW? → claim · evidence · alternatives → discriminating test → update confidence. |
-| 1–4 | Which case caught a mistake? · Which pattern came from how we looked? · Which needed competing explanations? · Where could reasonable people disagree? | Each case's thumbnail docks at the node it worked; click thumbnails to light them, more than one can light. |
-| 5 | | Terms appear around the edges: sampling bias · confounding · best explanation. |
-| 6 | Not "believe scientists." Check, compare, test, update. | The board students photograph. |
+| Last fossils fall short of the line | expected: finds thin out before the end | expected (pivot, once the sim has run) |
+| Extinction outpaced speciation | possible: if the record thins out | expected |
+| Herbivore variety shrank in North America | not expected | expected |
+| Dinosaur bones just below the line | expected | possible: fewer, not none |
+| Hell Creek: diverse to the end | expected | not expected |
+| Less late Cretaceous rock to search | expected: an apparent decline | fits too (pivot) |
 
-Falsifiable is on the outline's vocabulary list, but no core case teaches it (it lives in the healed-bite extra). It only goes on the map if that extra ran.
+Placed by their backs: two on each pan, two on the pivot, level. The live argument is whether the rate decline survives correcting for how much rock there is to search (Condamine et al. 2021 say it does; Bonsor et al. 2020 and Chiarenza et al. 2019 read the same era differently). The rate card is the one to watch after the simulation.
+
+#### The funnel
+
+Room list as a funnel, left to right. A column of 1000 dots (Lived); each reason the room gives becomes a gate, and the dots that pass fly on to the next column. Not buried · Destroyed since · Rock not exposed · Nobody looked · Not recognized take their places in that order whatever order they're said in; typed reasons join the end at 50%. Rates are draggable and marked *made-up rates*. "Never there" isn't a gate: it gets its own empty lane underneath that ends at 0, next to the main lane's handful (3 with the default rates).
+
+What the sim should show (computed, 51 levels):
+
+| p | median gap below 0 | mean gap | taxa 10+ levels short | of 20, never found |
+|---|---|---|---|---|
+| 0.03 | 22 | 18.7 | 74% | 4.2 |
+| 0.08 | 8 | 10.8 | 43% | 0.3 |
+| 0.20 | 3 | 4.0 | 11% | 0 |
+| 0.50 | 0 | 1.0 | 0% | 0 |
+
+Any one dig will wander around these. The default seed is picked so the first dig in class looks typical (median gap 8), not like a fluke. JS can't reproduce R's `set.seed(202)` draws, so the R code stays in the readme as the appendix and the deck uses its own seeded generator (mulberry32).
+
+### Did Spinosaurus hunt underwater? (60–68, if there's time)
+
+Last, if there's time; `]` skips straight to the exit ticket. Chosen because the evidence conflicts. Since 2014 two camps have read the same animal in opposite directions, and several of the cards are disputed in their own right. Placed by their backs, the cards leave the scale level: the honest answer is that nobody knows yet, and the useful question is what would settle it.
+
+Pans: *Swam after prey* and *Waded at the edge* (words until there are pictures).
+
+| # | Prompt | Stage | Rail |
+|---|---|---|---|
+| 0 | Did Spinosaurus hunt underwater? | The balance, empty. | Claim |
+| 1 | Predict: which way will it tip? | Votes. | Sure? |
+| 2–7 | | One card per press (below). | Evidence |
+| 8 | Evidence pulls both ways. What would settle it? | | Test |
+
+| Card | If it swam after prey | If it waded at the edge |
+|---|---|---|
+| Dense, heavy limb bones | expected: ballast for diving | not expected |
+| Tall, paddle-like tail | expected: a tail to swim with | possible: display |
+| Floats tipped over in models | not expected: a diver needs to be stable | expected: it stood in the shallows |
+| Big sail on its back | a problem: drag and roll in water | fine: display on land |
+| Bone chemistry like crocodiles' | expected | expected: it lived by water either way (pivot) |
+| Long jaws, cone-shaped teeth | expected: a fish eater | expected: a fish eater (pivot) |
+
+Two cards carry their own fights. The bone-density argument (Fabbri et al. 2022) was challenged on method (Myhrvold et al. 2024), and whether the tail could drive it through water is disputed (Ibrahim et al. 2020; Sereno et al. 2022). If a student wants to move one of those cards on exactly those grounds, the case is working.
 
 ### Exit ticket (68–75)
 
@@ -294,6 +313,7 @@ X swaps in the transfer version: *A claim from outside science. Same questions.*
 | Cope's 1869 and corrected 1870 Elasmosaurus | Hook, Elasmosaurus pans | Cope's plates, public domain, via Wikimedia Commons; cut by `img/make_elasmo.py` | done |
 | Triceratops and Torosaurus skulls | Triceratops case, its pans | two-panel figure supplied by the instructor, cut by `img/make_tritoro.py` | done; source and licence to record |
 | Boundary photo | K–Pg | the instructor's own | done |
+| Condamine et al. 2021, Fig. | Decline case, first and last build | *Nature Communications*, CC BY 4.0; credited on the slide | done |
 | Boundary clay photo | Case 3 | Wikimedia (Trinidad Lake, Colorado) or own | find |
 | Sinosauropteryx photo | Feathers, build 0 | supplied by the instructor | done; source and licence to record |
 | Caudipteryx, Microraptor, Yutyrannus | Feathers cards, if they get pictures | Wikimedia; check each license | not needed yet |
@@ -307,7 +327,9 @@ These fill the outline's TODOs and the card backs, from memory. None has been ch
 
 - Davidson JP (2002) Bonehead mistakes: the background in scientific literature and illustrations for Edward Drinker Cope's first presentation of *Elasmosaurus platyurus*. *Proc Acad Nat Sci Philadelphia* 152: 215–240. The Elasmosaurus card backs (chevrons, facets, ribs, atlas–axis) are the least certain item on this list.
 - Longrich NR, Field DJ (2012) *Torosaurus* is not *Triceratops*: ontogeny in chasmosaurine ceratopsids as a case study in dinosaur taxonomy. *PLoS ONE* 7: e32623.
-- Marshall CR, Ward PD (1996) Sudden and gradual molluscan extinctions in the latest Cretaceous of western European Tethys. *Science* 274: 1360–1363.
+- Spinosaurus: Ibrahim et al. 2014 (*Science*, semiaquatic adaptations); Amiot et al. 2010 (*Geology*, oxygen isotopes in spinosaurids); Henderson 2018 (*PeerJ*, buoyancy and stability); Ibrahim et al. 2020 (*Nature*, the tail); Hone & Holtz 2021 (*Palaeontologia Electronica*, shoreline generalist); Fabbri et al. 2022 (*Nature*, bone density); Sereno et al. 2022 (*eLife*, "not an aquatic dinosaur"); Myhrvold et al. 2024 (*PLoS ONE*, caveats on bone compactness).
+- The lizard card: which Jehol lizards are preserved with skin, and that none carries a filament halo.
+- Decline case: Condamine FL, Guinot G, Benton MJ, Currie PJ (2021) Dinosaur biodiversity declined well before the asteroid impact, influenced by ecological and environmental pressures. *Nature Communications* (doi:10.1038/s41467-021-23754-0); Brusatte et al. 2012 (*Nature Communications*, herbivore disparity); Lyson et al. 2011 (*Biology Letters*, a ceratopsian horn just below the boundary, "closing the 3 m gap"); Hell Creek diversity to the end (Pearson et al. 2002; Fastovsky & Bercovici 2016); the sampling side (Chiarenza et al. 2019, *Nature Communications*; Bonsor et al. 2020, *Royal Society Open Science*).
 - Scannella JB, Horner JR (2010) *Torosaurus* Marsh 1891, is *Triceratops* Marsh 1889 (Ceratopsidae: Chasmosaurinae): synonymy through ontogeny. *J Vertebr Paleontol* 30: 1157–1168.
 - K–Pg cards, and the timing chart if it gets built: Alvarez et al. 1980; Bohor et al. 1984 (shocked quartz, *Science*); Hildebrand et al. 1991 (Chicxulub, *Geology*); Schulte et al. 2010; Renne et al. 2013 (*Science*, 66.043 Ma); Izett 1990 or Sigurdsson et al. 1991 for the Haiti spherules; Schoene et al. 2019 and Sprain et al. 2019 (same issue of *Science*, disagreeing on when Deccan's big pulses fell); Hull et al. 2020 (*Science*, most Deccan outgassing before the boundary).
 - Case 4: Chen, Dong & Zhen 1998 (Sinosauropteryx, *Nature*; announced 1996); Lingham-Soliar et al. 2007 (collagen, *Proc R Soc B*); Ji et al. 1998 (Caudipteryx, *Nature*); Xu et al. 2003 (Microraptor, *Nature*); Zhang et al. 2010 (melanosomes, *Nature*); Xu et al. 2012 (Yutyrannus, *Nature*).
@@ -322,7 +344,7 @@ Built (October 2026): the deck engine and parts, every case's balance with its c
 2. Signor–Lipps sim and funnel. Done.
 3. Every case on the balance, Elasmosaurus pictures and skull, Triceratops skulls, boundary photo. Done.
 4. Drawings: the premise tiles and lamps; hypothesis pictures for feathers; photos for K–Pg and feathers.
-5. Feathers, concept map, exit ticket.
+5. Feathers, Spinosaurus, exit ticket. Done except the exit ticket's QR code.
 6. Extras. Printable case cards (a print stylesheet built from `content.js`: one page per case, the five prompts with blanks, no answers). A presenter window (second window kept in sync over BroadcastChannel, with the outline's notes and the clock).
 
 ## Tests

@@ -44,7 +44,7 @@
     {
       id: 'hook', title: 'Which end is the head?', mins: [0, 3],
       builds: [
-        { prompt: 'Which end is the head?', extra: true },
+        { prompt: 'Which end is the head?' },
         {}
       ],
       items: [{ kind: 'elasmo', box: STAGE, figAt: 1 }]
@@ -67,7 +67,7 @@
     },
 
     {
-      id: 'elasmo', title: 'Head or tail?', mins: [7, 15],
+      id: 'elasmo', title: 'Head or tail?', mins: [7, 14],
       builds: [
         { prompt: 'Head on the short end, or the long end?', rail: 'claim' },
         { prompt: PREDICT, rail: 'sure' },
@@ -101,7 +101,38 @@
     },
 
     {
-      id: 'tric', title: 'Triceratops or Torosaurus?', mins: [15, 26],
+      id: 'feathers', title: 'Feathered dinosaurs', mins: [14, 21],
+      builds: [
+        { prompt: 'Feathers? Or rotted skin fibers?', rail: 'claim' },
+        { prompt: PREDICT, rail: 'sure' },
+        { rail: 'evidence' },
+        { prompt: 'Skeptical. What would convince you?', rail: 'else' },
+        ...range(4, 8).map(() => ({ rail: 'evidence' })),
+        { prompt: 'Confidence should move when evidence moves.' }
+      ],
+      items: [
+        { kind: 'photo', builds: [0], box: [200, 110, 1200, 670], src: 'img/sinosauropteryx.jpg', alt: 'Sinosauropteryx head and neck, with a fringe of dark filaments along the neck and back' },
+        {
+          kind: 'balance', id: 'feathers', builds: [1, 2, 4, 5, 6, 7, 8, 9], box: FULL, vote: 1,
+          pans: [{ text: 'Feathers' }, { text: 'Collagen' }],
+          cards: [
+            { id: 'sino', at: 2, text: 'Sinosauropteryx', sub: '1996 · fuzz', back: ['expected', 'expected'] },
+            { id: 'lizards', at: 4, text: 'Fuzz on dinosaurs, not on lizards', back: ['expected: only feathered groups have it', 'not expected: lizards have collagen too'] },
+            { id: 'caud', at: 5, text: 'Caudipteryx', sub: '1998 · vaned feathers', back: ['expected', "collagen can't make vanes"] },
+            { id: 'micro', at: 6, text: 'Microraptor', sub: '2003 · four wings', back: ['expected', 'no'] },
+            { id: 'pigment', at: 7, text: 'Sinosauropteryx', sub: '2010 · pigment inside', back: ['expected', 'no pigment bodies in collagen'] },
+            { id: 'yut', at: 8, text: 'Yutyrannus', sub: '2012 · big, fuzzy', back: ['expected in more groups', 'also possible'] }
+          ]
+        },
+        {
+          kind: 'roomlist', id: 'feathers-convince', builds: [3], box: [200, 130, 1200, 640],
+          items: ['More specimens', 'Better preservation', 'Branching', 'Many species', 'Pigment inside', "Can't be collagen"]
+        }
+      ]
+    },
+
+    {
+      id: 'tric', title: 'Triceratops or Torosaurus?', mins: [21, 30],
       builds: [
         { prompt: 'Two species?', rail: 'claim' },
         { prompt: 'Or one animal, growing?', rail: 'else' },
@@ -133,48 +164,7 @@
     },
 
     {
-      id: 'signor', title: 'Were dinosaurs in decline before their extinction?', mins: [26, 39],
-      builds: [
-        { prompt: 'Were dinosaurs in decline before their extinction?', rail: 'claim' },
-        { prompt: PREDICT, rail: 'sure' },
-        { rail: 'evidence' },
-        { prompt: 'Suppose all 20 die at the line.', rail: 'test' },
-        { prompt: 'Does that look sudden?', rail: 'test' },
-        { eye: true, rail: 'test' },
-        { prompt: 'What if fossils were easier to find?', rail: 'test' },
-        { prompt: 'Now where does that card go?', rail: 'test' },
-        { rail: 'evidence' },
-        { rail: 'evidence' },
-        { prompt: "We didn't find it. Why not?", rail: 'else' },
-        { prompt: 'Absence is weak evidence when detection is poor.', tag: 'Signor–Lipps effect' }
-      ],
-      items: [
-        {
-          kind: 'balance', id: 'signor', builds: [0, 1, 2, 7, 8, 9, 11], box: FULL, vote: 1,
-          pans: [{ text: 'All at once', sketch: 'abrupt' }, { text: 'Already in decline', sketch: 'taper' }],
-          cards: [
-            { id: 'short', at: 2, text: 'Last fossils fall short of the line', back: ['expected: finds thin out before the end', 'expected'] },
-            { id: 'harder', at: 8, text: 'Dig harder: ranges reach the line', back: ['expected', 'not expected: they were already gone'] },
-            { id: 'plankton', at: 9, text: 'Common plankton end right at the line', back: ['expected: common fossils turn up to the end', 'not expected'] }
-          ]
-        },
-        { kind: 'signor', id: 'signor', builds: [3, 4, 5, 6], box: FULL, sortAt: 4, truthAt: 5, knobAt: 6 },
-        {
-          kind: 'funnel', id: 'funnel', builds: [10], box: FULL,
-          never: 'Never there',
-          gates: [
-            { text: 'Not buried', rate: 0.15 },
-            { text: 'Destroyed since', rate: 0.4 },
-            { text: 'Rock not exposed', rate: 0.2 },
-            { text: 'Nobody looked', rate: 0.15 },
-            { text: 'Not recognized', rate: 0.6 }
-          ]
-        }
-      ]
-    },
-
-    {
-      id: 'kpg', title: 'What ended the dinosaurs?', mins: [39, 50],
+      id: 'kpg', title: 'What ended the dinosaurs?', mins: [30, 39],
       builds: [
         { prompt: 'Something big happened 66 million years ago.', rail: 'claim' },
         { prompt: 'An impact, or volcanoes?', rail: 'else' },
@@ -207,48 +197,74 @@
     },
 
     {
-      id: 'feathers', title: 'Feathered dinosaurs', mins: [50, 60],
+      id: 'signor', title: 'Were dinosaurs in decline before their extinction?', mins: [39, 60],
       builds: [
-        { prompt: 'Feathers? Or rotted skin fibers?', rail: 'claim' },
+        { prompt: 'Were dinosaurs in decline before their extinction?', rail: 'claim' },
         { prompt: PREDICT, rail: 'sure' },
-        { rail: 'evidence' },
-        { prompt: 'Skeptical. What would convince you?', rail: 'else' },
-        ...range(4, 7).map(() => ({ rail: 'evidence' })),
-        { prompt: 'Confidence should move when evidence moves.' }
+        ...range(2, 7).map(() => ({ rail: 'evidence' })),
+        { prompt: 'Suppose all 20 die at the line.', rail: 'test' },
+        { prompt: 'Does that look sudden?', rail: 'test' },
+        { eye: true, rail: 'test' },
+        { prompt: 'What if fossils were easier to find?', rail: 'test' },
+        { prompt: 'Now where do the cards go?', rail: 'test' },
+        { prompt: "We didn't find it. Why not?", rail: 'else' },
+        { prompt: 'Absence is weak evidence when detection is poor.', tag: 'Signor–Lipps effect' },
+        {}
       ],
       items: [
-        { kind: 'photo', builds: [0], box: [200, 110, 1200, 670], src: 'img/sinosauropteryx.jpg', alt: 'Sinosauropteryx head and neck, with a fringe of dark filaments along the neck and back' },
         {
-          kind: 'balance', id: 'feathers', builds: [1, 2, 4, 5, 6, 7, 8], box: FULL, vote: 1,
-          pans: [{ text: 'Feathers' }, { text: 'Collagen' }],
-          cards: [
-            { id: 'sino', at: 2, text: 'Sinosauropteryx', sub: '1996 · fuzz', back: ['expected', 'expected'] },
-            { id: 'caud', at: 4, text: 'Caudipteryx', sub: '1998 · vaned feathers', back: ['expected', "collagen can't make vanes"] },
-            { id: 'micro', at: 5, text: 'Microraptor', sub: '2003 · four wings', back: ['expected', 'no'] },
-            { id: 'pigment', at: 6, text: 'Sinosauropteryx', sub: '2010 · pigment inside', back: ['expected', 'no pigment bodies in collagen'] },
-            { id: 'yut', at: 7, text: 'Yutyrannus', sub: '2012 · big, fuzzy', back: ['expected in more groups', 'also possible'] }
-          ]
+          kind: 'photo', builds: [0, 15], box: [40, 104, 1520, 676], src: 'img/condamine2021-fig.jpg',
+          alt: 'Late Cretaceous dinosaur speciation and extinction rates, with extinction overtaking speciation from about 76 million years ago',
+          credit: 'Condamine et al. 2021, Nature Communications · doi:10.1038/s41467-021-23754-0 · CC BY 4.0'
         },
         {
-          kind: 'roomlist', id: 'feathers-convince', builds: [3], box: [200, 130, 1200, 640],
-          items: ['More specimens', 'Better preservation', 'Branching', 'Many species', 'Pigment inside', "Can't be collagen"]
+          kind: 'balance', id: 'signor', builds: [1, 2, 3, 4, 5, 6, 7, 12, 14], box: FULL, vote: 1,
+          pans: [{ text: 'All at once', sketch: 'abrupt' }, { text: 'Already in decline', sketch: 'taper' }],
+          cards: [
+            { id: 'short', at: 2, text: 'Last fossils fall short of the line', back: ['expected: finds thin out before the end', 'expected'] },
+            { id: 'rates', at: 3, text: 'Extinction outpaced speciation', back: ['possible: if the record thins out', 'expected'] },
+            { id: 'herbivores', at: 4, text: 'Herbivore variety shrank in North America', back: ['not expected', 'expected'] },
+            { id: 'below', at: 5, text: 'Dinosaur bones just below the line', back: ['expected', 'possible: fewer, not none'] },
+            { id: 'hellcreek', at: 6, text: 'Hell Creek: diverse to the end', back: ['expected', 'not expected'] },
+            { id: 'rock', at: 7, text: 'Less late Cretaceous rock to search', back: ['expected: an apparent decline', 'fits too'] }
+          ]
+        },
+        { kind: 'signor', id: 'signor', builds: [8, 9, 10, 11], box: FULL, sortAt: 9, truthAt: 10, knobAt: 11 },
+        {
+          kind: 'funnel', id: 'funnel', builds: [13], box: FULL,
+          never: 'Never there',
+          gates: [
+            { text: 'Not buried', rate: 0.15 },
+            { text: 'Destroyed since', rate: 0.4 },
+            { text: 'Rock not exposed', rate: 0.2 },
+            { text: 'Nobody looked', rate: 0.15 },
+            { text: 'Not recognized', rate: 0.6 }
+          ]
         }
       ]
     },
 
     {
-      id: 'debrief', title: 'How do you know?', mins: [60, 68],
+      id: 'spino', title: 'Did Spinosaurus hunt underwater?', mins: [60, 68],
       builds: [
-        {},
-        { prompt: 'Which case caught a mistake?' },
-        { prompt: 'Which pattern came from how we looked?' },
-        { prompt: 'Which needed competing explanations?' },
-        { prompt: 'Where could reasonable people disagree?' },
-        {},
-        { prompt: 'Not "believe scientists." Check, compare, test, update.' }
+        { prompt: 'Did Spinosaurus hunt underwater?', rail: 'claim' },
+        { prompt: PREDICT, rail: 'sure' },
+        ...range(2, 7).map(() => ({ rail: 'evidence' })),
+        { prompt: 'Evidence pulls both ways. What would settle it?', rail: 'test' }
       ],
       items: [
-        { kind: 'placeholder', box: [160, 130, 1280, 600], label: 'concept map: case thumbnails dock at the question they worked; terms around the edges' }
+        {
+          kind: 'balance', id: 'spino', box: FULL, vote: 1,
+          pans: [{ text: 'Swam after prey' }, { text: 'Waded at the edge' }],
+          cards: [
+            { id: 'dense', at: 2, text: 'Dense, heavy limb bones', back: ['expected: ballast for diving', 'not expected'] },
+            { id: 'tail', at: 3, text: 'Tall, paddle-like tail', back: ['expected: a tail to swim with', 'possible: display'] },
+            { id: 'floats', at: 4, text: 'Floats tipped over in models', back: ['not expected: a diver needs to be stable', 'expected: it stood in the shallows'] },
+            { id: 'sail', at: 5, text: 'Big sail on its back', back: ['a problem: drag and roll in water', 'fine: display on land'] },
+            { id: 'isotopes', at: 6, text: "Bone chemistry like crocodiles'", back: ['expected', 'expected: it lived by water either way'] },
+            { id: 'jaws', at: 7, text: 'Long jaws, cone-shaped teeth', back: ['expected: a fish eater', 'expected: a fish eater'] }
+          ]
+        }
       ]
     },
 
