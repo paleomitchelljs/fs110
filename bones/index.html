@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reasoning from Bones</title>
+<meta name="description" content="How do you know? A 75-minute class worked through dinosaur cases: a head on the wrong end, a horned dinosaur that might be two, fossils that vanish early, an asteroid, and feathers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Kalam:wght@400;700&display=swap">
+<link rel="stylesheet" href="css/deck.css">
+</head>
+<body>
+<h1 class="sr-only">Reasoning from Bones</h1>
+<main id="stage"></main>
+
+<nav class="ctl" aria-label="Deck">
+  <span id="clock" class="clock" hidden></span>
+  <button type="button" id="prev" title="Back (←)" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <div id="dots" class="dots"></div>
+  <button type="button" id="next" title="Next (→, space)" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+  <button type="button" id="extras" title="Extra builds (X)" aria-label="Extra builds"><svg viewBox="0 0 24 24"><rect x="3.5" y="7.5" width="13" height="13" rx="2"/><path d="M8 3.5h10.5a2 2 0 0 1 2 2V16M10 11v6M7 14h6"/></svg></button>
+  <button type="button" id="answers" title="Answers hidden: click to show (P)" aria-label="Answers"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path class="slash" d="M4 20 20 4"/></svg></button>
+  <button type="button" id="clockbtn" title="Clock (C)" aria-label="Clock"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M10 2.5h4"/></svg></button>
+  <button type="button" id="theme" title="Whiteboard / chalkboard (T)" aria-label="Chalkboard"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" class="solid"/></svg></button>
+  <button type="button" id="reset" title="Start over: clears every sort, count and list (click twice)" aria-label="Start over"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 3.5v4h4"/></svg></button>
+  <button type="button" id="help" title="Keys (?)" aria-label="Keys"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg></button>
+</nav>
+
+<div id="helpbox" class="helpbox" hidden>
+  <dl>
+    <dt>→ space</dt><dd>next (clicker: page down)</dd>
+    <dt>←</dt><dd>back</dd>
+    <dt>[ ]</dt><dd>previous / next segment</dd>
+    <dt>P</dt><dd>answers</dd>
+    <dt>X</dt><dd>extra builds</dd>
+    <dt>1–9</dt><dd>reveal a list item · count a hand · shift: undo</dd>
+    <dt>N</dt><dd>type a list item</dd>
+    <dt>card</dt><dd>drag, or click it then click where it goes</dd>
+    <dt>F</dt><dd>turn a card over (answers on)</dd>
+    <dt>D</dt><dd>deal a card from the pile</dd>
+    <dt><u>numbers</u></dt><dd>drag, scroll, or ↑ ↓</dd>
+    <dt>T · B · C</dt><dd>theme · blank screen · clock</dd>
+  </dl>
+</div>
+<div id="blank" class="blank" hidden></div>
+<div class="rotate" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="17" rx="2"/><path d="M20 15a8 8 0 0 1-6 6.5M16.5 21.5l-2.5 0 1-2.4"/></svg></div>
+
+<noscript><p class="noscript">This page needs JavaScript.</p></noscript>
+<script src="js/sim.js"></script>
+<script src="js/content.js"></script>
+<script src="js/deck.js"></script>
+<script src="js/parts/card.js"></script>
+<script src="js/parts/basic.js"></script>
+<script src="js/parts/balance.js"></script>
+<script src="js/parts/roomlist.js"></script>
+<script src="js/parts/confidence.js"></script>
+<script src="js/parts/picker.js"></script>
+<script src="js/cases/signor.js"></script>
+<script src="js/cases/funnel.js"></script>
+<script>Deck.start(window.BONES);</script>
+</body>
+</html>
