@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stats</title>
+<meta name="description" content="Three classic stumpers: two kids, a rare disease, three doors. A quiz, then one manipulable picture for each.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="css/stats.css?v=1">
+</head>
+<body>
+<h1 class="sr-only">Stats</h1>
+
+<nav class="tabs" aria-label="Pages">
+  <button type="button" data-view="quiz" title="Quiz (1)" aria-label="Quiz">?</button>
+  <button type="button" data-view="kids" title="Two kids (2)" aria-label="Two kids">a</button>
+  <button type="button" data-view="test" title="The test (3)" aria-label="The test">b</button>
+  <button type="button" data-view="doors" title="Three doors (4)" aria-label="Three doors">c</button>
+</nav>
+
+<main>
+  <section id="quiz" data-view="quiz">
+    <form id="quizform">
+      <fieldset>
+        <legend><b>a</b> My friend Katie has two kids. One is a boy. What are the odds the other is a boy?</legend>
+        <label><input type="radio" name="a" value="25"><span>25%</span></label>
+        <label><input type="radio" name="a" value="33"><span>33%</span></label>
+        <label><input type="radio" name="a" value="50"><span>50%</span></label>
+        <label><input type="radio" name="a" value="67"><span>67%</span></label>
+      </fieldset>
+      <fieldset>
+        <legend><b>b</b> I tested positive for a rare (1-in-a-million) disease, and the test I took has 99% accuracy. What is the percent chance I have the disease?</legend>
+        <label><input type="radio" name="b" value="99"><span>99%</span></label>
+        <label><input type="radio" name="b" value="50"><span>50%</span></label>
+        <label><input type="radio" name="b" value="1"><span>1%</span></label>
+        <label><input type="radio" name="b" value="0.01"><span>0.01%</span></label>
+      </fieldset>
+      <fieldset>
+        <legend><b>c</b> You're shown three doors. One has a check for $1,000,000 behind it, the other two have goats. You pick the middle door at random. The left door opens, revealing a goat. You're asked if you want to stick with your choice (middle) or switch to the other (right). Do you keep your choice, switch, or does it not matter?</legend>
+        <label><input type="radio" name="c" value="keep"><span>Keep</span></label>
+        <label><input type="radio" name="c" value="switch"><span>Switch</span></label>
+        <label><input type="radio" name="c" value="same"><span>Doesn't matter</span></label>
+      </fieldset>
+      <button type="button" id="done" class="go" title="On to the pictures (2)" aria-label="Done">
+        <svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+      </button>
+    </form>
+  </section>
+
+  <section id="kids" data-view="kids" hidden>
+    <div class="row clue" role="group" aria-label="What you were told">
+      <button type="button" data-clue="either" class="on" title="Told: at least one is a boy" aria-label="At least one is a boy">
+        <svg viewBox="0 0 120 80"><path class="br" d="M22 40V30H98V40"/><text x="60" y="22" class="boy">♂</text><circle cx="36" cy="58" r="14"/><circle cx="84" cy="58" r="14"/></svg>
+      </button>
+      <button type="button" data-clue="older" title="Told: the older one is a boy" aria-label="The older one is a boy">
+        <svg viewBox="0 0 120 80"><path class="br" d="M36 40V30"/><text x="36" y="22" class="boy">♂</text><circle cx="36" cy="58" r="14"/><circle cx="84" cy="58" r="14"/></svg>
+      </button>
+    </div>
+    <div class="bins" id="bins"></div>
+    <div class="row">
+      <button type="button" id="kidsRun" class="icon" title="Start / stop sampling families (Space)" aria-label="Sample families"><svg viewBox="0 0 24 24"><path class="solid" d="M7 4l13 8-13 8z"/></svg></button>
+      <output id="kidsOut" class="big"></output>
+      <button type="button" id="kidsReset" class="icon" title="Clear (R)" aria-label="Clear"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 3.5v4h4"/></svg></button>
+    </div>
+  </section>
+
+  <section id="test" data-view="test" hidden>
+    <p class="given">
+      <span class="scrub" id="prev" role="slider" tabindex="0" aria-label="How rare the disease is" title="Drag"></span>
+      <span class="scrub" id="acc" role="slider" tabindex="0" aria-label="Test accuracy" title="Drag"></span>
+    </p>
+    <canvas id="crowd" width="100" height="100" aria-label="Everyone who tests positive"></canvas>
+    <div class="flow" id="flow"></div>
+    <output id="testOut" class="big"></output>
+  </section>
+
+  <section id="doors" data-view="doors" hidden>
+    <div class="row">
+      <button type="button" id="host" class="icon" title="The host knows where the check is / the host opens a door blindly (H)" aria-label="Host">
+        <svg viewBox="0 0 24 24" class="eye"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+        <svg viewBox="0 0 24 24" class="blind"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><path d="M3 21L21 3"/></svg>
+      </button>
+    </div>
+    <div class="doors" id="doorRow"></div>
+    <div class="row">
+      <button type="button" id="again" class="icon" title="New round (Space)" aria-label="New round"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 3.5v4h4"/></svg></button>
+      <button type="button" class="icon auto" data-n="100" title="Play 100 rounds" aria-label="Play 100 rounds"><svg viewBox="0 0 24 24"><path class="solid" d="M4 5l8 7-8 7zM12 5l8 7-8 7z"/></svg></button>
+      <button type="button" class="icon auto" data-n="5000" title="Play 5,000 rounds" aria-label="Play 5,000 rounds"><svg viewBox="0 0 24 24"><path class="solid" d="M2 5l6 7-6 7zM9 5l6 7-6 7zM16 5l6 7-6 7z"/></svg></button>
+      <button type="button" id="doorReset" class="icon" title="Clear the tallies" aria-label="Clear"><svg viewBox="0 0 24 24"><path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13"/></svg></button>
+    </div>
+    <div class="tally" id="tally"></div>
+  </section>
+</main>
+
+<noscript><p class="noscript">This page needs JavaScript.</p></noscript>
+<script src="js/model.js?v=1"></script>
+<script src="js/app.js?v=1"></script>
+</body>
+</html>

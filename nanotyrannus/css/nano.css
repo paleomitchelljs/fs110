@@ -1,0 +1,174 @@
+/* Whiteboard (light) and chalkboard (dark), the same tokens as the bones deck.
+ * The stage is 1600 × 900 px and scaled to fit, so every size below is in
+ * stage pixels. Nothing on stage is smaller than 19px. */
+:root {
+  --ground: #e8edea; --board: #f9fbfa; --card: #ffffff; --veil: rgba(249, 251, 250, 0.9);
+  --ink: #17211d; --ink-2: #44514c; --muted: #62706a; --rule: #cfd8d3;
+  --accent: #f2b705; --accent-ink: #8a6100; --accent-soft: rgba(242, 183, 5, 0.14);
+  --hide: #d5dfd9; --outline: #17211d; --critical: #d03b3b;
+  --font-ui: "Source Sans 3", "Source Sans Pro", "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #141e1a; --board: #1b2823; --card: #24352e; --veil: rgba(27, 40, 35, 0.92);
+    --ink: #edece3; --ink-2: #c4c9c0; --muted: #919d97; --rule: #34463e;
+    --accent: #f5d76e; --accent-ink: #f5d76e; --accent-soft: rgba(245, 215, 110, 0.12);
+    --hide: #34463f; --outline: #edeade; --critical: #ff8b7e;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #141e1a; --board: #1b2823; --card: #24352e; --veil: rgba(27, 40, 35, 0.92);
+  --ink: #edece3; --ink-2: #c4c9c0; --muted: #919d97; --rule: #34463e;
+  --accent: #f5d76e; --accent-ink: #f5d76e; --accent-soft: rgba(245, 215, 110, 0.12);
+  --hide: #34463f; --outline: #edeade; --critical: #ff8b7e;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; overflow: hidden; }
+body { background: var(--ground); color: var(--ink); font: 17px/1.4 var(--font-ui); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+:focus-visible { outline: 3px solid var(--accent-ink); outline-offset: 2px; }
+button, input, select { font: inherit; color: inherit; }
+.noscript { padding: 20px; }
+
+#stage {
+  position: absolute; left: 0; top: 0; width: 1600px; height: 900px; transform-origin: 0 0; overflow: hidden;
+  background: var(--board); color: var(--ink); font: 24px/1.3 var(--font-ui);
+  user-select: none; -webkit-user-select: none;
+  /* sizes that change with the number of balances; app.js sets them */
+  --cw: 220px; --ch: 112px; --no: 64px; --btn: 38px; --chipw: 84px; --chiph: 52px; --chipno: 32px;
+  --dt: 26px; --hypfont: 44px; --hyppad: 56px; --xs: 44px;
+}
+
+/* ---------- the balance ---------- */
+.bal { position: absolute; left: 0; top: 0; overflow: visible; }
+.bal-ground { stroke: var(--ink-2); stroke-width: 3; transition: stroke 0.2s; }
+.bal-sep { stroke: var(--rule); stroke-width: 2; stroke-dasharray: 3 12; stroke-linecap: round; }
+.bal-ground.hot { stroke: var(--accent-ink); stroke-width: 7; }
+.bal-post { fill: var(--hide); stroke: var(--outline); stroke-width: 4; stroke-linejoin: round; }
+.bal-beamg, .bal-pan { transition: transform 0.8s cubic-bezier(0.3, 1.35, 0.5, 1); }
+.bal-beam { fill: var(--hide); stroke: var(--outline); stroke-width: 4; }
+.bal-cap { fill: var(--accent); stroke: var(--outline); stroke-width: 4; }
+.bal-shelf { fill: none; stroke: var(--rule); stroke-width: 7; stroke-linecap: round; transition: stroke 0.2s; }
+.bal-shelf.used { stroke: var(--ink-2); }
+.bal-shelf.hot { stroke: var(--accent-ink); }
+.bal-chain { fill: none; stroke: var(--ink-2); stroke-width: 2.5; }
+.bal-dish { fill: var(--hide); stroke: var(--outline); stroke-width: 4; stroke-linejoin: round; transition: fill 0.2s; }
+.bal-pan.hot .bal-dish { fill: var(--accent); }
+.bal-pan.out { opacity: 0.4; }
+.still .bal-beamg, .still .bal-pan, .still .card { transition: none !important; }
+
+/* the two hypotheses, typed in above the pans. The text sits on its underline
+ * and grows upward if it wraps: the hidden mirror gives the box its height. */
+.hyp { position: absolute; display: flex; align-items: flex-end; }
+.hyp-grow { display: grid; width: 100%; }
+.hyp-mirror, .hyp textarea {
+  grid-area: 1 / 1; margin: 0; padding: 0 var(--hyppad) 4px; text-align: center;
+  font: 600 var(--hypfont)/1.1 var(--font-ui); white-space: pre-wrap; overflow-wrap: anywhere;
+  border: 0; border-bottom: 3px dashed transparent; border-radius: 0;
+}
+.hyp-mirror { visibility: hidden; pointer-events: none; }
+.hyp textarea {
+  display: block; width: 100%; resize: none; overflow: hidden; outline: none; color: var(--ink); background: transparent;
+  user-select: text; -webkit-user-select: text; border-bottom-color: var(--rule); transition: border-color 0.2s, background 0.2s;
+}
+.hyp textarea::placeholder { color: var(--muted); opacity: 0.7; }
+.hyp textarea:focus { border-bottom-color: var(--accent-ink); }
+.hyp.hot textarea { background: var(--accent-soft); border-bottom-color: var(--accent-ink); }
+.hyp.out textarea { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--critical); text-decoration-thickness: 5px; }
+/* a card dropped here rules the hypothesis out */
+.hyp-x {
+  position: absolute; right: 6px; bottom: 8px; width: var(--xs); height: var(--xs); pointer-events: none;
+  fill: none; stroke: var(--rule); stroke-width: 3; stroke-linecap: round; transition: stroke 0.2s;
+}
+.hyp.hot .hyp-x, .hyp.out .hyp-x { stroke: var(--critical); }
+
+/* ---------- cards ---------- */
+.card {
+  position: absolute; left: 0; top: 0; width: var(--cw); height: var(--ch); padding: 8px 12px; cursor: grab; touch-action: none;
+  display: flex; flex-direction: column; justify-content: center; gap: 4px;
+  background: var(--card); border: 2px solid var(--ink-2); border-radius: 12px; box-shadow: 0 3px 0 var(--rule);
+  transition: transform 0.55s cubic-bezier(0.3, 1.2, 0.5, 1), opacity 0.3s;
+}
+.card-no { display: block; font: 700 var(--no)/1 var(--font-ui); font-variant-numeric: tabular-nums; }
+.card-date { display: block; font: 600 var(--dt)/1 var(--font-ui); color: var(--accent-ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.card-read, .card-copy {
+  position: absolute; right: calc(var(--btn) * 0.16); top: calc(var(--btn) * 0.16); width: var(--btn); height: var(--btn); padding: 0; display: grid; place-items: center;
+  border: 2px solid var(--rule); border-radius: 50%; background: var(--card); color: var(--ink-2); cursor: pointer;
+}
+.card-copy { top: auto; bottom: calc(var(--btn) * 0.16); }
+.card-read:hover, .card-copy:hover { border-color: var(--accent-ink); color: var(--accent-ink); }
+.card-read svg { width: 52%; height: 52%; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.card.sel { border-color: var(--accent-ink); box-shadow: 0 0 0 5px var(--accent); }
+.card.dragging { transition: none; z-index: 10; cursor: grabbing; box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22); }
+.card.fresh { z-index: 5; box-shadow: 0 0 0 5px var(--accent-soft), 0 8px 22px rgba(0, 0, 0, 0.18); }
+/* a ruled-out hypothesis keeps its killers as small stamps under its label */
+.card.chip { width: var(--chipw); height: var(--chiph); padding: 4px 0; align-items: center; text-align: center; border-color: var(--critical); }
+.card.chip .card-no { font-size: var(--chipno); }
+.card.chip .card-date { display: none; }
+.card.chip .card-read, .card.chip .card-copy { display: none; }
+
+/* a card opened big: the whole fact, for the room to read */
+.reader { position: absolute; inset: 0; z-index: 50; display: grid; place-items: center; background: var(--veil); opacity: 0; transition: opacity 0.25s; cursor: pointer; }
+.reader.in { opacity: 1; }
+.reader-card {
+  width: 1180px; max-width: 94%; padding: 40px 56px 48px; background: var(--card); border: 3px solid var(--ink-2); border-radius: 26px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25); transform: scale(0.92); transition: transform 0.3s;
+}
+.reader.in .reader-card { transform: none; }
+.reader-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+.reader-no { font: 700 96px/1 var(--font-ui); font-variant-numeric: tabular-nums; }
+.reader-date { font: 700 64px/1 var(--font-ui); color: var(--accent-ink); font-variant-numeric: tabular-nums; }
+.reader-tx { margin: 0; font: 400 38px/1.32 var(--font-ui); }
+
+/* ---------- the waves (not scaled) ---------- */
+.waves {
+  position: fixed; z-index: 30; left: 50%; top: 6px; transform: translateX(-50%);
+  display: flex; gap: 6px; padding: 4px 6px; background: var(--ground); border: 1px solid var(--rule); border-radius: 12px; transition: opacity 0.5s;
+}
+.waves.idle:not(:hover):not(:focus-within) { opacity: 0.3; }
+@media (hover: none) { .waves.idle { opacity: 1; } }
+.pip {
+  height: 40px; padding: 0 12px; cursor: pointer; white-space: nowrap; font: 600 18px var(--font-ui); font-variant-numeric: tabular-nums;
+  color: var(--muted); background: transparent; border: 2px dashed var(--rule); border-radius: 8px;
+}
+.pip.open { color: var(--ink); background: var(--card); border: 2px solid var(--ink-2); }
+.pip.open.done { color: var(--muted); border-color: var(--rule); }
+.pip.next { color: var(--accent-ink); border: 2px solid var(--accent-ink); }
+.pip.next:hover { background: var(--accent-soft); }
+.pip:disabled { cursor: default; opacity: 0.5; }
+@media (max-width: 900px) { .pip { padding: 0 7px; font-size: 14px; } }
+
+/* ---------- controls (not scaled) ---------- */
+.ctl {
+  position: fixed; z-index: 20; bottom: calc(8px + env(safe-area-inset-bottom, 0px)); right: 8px;
+  display: flex; align-items: center; gap: 4px; padding: 4px 6px;
+  background: var(--ground); border: 1px solid var(--rule); border-radius: 12px; transition: opacity 0.5s;
+}
+.ctl.idle:not(:hover):not(:focus-within) { opacity: 0.15; }
+@media (hover: none) { .ctl.idle { opacity: 1; } }
+.ctl select {
+  height: 38px; padding: 0 8px; cursor: pointer; font: 600 20px var(--font-ui); font-variant-numeric: tabular-nums;
+  background: var(--card); border: 1px solid var(--rule); border-radius: 8px;
+}
+.ctl select:hover { border-color: var(--accent-ink); }
+.ctl button {
+  display: grid; place-items: center; width: 38px; height: 38px; padding: 0; cursor: pointer;
+  border: 1px solid transparent; border-radius: 8px; background: transparent; color: var(--ink-2);
+}
+.ctl button:hover { border-color: var(--rule); color: var(--ink); }
+.ctl button:disabled { opacity: 0.3; cursor: default; }
+.ctl button:disabled:hover { border-color: transparent; color: var(--ink-2); }
+.ctl svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+#theme .solid { fill: currentColor; stroke: none; }
+#reset.armed, #fewer.armed { background: var(--critical); color: #fff; }
+.rotate { display: none; }
+@media (orientation: portrait) and (max-width: 700px) {
+  .rotate { display: grid; place-items: center; position: fixed; left: 50%; bottom: 40px; width: 64px; height: 64px; margin-left: -32px; color: var(--muted); }
+  .rotate svg { width: 48px; height: 48px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; transition-delay: 0s !important; }
+}
