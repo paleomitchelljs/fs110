@@ -1,7 +1,6 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  8 OCT 2026 20:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  12 OCT 2026 09:17
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
 **cards.tex
 (./cards.tex
@@ -382,15 +381,15 @@ L3 programming layer <2025-01-18>
 Here is how much of TeX's memory you used:
  3071 strings out of 473190
  49028 string characters out of 5715801
- 447954 words of memory out of 5000000
+ 448954 words of memory out of 5000000
  26315 multiletter control sequences out of 15000+600000
  619450 words of font info for 55 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,12n,70p,495b,254s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,12n,70p,436b,254s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/adobe/sourcesanspro/SourceSan
 sPro-Bold.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/adobe/sourcesansp
 ro/SourceSansPro-Regular.pfb>
-Output written on cards.pdf (3 pages, 127395 bytes).
+Output written on cards.pdf (3 pages, 126751 bytes).
 PDF statistics:
  25 PDF objects out of 1000 (max. 8388607)
  15 compressed objects within 1 object stream

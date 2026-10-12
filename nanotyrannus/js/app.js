@@ -439,11 +439,37 @@
     if (w === S.wave && w > 1 && !waveCards(w).some((n) => Object.values(S.cards).some((c) => c.n === n))) { S.wave = w - 1; save(); fillMenu(); }
   }
 
+  /* ---------- the pictures: thumbnails along the top, one opens full screen ---------- */
+  const pics = document.querySelector('.pics');
+  const box = document.querySelector('.lightbox'), boxImg = box.querySelector('img');
+  let shown = -1;
+  const thumbs = Array.from(pics.querySelectorAll('button'));
+  function showPic(i) {
+    if (i === shown) i = -1;
+    shown = i;
+    thumbs.forEach((b, k) => b.classList.toggle('on', k === i));
+    if (i < 0) { box.hidden = true; return; }
+    closeReader();
+    boxImg.src = thumbs[i].dataset.src;
+    boxImg.alt = thumbs[i].getAttribute('aria-label') || '';
+    box.hidden = false;
+  }
+  thumbs.forEach((b, k) => b.addEventListener('click', () => showPic(k)));
+  box.addEventListener('click', () => showPic(shown));
+
   /* ---------- keys, theme, start over ---------- */
   addEventListener('keydown', (e) => {
     if (e.target.closest && e.target.closest('input, select, textarea')) return;
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     const k = e.key.toLowerCase();
+    if (shown >= 0) {
+      if (k === 'arrowright' || k === 'arrowleft') {
+        const i = (shown + (k === 'arrowright' ? 1 : -1) + thumbs.length) % thumbs.length;
+        shown = -1; showPic(i);
+      } else if (['1', '2', '3', '4'].includes(k) && thumbs[+k - 1]) { const i = +k - 1; if (i !== shown) showPic(i); }
+      else showPic(shown);
+      e.preventDefault(); return;
+    }
     if (reader) { closeReader(); e.preventDefault(); return; }
     if (k === 'escape' && sel != null) { sel = null; hot(null); layout(); }
     else if ((k === 'delete' || k === 'backspace') && sel != null) { e.preventDefault(); discard(sel); }
@@ -477,7 +503,7 @@
   });
 
   /* the control bars fade when the mouse is still */
-  const bars = [document.querySelector('.ctl'), strip];
+  const bars = [document.querySelector('.ctl'), strip, pics];
   let idle = 0;
   const wake = () => { bars.forEach((b) => b.classList.remove('idle')); clearTimeout(idle); idle = setTimeout(() => bars.forEach((b) => b.classList.add('idle')), 3000); };
   addEventListener('pointermove', wake); wake();

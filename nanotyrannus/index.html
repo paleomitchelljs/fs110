@@ -8,13 +8,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="css/nano.css?v=1">
+<link rel="stylesheet" href="css/nano.css?v=2">
 </head>
 <body>
 <h1 class="sr-only">Nanotyrannus</h1>
 <main id="stage"></main>
 
 <nav class="waves" aria-label="Evidence waves"></nav>
+
+<nav class="pics" aria-label="Images">
+  <button type="button" data-src="img/skull.png" title="Skull (1)" aria-label="Skull and body-size silhouettes"><img src="img/skull.png" alt=""></button>
+  <button type="button" data-src="img/skeletons.png" title="Skeletons (2)" aria-label="Two skeletons side by side"><img src="img/skeletons.png" alt=""></button>
+  <button type="button" data-src="img/hands.png" title="Arms (3)" aria-label="Arm and hand bones compared"><img src="img/hands.png" alt=""></button>
+  <button type="button" data-src="img/histology.png" title="Bone sections (4)" aria-label="Bone sections with growth rings"><img src="img/histology.png" alt=""></button>
+</nav>
+<div class="lightbox" hidden><img alt=""></div>
 
 <nav class="ctl" aria-label="Board">
   <select id="add" title="Add a card by its number" aria-label="Add a fact card"></select>
@@ -26,7 +34,7 @@
 <div class="rotate" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="17" rx="2"/><path d="M20 15a8 8 0 0 1-6 6.5M16.5 21.5l-2.5 0 1-2.4"/></svg></div>
 
 <noscript><p class="noscript">This page needs JavaScript.</p></noscript>
-<script src="js/facts.js?v=1"></script>
-<script src="js/app.js?v=1"></script>
+<script src="js/facts.js?v=2"></script>
+<script src="js/app.js?v=2"></script>
 </body>
 </html>
