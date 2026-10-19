@@ -120,9 +120,9 @@
     const read = text(s, 250 + MAX + 18, ry + 14, '0 mm', 'jw-read');
     read.setAttribute('style', 'font-size:44px');
     // the comparison the paper doesn't put a number on
-    text(s, 0, ry + 74, 'typical oviraptor', 'jw-lab');
+    text(s, 0, ry + 74, 'oviraptorid', 'jw-lab');
     D.svg('path', { class: 'jw-unk', d: `M250 ${ry + 62} v12 h30 v-12` }, s);
-    text(s, 300, ry + 86, '?', 'jw-unk-t');
+    text(s, 300, ry + 86, '? mm', 'jw-unk-t');
 
     const unk = [...s.querySelectorAll('.jw-unk, .jw-unk-t')];
     let dx = 0, stop = null;

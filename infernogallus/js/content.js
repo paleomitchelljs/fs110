@@ -175,7 +175,7 @@
     alt: [
       { t: 'Could ≠ did: bones only', own: true },
       'Cartilage and ligaments unknown',
-      'Typical oviraptor: no number given'
+      'Oviraptorid jaws: “more limited”; no mm given'
     ],
     test: 'Look for fore–aft wear scratches',
     quotes: ['up to 15 mm of anteroposterior jaw motion was ==possible==', 'soft tissues ==likely== affected true joint mobility']
