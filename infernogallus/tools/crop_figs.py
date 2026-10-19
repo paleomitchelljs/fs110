@@ -4,7 +4,7 @@
 
 Needs infernogallus/infernogallus.pdf (gitignored), poppler's pdfimages, and Pillow.
 Figures are the paper's own (Funston et al. 2026, Nature Communications), cropped
-for teaching. Panel boxes are (left, top, right, bottom) in each figure's own pixels.
+for teaching. img/recon.png (the skeleton alone, from Fig. 1c) was cleaned by hand and is not made here. Panel boxes are (left, top, right, bottom) in each figure's own pixels.
 """
 import subprocess, sys, tempfile, pathlib
 from PIL import Image
@@ -61,17 +61,6 @@ with tempfile.TemporaryDirectory() as t:
             c = im.crop(box)
             c.save(out / (name + '.jpg'), quality=88, optimize=True)
             print(name, c.size)
-        if i == 0:
-            # the reconstruction alone: full width (the head is at the far right), panel d painted out
-            from PIL import ImageDraw
-            c = im.crop((0, 905, 1350, 1524))
-            d = ImageDraw.Draw(c)
-            d.rectangle((280, 0, 345, 45), fill='white')                       # panel letter
-            d.line([(803, 348), (892, 437)], fill='white', width=14)          # tail of the dotted leader to panel d
-            # panel d and its upper leader, below the line of the neck
-            d.polygon([(950, 194), (1060, 150), (1130, 118), (1350, 118), (1350, 619), (880, 619), (880, 250), (950, 250)], fill='white')
-            c.save(out / 'fig1-recon-only.jpg', quality=88, optimize=True)
-            print('fig1-recon-only', c.size)
         if i == 1:
             c = restore_pair(im)
             c.save(out / 'fig2-restore.jpg', quality=88, optimize=True)

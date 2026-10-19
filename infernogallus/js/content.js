@@ -21,7 +21,7 @@
 (function (root) {
   'use strict';
 
-  const FIG = (name, cap, alt, from) => ({ kind: 'img', src: 'img/' + name + '.jpg', cap, alt, from: from || 0 });
+  const FIG = (name, cap, alt, from) => ({ kind: 'img', src: 'img/' + (name.includes('.') ? name : name + '.jpg'), cap, alt, from: from || 0 });
   const CR = 'Funston et al. 2026';
 
   /* ---------------------------------------------------------------- claims */
@@ -67,7 +67,7 @@
     id: 'c2', n: 2, short: '12 kg', step: 2,
     claim: 'Infernogallus weighed about 12 kg',
     viz: [
-      FIG('fig1-recon-only', `Fig. 1c · ${CR}`, 'Skeletal reconstruction with scale bar'),
+      FIG('recon.png', `Fig. 1c · ${CR}`, 'Skeletal reconstruction with scale bar'),
       { kind: 'mass', from: 1, at: { femur: 1, eq: 2, mass: 3 } }
     ],
     evidence: [
@@ -233,7 +233,7 @@
     id: 'c9', n: 9, short: 'Hidden diversity', step: 4,
     claim: 'We know less about pre-extinction diversity than we thought',
     viz: [
-      FIG('fig1-recon-only', `Fig. 1c · ${CR}`, 'Skeletal reconstruction with scale bar'),
+      FIG('recon.png', `Fig. 1c · ${CR}`, 'Skeletal reconstruction with scale bar'),
       { kind: 'accum', from: 'alt' }
     ],
     evidence: [
@@ -254,7 +254,7 @@
   C.e3 = {
     id: 'e3', n: 0, short: 'Diet doomed it', step: 4, extra: true,
     claim: 'A specialized diet helps explain the extinction',
-    viz: [FIG('fig1-recon-only', `Fig. 1c · ${CR}`, 'Skeletal reconstruction with scale bar')],
+    viz: [FIG('recon.png', `Fig. 1c · ${CR}`, 'Skeletal reconstruction with scale bar')],
     evidence: [
       'Small: under the hypothesized size cutoff',
       'Herbivore with bird-like traits',
@@ -317,7 +317,7 @@
       id: 'title', title: 'Dissecting a paper', mins: [0, 1],
       builds: [{}, { prompt: 'What is the title claiming?' }],
       items: [{
-        kind: 'cover', box: [0, 0, 1600, 790], pic: 'img/fig1-recon-only.jpg', title: 'Dissecting a Paper',
+        kind: 'cover', box: [0, 0, 1600, 790], pic: 'img/recon.png', title: 'Dissecting a Paper',
         cite: 'Funston et al. 2026 · _Nature Communications_',
         claim: 'Fruit-eating adaptations in a Late Cretaceous oviraptorosaur', claimAt: 1
       }]
