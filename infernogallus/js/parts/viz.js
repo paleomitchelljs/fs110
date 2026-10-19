@@ -71,7 +71,7 @@
     B.genus = D.svg('rect', { class: 'ns-box', x: 52, y: 270, width: 218, height: 54, rx: 12 }, s);
     text(s, 161, 306, 'Oviraptor', 'ns-lab', 'middle');
     ['Citipati', 'Conchoraptor', 'Khaan'].forEach((n, i) => text(s, 161, 150 + i * 30, '_' + n + '_', 'ns-dim', 'middle'));
-    ['Anzu', 'Chirostenotes', 'Elmisaurus'].forEach((n, i) => text(s, 352, 188 + i * 30, '_' + n + '_', 'ns-dim'));
+    ['Anzu', 'Eoneophron', 'Chirostenotes', 'Elmisaurus'].forEach((n, i) => text(s, 352, 188 + i * 30, '_' + n + '_', 'ns-dim'));
     D.svg('circle', { class: 'ns-dot', cx: 612, cy: 288, r: 15 }, s);
     text(s, 612, 334, '_Infernogallus_', 'ns-lab', 'middle').setAttribute('style', 'font-size:23px');
     const verdict = text(s, 690, 62, '', 'ns-verdict', 'end');
