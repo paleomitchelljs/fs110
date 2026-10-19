@@ -68,17 +68,17 @@
     claim: 'Infernogallus weighed about 12 kg',
     viz: [
       FIG('fig1-recon-only', `Fig. 1c · ${CR}`, 'Skeletal reconstruction with scale bar'),
-      { kind: 'mass', from: 1, at: { femur: 1, eq: 2, mass: 2, anzu: 3 } }
+      { kind: 'mass', from: 1, at: { femur: 1, eq: 2, mass: 3 } }
     ],
     evidence: [
-      'Femur ~185 mm long (restored)',
-      'Femur circumference → mass equation',
-      'Compare _Anzu_: femur 500–525 mm'
+      'Femur circumference measured',
+      'Equation: circumference → body mass',
+      'Result: 12 kg (range 9–15)'
     ],
     alt: [
       { t: 'Equation fitted on other body plans', own: true },
       { t: 'Volume models give other numbers', own: true },
-      'Femur partly missing: length restored'
+      'Range is ±25%: 9 to 15 kg'
     ],
     test: 'Two methods: do they agree?',
     quotes: ['would have weighed ==approximately== 12 kg (9–15 kg) in life']

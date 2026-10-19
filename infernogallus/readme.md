@@ -40,7 +40,7 @@ Rows with a small **+** at the right are mine. The paper doesn't raise them. Eve
 | 3–5.5 | How sure are the authors? | Six verbatim phrases from the abstract, one per press. Students drag each onto a line from unsure to sure. Verbs are marked: *describe, reveals, enabled, attests, likely, remains unclear*. |
 | 5.5–7.5 | How do you know? | The five questions, same as `bones/`. |
 | 7.5–9 | 1 New species | Short. Falls out of the specimen and the diagnosis. |
-| 9–11.5 | 2 Twelve kg | Femur bars and the 9–15 kg band. |
+| 9–11.5 | 2 Twelve kg | Femur circumference, then the equation, then the 12 kg dot inside its 9–15 band. |
 | 11.5–14.5 | 3 Age 6–7 | Histology. The femur and fibula disagree by one mark. |
 | 14.5–17.5 | 4 Oviraptor | Which "oviraptor"? Three pills outline three nested groups. |
 | 17.5–21 | 5 Jaw muscles | Fig. 2e, f, then the muscle plot. |

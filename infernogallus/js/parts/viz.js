@@ -11,32 +11,29 @@
     return t;
   };
 
-  /* ---------- claim 2: femur and mass ---------- */
+  /* ---------- claim 2: femur -> equation -> mass ---------- */
   D.viz.mass = function (layer, v) {
     const s = svg(layer, 740, 480);
-    const X0 = 190;
-    const show = {};
-    const grp = (k) => (show[k] = D.svg('g', { class: 'reveal' }, s));
+    const X0 = 190, kx = (k) => X0 + k * 25.5;
+    const grp = (k) => (g[k] = D.svg('g', { class: 'reveal' }, s));
+    const g = {};
+    const arrow = (p, x, y0, y1) => D.svg('path', { class: 'ms-arrow', d: `M${x} ${y0} V${y1 - 4} M${x - 11} ${y1 - 16} l11 14 11 -14` }, p);
 
-    // femur bars, 1 px per mm
-    const a = grp('anzu');
-    text(a, 0, 76, '_Anzu_', 'ms-lab');
-    D.svg('rect', { class: 'ms-bar', x: X0, y: 48, width: 500, height: 32, rx: 4 }, a);
-    D.svg('rect', { class: 'ms-ext', x: X0 + 500, y: 48, width: 25, height: 32, rx: 4 }, a);
-    text(a, X0, 38, '500–525 mm', 'ms-val');
-
+    // the bone: 185 px for 185 mm; the ring is the measurement the equation uses
     const f = grp('femur');
-    text(f, 0, 186, '_Infernogallus_', 'ms-lab');
-    D.svg('rect', { class: 'ms-bar', x: X0, y: 158, width: 185, height: 32, rx: 4 }, f);
-    text(f, X0 + 200, 186, '~185 mm', 'ms-val');
+    text(f, 0, 78, 'Femur', 'ms-lab');
+    D.svg('rect', { class: 'ms-bar', x: X0, y: 52, width: 185, height: 30, rx: 6 }, f);
+    D.svg('ellipse', { class: 'ms-ring', cx: X0 + 92, cy: 67, rx: 11, ry: 28 }, f);
+    text(f, X0 + 92, 30, 'circumference', 'ms-lab', 'middle');
+    text(f, X0 + 200, 76, '~185 mm long', 'ms-val');
 
-    // femur -> equation -> mass
+    // the equation joins them
     const q = grp('eq');
-    D.svg('path', { class: 'ms-arrow', d: `M${X0 + 92} 206 V276 M${X0 + 80} 262 l12 14 12 -14` }, q);
-    text(q, X0 + 120, 250, 'equation', 'ms-lab');
+    arrow(q, X0 + 92, 112, 184);
+    D.svg('rect', { class: 'ms-box', x: X0, y: 184, width: 380, height: 62, rx: 14 }, q);
+    text(q, X0 + 190, 224, 'mass equation', 'ms-val', 'middle');
 
-    // mass axis 0–20 kg
-    const kx = (k) => X0 + k * 25.5;
+    // the result, on a kg axis; the arrow lands on the dot
     D.svg('path', { class: 'ms-axis', d: `M${kx(0)} 350 H${kx(20)}` }, s);
     [0, 5, 10, 15, 20].forEach((k) => {
       D.svg('path', { class: 'ms-axis', d: `M${kx(k)} 350 v10` }, s);
@@ -44,17 +41,15 @@
     });
     text(s, 0, 360, 'kg', 'ms-lab');
     const m = grp('mass');
+    arrow(m, kx(12), 246, 300);
     D.svg('rect', { class: 'ms-range', x: kx(9), y: 306, width: kx(15) - kx(9), height: 40, rx: 6 }, m);
     D.svg('circle', { class: 'ms-me', cx: kx(12), cy: 326, r: 15 }, m);
-    text(m, kx(12), 292, '12 kg', 'ms-val', 'middle');
-    text(m, kx(9), 438, '9', 'ms-tick', 'middle');
+    text(m, kx(15) + 16, 336, '12 kg (9–15)', 'ms-val');
     return {
       show(b) {
-        const at = v.at;
-        show.femur.classList.toggle('on', b >= at.femur);
-        show.eq.classList.toggle('on', b >= at.eq);
-        show.mass.classList.toggle('on', b >= at.mass);
-        show.anzu.classList.toggle('on', b >= at.anzu);
+        g.femur.classList.toggle('on', b >= v.at.femur);
+        g.eq.classList.toggle('on', b >= v.at.eq);
+        g.mass.classList.toggle('on', b >= v.at.mass);
       }
     };
   };
