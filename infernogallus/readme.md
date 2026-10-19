@@ -44,7 +44,7 @@ Rows with a small **+** at the right are mine. The paper doesn't raise them. Eve
 | 11.5–14.5 | 3 Age 6–7 | Histology. The femur and fibula disagree by one mark. |
 | 14.5–17.5 | 4 Oviraptor | Which "oviraptor"? Three pills outline three nested groups. |
 | 17.5–21 | 5 Jaw muscles | Fig. 2e, f, then the muscle plot. |
-| 21–26 | 6 Fore–aft jaw | Drag the jaw. 15 mm is the paper's number for Infernogallus. For oviraptorids the main text says only "considerably more limited", so the claim's comparison has a number on one side and a "? mm" on the other. |
+| 21–26 | 6 Fore–aft jaw | Drag the jaw. 15 mm is the paper's number for Infernogallus. For oviraptorids the main text says only "considerably more limited", so the claim's comparison has a number on one side and a "? mm" on the other (the second line of the readout under the jaw). |
 | 26–32 | 7 Fruit specialist | A ladder of four nested claims, a certainty marker on each rung. |
 | 32–36.5 | 8 All caenagnathids | Fig. 4. |
 | 36.5–40 | 9 Hidden diversity | Two ways a discovery curve could go on. |

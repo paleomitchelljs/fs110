@@ -112,24 +112,20 @@
     // a fat invisible target so the jaw is easy to grab
     D.svg('rect', { x: 20, y: 160, width: 600, height: 170, fill: 'transparent' }, jaw);
 
-    // how far it moved, live
+    // how far it has slid, live; the comparison the paper gives no number for appears with the alternatives
     const ry = 392;
-    text(s, 0, ry + 8, '_Infernogallus_', 'jw-lab');
-    D.svg('rect', { x: 250, y: ry - 14, width: MAX, height: 28, rx: 6, fill: 'none', stroke: 'var(--ink-2)', 'stroke-width': 3 }, s);
-    const fill = D.svg('rect', { x: 250, y: ry - 14, width: 0, height: 28, rx: 6, fill: 'var(--accent)' }, s);
-    const read = text(s, 250 + MAX + 18, ry + 14, '0 mm', 'jw-read');
+    text(s, 0, ry + 14, '_Infernogallus_', 'jw-lab');
+    const read = text(s, 250, ry + 14, '0 mm', 'jw-read');
     read.setAttribute('style', 'font-size:44px');
-    // the comparison the paper doesn't put a number on
-    text(s, 0, ry + 74, 'oviraptorid', 'jw-lab');
-    D.svg('path', { class: 'jw-unk', d: `M250 ${ry + 62} v12 h30 v-12` }, s);
-    text(s, 300, ry + 86, '? mm', 'jw-unk-t');
+    text(s, 400, ry + 14, 'max 15', 'jw-lab');
+    text(s, 0, ry + 78, 'oviraptorid', 'jw-lab');
+    text(s, 250, ry + 78, '? mm', 'jw-unk-t').setAttribute('style', 'font-size:44px');
 
-    const unk = [...s.querySelectorAll('.jw-unk, .jw-unk-t')];
+    const unk = [...s.querySelectorAll('.jw-unk-t')];
     let dx = 0, stop = null;
     const set = (x) => {
       dx = D.clamp(x, -MAX, 0);
       jaw.setAttribute('transform', `translate(${dx} 0)`);
-      fill.setAttribute('width', -dx);
       read.textContent = Math.round(-dx / PX) + ' mm';
     };
     // drag
