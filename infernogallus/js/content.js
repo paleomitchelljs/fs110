@@ -308,7 +308,7 @@
   };
   const LABELS = {
     c1: 'New species', c2: '12 kg', c3: 'Age 6–7', c4: 'Oviraptorosaur', c5: 'Muscles differ', c6: 'Fore–aft jaw',
-    c7: 'Fruit specialist', c8: 'All caenagnathids', c9: 'Hidden diversity',
+    c7: 'Fruit specialist', c8: 'Caenagnathid frugivory', c9: 'Hidden diversity',
     e1: 'One species', e2: 'Skull restored', e3: 'Diet doomed it'
   };
 
