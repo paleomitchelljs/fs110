@@ -64,7 +64,7 @@
     const rows = [];
     const addRow = (kind, item, i, gap) => {
       const e = D.el('div', 'row ' + kind + (item.own ? ' mine' : '') + (gap ? ' gap' : ''), rowsEl,
-        D.icons[kind === 'ev' ? 'evidence' : kind === 'alt' ? 'else' : 'test'] + '<span>' + D.fmt(item.t) + '</span>');
+        D.bul[kind] + '<span>' + D.fmt(item.t) + '</span>');
       if (item.own) e.title = 'Added by the deck, not raised in the paper';
       rows.push({ e, at: i });
     };
@@ -74,7 +74,7 @@
 
     /* quotes */
     const qs = D.el('div', 'cl-quotes', host);
-    const quotes = (c.quotes || []).map((q) => D.el('div', 'q', qs, D.icons.claim + '<span>“' + D.fmt(q) + '”</span>'));
+    const quotes = (c.quotes || []).map((q) => D.el('div', 'q', qs, '<span>“' + D.fmt(q) + '”</span>'));
 
     /* certainty gauge */
     const g = D.el('div', 'gauge', host);

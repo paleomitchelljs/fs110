@@ -239,7 +239,7 @@ mark { background: var(--accent-soft); color: var(--accent-ink); font-style: nor
 .row.on { opacity: 1; transform: none; }
 .row.play { animation: rise 0.45s ease both; }
 .row.gap { margin-top: 20px; }
-.row svg { flex: none; width: 36px; height: 36px; margin-top: 1px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.row svg { flex: none; width: 30px; height: 30px; margin-top: 4px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .row.ev svg { color: var(--ink-2); }
 .row.alt svg { color: var(--accent-ink); }
 .row.test svg { color: var(--accent-ink); }
@@ -249,7 +249,6 @@ mark { background: var(--accent-soft); color: var(--accent-ink); font-style: nor
 .cl-quotes { position: absolute; left: 860px; top: 690px; width: 700px; height: 104px; display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; }
 .q { display: flex; gap: 12px; align-items: flex-start; font: italic 600 27px/1.2 var(--font-ui); color: var(--ink-2); opacity: 0; transition: opacity 0.4s; }
 .q.on { opacity: 1; }
-.q svg { flex: none; width: 30px; height: 30px; margin-top: 2px; fill: none; stroke: var(--muted); stroke-width: 2; stroke-linejoin: round; }
 
 /* the certainty gauge */
 .gauge { position: absolute; left: 70px; top: 690px; width: 740px; height: 104px; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
@@ -319,7 +318,7 @@ mark { background: var(--accent-soft); color: var(--accent-ink); font-style: nor
 .rung-name b { flex: none; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font: 700 26px var(--font-ui); background: var(--accent); color: #1a1405; }
 .rung-rows { align-self: center; }
 .rung .row { font-size: 27px; padding: 1px 0; gap: 10px; }
-.rung .row svg { width: 28px; height: 28px; }
+.rung .row svg { width: 24px; height: 24px; margin-top: 3px; }
 .rung .row.gap { margin-top: 0; }
 .mg { position: relative; height: 52px; border-radius: 14px; border: 2px solid var(--ink-2); cursor: pointer; background: linear-gradient(90deg, var(--hide), var(--accent-soft)); opacity: 0; pointer-events: none; transition: opacity 0.4s; }
 .mg.on { opacity: 1; pointer-events: auto; }

@@ -62,6 +62,13 @@
     fine: '<svg viewBox="0 0 24 24"><rect x="7" y="3" width="13" height="15" rx="1.5"/><path d="M3.5 7v13.5h13M10.5 8h6M10.5 12h6"/></svg>'
   });
 
+  /* Row bullets: filled for evidence, hollow for an alternative, a diamond for the test. */
+  D.bul = {
+    ev: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="currentColor" stroke="none"/></svg>',
+    alt: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5.5" stroke-width="3"/></svg>',
+    test: '<svg viewBox="0 0 24 24"><path d="M12 4.5l7.5 7.5-7.5 7.5L4.5 12z" fill="currentColor" stroke="none"/></svg>'
+  };
+
   /* Certainty: five bins, 0–1 along the bar. */
   D.BINS = ['Guess', 'Maybe', 'Likely', 'Strong', 'Solid'];
   D.cert = (id) => D.get('cert:' + id, () => ({ v: [0, 0, 0, 0, 0], call: null }));

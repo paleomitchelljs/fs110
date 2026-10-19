@@ -22,17 +22,17 @@
       e.innerHTML = `<div class="rung-name"><b>${i + 1}</b><span>${D.fmt(r.name)}</span></div><div class="rung-rows"></div><div class="mg"><div class="mg-knob"></div><div class="mg-ends"><span>Guess</span><span>Solid</span></div></div>`;
       const rows = r.rows.map((x) => {
         const row = D.el('div', 'row ' + (x.k === 'ev' ? 'ev' : 'alt') + (x.own ? ' mine' : ''), e.querySelector('.rung-rows'),
-          D.icons[x.k === 'ev' ? 'evidence' : 'else'] + '<span>' + D.fmt(x.t) + '</span>');
+          D.bul[x.k] + '<span>' + D.fmt(x.t) + '</span>');
         return { e: row, at: n++ };
       });
       return { e, rows, first: rows[0].at, last: rows[rows.length - 1].at, mg: e.querySelector('.mg'), knob: e.querySelector('.mg-knob') };
     });
     const tAt = n++, qAt = n++;
-    const test = D.el('div', 'row test ld-test', root, D.icons.test + '<span>' + D.fmt(c.test) + '</span>');
+    const test = D.el('div', 'row test ld-test', root, D.bul.test + '<span>' + D.fmt(c.test) + '</span>');
     test.style.width = '640px';
     const qs = D.el('div', 'cl-quotes', root);
     qs.style.cssText = 'left:720px;top:726px;width:830px;height:70px;';
-    const quotes = (c.quotes || []).map((q) => { const e = D.el('div', 'q', qs, D.icons.claim + '<span>“' + D.fmt(q) + '”</span>'); e.style.fontSize = '25px'; return e; });
+    const quotes = (c.quotes || []).map((q) => { const e = D.el('div', 'q', qs, '<span>“' + D.fmt(q) + '”</span>'); e.style.fontSize = '25px'; return e; });
 
     const L = () => D.get('ladder:' + c.id, () => ({ v: R.map(() => null) }));
     function setRung(i, k) {
