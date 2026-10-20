@@ -164,7 +164,6 @@
     { id: 'edu', name: 'Education', icon: 'edu' },
     { id: 'teach', name: 'Teaching', icon: 'teach' },
     { id: 'research', name: 'Research', icon: 'pubs' },
-    { id: 'grants', name: 'Grants', icon: 'grants' },
     { id: 'outreach', name: 'Outreach', icon: 'outreach' },
     { id: 'field', name: 'Field work', icon: 'field' },
     { id: 'service', name: 'Service', icon: 'service' },
@@ -200,13 +199,6 @@
   add('research', 'r_pnas', 'Late Cretaceous restructuring of dinosaur-bearing communities facilitated the End-Cretaceous mass extinction. *PNAS*', '2012');
   add('research', 'r_nw', 'Grooves to tubes: Evolution of the venom delivery system in a Late Triassic "reptile". *Naturwissenschaften*', '2010');
 
-  add('grants', 'g_25', '$6,000, Pochobradsky grant, Coe College', '2025');
-  add('grants', 'g_24', '$5,844, Pochobradsky & Coe Research Fund Grant, Coe College', '2024');
-  add('grants', 'g_ddig', '$14,960, NSF Doctoral Dissertation Improvement Grant (DEB-1311389)', '2012');
-  add('grants', 'g_easpi', '$5,700, NSF East Asia and Pacific Summer Institute Grant (OISE-1107676)', '2010');
-  add('grants', 'g_h12', '$500, Hinds Fund, University of Chicago', '2012');
-  add('grants', 'g_h11', '$1,520, Hinds Fund, University of Chicago', '2011');
-  add('grants', 'g_ps', '$850, Paleontological Society Student Grant', '2011');
 
   add('outreach', 'o_20', '{Gave|Presented} over 20 talks in middle and high school classrooms, rural North Carolina and Chicago Public Schools', '2009–2015');
   add('outreach', 'o_aap', 'Ask-a-paleontologist visits to Chicago Public Schools kindergarten classes', '2010–2015');
@@ -238,22 +230,22 @@
   /* Three starting arrangements of the same lines. order lists every section; on lists what is on the page. */
   const PRESETS = {
     teach: {
-      order: ['profile', 'teach', 'exp', 'edu', 'outreach', 'research', 'service', 'grants', 'field'],
+      order: ['profile', 'teach', 'exp', 'edu', 'outreach', 'research', 'service', 'field'],
       on: {
         profile: ['p_teach'], teach: ['t_coe', 't_anat', 't_evo', 't_sem'], exp: ['x_coe', 'x_wvu', 'x_um'], edu: ['d_phd', 'd_bs'],
-        outreach: ['o_20', 'o_bsa'], research: ['r_n', 'r_nat'], service: ['s_coe', 's_rev'], grants: ['g_25'],
+        outreach: ['o_20', 'o_bsa'], research: ['r_n', 'r_nat'], service: ['s_coe', 's_rev'],
       },
     },
     research: {
-      order: ['profile', 'edu', 'research', 'grants', 'exp', 'field', 'teach', 'service', 'outreach'],
+      order: ['profile', 'edu', 'research', 'exp', 'field', 'teach', 'service', 'outreach'],
       on: {
         profile: ['p_res'], edu: ['d_phd', 'd_bs'],
         research: ['r_n', 'r_nat', 'r_feath', 'r_cb', 'r_fb', 'r_pnas'],
-        grants: ['g_ddig', 'g_easpi', 'g_25'], exp: ['x_coe', 'x_wvu', 'x_um'], field: ['f_mo'], service: ['s_rev'],
+        exp: ['x_coe', 'x_wvu', 'x_um'], field: ['f_mo'], service: ['s_rev'],
       },
     },
     outreach: {
-      order: ['profile', 'outreach', 'exp', 'teach', 'edu', 'research', 'field', 'service', 'grants'],
+      order: ['profile', 'outreach', 'exp', 'teach', 'edu', 'research', 'field', 'service'],
       on: {
         profile: ['p_out'], outreach: ['o_20', 'o_aap', 'o_dozin', 'o_bsa', 'o_wild', 'o_stem', 'o_gs', 'o_pod', 'o_press'],
         exp: ['x_coe', 'x_wvu', 'x_um'], teach: ['t_sem'], edu: ['d_phd', 'd_bs'], research: ['r_nat', 'r_nw'], field: ['f_mo'],

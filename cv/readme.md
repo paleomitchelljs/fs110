@@ -16,7 +16,7 @@ In publications the author's own name is bold. Ask why.
 
 ## 3. The resume
 
-A letter-size page, the same lines as the CV, cut and reworded. The grey bar on top is how full the page is. Past one page the bar goes red, the page turns red below the dashed line, and the text spills off it.
+A letter-size page, the same lines as the CV, cut and reworded. The grey bar on top is how full the page is. Past one page it goes red.
 
 - **Move.** Drag a section by the dots in the far margin, or a line by the dots beside it (↑ ↓ when a handle has focus). The order is the emphasis.
 - **Cut.** Drag a line off the page (or click ×, or Delete). It goes back to the CV column on the left.
@@ -31,6 +31,7 @@ Nothing is saved. Reloading starts over.
 
 - The CV's Education band holds jobs and degrees. The resume splits it into Experience and Education.
 - Teaching is 13 rows on the CV and 4 lines on the resume. Grouping is a choice.
+- Grants are on the CV and left off the resume.
 - A citation loses its author list and volume. What is left is the title and the journal.
 - Numbers are counted from the CV, not rounded up: 13 courses, 19 journal articles, 13 journals reviewed for, five Utah field seasons, three Chinle seasons. `tests/data.test.js` checks each against the CV rows.
 - Nothing on the resume is absent from the CV. The profile lines are the only new sentences.

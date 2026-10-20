@@ -228,7 +228,6 @@
     const W = sheet.clientWidth; if (!W) return;
     const room = W * 11 / 8.5 - W * 0.055;
     const used = inner.offsetTop + inner.offsetHeight;
-    sheet.classList.toggle('over', used > room);
     meter.classList.toggle('over', used > room);
     $('i', meter).style.width = Math.min(100, used / room * 100) + '%';
   }
