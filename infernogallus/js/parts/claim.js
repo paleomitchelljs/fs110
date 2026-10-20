@@ -87,6 +87,9 @@
       b.addEventListener('click', (ev) => vote(i, ev.shiftKey || ev.altKey));
       bins.push(b);
     });
+    const undo = D.el('button', 'g-undo', g, '↶');
+    undo.title = 'Undo the last vote (and clear the marker if there are no votes left)';
+    undo.addEventListener('click', () => vote(-1, true));
     const mark = D.el('div', 'g-mark', g);
     mark.title = "The room's call: drag to move it · double-click to follow the votes";
     D.slide(mark, bar, (k) => { D.cert(c.id).call = k; paint(); }, () => D.save());
@@ -94,7 +97,18 @@
 
     function vote(i, undo) {
       const s = D.cert(c.id);
-      if (undo) s.v[i] = Math.max(0, s.v[i] - 1); else s.v[i]++;
+      s.h = s.h || [];
+      if (undo) {
+        // i < 0: take back the latest click, wherever it was; otherwise the latest in that bin
+        const any = i < 0;
+        if (any) i = s.h.length ? s.h[s.h.length - 1] : s.v.reduce((m, n, j) => (n ? j : m), -1);
+        if (i < 0 || !s.v[i]) { if (any) s.call = null; }
+        else {
+          s.v[i]--;
+          const at = s.h.lastIndexOf(i);
+          if (at >= 0) s.h.splice(at, 1);
+        }
+      } else { s.v[i]++; s.h.push(i); }
       D.save(); paint();
     }
     function paint() {

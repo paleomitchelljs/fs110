@@ -19,7 +19,7 @@
       const e = D.el('div', 'rung', root);
       e.style.top = (TOP + (N - 1 - i) * (RH + GAP)) + 'px';
       e.style.height = RH + 'px';
-      e.innerHTML = `<div class="rung-name"><b>${i + 1}</b><span>${D.fmt(r.name)}</span></div><div class="rung-rows"></div><div class="mg"><div class="mg-knob"></div><div class="mg-ends"><span>Guess</span><span>Solid</span></div></div>`;
+      e.innerHTML = `<div class="rung-name"><b>${i + 1}</b><span>${D.fmt(r.name)}</span></div><div class="rung-rows"></div><div class="mg"><div class="mg-knob"></div><div class="mg-ends"><span>Guess</span><span>Solid</span></div><button class="g-undo" title="Clear this marker">↶</button></div>`;
       const rows = r.rows.map((x) => {
         const row = D.el('div', 'row ' + (x.k === 'ev' ? 'ev' : 'alt') + (x.own ? ' mine' : ''), e.querySelector('.rung-rows'),
           D.bul[x.k] + '<span>' + D.fmt(x.t) + '</span>');
@@ -59,6 +59,11 @@
         const up = () => { r.mg.removeEventListener('pointermove', apply); r.mg.removeEventListener('pointerup', up); r.mg.removeEventListener('pointercancel', up); r.knob.classList.remove('drag'); };
         r.mg.addEventListener('pointermove', apply); r.mg.addEventListener('pointerup', up); r.mg.addEventListener('pointercancel', up);
       });
+    });
+    rungs.forEach((r, i) => {
+      const b = r.mg.querySelector('.g-undo');
+      b.addEventListener('pointerdown', (ev) => ev.stopPropagation());
+      b.addEventListener('click', () => { L().v[i] = null; D.save(); paint(); });
     });
     paint();
 
