@@ -1,0 +1,365 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Stylish Curriculum Vitae
+% LaTeX Template
+% Version 1.0 (18/7/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Stefano (http://stefano.italians.nl/)
+%
+% IMPORTANT: THIS TEMPLATE NEEDS TO BE COMPILED WITH XeLaTeX
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+% The main font used in this template, Adobe Garamond Pro, does not 
+% come with Windows by default. You will need to download it in
+% order to get an output as in the preview PDF. Otherwise, change this 
+% font to one that does come with Windows or comment out the font line 
+% to use the default LaTeX font.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper, oneside, final]{scrartcl} % Paper options using the scrartcl class
+\usepackage[margin=2.5cm]{geometry}
+%\usepackage{scrpage2} % Provides headers and footers configuration
+\usepackage{scrlayer-scrpage}
+\usepackage{titlesec} % Allows creating custom \section's
+\usepackage{marvosym} % Allows the use of symbols
+\usepackage{tabularx,colortbl} % Advanced table configurations
+\usepackage{fontspec} % Allows font customization
+\usepackage[colorlinks=true]{hyper ref}
+\usepackage[oldstyle]{libertine}
+
+%\defaultfontfeatures{Mapping=tex-text}
+%\setmainfont{Diacritics} % Main document font
+
+%\setmainfont{Linux Libertine O}
+%\setmonofont[ItalicFont={Linux Libertine Mono O Oblique}]{Linux Libertine Mono O}
+%\newfontface{\lli}{Linux Libertine Display O}
+
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule] % Section formatting
+
+\pagestyle{scrheadings} % Print the headers and footers on all pages
+
+\addtolength{\voffset}{-0.5in} % Adjust the vertical offset - less whitespace at the top of the page
+\addtolength{\textheight}{0.5cm} % Adjust the text height - less whitespace at the bottom of the page
+
+\newcommand{\gray}{\rowcolor[gray]{.90}} % Custom highlighting for the work experience and education sections
+
+%----------------------------------------------------------------------------------------
+% FOOTER SECTION
+%----------------------------------------------------------------------------------------
+
+\renewcommand{\headfont}{\normalfont\rmfamily\scshape} % Font settings for footer
+
+\cofoot{
+\addfontfeature{LetterSpace=20.0}\fontsize{12}{17}\selectfont % Letter spacing and font size
+
+ jonsmitchell.com \\ % Your mailing address
+{\Large\Letter} jonsmitch2@gmail.com \ {\Large\Telefon} (919) 273-8800 % Your email address and phone number
+}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\begin{center} % Center everything in the document
+
+%----------------------------------------------------------------------------------------
+% HEADER SECTION
+%----------------------------------------------------------------------------------------
+
+{\addfontfeature{LetterSpace=10.0}\fontsize{30}{30}Jonathan S. Mitchell} % Your name at the top
+
+\vspace{0.1cm} % Extra whitespace after the large name at the top
+
+%----------------------------------------------------------------------------------------
+%	EDUCATION
+%----------------------------------------------------------------------------------------
+
+\section{Education}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+Asst. Prof. & Coe College, 2023 - Current \\
+Asst. Prof. & West Virginia University Institute of Technology, 2017 - 2023 \\
+Postdoc & The University of Michigan, 2015 - 2017 \\
+ Ph.D. & Committee on Evolutionary Biology, The University of Chicago, June 2015 \\
+ %M.S. & Committee on Evolutionary Biology, The University of Chicago, June 2012 \\
+ B.S. & Geology \textit{magna cum laude} Appalachian State University, 2010 \\
+\end{tabularx}
+
+%----------------------------------------------------------------------------------------
+%	PUBLICATIONS
+%----------------------------------------------------------------------------------------
+
+\section{Publications}
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+ ORCID & https://orcid.org/0000-0002-8666-5825 \\
+\gray 2026 & Makovicky P.J., \textbf{Mitchell J.S.}, Meso J., Gianechini F.A., Cerda I., and Apesteguia S. Argentine fossil rewrites evolutionary history of a baffling dinosaur clade. \textbf{\textit{Nature}} (2026. https://doi.org/10.1038/s41586-026-10194-3 \\
+ 2025 & Saitta E.T., Balaji L., \textbf{Mitchell J.S.}, and Makovicky P.J. Feather evolution following flight loss in crown group birds: relaxed selection and developmental constraints. \textbf{\textit{Evolution}} 79(5) https://doi.org/10.1093/evolut/qpaf020.\\
+\gray 2022 & Canale J.I., Apesteguia S, Gallina P.A., \textbf{Mitchell J.S.}, Smith N.D., Cullen T.M., Shinya A., Haluza A., Gianechini F.A., and Makovicky P.J. New giant carnivorous dinosaur reveals convergent evolutionary trends in theropod arm reduction. \textbf{\textit{Current Biology}}. https://doi.org/10.1016/j.cub.2022.05.057 \\
+2022 & Lopez-Antonanzas R., \textbf{Mitchell J.S.}, Simoes T.R., Condamine F.L., Aguilee R., Pelaez-Campomanes P., Renaud S., Rolland J., and Donoghue P.C.J. Integrative Phylogenetics: Tools for Palaeontologists to Explore the Tree of Life. \textbf{\textit{MDPI Biology}}. https://doi.org/10.3390/biology11081185 \\
+\gray 2021 & Smith N.A., Koeller K., Clarke J., Ksepka D., \textbf{Mitchell J.S.}, Nabavizadeh A., Ridgely R., and Witmer L. Convergent Evolution In Dippers (Aves, Cinclidae): The Only Wing-propelled Diving Songbirds. \textbf{\textit{Anatomical Record}}. https://doi.org/10.1002/ar.24820 \\
+2020 & Smith N.A., Stidham T.A., \textbf{Mitchell} J.S. The First Fossil Owl (Aves, Strigiformes) From the Paleogene of Africa. \textbf{\textit{Diversity}} 12(4), 163; https://doi.org/10.3390/d12040163. \\
+\gray 2019 & \textbf{Mitchell, J.S.}, Etienne, R and Rabosky D.L.. fossilBAMM: A General Multiprocess Diversification Model for Paleontological and Molecular Phylogenetic Data. \textbf{\textit{Systematic Biology}} 68(1); https://doi.org/10.1093/sysbio/syy035.\\
+2017 & Rabosky D.L., \textbf{Mitchell J.S.}, and Chang, J. Is BAMM flawed? Theoretical and practical concerns in the analysis of multi-rate diversification models. \textbf{\textit{Systematic Biology}} 66:4 477 - 498. \\
+\gray 2017 & Zelditch M.L., Ye J., \textbf{Mitchell J.S.}, and Swiderski D. L. Rare ecomorphological convergence on a complex adaptive landscape: Body size and diet mediate evolution of jaw shape in squirrels (Sciuridae). \textbf{\textit{Evolution}} 71(3); doi:10.1111/evo.13168. \\ 
+2017 & Johnson, A.E, \textbf{Mitchell, J.S.}, and Brown, M.B. Convergent evolution in social swallows (Aves: Hirundinidae). \textbf{\textit{Ecology \& Evolution}} 7(2) 550-560 doi:10.1002/ece3.2641 \\
+ \gray 2016 & Bernardi, M, Angielczyk, K.D., \textbf{Mitchell, J.S.}, and Ruta, M. Phylogenetic stability, tree shape, and character compatibility: A case study using early Tetrapods. \textbf{\textit{Systematic Biology}}, doi: 10.1093/sysbio/syw049 \\
+2016 & \textbf{Mitchell, J.S.} and Rabosky, D.L. Bayesian model selection with BAMM: effects of the model prior on the inferred number of diversification shifts. \textbf{\textit{Methods in Ecology and Evolution}} 65(5) 737-758 doi: 10.1111/2041-210X.12626. \\
+\end{tabularx}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+ \gray 2015 & \textbf{Mitchell, J.S.} Extant only comparative methods fail to recover the disparity preserved in the bird fossil record. \textbf{\textit{Evolution}} 69(9) 2414-2424. \\
+ 2015 &  \textbf{Mitchell, J.S.} Preservation is predictable: Quantifying the impact of taphonomic biases on ecological disparity in birds. \textbf{\textit{Paleobiology}} 41(2) 353-367 doi: http://dx.doi.org/10.1017/pab.2014.23\\
+\gray 2014 & \textbf{Mitchell, J.S.} and Makovicky, P.J. Low ecological disparity in Early Cretaceous birds. \textbf{\textit{Proceedings of the Royal Society B.}} 281(1787), doi:10.1098/rspb.2014.0608  \\
+ 2012 & \textbf{Mitchell, J.S.}, Roopnarine, P.D., Angielczyk K.D. Late Cretaceous restructuring of dinosaur-bearing communities facilitated the End-Cretaceous mass extinction. \textbf{\textit{Proceedings of the National Academy of Sciences}} 109(46):18857-61. doi: 10.1073/pnas.1202196109 \\
+\gray 2012 & Heckert, A.B., \textbf{Mitchell, J.S.}, Schneider, V., and Olsen, P.E. Diverse new microvertebrate assemblage from the Upper Triassic (Norian) Cumnock Formation, Sanford Subbasin, North Carolina, USA. \textbf{\textit{Journal of Paleontology}}, 86(2):368-390, doi: http://dx.doi.org/10.1666/11-098.1\\
+ 2010 & \textbf{Mitchell, J.S.}, Heckert A. B., and Sues, H-D. Grooves to tubes: Evolution of the venom delivery system in a Late Triassic "reptile". \textbf{\textit{Naturwissenchaften}} 97:1117-1121.\\
+\gray 2010 & \textbf{Mitchell, J.S.} and A. B. Heckert. The setup, use and efficacy of sodium polytungstate separation methodology with respect to microvertebrate remains. \textbf{\textit{Journal of Paleontological Techniques}}, 7: 1-12\\
+\end{tabularx}
+
+%\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+%In press & \\
+%\end{tabularx}
+
+%\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+% In prep. & \\ 
+% & \textbf{Mitchell, J.S.}, Koeller, K and Tomiya S.. A new species of \textit{Elaphrocnemus}-like bird from the Washakie Formation of Wyoming (middle Eocene). In preparation for submission to \textit{Journal of Palaeontology}. \\
+%\gray & Smith, N.A., Boyd, C., Stidham, T. and \textbf{Mitchell, J.S.}. Body mass in prey size in owls, including a description of a new species of fossil owl. In preparation for submission to \textit{Biology Letters}. \\
+% & Koeller, K. and \textbf{Mitchell, J.S.}. Paleoecology of the Cedar Mountain Formation (Early Cretaceous, Utah). In preparation, intended for \textit{Journal of Vertebrate Paleontology}. \\
+%\end{tabularx}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+Book reviews & \\
+2015 & \textbf{Mitchell, J.S.}. Issues in Palaeobiology: a Global View. \textit{Quarterly Review of Biology}. 90:424-429 \\
+\end{tabularx}
+
+
+
+%----------------------------------------------------------------------------------------
+%	TEACHING EXPERIENCE
+%----------------------------------------------------------------------------------------
+
+\section{Teaching Experience}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+  & Courses designed \& taught \hfill Institution \\
+ \gray 2024 & Comparative Chordate Anatomy \hfill Coe College \\
+ 2024, 2025 & BIO 145 Cell \& Molecular Biology \hfill Coe College \\
+  \gray 2024, 2025 & BIO 315 Integrated Human Anatomy \hfill Coe College \\
+  2023, 2024, 2025 & BIO 155 Organismal \& Ecological Biology \hfill Coe College \\
+  \gray 2023, 2025 & BIO 202 Topics in Evolution \hfill Coe College \\
+ 2018, 2020, 2022 & Comparative Vertebrate Anatomy \hfill WVU Tech \\
+ \gray 2018 - 2022 & Evolution \hfill WVU Tech \\
+ 2017, 2019, \& 2021 & Vertebrate Embryology \hfill WVU Tech \\
+ \gray 2018 - 2022 & Human Anatomy \& Physiology II \hfill WVU Tech \\
+2017 - 2022 & Human Anatomy \& Physiology I \hfill WVU Tech \\
+ \gray 2020 \& 2021 & Geology \hfill WVU Tech \\
+2019 - 2021 & Freshmen Seminar \hfill WVU Tech \\
+ \gray 2022 & Paleobiology \hfill WVU Tech \\
+\hline
+%  & Teaching assistantships \hfill Institution\\
+%  \gray Winter 2015 & Environmental Ecology (non-majors) \hfill The University of Chicago \\
+% Summer 2014 & Stones and Bones (high school) \hfill The University of Chicago \\
+% \gray Spring 2013 & Scientific Ethics \& Integrity (grad.) \hfill The University of Chicago\\
+% Spring 2013 & Biodiversity (undergrad.) \hfill The University of Chicago\\
+%\gray Fall 2012 & Biological Evolution (non-majors) \hfill The University of Chicago\\
+% Fall 2009 - Spring 2010 & Introduction to Geology (undergrad.) \hfill Appalachian State University \\
+\end{tabularx}
+
+%\vspace{12pt}
+
+%\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+%\gray 2010-Current & Outreach partnerships with the Field Museum Education Department\\
+%\gray Fall 2011 & Teaching Evolutionary Biology \hfill The University of Chicago \\ 
+%\gray Fall 2009 - Spring 2010 & Geology tutor \hfill Appalachian State University \\
+
+%\end{tabularx}
+
+
+%----------------------------------------------------------------------------------------
+%	PROFESSIONAL SERVICE
+%----------------------------------------------------------------------------------------
+\section{Professional service}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+% WVU Tech
+%Present & Faculty Status Committee \\
+
+%\gray 2020 - Present & Election Committee \\
+Committees & Committee on Academic Persistence and Enrollment, Coe College (2024-Current) \\ 
+& Faculty Evaluation Committee, WVU Tech (2019, 2022) \\
+& Legislative Committee, WVU Tech (2020 - 2023) \\
+& Election Committee, WVU Tech (2020) \\
+& Dean's Council, Biological Sciences, The University of Chicago (2011-2015) \\
+
+\gray Peer Review & Paleobiology, Proceedings of the Royal Society B, Palaeontology, Ecology Letters, Current Biology, Naturwissenchaften, Fieldiana and Journal of Geophysical Research - Biogeosciences, Systematic Biology, TREE, Nature Communications, Journal of Biogeography,  Biology Letters\\
+
+%2020 - 2023 & WVU Tech Legislative Committee \\ 
+
+%\gray 2019 - 2023 & WVU Tech Biology Club Advisor \\
+
+%2019, 2022 & WVU Tech Faculty Evaluation Committee \\ 
+
+\gray Workshops & Presenter at K-Pg food web workshop at UC Berkeley, supported by the Welles Fund; Organized and ran a graduate student programming workshop series at the University of Chicago\\
+
+Session Moderator & Society of Vertebrate Paleontology (2012), Society of Integrative Biology (2013), Evolution (2014) \\
+
+\gray Grant reviewer & UChicago Dean's Council Travel Grant Review Panel (2012-2015) \\
+
+\end{tabularx}
+%----------------------------------------------------------------------------------------
+%	OUTREACH
+%----------------------------------------------------------------------------------------
+\section{Outreach}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+
+2021 & \textit{The Final Ghouls} Podcast interview \\
+
+\gray 2018, 2020 & Camp STEM, WVU Tech \\
+
+2019 & Presenter Girl Scouts of America \\
+
+\gray 2014-2015 & Advisor to undergraduate intern, Krista Kroeller, Field Museum \\
+
+ 2013-2015 & Presenter for Geology Badge, Boy Scouts of America, Field Museum \\
+
+\gray  2012-2015 & Dozin' with the Dinos, Field Museum Public Outreach Program \\
+
+2010-2015 & Ask-a-paleontologist outreach to Chicago Public Schools Kindergarten classes \\
+
+\gray 2009-2015 & Over 20 presentations to middle-high school classrooms in rural North Carolina and Chicago Public Schools \\
+
+2014 & ``Wild Wednesday'' Presenter, Garfield Park Conservatory, Chicago \\
+
+\gray 2013 & Educator Open House, Field Museum \\
+
+ 2012 & Presentation to undergraduate  Geology Club, The University of Chicago\\
+
+\gray 2011 & Proof-reader for Chicago Public Schools science materials, Field Museum \\
+
+ 2010 & Public Lecture hosted by the New Mexico Friends of Paleontology \\
+
+\end{tabularx}
+
+
+%----------------------------------------------------------------------------------------
+%	GRANTS
+%----------------------------------------------------------------------------------------
+\section{Grants}
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+&   \\
+\gray 2025 & Pochobradksy \$6,000 \hfill Coe College \\
+2024 & Pochobradsky \& Coe Research Fund Grant \$5,844 \hfill Coe College \\
+\gray 2012 & Doctoral Dissertation Improvement Grant $\$14,960$ (DEB-1311389) \hfill NSF \\
+ 2012 & Hinds Fund $\$500$ \hfill The University of Chicago \\
+\gray 2011 & Hinds Fund $\$1,520$ \hfill The University of Chicago \\
+ 2011 & Paleontological Society Student Grant $\$850$ \hfill The Paleontological Society \\
+\gray 2010 & East Asia and Pacific Summer Institute Grant $\$5,700$ (OISE-1107676) \hfill NSF \\
+\end{tabularx}
+
+
+%----------------------------------------------------------------------------------------
+%	CONFERENCE PROCEEDINGS
+%----------------------------------------------------------------------------------------
+
+\iffalse
+\section{Presentations}
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+ & Conference presentations \\
+ 2024 & Society of Vertebrate Paleontology (Poster) \\
+\gray 2017 & Evolution (15 minute Talk) \\
+ 2016 & Society of Vertebrate Paleontology (15 minute Talk) \\
+\gray 2016 & Evolution (15 minute Talk) \\
+  2014 & Society of Vertebrate Paleontology (15 minute Talk) \\
+\gray 2014 & Geological Society of America (15 minute Talk) \\
+ 2014 & Evolution (20 minute Talk) \href{https://www.youtube.com/watch?v=geyHNOFDg60}{(link to video)} \\ 
+\gray 2013 & Society of Vertebrate Paleontology Meeting (Poster) \\
+ 2013 & American Ornithologist's Union (20 minute Talk) \\
+\gray 2013 & Society of Integrative and Comparative Biology Meeting (20 minute Talk) \\
+ 2012 & Society of Vertebrate Paleontology Meeting (15 minute Talk) \\
+\gray 2012 & Society of Vertebrate Paleontology Meeting (Poster, co-author) \\
+ 2012 & Geological Society of America Meeting (Poster, co-author) \\
+\gray 2011 & Society of Vertebrate Paleontology Meeting (Poster) \\
+ 2011 & Geological Society of America Meeting: Phylogenetic Methods \& the Fossil Record (15 minute Talk) \\
+\gray 2010 & Geological Society of America Meeting (15 minute Talk) \\
+ 2010 & Society of Vertebrate Paleontology Meeting (Poster in Colbert Prize Session) \\
+\gray 2009 & Society of Vertebrate Paleontology Meeting (Poster) \\
+ 2009 & Appalachian State University Student Research Symposium (15 minute Talk) \\
+\gray 2008 & Society of Vertebrate Paleontology Meeting (Poster) \\
+ 2008 & Society of Vertebrate Paleontology Meeting Prepator's Session (Poster) \\
+\gray 2008 & Southeastern Geological Society of America Meeting 2008 (Poster) \\
+ 2008 & Appalachian State University Student Research Symposium (Poster) \\
+%& Extra information about degree
+\end{tabularx}
+
+\vspace{12pt}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+ & Other presentations  \\
+\gray 2018 & American Museum of Natural History (60 minute invited Talk) \\ 
+ 2014 & Field Museum Science \& Education Interchange Seminar Series (30 minute Talk) \\
+\gray 2008 & Appalachian State University, Geology Department Seminar Series (45 minute Talk) \\
+ 2008 & Smithsonian Research Training Program Symposium (Poster) \\
+ \gray 2008 & Appalachian State University Student Research Symposium (Poster) \\
+\end{tabularx}
+\fi
+
+%----------------------------------------------------------------------------------------
+%	PROFESSIONAL TRAINING
+%----------------------------------------------------------------------------------------
+\section{Professional training}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+\gray 2014 & Human Anatomy \hfill Prtizker School of Medicine \\
+ 2013 & K-Pg Food Web Workshop \hfill UC Berkeley  \\
+\gray 2011 & Pedagogy in Evolutionary Biology \hfill The University of Chicago \\ 
+ 2010 & Analytical Methods in Paleobiology Workshop, Paleobiology Database \hfill Macquarie University \\
+\end{tabularx}
+
+%----------------------------------------------------------------------------------------
+%	PROFESSIONAL SOCIETIES
+%----------------------------------------------------------------------------------------
+\section{Professional societies}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+  & Society for the Study of Evolution, Society of Integrative and Comparative Biology, Geological Society of America, Society of Vertebrate Paleontology  \\
+\end{tabularx}
+
+%----------------------------------------------------------------------------------------
+%	MEDIA COVERAGE
+%----------------------------------------------------------------------------------------
+\section{Select media coverage}
+
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+ & Business Insider, on \textit{Meraxes} \href{https://www.businessinsider.com/meraxes-gigas-dinosaur-tiny-arms-evolutionary-function-t-rex-2022-7}{(link)} \\
+\gray  & University of Chicago, early birds \href{http://news.uchicago.edu/article/2014/05/28/earliest-birds-lacked-wide-diversity-modern-descendants-study-finds}{(link)}  \\
+  & University of Chicago, food webs \href{http://sciencelife.uchospitals.edu/2012/11/14/modeling-the-ancient-ecosystems-to-understand-the-environmental-impact-of-human-activity/}{(link)} \\
+ \gray  & Nature News, \textit{Uatchitodon} \href{http://www.nature.com/news/2010/101117/full/news.2010.617.html}{(link)} \\
+   & National Geographic, \textit{Uatchitodon} \href{http://newswatch.nationalgeographic.com/2010/11/24/sharper_than_a_serpents_tooth/}{(link)} \\
+  \gray & University of Chicago, \textit{Uatchitodon} \href{http://sciencelife.uchospitals.edu/2010/11/19/linkage-1119-snake-fangs-chinese-bridges/}{(link)} \\ 
+\end{tabularx}
+
+%----------------------------------------------------------------------------------------
+%	FIELD WORK
+%----------------------------------------------------------------------------------------
+\section{Field work}
+\begin{tabularx}{0.97\linewidth}{>{\raggedleft\scshape}p{2cm}X}
+&   \\
+2026 & Missouri, Chronister Dinosaur Site, Campanian \\
+\gray 2012, 2013, 2015, 2020, 2021 & Utah, Cedar Mountain Fm., Early Cretaceous \\
+ 2013-2014 & Wyoming, Green River Fm., Eocene \\
+\gray 2013-2014 & Argentina, Huincul Fm., Early Cretaceous \\
+ 2007, 2008, 2010 & Arizona, New Mexico \& Colorado, Chinle Fm., Late Triassic \\
+\gray 2008 & Wyoming, Cloverly Fm., Early Cretaceous \\
+ 2008 & North Carolina, Newark Group, Pekin Fm., Late Triassic \\
+\end{tabularx}
+
+\end{center}
+
+\end{document}

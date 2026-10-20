@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CV and resume</title>
+<meta name="description" content="Walk through a real CV one section at a time, take a line apart into its pieces, then move the pieces around on a one-page resume.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="css/cv.css?v=1">
+</head>
+<body>
+<h1 class="sr-only">CV and resume</h1>
+
+<nav class="tabs" aria-label="Pages">
+  <button type="button" data-view="cv" title="The CV, section by section (1)" aria-label="The CV"></button>
+  <button type="button" data-view="parts" title="One line, taken apart (2)" aria-label="Parts of a line"></button>
+  <button type="button" data-view="resume" title="The resume (3)" aria-label="The resume"></button>
+</nav>
+
+<main>
+  <section id="cv" data-view="cv">
+    <div class="row">
+      <button type="button" class="icon" id="cvPrev" title="Previous section (←)" aria-label="Previous section"></button>
+      <button type="button" class="icon" id="cvParts" title="Color the pieces of each line (P)" aria-label="Color the pieces" aria-pressed="false"></button>
+      <button type="button" class="icon" id="cvNext" title="Next section (→)" aria-label="Next section"></button>
+    </div>
+    <div class="cvpage" id="cvpage"></div>
+  </section>
+
+  <section id="parts" data-view="parts" hidden>
+    <div class="row pick" id="secpick" role="group" aria-label="Section"></div>
+    <div class="row">
+      <button type="button" class="icon" id="rowPrev" title="Previous line (←)" aria-label="Previous line"></button>
+      <output id="rowN" class="num"></output>
+      <button type="button" class="icon" id="rowNext" title="Next line (→)" aria-label="Next line"></button>
+    </div>
+    <div class="cvpage parts one" id="specLine"></div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section id="resume" data-view="resume" hidden>
+    <div class="row" id="tools">
+      <span class="grp" role="group" aria-label="Aim">
+        <button type="button" class="icon" data-target="teach" title="Aimed at a teaching job" aria-label="Teaching job"></button>
+        <button type="button" class="icon" data-target="research" title="Aimed at a research job" aria-label="Research job"></button>
+        <button type="button" class="icon" data-target="outreach" title="Aimed at an outreach job" aria-label="Outreach job"></button>
+      </span>
+      <span class="grp">
+        <button type="button" class="icon" id="editBtn" title="Edit the wording (E). Click a dotted word to swap it; ⌘B / ⌘I for bold and italic" aria-label="Edit wording" aria-pressed="false"></button>
+        <button type="button" class="icon" id="heatBtn" title="Where a reader looks first (H)" aria-label="Show where readers look" aria-pressed="false"></button>
+        <button type="button" class="icon" id="rsReset" title="Back to this aim's starting page (R)" aria-label="Reset"></button>
+      </span>
+    </div>
+    <div class="rw">
+      <aside class="tray" id="tray" aria-label="Lines left in the CV"></aside>
+      <div class="pagecol">
+        <div class="meter" id="meter" aria-hidden="true"><i></i></div>
+        <div class="page">
+          <article class="sheet" id="sheet" aria-label="Resume"><div class="inner" id="inner"></div></article>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<noscript><p class="noscript">This page needs JavaScript.</p></noscript>
+<script src="js/data.js?v=1"></script>
+<script src="js/app.js?v=1"></script>
+</body>
+</html>

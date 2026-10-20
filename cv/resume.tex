@@ -1,0 +1,67 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% One-page resume drawn from cv_6.tex. Same look as the CV (Libertine, small-caps rules).
+% Aimed at a teaching job: teaching and experience first, research cut to two lines.
+% Compile with XeLaTeX:  xelatex resume.tex
+%
+% The interactive (index.html#resume) holds the same lines and shows the other two aims.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[letterpaper, oneside, 11pt, final]{scrartcl}
+\usepackage[margin=0.9in, top=0.7in, bottom=0.7in]{geometry}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{fontspec}
+\usepackage[colorlinks=true, urlcolor=black, linkcolor=black]{hyperref}
+\usepackage[oldstyle]{libertine}
+
+\pagestyle{empty}
+\sloppy
+\setlength{\parindent}{0pt}
+\titleformat{\section}{\large\scshape\raggedright}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{1.1em}{0.5em}
+
+% \entry{what}{when}: text at the left, date flush right on the first line
+\newcommand{\entry}[2]{%
+  \noindent\begin{tabularx}{\linewidth}{@{}X@{\hspace{1em}}r@{}}#1 & #2\end{tabularx}\par\vspace{0.12em}}
+
+\begin{document}
+
+\begin{center}
+{\addfontfeature{LetterSpace=10.0}\fontsize{30}{30}\selectfont Jonathan S. Mitchell}\\[0.4em]
+jonsmitchell.com \quad $\cdot$ \quad jonsmitch2@gmail.com
+\end{center}
+
+\vspace{0.5em}
+Biology professor. I teach anatomy, evolution and ecology: 13 courses across two institutions since 2017.
+
+\section{Teaching}
+\entry{Coe College: Comparative Chordate Anatomy, Integrated Human Anatomy, Organismal \& Ecological Biology, Cell \& Molecular Biology, Topics in Evolution}{2023--present}
+\entry{WVU Tech: Human Anatomy \& Physiology I and II, Comparative Vertebrate Anatomy, Vertebrate Embryology}{2017--2022}
+\entry{WVU Tech: Evolution, Paleobiology, Geology}{2018--2022}
+\entry{First-year seminar, WVU Tech}{2019--2021}
+
+\section{Experience}
+\entry{Assistant Professor, Coe College}{2023--present}
+\entry{Assistant Professor, West Virginia University Institute of Technology}{2017--2023}
+\entry{Postdoctoral researcher, University of Michigan}{2015--2017}
+
+\section{Education}
+\entry{Ph.D., Evolutionary Biology, University of Chicago}{2015}
+\entry{B.S., Geology (\textit{magna cum laude}), Appalachian State University}{2010}
+
+\section{Outreach}
+\entry{Gave over 20 talks in middle and high school classrooms, rural North Carolina and Chicago Public Schools}{2009--2015}
+\entry{Presented the Geology Badge for Boy Scouts of America, Field Museum}{2013--2015}
+
+\section{Research}
+\entry{Selected from 19 journal articles (ORCID 0000-0002-8666-5825)}{}
+\entry{Argentine fossil rewrites evolutionary history of a baffling dinosaur clade. \textit{Nature}}{2026}
+
+\section{Service}
+\entry{Committee on Academic Persistence and Enrollment, Coe College}{2024--present}
+\entry{Peer reviewer for 13 journals, including \textit{Paleobiology}, \textit{Current Biology} and \textit{Nature Communications}}{}
+
+\section{Grants}
+\entry{\$6,000, Pochobradsky grant, Coe College}{2025}
+
+\end{document}
