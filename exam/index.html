@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Why 28 of 42?</title>
+<meta name="description" content="Four students with the same exam grade. Weigh the claims about why, test them against their question-by-question results, and see where the misses actually fell.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,600&display=swap">
+<link rel="stylesheet" href="css/exam.css">
+</head>
+<body>
+<h1 class="sr-only">Why 28 of 42?</h1>
+<main id="stage"></main>
+
+<nav class="ctl" aria-label="Deck">
+  <span id="clock" class="clock" hidden></span>
+  <button type="button" id="prev" title="Back (←)" aria-label="Back"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <div id="dots" class="dots"></div>
+  <button type="button" id="next" title="Next (→, space)" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+  <button type="button" id="clockbtn" title="Clock (C)" aria-label="Clock"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M10 2.5h4"/></svg></button>
+  <button type="button" id="theme" title="Whiteboard / chalkboard (T)" aria-label="Chalkboard"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" class="solid"/></svg></button>
+  <button type="button" id="reset" title="Start over: clears the cards and the model (click twice)" aria-label="Start over"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 3.5v4h4"/></svg></button>
+  <button type="button" id="help" title="Keys (?)" aria-label="Keys"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/></svg></button>
+</nav>
+
+<div id="helpbox" class="helpbox" hidden>
+  <dl>
+    <dt>→ space</dt><dd>next build (clicker: page down)</dd>
+    <dt>←</dt><dd>back</dd>
+    <dt>[ ]</dt><dd>previous / next page</dd>
+    <dt>card</dt><dd>click to type · Enter to finish · icons below it: holds up, unclear, out</dd>
+    <dt>toolbar</dt><dd>attach a different test to the card</dd>
+    <dt>D · shift D</dt><dd>deal the results at random, once · 100 times</dd>
+    <dt>drag</dt><dd>time, study method, and each chapter's tank</dd>
+    <dt>T · B · C</dt><dd>theme · blank screen · clock</dd>
+  </dl>
+</div>
+<div id="blank" class="blank" hidden></div>
+<div class="rotate" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="17" rx="2"/><path d="M20 15a8 8 0 0 1-6 6.5M16.5 21.5l-2.5 0 1-2.4"/></svg></div>
+
+<noscript><p class="noscript">This page needs JavaScript.</p></noscript>
+<script src="js/model.js"></script>
+<script src="js/data.js"></script>
+<script src="js/deck.js"></script>
+<script src="js/icons.js"></script>
+<script src="js/rows.js"></script>
+<script src="js/dag.js"></script>
+<script src="js/claims.js"></script>
+<script src="js/alloc.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -10,6 +10,7 @@ Class tools for FS110. Each is a static page in its own folder: no build step, n
 | [`stats/`](stats/) | Stats. A short quiz (two kids, a rare disease, three doors), then one manipulable picture for each: sample families under two different clues, drag the disease rarity and test accuracy, play Monty Hall with a host who knows or doesn't. |
 | [`infernogallus/`](infernogallus/) | Dissecting a paper. A 50-minute lecture deck on one paper (the Infernogallus fruit-eater). Nine claims, each run as claim, evidence, alternatives, test, and a room vote on how sure. Ends with every claim sorted on one line. |
 | [`cv/`](cv/) | CV and resume. Walk a real CV a section at a time, take one line apart into its pieces, then rearrange and reword a one-page resume drawn from it. Also has `resume.tex`. |
+| [`exam/`](exam/) | Why 28 of 42? Four students with the same exam grade, shown column by column. A study-time model with strongly diminishing returns, claim cards you type into (words attach a test), and the reveal: the misses fell on particular chapters. |
 
 `index.html` at the top is a landing page with a tile for each. Each folder has its own readme.
 
@@ -27,6 +28,7 @@ node bones/tests/sim.test.js
 node tanis/tests/facts.test.js
 node stats/tests/model.test.js
 node cv/tests/data.test.js
+node exam/tests/model.test.js
 JSDOM=/path/to/node_modules/jsdom node infernogallus/tests/deck.smoke.js
 JSDOM=/path/to/node_modules/jsdom node bones/tests/deck.smoke.js
 ```
