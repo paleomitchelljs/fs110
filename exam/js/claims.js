@@ -1,64 +1,73 @@
-/* Claim cards you type into, and a bench of tests to hold them up against.
- * Type a claim. Words in it attach a test (TESTS below); the test's icon lights in the toolbar and the bench changes to match.
- * Click another icon to attach a different test by hand. A card is kept, left unsure, or struck out with the three marks.
- * Each test is one view of the same four rows of columns, or the model curve:
- *   time, method   the curve                              late     exam order in thirds, percent right per third
- *   hard           hardest first, with the class row      luck     dealt at random into chapter slots, with the dot plots
- *   chapter        grouped by chapter, percent right      other    nothing in these columns can test it
+/* Four explanations to pick from, and the exam questions regrouped by whichever are picked.
+ * The page opens on four blank cards. Next build the cards turn into the explanations; click any number of them. Each one
+ * is a property of the questions in exam_question_traits.csv:
+ *   Ran out of time        position in the exam (early, middle, late)       splits the questions
+ *   Not smart              Bloom level (remember, understand, apply, analyze)  splits the questions
+ *   Didn't read carefully  a critical word in the question (not, always)     splits the questions
+ *   Test too hard         reading level of the question                      splits the questions (7–8th, 9–10th, 11–12th grade)
+ *   Skimmed                question length                                   sorts within each group, and halves it short / long
+ * Picked ones nest in the order they were picked; a number on the card says where. Luck sits at the right the whole time:
+ * the same results dealt at random into the same groups (see rows.js), the gold bar being the real gap.
  */
 (function () {
   'use strict';
-  const D = Deck;
+  const D = Deck, M = Model, Q = EXAM.q, NQ = Q.length;
 
-  /* The words that trigger each test. The test with the most hits wins; a tie goes to the one listed first. */
-  const TESTS = [
-    { k: 'late', re: /\b(late|end|tired|fatigue|exhaust|rush|run(?:ning)? out|ran out|anxi|nervous|panic|stress|clock|pressure|time limit|slow)/gi },
-    { k: 'chapter', re: /\b(chapter|unit|topic|section|early|first|beginning|forgot|forget|review|notes?|middle|skipp?|miss(?:ed)?|recent|last|week|lecture|material|content|cover|ignored|old)/gi },
-    { k: 'hard', re: /\b(hard|difficult|tough|trick|unfair|confus|ambigu|bad question|wording|impossible)/gi },
-    { k: 'luck', re: /\b(luck|random|guess|chance|fluke|coin|slip|careless|silly|mistake|misread|noise|accident)/gi },
-    { k: 'method', re: /\b(method|technique|strateg|wrong way|how (?:they|you|we) stud|re-?read|highlight|flash ?card|passive|practice|marathon|weights?|cram|memoriz)/gi },
-    { k: 'time', re: /\b(time|hours|enough|lazy|procrastinat|effort|work(?:ed)? hard|study(?:ing)? more|didn.?t study|under-?prepared)/gi },
-    { k: 'other', re: /\b(interest|bor(?:ed|ing)|care|motivat|attend|absent|sleep|job|family|health|sick|ill|personal|phone|distract|cheat|prior|background|anxiety)/gi }
+  const THIRDS = M.thirds(NQ);
+  const BLOOM = ['Remember', 'Understand', 'Apply', 'Analyze'];
+  /* of(j): which group question j falls in, as a number. label(g): its name. */
+  const SPLIT = {
+    time: { of: (j) => THIRDS.findIndex((t) => j >= t.a && j < t.b), label: (g) => ['Early', 'Middle', 'Late'][g] },
+    smart: { of: (j) => BLOOM.indexOf(Q[j].bloom), label: (g) => BLOOM[g] },
+    hard: { of: (j) => Q[j].rl <= 8 ? 0 : Q[j].rl <= 10 ? 1 : 2, label: (g) => ['7–8th grade', '9–10th', '11–12th'][g] },
+    care: { of: (j) => Q[j].crit ? 1 : 0, label: (g) => g ? 'not · always' : 'Plain' }
+  };
+  const EXPL = [
+    { k: 'time', t: 'Ran out of time' },
+    { k: 'smart', t: 'Not smart' },
+    { k: 'care', t: 'Didn’t read carefully' },
+    { k: 'hard', t: 'Test too hard' },
+    { k: 'skim', t: 'Skimmed' }
   ];
-  const pick = (text) => {
-    let best = null, n = 0;
-    TESTS.forEach((t) => { const c = (text.match(t.re) || []).length; if (c > n) { n = c; best = t.k; } });
-    return best;
-  };
-  D.pickTest = pick;
-  D.TESTS = TESTS;
+  const GAPS = [30, 16, 10], GAP_HALF = 5;      // space before a new group, by the level where it begins
 
-  /* What each claim says the columns should look like: 21 columns, 7 of them wrong, the same share as the students. */
-  const SCATTER = [1, 4, 8, 11, 14, 17, 19];
-  const PREDICT = {
-    time: { red: SCATTER }, method: { red: SCATTER }, luck: { red: SCATTER },
-    hard: { red: [0, 1, 2, 3, 4, 5, 6] },
-    late: { red: [14, 15, 16, 17, 18, 19, 20] },
-    chapter: { red: [7, 8, 9, 10, 11, 12, 13], gaps: [7, 14] }
-  };
-  const strip = (k) => {
-    const p = PREDICT[k];
-    if (!p) return '<span class="none"></span>';
-    let h = '';
-    for (let i = 0; i < 21; i++) h += '<i class="' + (p.red.includes(i) ? 'no' : 'ok') + (p.gaps && p.gaps.includes(i) ? ' g' : '') + '"></i>';
-    return h;
-  };
-
-  const VIEW = {
-    time: 'model', method: 'model',
-    late: { layout: 'exam', thirds: true, pct: true },
-    hard: { layout: 'hard', cls: true, pct: true },
-    luck: { layout: 'chapter', head: true, pct: true, luck: true },
-    chapter: { layout: 'chapter', head: true, caps: true, pct: true },
-    other: { layout: 'exam', other: true }
-  };
-  const PLAIN = { layout: 'exam', thirds: false, caps: false, pct: false, cls: false, luck: false, head: false };
-
-  const DEFAULT = () => ({
-    cards: [{ t: 'Didn’t study enough' }, { t: 'The exam was hard' }, { t: 'Bad luck' }, { t: 'Ran out of time' }].map((c) => ({ t: c.t, test: pick(c.t), by: 'auto', v: null })),
-    active: 0
-  });
-  const MAX = 5;
+  /* The order, groups and labels the columns take for a list of picked explanations. */
+  function nestFor(sel) {
+    const cats = sel.filter((k) => SPLIT[k]), skim = sel.includes('skim');
+    const idx = Q.map((x, i) => i);
+    const key = idx.map((j) => cats.map((k) => SPLIT[k].of(j)));
+    idx.sort((a, b) => {
+      for (let i = 0; i < cats.length; i++) if (key[a][i] !== key[b][i]) return key[a][i] - key[b][i];
+      return (skim ? Q[a].words - Q[b].words : 0) || a - b;
+    });
+    const path = idx.map((j) => key[j].slice());
+    if (skim) {                       // the shorter half of each group, then the longer half
+      for (let a = 0, s = 1; s <= NQ; s++) {
+        if (s < NQ && path[s].join() === path[a].join()) continue;
+        const half = Math.ceil((s - a) / 2);
+        for (let i = a; i < s; i++) path[i].push(i - a < half ? 0 : 1);
+        a = s;
+      }
+    }
+    const depth = cats.length + (skim ? 1 : 0);
+    const differs = (s) => { let l = 0; while (l < depth && path[s][l] === path[s - 1][l]) l++; return l; };
+    const gaps = idx.map((j, s) => {
+      if (!s) return 0;
+      const l = differs(s);
+      return l >= depth ? 0 : (skim && l === cats.length ? GAP_HALF : GAPS[l]);
+    });
+    const runs = (levels) => {        // consecutive slots that share the first `levels` entries of their path
+      const out = [];
+      for (let a = 0, s = 1; s <= NQ; s++) {
+        if (s < NQ && path[s].slice(0, levels).join() === path[a].slice(0, levels).join()) continue;
+        out.push({ a, b: s, path: path[a] }); a = s;
+      }
+      return out;
+    };
+    const levels = cats.map((k, l) => runs(l + 1).map((r) => ({ a: r.a, b: r.b, label: SPLIT[k].label(r.path[l]) })));
+    return { order: idx, leaves: runs(depth).map((r) => ({ a: r.a, b: r.b })), gaps, levels };
+  }
+  D.nestFor = nestFor;
 
   /* The three dice buttons. css places the strip. */
   D.dealTools = function (host, rows, css) {
@@ -71,104 +80,68 @@
     return el;
   };
 
-  /* host: the page. rows: a Rows. chart: a Chart (its element is shown for time and method). */
-  D.Claims = function (host, rows, chart, bench) {
-    const S = () => D.get('claims', DEFAULT);
+  /* host: the page. rows: a Rows. bench: { x, ty, rx } placement of the cards and the dice. */
+  D.Claims = function (host, rows, bench) {
+    const S = () => D.get('claims', () => ({ typed: ['', '', '', '', ''], sel: [] }));
     const board = D.el('div', 'board', host);
-    const tools = D.el('div', 'tools', host);
-    const nodata = D.el('div', 'nodata', host, D.icons.other);
-    tools.style.cssText = 'left:' + bench.x + 'px;top:' + bench.ty + 'px';
-    const dealc = D.dealTools(host, rows, 'right:' + bench.rx + 'px;top:' + bench.ty + 'px');
-    nodata.style.cssText = 'left:' + (bench.x + 380) + 'px;top:' + (bench.y + 20) + 'px';
-    let showBench = false, showStrips = false;
+    board.style.cssText = 'left:' + bench.x + 'px;top:' + bench.ty + 'px';
+    const dealc = D.dealTools(host, rows, 'right:' + bench.rx + 'px;top:' + bench.dy + 'px');
+    let revealed = false;
 
-    const tbtn = {};
-    TESTS.forEach((t) => {
-      const b = D.el('button', 'tool', tools, D.icons[t.k]);
-      b.type = 'button'; b.dataset.k = t.k; b.title = ({ time: 'Not enough time', method: 'Wrong method', late: 'Late in the exam', hard: 'Hard questions', luck: 'Luck', chapter: 'A chapter', other: 'Not in these columns' })[t.k];
-      b.setAttribute('aria-label', b.title);
-      tools.appendChild(b); tbtn[t.k] = b;
-      b.addEventListener('click', () => {
-        const s = S(), c = s.cards[s.active];
-        if (c) { c.test = c.test === t.k ? null : t.k; c.by = 'manual'; renderBoard(); D.save(); }
-        else view(t.k);
-        if (c) view(c.test);
+    function view() {
+      const sel = S().sel, nest = nestFor(sel);
+      rows.set({
+        layout: 'nest', nest, lens: sel.includes('skim'), pct: nest.leaves.length > 1, luck: true, head: false, caps: false,
+        thirds: false, cls: false, ring: false, scores: false
       });
-    });
-    let cur = null;      // the test now on the bench
-    function view(k) {
-      cur = k;
-      Object.keys(tbtn).forEach((x) => tbtn[x].classList.toggle('on', x === k));
-      const v = k ? VIEW[k] : null;
-      const model = v === 'model';
-      chart.el.classList.toggle('on', showBench && model);
-      rowsOn(showBench && !model);
-      const rv = (v && !model) ? v : {};
-      rows.set(Object.assign({}, PLAIN, { scores: false }, rv));
-      host.classList.toggle('luck', !!(v && v.luck));
-      dealc.classList.toggle('on', showBench && !!(v && !model && (v.luck || v.layout === 'chapter')));
-      nodata.classList.toggle('on', showBench && k === 'other');
-      if (k !== 'luck' && k !== 'chapter') { if (rows.dealt) rows.real(); }
     }
-    const rowsOn = (on) => host.classList.toggle('rowsoff', !on);
-
-    function renderBoard() {
+    function toggle(k) {
+      const s = S(), i = s.sel.indexOf(k);
+      if (i < 0) s.sel.push(k); else s.sel.splice(i, 1);
+      renderBoard(); view(); D.save();
+    }
+    function renderBoard(flip) {
       const s = S();
       board.innerHTML = '';
-      s.cards.forEach((c, i) => {
-        const e = D.el('div', 'card' + (i === s.active ? ' on' : '') + (c.v ? ' ' + c.v : ''), board);
-        e.innerHTML = '<div class="tx" contenteditable="true" spellcheck="false" role="textbox" aria-label="Claim"></div>' +
-          '<div class="cf"><span class="tic">' + (c.test ? D.icons[c.test] : '') + '</span><span class="strip">' + (showStrips ? strip(c.test) : '') + '</span>' +
-          '<span class="vs"><button type="button" data-v="keep" title="Holds up">' + D.icons.keep + '</button><button type="button" data-v="maybe" title="Unclear">' + D.icons.maybe + '</button><button type="button" data-v="out" title="Doesn’t hold up">' + D.icons.x + '</button></span></div>' +
-          '<button type="button" class="del" title="Remove" aria-label="Remove">' + D.icons.x + '</button>';
-        const tx = e.querySelector('.tx');
-        tx.textContent = c.t;
-        tx.addEventListener('focus', () => select(i));
-        tx.addEventListener('keydown', (ev) => { if (ev.key === 'Enter') { ev.preventDefault(); tx.blur(); } else if (ev.key === 'Escape') tx.blur(); ev.stopPropagation(); });
+      EXPL.forEach((x, i) => {
+        const on = revealed && s.sel.includes(x.k);
+        const e = D.el('div', 'card' + (revealed ? ' ex' : '') + (on ? ' on' : '') + (flip ? ' flip' : ''), board);
+        const tx = D.el('div', 'tx', e);
+        if (revealed) {
+          tx.textContent = x.t;
+          if (on) D.el('b', 'ord', e, String(s.sel.indexOf(x.k) + 1));
+          e.tabIndex = 0; e.setAttribute('role', 'button'); e.setAttribute('aria-pressed', String(on));
+          e.addEventListener('click', () => toggle(x.k));
+          e.addEventListener('keydown', (ev) => { if (ev.key === ' ' || ev.key === 'Enter') { ev.preventDefault(); ev.stopPropagation(); toggle(x.k); } });
+          return;
+        }
+        tx.contentEditable = 'true'; tx.spellcheck = false; tx.setAttribute('role', 'textbox'); tx.setAttribute('aria-label', 'Explanation');
+        tx.textContent = s.typed[i];
+        tx.addEventListener('input', () => { s.typed[i] = tx.textContent.slice(0, 70); D.save(); });
+        tx.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === 'Escape') { ev.preventDefault(); tx.blur(); } ev.stopPropagation(); });
         tx.addEventListener('paste', (ev) => { ev.preventDefault(); document.execCommand('insertText', false, (ev.clipboardData.getData('text') || '').replace(/\s+/g, ' ')); });
-        tx.addEventListener('input', () => {
-          c.t = tx.textContent.slice(0, 70);
-          if (c.by === 'auto') { c.test = pick(c.t); e.querySelector('.tic').innerHTML = c.test ? D.icons[c.test] : ''; e.querySelector('.strip').innerHTML = showStrips ? strip(c.test) : ''; }
-          if (i === S().active) view(c.test);
-          D.save();
-        });
-        e.addEventListener('pointerdown', (ev) => { if (!ev.target.closest('button') && ev.target !== tx) { select(i); } });
-        e.querySelectorAll('.vs button').forEach((b) => b.addEventListener('click', () => { c.v = c.v === b.dataset.v ? null : b.dataset.v; renderBoard(); D.save(); }));
-        e.querySelector('.del').addEventListener('click', () => { s.cards.splice(i, 1); s.active = Math.min(s.active, s.cards.length - 1); renderBoard(); view(s.cards[s.active] ? s.cards[s.active].test : null); D.save(); });
       });
-      if (s.cards.length < MAX) {
-        const a = D.el('button', 'card add', board, D.icons.plus); a.type = 'button'; a.title = 'New claim'; a.setAttribute('aria-label', 'New claim');
-        a.addEventListener('click', () => {
-          s.cards.push({ t: '', test: null, by: 'auto', v: null }); s.active = s.cards.length - 1; renderBoard(); view(null);
-          board.querySelectorAll('.tx')[s.active].focus(); D.save();
-        });
-      }
-    }
-    function select(i) {
-      const s = S();
-      if (s.active === i && cur === (s.cards[i] && s.cards[i].test)) return;
-      s.active = i;
-      board.querySelectorAll('.card').forEach((e, j) => e.classList.toggle('on', j === i));
-      view(s.cards[i] ? s.cards[i].test : null);
-      D.save();
     }
 
     renderBoard();
     return {
-      /* b: 0 cards only, 1 + what each would look like, 2 + the bench */
-      show(b) {
-        showStrips = b >= 1; showBench = b >= 2;
-        host.classList.toggle('bench-on', showBench);
-        renderBoard();
-        const c = S().cards[S().active];
-        view(c ? c.test : null);
+      /* b: 0 four blank cards, 1 the explanations, the columns and luck */
+      show(b, how) {
+        const was = revealed;
+        revealed = b >= 1;
+        host.classList.toggle('bench-on', revealed);
+        dealc.classList.toggle('on', revealed);
+        renderBoard(revealed && !was && how === 'step');
+        if (revealed) view(); else if (rows.dealt) rows.real();
       },
       key(e) {
-        if (!showBench) return false;
+        if (!revealed) return false;
         if (e.key.toLowerCase() === 'd') { rows.deal(e.shiftKey ? 100 : 1); return true; }
+        const i = '12345'.indexOf(e.key);
+        if (i >= 0 && e.key.length === 1) { toggle(EXPL[i].k); return true; }
         return false;
       },
-      reset() { renderBoard(); rows.clearDraws(); view(null); }
+      reset() { revealed = false; host.classList.remove('bench-on'); dealc.classList.remove('on'); renderBoard(); rows.clearDraws(); }
     };
   };
 })();

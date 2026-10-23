@@ -9,10 +9,9 @@ Students show as **A–D**. The data file's own column names (`uniform01`, `clus
 | | page | builds |
 |---|---|---|
 | 1 | **Four students** | one column per question in exam order, green right, red wrong (red is also hatched). Then the scores. |
-| 2 | **The model** | learning-dag.png. Drag across **Time**, then also **Study Methods**. Last build: the same model as a curve. |
-| 3 | **Claims** | Cards you type into. Then what each claim predicts. Then the bench of tests. |
+| 2 | **The model** | learning-dag.png. Drag across **Time**, then also **Study Methods**. |
+| 3 | **Claims** | Four blank cards. Then four explanations to pick, nesting the questions into groups, with luck beside them. |
 | 4 | **Chapters** | The reveal: chapter colors on the columns, regroup by chapter, percent right, deal at random (D), circle the weak chapter. |
-| 5 | **Where the time went** | One study-time tank per chapter. Drag one down. |
 
 ## The model
 
@@ -27,21 +26,19 @@ Interest, class and assessment are held fixed. The starting method value (`M0`, 
 
 ## Claims
 
-Click a card, type. Enter finishes. The first four are mine and editable. Words in a card attach a test (`TESTS` in `js/claims.js`); the most hits wins and a tie goes to the one listed first. The test's icon lights in the toolbar. Click another icon to attach a different one by hand, click it again to clear. The marks at the card's foot: holds up, unclear, out (struck through).
+Build 0: four blank cards you can type into. Build 1: they become the explanations, and the 42 questions appear in exam order with luck at the right. Click cards (or keys 1–5) to pick any number. The questions regroup, in the order picked (the number on the card):
 
-| trigger words (examples) | test | what the bench shows |
+| explanation | property (`exam_question_traits.csv`) | effect |
 |---|---|---|
-| late, end, tired, ran out, anxiety, rush | late in the exam | exam order in thirds, percent right per third |
-| chapter, early, first, middle, last, review, notes, forgot, skipped, recent | a chapter | grouped by chapter, percent right, chapter colors |
-| hard, difficult, tough, trick, unfair, confusing | hard questions | hardest first, the class row, percent right in each half |
-| luck, random, guess, chance, careless, misread | luck | results dealt at random into the chapter slots, with dot plots |
-| method, technique, re-read, flashcards, cram, wrong way, marathon | wrong method | the curve |
-| time, enough, effort, lazy, didn't study | not enough time | the curve |
-| interest, bored, motivation, attend, sleep, job, family, health, phone | not in these columns | a dashed "?" . Nothing here can test it. |
+| Ran out of time | position in the exam | splits into early / middle / late |
+| Not smart | Bloom level | splits into remember / understand / apply / analyze |
+| Didn't read carefully | critical words (not, always) | splits into plain / has one |
+| Test too hard | reading level | splits into 7–8th / 9–10th / 11–12th grade |
+| Skimmed | word count | sorts within each group, shortest first, with a length bar over each column; also halves each group short / long so there is a gap to measure |
 
-The strip on each card is what the claim says the columns should look like (7 wrong of 21, the students' own share). Time, method and luck all predict the same scatter, so these columns cannot tell them apart. That is the point to make before the bench opens. Only the dice separate "scatter" from "pattern".
+Each group gets a percent-right bar per student (tick = the class). Luck: each student's results are shuffled 400 times into the same groups; the dots are the best-minus-worst-group gap of each shuffle, the gold bar is the real one. It rebuilds whenever the groups change. Dice buttons / D show one shuffle in the columns. More groups means chance alone produces bigger gaps, so the real bar sinks into the pile as you stack explanations; with tiny groups both saturate at 100.
 
-**Dice** (D, shift D for 100): each student's right and wrong answers are dealt into the same slots at random. Same score, only chance left. Each deal adds one dot to that student's plot, measuring the gap between their best and worst chapter. The gold bar is the real gap. The page shows no p-value; the picture is illustrative, not a significance test.
+`js/data.js` is built from both csv files by `tools/make_data.js`. Chapters are not shown on this page; page 4 reveals them.
 
 ## What the data shows
 
@@ -63,11 +60,7 @@ A is even across chapters. B, C and D each dip in a different one. (Shuffling th
 
 ## Time per chapter
 
-On page 2 the small chapter icon above the Time box splits it into three bars, one per chapter. Drag across each. Overall time is their mean, and the grade is the model run chapter by chapter, so putting the same total time unevenly scores lower (ch 10 at 20% and the rest at 100% gives 27, not 29). The curve's dot then sits below the curve. Page 5 is the same three numbers as tanks.
-
-## Where the time went
-
-Three tanks at 75%, each with the model's score for its chapter beside it, and the questions-weighted total. The curve is flat past about 60%, so pushing a tank to 100% gains nothing, and emptying one costs its whole chapter. That is the quantitative form of "the three weeks were not studied evenly". It does not fit any student; the model has no way to say which chapter they skipped.
+On page 2 the small chapter icon above the Time box splits it into three bars, one per chapter. Drag across each. Overall time is their mean, and the grade is the model run chapter by chapter, so putting the same total time unevenly scores lower (ch 10 at 20% and the rest at 100% gives 27, not 29). The curve's dot then sits below the curve.
 
 ## Keys
 
@@ -82,8 +75,8 @@ js/data.js       generated by tools/make_data.js from example_students.csv
 js/model.js      the model and the shuffle statistics (node-testable)
 js/deck.js       stage, builds, keys
 js/icons.js      js/rows.js (columns, groups, dice)  js/dag.js (diagram, curve)
-js/claims.js     cards, trigger words, toolbar     js/alloc.js    chapter tanks
-js/app.js        the five pages
+js/claims.js     the explanations and how they nest
+js/app.js        the four pages
 tests/model.test.js
 ```
 

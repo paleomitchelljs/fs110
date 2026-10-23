@@ -21,33 +21,28 @@
     /* 2. learning-dag.png, with Time and Study Methods live; then the same model as a curve. */
     {
       id: 'model', title: 'The model',
-      prompts: ['Study more?', 'Study differently?', 'How far can each go?'],
+      prompts: ['Study more?', 'Study differently?'],
       make(host) {
         host.classList.add('model');
         const dag = D.Dag(host);
-        const chart = D.Chart(host, { x: 140, y: 40, w: 1320, h: 720 });
         return {
           show(b) {
             dag.live({ time: b === 0 || b === 1, method: b === 1 });
-            host.classList.toggle('curve', b >= 2);
-            chart.el.classList.toggle('on', b >= 2);
-            dag.refresh(); chart.refresh();
+            dag.refresh();
           },
-          reset() { dag.refresh(); chart.refresh(); }
+          reset() { dag.refresh(); }
         };
       }
     },
 
-    /* 3. Claims you type, and a bench to test them on. */
+    /* 3. Four blank cards, then four explanations to pick from. The questions regroup by whichever are picked; luck sits beside them. */
     {
       id: 'claims', title: 'Claims',
-      prompts: ['Why 28 of 42?', 'What would each look like?', ''],
+      prompts: ['Why 28 of 42?', 'Pick some'],
       make(host) {
         host.classList.add('claims');
-        const geo = Object.assign({ y0: 344, cellH: 50, rowPitch: 112 }, COLS);
-        const rows = D.Rows(host, geo);
-        const chart = D.Chart(host, { x: 140, y: 270, w: 1320, h: 520 });
-        const cl = D.Claims(host, rows, chart, { x: 140, ty: 204, y: 300, rx: 20 });
+        const rows = D.Rows(host, Object.assign({ y0: 300, cellH: 60, rowPitch: 120 }, COLS));
+        const cl = D.Claims(host, rows, { x: 50, ty: 24, rx: 20, dy: 176 });
         return { show: cl.show, key: cl.key, reset: cl.reset };
       }
     },
@@ -83,13 +78,6 @@
           reset() { rows.clearDraws(); }
         };
       }
-    },
-
-    /* 5. The model at chapter size. */
-    {
-      id: 'alloc', title: 'Where the time went',
-      prompts: ['Where did the time go?'],
-      make(host) { const al = D.Alloc(host); return { show() { al.refresh(); }, reset() { al.refresh(); } }; }
     }
   ];
 
