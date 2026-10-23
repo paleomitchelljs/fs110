@@ -38,13 +38,13 @@ near(M.methodFor(M.U(0.6, 0.3), 0.6), 0.3, 1e-9, 'methodFor inverts U');
 // chapters
 const ch = students.map((s) => M.chapters(q, s.v));
 ok(ch[0].map((c) => c.n).join() === '10,23,9', 'chapter sizes 10, 23, 9');
-ok(ch[1][0].k === 3 && ch[1][1].k === 19 && ch[1][2].k === 7, 'B: 3, 19, 7');
-ok(ch[2][2].k === 4 && ch[3][1].k === 11, 'C is weakest in 12, D in 11');
+ok(ch[1][0].k === 1 && ch[1][1].k === 20 && ch[1][2].k === 8, 'B: 1, 20, 8');
+ok(ch[2][2].k === 2 && ch[3][1].k === 9, 'C is weakest in 12, D in 11');
 const gaps = ch.map(M.gap);
 ok(gaps[0] < 0.15, 'A is even across chapters');
 ok(gaps[1] > 0.5, 'B is very uneven');
 
-// luck: a deal keeps the score and moves the pattern; B's gap is rare, A's is not
+// luck: a deal keeps the score and moves the pattern; B's, C's and D's gaps are rare, A's is not
 const rand = M.rng(7);
 const d = M.deal(students[1].v, rand);
 ok(M.sum(d) === 29 && d.length === 42, 'a deal keeps the score');
@@ -58,8 +58,8 @@ function nullGaps(v, reps, seed) {
 const p = students.map((s, i) => M.tail(nullGaps(s.v, 3000, 11 + i), gaps[i]));
 ok(p[0] > 0.5, 'A: the gap is ordinary luck, p = ' + p[0].toFixed(3));
 ok(p[1] < 0.03, 'B: the gap is rare, p = ' + p[1].toFixed(3));
-ok(p[3] < 0.15, 'D: the gap is uncommon, p = ' + p[3].toFixed(3));
-ok(p[2] > 0.05, 'C: the gap is not clearly beyond luck, p = ' + p[2].toFixed(3));
+ok(p[3] < 0.03, 'D: the gap is rare, p = ' + p[3].toFixed(3));
+ok(p[2] < 0.03, 'C: the gap is rare, p = ' + p[2].toFixed(3));
 ok(M.rng(3)() === M.rng(3)(), 'the generator is seeded');
 
 // thirds of the exam: nobody fades at the end

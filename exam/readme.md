@@ -31,10 +31,10 @@ Build 0: four blank cards you can type into. Build 1: they become the explanatio
 | explanation | property (`exam_question_traits.csv`) | effect |
 |---|---|---|
 | Ran out of time | position in the exam | splits into early / middle / late |
-| Hard questions | Bloom level | splits into remember / understand / apply / analyze |
+| Hard questions | average difficulty (class share right, `class_avg`) | splits into under 50% right / middle / 70%+ (9, 17 and 16 questions) |
 | Didn't read carefully | critical words (not, always) | splits into plain / has one |
 | Confused by question wording | reading level | splits into 7–8th / 9–10th / 11–12th grade |
-| Skimmed | word count | sorts within each group, shortest first, with a length bar over each column; also halves each group short / long so there is a gap to measure |
+| Complex questions | Bloom level | splits into remember / understand / apply / analyze (15, 8, 13 and 6 questions) |
 
 Each group gets a percent-right bar per student (tick = the class). Luck: each student's results are shuffled 400 times into the same groups; the dots are the best-minus-worst-group gap of each shuffle, the gold bar is the real one. It rebuilds whenever the groups change. Dice buttons / D show one shuffle in the columns. More groups means chance alone produces bigger gaps, so the real bar sinks into the pile as you stack explanations; with tiny groups both saturate at 100.
 
@@ -47,14 +47,14 @@ Each group gets a percent-right bar per student (tick = the class). Luck: each s
 | | ch 10 | ch 11 | ch 12 |
 |---|---|---|---|
 | A | 6/10 | 16/23 | 6/9 |
-| B | 3/10 | 19/23 | 7/9 |
-| C | 7/10 | 18/23 | 4/9 |
-| D | 8/10 | 11/23 | 8/9 |
+| B | 1/10 | 20/23 | 8/9 |
+| C | 8/10 | 19/23 | 2/9 |
+| D | 9/10 | 9/23 | 9/9 |
 
-A is even across chapters. B, C and D each dip in a different one. (Shuffling their results gives a gap this large rarely for B, sometimes for C and D; the deck treats this as illustration, not proof.)
+A is even across chapters. B, C and D each dip in a different one. (Shuffling their results gives a gap this large rarely for all three, p under 0.01; the deck treats this as illustration, not proof.)
 
-- **A's misses lean toward the hard questions.** So do most students', since hard questions are hard for everyone. The class tick on each bar is there for this.
-- **Question order is not chapter order.** Q36–42 are chapter 11 and Q47–50 are chapter 10, so B's chapter-10 misses fall at both ends of the exam, which rules out "ran out of time". Page 4 opens with chapter colors on the exam-order columns.
+- **Everyone's misses lean toward the hard questions**, since hard questions are hard for everyone. The class tick on each bar is there for this.
+- **Question order is not chapter order.** `make_data.js` sorts the file by question number. Q36–42 are chapter 11 and Q47–50 are chapter 10, so B's chapter-10 misses fall at both ends of the exam, which rules out "ran out of time". Page 4 opens with chapter colors on the exam-order columns.
 - The circles on the last build mark a best–worst chapter gap of 30 points or more (`RING_GAP` in `rows.js`): B, C and D.
 - Questions 5, 8–10, 28, 29, 34 and 45 are missing from the file (42 of 50).
 

@@ -3,6 +3,7 @@ const fs = require('fs'), path = require('path');
 const dir = path.join(__dirname, '..');
 const rows = fs.readFileSync(path.join(dir, 'example_students.csv'), 'utf8').trim().split(/\r?\n/).map((l) => l.split(','));
 const head = rows.shift();
+rows.sort((a, b) => +a[0] - +b[0]);                  // exam order is question number, whatever order the file lists them in
 const col = (n) => head.indexOf(n);
 const ids = head.slice(col('uniform01'));          // every column after class_avg is one student
 // exam_question_traits.csv: one row per question of the 50, with quoted fields. Questions missing from the students file are skipped.

@@ -2,10 +2,10 @@
  * The page opens on four blank cards. Next build the cards turn into the explanations; click any number of them. Each one
  * is a property of the questions in exam_question_traits.csv:
  *   Ran out of time        position in the exam (early, middle, late)       splits the questions
- *   Hard questions            Bloom level (remember, understand, apply, analyze)  splits the questions
+ *   Hard questions         average difficulty: share of the class who got it right (hard, middle, easy)  splits the questions
  *   Didn't read carefully  a critical word in the question (not, always)     splits the questions
  *   Confused by wording        reading level of the question                      splits the questions (7–8th, 9–10th, 11–12th grade)
- *   Skimmed                question length                                   sorts within each group, and halves it short / long
+ *   Complex questions      Bloom level (remember, understand, apply, analyze)  splits the questions
  * Picked ones nest in the order they were picked; a number on the card says where. Luck sits at the right the whole time:
  * the same results dealt at random into the same groups (see rows.js), the gold bar being the real gap.
  */
@@ -18,7 +18,8 @@
   /* of(j): which group question j falls in, as a number. label(g): its name. */
   const SPLIT = {
     time: { of: (j) => THIRDS.findIndex((t) => j >= t.a && j < t.b), label: (g) => ['Early', 'Middle', 'Late'][g] },
-    smart: { of: (j) => BLOOM.indexOf(Q[j].bloom), label: (g) => BLOOM[g] },
+    smart: { of: (j) => Q[j].avg < 0.5 ? 0 : Q[j].avg < 0.7 ? 1 : 2, label: (g) => ['Hard · under 50% right', 'Middle', 'Easy · 70%+'][g] },
+    complex: { of: (j) => BLOOM.indexOf(Q[j].bloom), label: (g) => BLOOM[g] },
     hard: { of: (j) => Q[j].rl <= 8 ? 0 : Q[j].rl <= 10 ? 1 : 2, label: (g) => ['7–8th grade', '9–10th', '11–12th'][g] },
     care: { of: (j) => Q[j].crit ? 1 : 0, label: (g) => g ? 'not · always' : 'Plain' }
   };
@@ -27,34 +28,26 @@
     { k: 'smart', t: 'Hard questions' },
     { k: 'care', t: 'Didn’t read carefully' },
     { k: 'hard', t: 'Confused by question wording' },
-    { k: 'skim', t: 'Skimmed' }
+    { k: 'complex', t: 'Complex questions' }
   ];
-  const GAPS = [30, 16, 10], GAP_HALF = 5;      // space before a new group, by the level where it begins
+  const GAPS = [30, 16, 10, 6];     // space before a new group, by the level where it begins
 
   /* The order, groups and labels the columns take for a list of picked explanations. */
   function nestFor(sel) {
-    const cats = sel.filter((k) => SPLIT[k]), skim = sel.includes('skim');
+    const cats = sel.filter((k) => SPLIT[k]);
     const idx = Q.map((x, i) => i);
     const key = idx.map((j) => cats.map((k) => SPLIT[k].of(j)));
     idx.sort((a, b) => {
       for (let i = 0; i < cats.length; i++) if (key[a][i] !== key[b][i]) return key[a][i] - key[b][i];
-      return (skim ? Q[a].words - Q[b].words : 0) || a - b;
+      return a - b;
     });
     const path = idx.map((j) => key[j].slice());
-    if (skim) {                       // the shorter half of each group, then the longer half
-      for (let a = 0, s = 1; s <= NQ; s++) {
-        if (s < NQ && path[s].join() === path[a].join()) continue;
-        const half = Math.ceil((s - a) / 2);
-        for (let i = a; i < s; i++) path[i].push(i - a < half ? 0 : 1);
-        a = s;
-      }
-    }
-    const depth = cats.length + (skim ? 1 : 0);
+    const depth = cats.length;
     const differs = (s) => { let l = 0; while (l < depth && path[s][l] === path[s - 1][l]) l++; return l; };
     const gaps = idx.map((j, s) => {
       if (!s) return 0;
       const l = differs(s);
-      return l >= depth ? 0 : (skim && l === cats.length ? GAP_HALF : GAPS[l]);
+      return l >= depth ? 0 : GAPS[l];
     });
     const runs = (levels) => {        // consecutive slots that share the first `levels` entries of their path
       const out = [];
@@ -91,7 +84,7 @@
     function view() {
       const sel = S().sel, nest = nestFor(sel);
       rows.set({
-        layout: 'nest', nest, lens: sel.includes('skim'), pct: nest.leaves.length > 1, luck: true, head: false, caps: false,
+        layout: 'nest', nest, lens: false, pct: nest.leaves.length > 1, luck: true, head: false, caps: false,
         thirds: false, cls: false, ring: false, scores: false
       });
     }
