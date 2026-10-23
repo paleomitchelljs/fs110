@@ -2,9 +2,9 @@
  * The page opens on four blank cards. Next build the cards turn into the explanations; click any number of them. Each one
  * is a property of the questions in exam_question_traits.csv:
  *   Ran out of time        position in the exam (early, middle, late)       splits the questions
- *   Not smart              Bloom level (remember, understand, apply, analyze)  splits the questions
+ *   Hard questions            Bloom level (remember, understand, apply, analyze)  splits the questions
  *   Didn't read carefully  a critical word in the question (not, always)     splits the questions
- *   Test too hard         reading level of the question                      splits the questions (7–8th, 9–10th, 11–12th grade)
+ *   Confused by wording        reading level of the question                      splits the questions (7–8th, 9–10th, 11–12th grade)
  *   Skimmed                question length                                   sorts within each group, and halves it short / long
  * Picked ones nest in the order they were picked; a number on the card says where. Luck sits at the right the whole time:
  * the same results dealt at random into the same groups (see rows.js), the gold bar being the real gap.
@@ -24,9 +24,9 @@
   };
   const EXPL = [
     { k: 'time', t: 'Ran out of time' },
-    { k: 'smart', t: 'Not smart' },
+    { k: 'smart', t: 'Hard questions' },
     { k: 'care', t: 'Didn’t read carefully' },
-    { k: 'hard', t: 'Test too hard' },
+    { k: 'hard', t: 'Confused by question wording' },
     { k: 'skim', t: 'Skimmed' }
   ];
   const GAPS = [30, 16, 10], GAP_HALF = 5;      // space before a new group, by the level where it begins

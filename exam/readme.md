@@ -31,9 +31,9 @@ Build 0: four blank cards you can type into. Build 1: they become the explanatio
 | explanation | property (`exam_question_traits.csv`) | effect |
 |---|---|---|
 | Ran out of time | position in the exam | splits into early / middle / late |
-| Not smart | Bloom level | splits into remember / understand / apply / analyze |
+| Hard questions | Bloom level | splits into remember / understand / apply / analyze |
 | Didn't read carefully | critical words (not, always) | splits into plain / has one |
-| Test too hard | reading level | splits into 7–8th / 9–10th / 11–12th grade |
+| Confused by question wording | reading level | splits into 7–8th / 9–10th / 11–12th grade |
 | Skimmed | word count | sorts within each group, shortest first, with a length bar over each column; also halves each group short / long so there is a gap to measure |
 
 Each group gets a percent-right bar per student (tick = the class). Luck: each student's results are shuffled 400 times into the same groups; the dots are the best-minus-worst-group gap of each shuffle, the gold bar is the real one. It rebuilds whenever the groups change. Dice buttons / D show one shuffle in the columns. More groups means chance alone produces bigger gaps, so the real bar sinks into the pile as you stack explanations; with tiny groups both saturate at 100.
