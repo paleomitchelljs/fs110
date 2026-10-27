@@ -8,32 +8,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="css/website.css?v=2">
+<link rel="stylesheet" href="css/website.css?v=3">
 </head>
 <body>
-<header class="top">
-  <h1>Your own website</h1>
-  <p>Make your own copy of the notes app, give it a free web address, then change it from your computer.</p>
-</header>
+<header class="top"><h1>Your own website</h1></header>
 
 <section class="who" aria-label="About you">
-  <div class="how" role="group" aria-label="How you got the notes">
-    <span>Have you got my notes yet?</span>
-    <span class="seg paths" id="paths"></span>
-  </div>
-  <label class="user">
-    <span>Your GitHub username</span>
-    <input id="user" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type it here">
-  </label>
-  <div class="addr">
-    <span>Your web address will be</span>
-    <span class="site"><b id="site">yourname.github.io</b> <button type="button" id="copy" class="small">Copy</button></span>
-  </div>
-  <div class="os" role="group" aria-label="Your computer">
-    <span>Your computer</span>
-    <span class="seg"><button type="button" data-os="win" aria-pressed="false">Windows</button><button type="button" data-os="mac" aria-pressed="false">Mac</button></span>
-  </div>
-  <p class="warn" id="userwarn" hidden>That doesn’t look like a GitHub username. Click your picture at the top right of GitHub: the name in bold is it.</p>
+  <span class="seg paths" id="paths" role="group" aria-label="How you got the notes"></span>
+  <input id="user" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="username" aria-label="Your GitHub username">
+  <span class="site"><b id="site">yourname.github.io</b><button type="button" id="copy" class="small">Copy</button></span>
+  <span class="seg os" role="group" aria-label="Your computer"><button type="button" data-os="win" aria-pressed="false">Windows</button><button type="button" data-os="mac" aria-pressed="false">Mac</button></span>
+  <span class="warn" id="userwarn" hidden>Not a GitHub username</span>
 </section>
 
 <nav class="steps" id="steps" aria-label="Steps"></nav>
@@ -41,22 +26,16 @@
 <main id="step">
   <figure class="vid">
     <img id="gif" alt="" width="1000" height="625">
-    <figcaption>
-      <button type="button" id="replay" class="small">↺ Play again</button>
-      <button type="button" id="bigger" class="small">⤢ Bigger</button>
-      <span class="fine">A re-enactment. Your screen will look nearly the same; in the video the username is <b>yourname</b>.</span>
-    </figcaption>
+    <figcaption><button type="button" id="replay" class="small">↺ Replay</button><button type="button" id="bigger" class="small">⤢ Zoom</button></figcaption>
   </figure>
   <div class="text">
-    <h2 id="title"></h2>
-    <p class="word" id="word"></p>
+    <div class="head"><h2 id="title"></h2><a id="link" class="go" target="_blank" rel="noopener"></a></div>
     <ul class="pre" id="pre"></ul>
     <ol class="lines" id="lines"></ol>
-    <p class="after" id="after"></p>
-    <details class="stuck" id="stuck"><summary>Stuck?</summary><dl id="stucklist"></dl></details>
+    <details class="stuck" id="stuck"><summary>Help</summary><dl id="stucklist"></dl></details>
     <div class="nav">
       <button type="button" id="prev">← Back</button>
-      <button type="button" id="done" class="done" aria-pressed="false">✓ I did this</button>
+      <button type="button" id="done" class="done" aria-pressed="false">Done</button>
       <button type="button" id="next">Next →</button>
     </div>
   </div>
@@ -65,7 +44,7 @@
 <dialog id="big" aria-label="Bigger video"><img id="biggif" alt=""><button type="button" id="close" class="small">Close</button></dialog>
 
 <noscript><p class="noscript">This page needs JavaScript.</p></noscript>
-<script src="js/steps.js?v=2"></script>
-<script src="js/app.js?v=2"></script>
+<script src="js/steps.js?v=3"></script>
+<script src="js/app.js?v=3"></script>
 </body>
 </html>

@@ -1,20 +1,22 @@
 # Your own website
 
-Short videos, step by step, no build step. Open `index.html`. Each step is a short looping video (a gif) next to the same clicks in words, numbered to match the numbers in the video.
+Short videos, step by step, no build step. Open `index.html`. The page is kept nearly wordless on purpose: the looping gif does the explaining, with its own numbered captions, and beside it are a one-word title, one button to the right page (Notes, Settings, Site…), and one short bullet per numbered caption. A collapsed **Help** holds one-line fixes for what goes wrong most often.
 
-Students first say whether they have the notes yet: **Not yet** (fork it), **I downloaded the ZIP**, or **I cloned it**. That picks their path. Then they type their GitHub username, and from then on every line says their own address (`ada.github.io`), and the links go to their own copy. They pick Windows or Mac (the page guesses), and the steps on their own computer change to match. A **Stuck?** box under each step holds what goes wrong most often. **I did this** ticks the step off and moves on. The page remembers all of this in that browser only. ← → step through. A link like `index.html#zip/upload` opens one step of one path, so you can send each group its own link.
+Along the top: **Fork / ZIP / Clone** (how the student got the notes, which picks the path), their GitHub username (every bullet and link then uses their own address, `ada.github.io`), and **Windows / Mac** (the page guesses). **Done** ticks a step off and moves on. The page remembers all of this in that browser only. ← → step through. A link like `index.html#zip/upload` opens one step of one path, so each group can get its own link.
+
+`tests/steps.test.js` keeps it light: titles, path names and button words are one word, and no bullet runs past 40 characters.
 
 ## The three paths
 
 All three end the same way: the site is live at `username.github.io`, and the student has changed a file on their own computer and pushed it.
 
-| | Not yet: fork it | I downloaded the ZIP | I cloned it |
+| | Fork | ZIP | Clone |
 |---|---|---|---|
-| Get your copy | **Make your own copy**: fork, naming the fork `username.github.io` | **Download the files**: Code → Download ZIP, unzip<br>**Make an empty project**: + → New repository, `username.github.io`, Public, no README<br>**Drag the files in**: *uploading an existing file*, drag in what's inside `notes-main`, Commit changes | **Make an empty project** (as on the left)<br>**Get GitHub Desktop** (most already have it: tick and go on)<br>**Send your clone to your account**: Repository settings → Remote → paste `https://github.com/username/username.github.io.git` → Save → Fetch origin → Publish branch |
-| Put it online | **Turn on your web address**: Settings → Pages → Branch `main`, `/ (root)` → Save<br>**Watch it go live**: Actions tab, yellow circle then green check, then Visit site | same | same |
-| Change it from your computer | **Get GitHub Desktop**<br>**Put your site on this computer**: clone it from *Your repositories*<br>**Change one line**<br>**Commit and push** | same | **Change one line**<br>**Commit and push**<br>(their clone is already on the computer) |
+| Get your copy | **Fork**: fork, naming the fork `username.github.io` | **Download**: Code → Download ZIP, unzip<br>**New**: + → New repository, `username.github.io`, Public, no README<br>**Upload**: *uploading an existing file*, drag in what's inside `notes-main`, Commit changes | **New** (as on the left)<br>**Desktop** (most already have it: Next)<br>**Connect**: Repository settings → Remote → paste `https://github.com/username/username.github.io.git` → Save → Fetch origin → Publish branch |
+| Put it online | **Pages**: Settings → Pages → Branch `main`, `/ (root)` → Save<br>**Live**: Actions tab, yellow circle then green check, then Visit site | same | same |
+| Change it from your computer | **Desktop**<br>**Clone**: from *Your repositories*<br>**Edit**<br>**Push** | same | **Edit**<br>**Push**<br>(their clone is already on the computer) |
 
-**Change one line**: Show in Explorer/Finder → open `index.html` in Notepad/TextEdit → change `<title>Margins</title>` to `<title>Notes by username</title>` → save. On a Mac this includes TextEdit's one-time "display HTML files as HTML code" setting, without which TextEdit shows the page and not the code. **Commit and push**: Summary → Commit to main → Push origin → reload the site. The browser tab now has their name.
+**Edit**: Show in Explorer/Finder → open `index.html` in Notepad/TextEdit → change `<title>Margins</title>` to `<title>Notes by username</title>` → save. On a Mac this includes TextEdit's one-time "display HTML files as HTML code" setting, without which TextEdit shows the page and not the code. **Push**: Summary → Commit to main → Push origin → reload the site. The browser tab now has their name.
 
 The change is the page title because it is one word on line 6, it can't break the app, and it shows up in the browser tab.
 
@@ -65,7 +67,7 @@ Any gif can be replaced by a real screen recording with the same file name. The 
 
 ## Files
 
-- `js/steps.js`: every word on the page (steps, Windows/Mac variants, Stuck? answers), the three paths through the steps, and the username cleanup.
+- `js/steps.js`: every word on the page (steps, Windows/Mac variants, Help answers), the three paths through the steps, and the username cleanup.
 - `js/app.js`: the page.
 - `tools/scenes.html`, `tools/record.js`, `tools/notes.png`: the videos' source.
 

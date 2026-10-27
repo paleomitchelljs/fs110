@@ -1,4 +1,4 @@
-/* Your own website: a path of steps, each a gif and the same clicks in words. Steps and paths live in steps.js.
+/* Your own website: a path of steps, each a gif with one short bullet per numbered caption. Steps and paths live in steps.js.
  * The path is how the student got the notes (forked, downloaded the ZIP, cloned). Remembers (in this browser only) the path,
  * the username, Windows or Mac, and which steps are ticked. ← → step through; #zip/upload links to one step of one path. */
 (function () {
@@ -35,11 +35,10 @@
     return true;
   }
 
-  /* **bold**, `code`, [words](url), [[copyable]], after the names are filled in */
+  /* **bold**, *italic*, [words](url), [[copyable]], after the names are filled in */
   function md(text) {
     return esc(D.fill(text, S.user))
       .replace(/\[\[([^\]]+)\]\]/g, '<span class="cp"><code>$1</code><button type="button" class="small" data-copy="$1">Copy</button></span>')
-      .replace(/`([^`]+)`/g, '<code>$1</code>')
       .replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')
       .replace(/\*(.+?)\*/g, '<i>$1</i>')
       .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (m, words, url) => '<a href="' + url + '"' + (url[0] === '#' ? '' : ' target="_blank" rel="noopener"') + '>' + words + '</a>');
@@ -53,7 +52,7 @@
 
   /* ---------- the path and its step buttons ---------- */
   function buildPaths() {
-    $('#paths').innerHTML = D.PATHS.map(p => '<button type="button" data-path="' + p.id + '">' + esc(p.label) + '<small>' + esc(p.sub) + '</small></button>').join('');
+    $('#paths').innerHTML = D.PATHS.map(p => '<button type="button" data-path="' + p.id + '">' + esc(p.label) + '</button>').join('');
     $$('#paths button').forEach(b => b.addEventListener('click', () => {
       if (b.dataset.path === S.path.id) return;
       const was = steps()[S.i].id;
@@ -64,9 +63,9 @@
   }
   function buildNav() {
     let n = 0;
-    $('#steps').innerHTML = S.path.groups.map(([name, ids]) => '<div class="grp"><span>' + esc(name) + '</span><div class="row">' +
+    $('#steps').innerHTML = S.path.groups.map(ids => '<div class="row">' +
       ids.map(id => { const s = D.STEPS.find(x => x.id === id), i = n++; return '<button type="button" data-i="' + i + '"><span class="n">' + (i + 1) + '</span><span>' + esc(s.title) + '</span></button>'; }).join('') +
-      '</div></div>').join('<i class="sep"></i>');
+      '</div>').join('<i class="sep"></i>');
     $$('#steps button').forEach(b => b.addEventListener('click', () => go(+b.dataset.i)));
     $$('#paths button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.path === S.path.id)));
   }
@@ -87,22 +86,23 @@
   }
   function render() {
     const all = steps(), s = all[S.i];
-    $('#title').innerHTML = '<span class="k">Step ' + (S.i + 1) + ' of ' + all.length + ' ·</span> ' + esc(s.title);
-    $('#word').innerHTML = md(s.word);
+    $('#title').innerHTML = '<span class="k">' + (S.i + 1) + '</span>' + esc(s.title);
+    const link = $('#link');
+    link.textContent = s.link ? s.link[0] + ' ↗' : '';
+    if (s.link) link.href = D.fill(s.link[1], S.user); else link.removeAttribute('href');
     list($('#pre'), s.pre);
     list($('#lines'), D.pick(s.lines, S.os));
-    $('#after').innerHTML = s.after ? md(s.after) : '';
-    $('#stucklist').innerHTML = s.stuck.map(x => { const [q, a] = D.pick(x, S.os); return '<dt>' + md(q) + '</dt><dd>' + md(D.pick(a, S.os)) + '</dd>'; }).join('');
+    $('#stucklist').innerHTML = s.help.map(x => { const [q, a] = D.pick(x, S.os); return '<div><dt>' + md(q) + '</dt><dd>' + md(D.pick(a, S.os)) + '</dd></div>'; }).join('');
     $('#stuck').open = false;
     const src = D.gifFor(s, S.os);
     const img = $('#gif');
     if (img.getAttribute('src') !== src) img.src = src;
-    img.alt = 'A short video of step ' + (S.i + 1) + ': ' + s.title + '.';
+    img.alt = 'Video: ' + D.pick(s.lines, S.os).map(l => D.fill(D.pick(l, S.os), S.user).replace(/\*|\[\[|\]\]/g, '')).join('. ');
     $('#prev').disabled = S.i === 0;
     $('#next').disabled = S.i === all.length - 1;
     const d = !!S.done[s.id];
     $('#done').setAttribute('aria-pressed', String(d));
-    $('#done').textContent = d ? '✓ Done' : '✓ I did this';
+    $('#done').textContent = d ? '✓ Done' : 'Done';
     paintNav();
   }
   function go(i) {
