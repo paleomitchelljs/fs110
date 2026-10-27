@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Scenes</title>
+<!--
+  Re-enactments of the GitHub, GitHub Desktop, Explorer/Finder and Notepad/TextEdit screens, played by a fake cursor.
+  record.js opens this page as  scenes.html?scene=fork  (or &os=win / &os=mac), steps a fake clock, and turns the frames into gif/<scene>[-os].gif.
+  Open it in a browser to watch a scene play in real time.
+-->
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #555; }
+  body { font: 14px/1.5 Inter, "Segoe UI", system-ui, sans-serif; color: #1f2328; }
+  #stage { position: relative; width: 1000px; height: 625px; overflow: hidden; background: #fff; }
+  #view { position: absolute; left: 0; top: 0; width: 1000px; height: 625px; transform-origin: 0 0; }
+  #screen { position: absolute; inset: 0; }
+  .abs { position: absolute; }
+  .hide { display: none !important; }
+
+  /* cursor, click ring, highlight box, caption, keys */
+  #cursor { position: absolute; left: 0; top: 0; width: 22px; height: 30px; z-index: 50; pointer-events: none; }
+  #ring { position: absolute; z-index: 49; border: 3px solid #f2b705; border-radius: 50%; pointer-events: none; }
+  #hl { position: absolute; z-index: 48; border: 4px solid #f2b705; border-radius: 9px; box-shadow: 0 0 0 4000px rgba(0,0,0,0.0); pointer-events: none; }
+  #cap {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 60; display: flex; align-items: center; gap: 16px;
+    min-height: 66px; padding: 10px 22px; background: rgba(23, 33, 29, 0.94); color: #fff; font: 600 25px/1.25 Inter, sans-serif;
+  }
+  #cap .n { flex: none; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: #f2b705; color: #17211d; font-weight: 800; }
+  #cap b { color: #f5d76e; }
+  #keys { position: absolute; left: 50%; top: 42%; z-index: 61; transform: translate(-50%, -50%); display: flex; gap: 10px; align-items: center; font: 700 34px Inter, sans-serif; color: #fff; }
+  #keys kbd { padding: 10px 22px; border-radius: 12px; background: #17211d; border: 3px solid #f2b705; font: inherit; }
+
+  /* ---------- browser ---------- */
+  .browser { position: absolute; inset: 0; display: flex; flex-direction: column; background: #fff; }
+  .win .browser, .desk .browser { border-radius: 8px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.35); }
+  .tabstrip { display: flex; align-items: flex-end; gap: 4px; height: 36px; padding: 0 10px; background: #dee1e6; }
+  .tab { display: flex; align-items: center; gap: 8px; width: 230px; height: 30px; padding: 0 12px; border-radius: 8px 8px 0 0; background: #fff; font-size: 13px; white-space: nowrap; overflow: hidden; }
+  .tab.off { background: transparent; color: #444; }
+  .tab .fav { flex: none; width: 14px; height: 14px; border-radius: 50%; background: #1f2328; }
+  .tab .fav.notes { border-radius: 3px; background: #fffdf7; border: 2px solid #333; border-left: 4px solid #c0392b; }
+  .tab .x { margin-left: auto; color: #666; }
+  .wc { margin-left: auto; display: flex; gap: 22px; align-self: center; color: #333; font-size: 13px; padding-right: 6px; }
+  .lights { display: flex; gap: 8px; align-self: center; padding: 0 10px 0 4px; }
+  .lights i { width: 12px; height: 12px; border-radius: 50%; background: #ff5f57; } .lights i + i { background: #febc2e; } .lights i + i + i { background: #28c840; }
+  .toolbar { display: flex; align-items: center; gap: 14px; height: 42px; padding: 0 12px; border-bottom: 1px solid #ddd; color: #555; font-size: 17px; }
+  .url { flex: 1; display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 14px; border-radius: 15px; background: #f1f3f4; color: #1f2328; font-size: 14px; }
+  .url .lock { font-size: 11px; color: #555; }
+  .page { position: relative; flex: 1; overflow: hidden; background: #fff; }
+
+  /* ---------- GitHub look-alike ---------- */
+  .gh-head { height: 92px; background: #f6f8fa; border-bottom: 1px solid #d1d9e0; padding: 12px 22px 0; }
+  .gh-top { display: flex; align-items: center; gap: 14px; height: 34px; }
+  .gh-ham { width: 32px; height: 32px; border: 1px solid #d1d9e0; border-radius: 6px; display: grid; place-items: center; color: #59636e; }
+  .gh-logo { width: 32px; height: 32px; border-radius: 50%; background: #1f2328; }
+  .gh-crumb { font-size: 14px; } .gh-crumb b { font-weight: 600; }
+  .gh-search { margin-left: auto; width: 250px; height: 32px; border: 1px solid #d1d9e0; border-radius: 6px; padding: 5px 10px; color: #59636e; font-size: 13px; background: #fff; }
+  .gh-av { width: 32px; height: 32px; border-radius: 50%; background: #8250df; color: #fff; display: grid; place-items: center; font-weight: 700; }
+  .gh-tabs { display: flex; gap: 6px; margin-top: 10px; }
+  .gh-tabs span { padding: 6px 10px 10px; font-size: 14px; color: #1f2328; border-bottom: 2px solid transparent; white-space: nowrap; }
+  .gh-tabs span.on { border-bottom-color: #fd8c73; font-weight: 600; }
+  .gh-tabs .ic { color: #59636e; margin-right: 6px; }
+  .gh-main { padding: 20px 32px; }
+  .gh-title { display: flex; align-items: center; gap: 10px; padding-bottom: 16px; border-bottom: 1px solid #d1d9e0; }
+  .gh-title .av { width: 24px; height: 24px; border-radius: 50%; background: #1a7f37; }
+  .gh-title .av.you { background: #8250df; }
+  .gh-title h1 { margin: 0; font-size: 20px; font-weight: 600; }
+  .pill { padding: 0 8px; border: 1px solid #d1d9e0; border-radius: 12px; font-size: 12px; color: #59636e; }
+  .gh-title .acts { margin-left: auto; display: flex; gap: 8px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border: 1px solid #d1d9e0; border-radius: 6px; background: #f6f8fa; font-size: 14px; font-weight: 500; white-space: nowrap; }
+  .btn .ct { padding: 0 6px; border-radius: 10px; background: #e8ebef; font-size: 12px; }
+  .btn.green { background: #1f883d; border-color: #1a7f37; color: #fff; font-weight: 600; }
+  .btn.dis { opacity: 0.5; }
+  .forked { margin: -10px 0 12px 34px; font-size: 12px; color: #59636e; }
+  .forked a { color: #0969da; }
+  .gh-grid { display: grid; grid-template-columns: 1fr 250px; gap: 26px; margin-top: 18px; }
+  .files { border: 1px solid #d1d9e0; border-radius: 6px; overflow: hidden; }
+  .files .bar { display: flex; gap: 8px; padding: 10px 14px; }
+  .files .bar .sp { flex: 1; }
+  .files .row { display: flex; gap: 12px; padding: 9px 14px; border-top: 1px solid #d1d9e0; font-size: 14px; }
+  .files .row .when { margin-left: auto; color: #59636e; }
+  .files .row.head { background: #f6f8fa; color: #59636e; font-size: 13px; }
+  .dir { color: #54aeff; } .doc { color: #59636e; }
+  .about h3 { margin: 0 0 10px; font-size: 16px; } .about p { margin: 0; font-size: 14px; }
+
+  .fork { width: 680px; margin: 26px auto; }
+  .fork h2 { margin: 0 0 6px; font-size: 24px; font-weight: 400; }
+  .fork p { margin: 0 0 10px; color: #59636e; font-size: 14px; }
+  .fork hr { border: 0; border-top: 1px solid #d1d9e0; margin: 14px 0; }
+  .lbl { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+  .field { height: 34px; border: 1px solid #d1d9e0; border-radius: 6px; padding: 6px 10px; font-size: 14px; background: #fff; white-space: pre; }
+  .field.focus { border-color: #0969da; box-shadow: 0 0 0 2px #0969da; }
+  .sel { background: #b6d7ff; }
+  .caret { display: inline-block; width: 1.5px; height: 1.1em; vertical-align: -0.15em; background: #1f2328; margin-left: 1px; }
+  .ok { color: #1a7f37; font-size: 13px; margin-top: 6px; }
+  .check { display: inline-block; width: 15px; height: 15px; border-radius: 3px; background: #0969da; vertical-align: -2px; margin-right: 8px; color: #fff; font-size: 11px; line-height: 15px; text-align: center; }
+  .check.off { background: #fff; border: 1px solid #59636e; }
+  .note { padding: 10px 14px; border: 1px solid #d1d9e0; border-radius: 6px; font-size: 13px; color: #59636e; }
+
+  .set { display: grid; grid-template-columns: 220px 1fr; gap: 28px; padding: 22px 32px; }
+  .side div { padding: 5px 10px; border-radius: 6px; font-size: 14px; }
+  .side .grp { margin-top: 12px; padding: 4px 10px; font-size: 12px; font-weight: 600; color: #59636e; }
+  .side .on { background: #eef1f4; font-weight: 600; box-shadow: inset 3px 0 0 #0969da; }
+  .set h2 { margin: 0 0 8px; padding-bottom: 8px; border-bottom: 1px solid #d1d9e0; font-size: 24px; font-weight: 400; }
+  .set h3 { margin: 18px 0 6px; font-size: 16px; font-weight: 600; }
+  .set p { margin: 0 0 8px; color: #59636e; font-size: 14px; }
+  .menu { position: absolute; z-index: 10; width: 250px; background: #fff; border: 1px solid #d1d9e0; border-radius: 12px; box-shadow: 0 8px 24px rgba(140,149,159,0.3); overflow: hidden; font-size: 14px; }
+  .menu .mh { padding: 8px 14px; font-weight: 600; border-bottom: 1px solid #d1d9e0; }
+  .menu .mi { padding: 7px 14px 7px 34px; position: relative; }
+  .menu .mi.ck::before { content: "✓"; position: absolute; left: 13px; }
+  .menu .mi.hov { background: #eef1f4; }
+  .flash { padding: 14px 18px; border: 1px solid #54aeff66; background: #ddf4ff; border-radius: 6px; font-size: 14px; margin-bottom: 14px; }
+  .live { display: flex; align-items: center; gap: 14px; padding: 16px; border: 1px solid #d1d9e0; border-radius: 6px; background: #f6f8fa; margin: 6px 0 14px; }
+  .live .t { font-size: 16px; } .live a { color: #0969da; } .live .sm { font-size: 12px; color: #59636e; }
+
+  .act { display: grid; grid-template-columns: 220px 1fr; gap: 28px; padding: 22px 32px; }
+  .act h2 { margin: 0 0 4px; font-size: 20px; font-weight: 600; }
+  .runs { border: 1px solid #d1d9e0; border-radius: 6px; margin-top: 14px; }
+  .runs .rh { padding: 12px 16px; background: #f6f8fa; font-weight: 600; font-size: 14px; border-bottom: 1px solid #d1d9e0; }
+  .run { display: flex; align-items: center; gap: 14px; padding: 14px 16px; }
+  .run .st { width: 18px; height: 18px; border-radius: 50%; flex: none; }
+  .run .st.go { border: 3px solid #bf8700; border-right-color: transparent; }
+  .run .st.done { background: #1a7f37; color: #fff; font-size: 12px; text-align: center; line-height: 18px; font-weight: 700; }
+  .run .nm { font-weight: 600; } .run .sub { font-size: 12px; color: #59636e; }
+  .run .br { margin-left: auto; padding: 0 8px; border-radius: 6px; background: #ddf4ff; color: #0969da; font-size: 12px; font-family: "JetBrains Mono", monospace; }
+
+  .auth { width: 460px; margin: 40px auto; text-align: center; }
+  .auth .apps { display: flex; justify-content: center; gap: 18px; align-items: center; margin-bottom: 18px; }
+  .auth .apps i { width: 64px; height: 64px; border-radius: 50%; background: #8250df; display: block; }
+  .auth .apps i.d { background: #6f42c1; border-radius: 14px; }
+  .auth h2 { font-size: 24px; font-weight: 400; margin: 0 0 18px; }
+  .auth .box { border: 1px solid #d1d9e0; border-radius: 6px; padding: 18px; text-align: left; font-size: 14px; color: #59636e; }
+  .prompt { position: absolute; left: 50%; top: 4px; transform: translateX(-50%); width: 420px; padding: 18px; background: #fff; border-radius: 8px; box-shadow: 0 6px 30px rgba(0,0,0,0.35); font-size: 14px; z-index: 5; }
+  .prompt b { display: block; font-size: 16px; margin-bottom: 6px; }
+  .prompt .row { display: flex; justify-content: flex-end; gap: 10px; margin-top: 14px; }
+  .prompt .pb { padding: 7px 16px; border-radius: 18px; border: 1px solid #ccc; }
+  .prompt .pb.go { background: #0b57d0; color: #fff; border-color: #0b57d0; }
+
+  .notesapp { position: absolute; inset: 0; background: center top / cover no-repeat; }
+
+  /* ---------- desktop, windows ---------- */
+  .desk { position: absolute; inset: 0; }
+  .desk.win { background: linear-gradient(135deg, #1b4f8a, #4f8fd0 60%, #9ac3ea); }
+  .desk.mac { background: linear-gradient(160deg, #3a2a68, #b0558f 55%, #f0a868); }
+  .macbar { position: absolute; left: 0; right: 0; top: 0; height: 26px; display: flex; gap: 22px; align-items: center; padding: 0 18px; background: rgba(240,240,240,0.82); font-size: 13px; z-index: 20; }
+  .macbar span:first-child { font-weight: 700; }
+  .macbar span.open { background: #2f6fd8; color: #fff; border-radius: 4px; padding: 0 6px; margin: 0 -6px; }
+  .taskbar { position: absolute; left: 0; right: 0; bottom: 0; height: 40px; background: rgba(232,236,242,0.92); display: flex; justify-content: center; gap: 10px; align-items: center; z-index: 20; }
+  .taskbar i { width: 26px; height: 26px; border-radius: 6px; background: #2a62c9; opacity: 0.85; }
+  .taskbar i:nth-child(2) { background: #f2b705; } .taskbar i:nth-child(3) { background: #6f42c1; } .taskbar i:nth-child(4) { background: #1f883d; }
+  .w { position: absolute; display: flex; flex-direction: column; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.38); }
+  .tb { display: flex; align-items: center; height: 32px; padding: 0 10px; background: #f3f3f3; font-size: 12px; color: #333; flex: none; }
+  .tb .ttl { flex: 1; text-align: center; }
+  .desk.win .tb .ttl { text-align: left; padding-left: 4px; }
+  .tb .wc { margin: 0; }
+  .wbody { position: relative; flex: 1; overflow: hidden; }
+
+  /* GitHub Desktop look-alike */
+  .gd { background: #fff; }
+  .gd .tb { background: #24292e; color: #fff; }
+  .gd .gmenu { display: flex; gap: 16px; color: #e1e4e8; font-size: 12.5px; }
+  .gd .gmenu span.open { background: #444d56; border-radius: 3px; padding: 0 5px; margin: 0 -5px; }
+  .gd .gbar { display: flex; height: 52px; background: #24292e; color: #fff; flex: none; border-top: 1px solid #3a4048; }
+  .gd .gbar > div { display: flex; flex-direction: column; justify-content: center; padding: 0 14px; border-right: 1px solid #141414; font-size: 13px; font-weight: 600; }
+  .gd .gbar small { display: block; color: #9ba1a8; font-size: 11px; font-weight: 400; }
+  .gd .gbar .repo { width: 260px; } .gd .gbar .branch { width: 230px; } .gd .gbar .fetch { width: 240px; }
+  .gd .gbar .fetch.push { background: #2f363d; }
+  .gd .gbar .up { display: inline-block; margin-left: 8px; padding: 0 6px; border-radius: 9px; background: #444d56; font-size: 11px; }
+  .gd .cols { display: grid; grid-template-columns: 260px 1fr; height: 100%; }
+  .gd .left { display: flex; flex-direction: column; border-right: 1px solid #e1e4e8; background: #fff; }
+  .gd .ltabs { display: flex; border-bottom: 1px solid #e1e4e8; } .gd .ltabs span { flex: 1; text-align: center; padding: 8px; font-size: 13px; }
+  .gd .ltabs span.on { box-shadow: inset 0 -3px #f9826c; font-weight: 600; }
+  .gd .chg { padding: 6px 10px; font-size: 13px; border-bottom: 1px solid #e1e4e8; color: #586069; }
+  .gd .file { display: flex; align-items: center; gap: 8px; padding: 6px 10px; font-size: 13px; background: #f1f8ff; }
+  .gd .file .m { margin-left: auto; width: 14px; height: 14px; border: 2px solid #d29922; border-radius: 3px; position: relative; }
+  .gd .file .m::after { content: ""; position: absolute; left: 3px; top: 3px; width: 4px; height: 4px; border-radius: 50%; background: #d29922; }
+  .gd .commit { margin-top: auto; padding: 10px; border-top: 1px solid #e1e4e8; background: #f6f8fa; }
+  .gd .commit .field { height: 30px; font-size: 13px; margin-bottom: 6px; color: #1f2328; }
+  .gd .commit .field.ph { color: #8b949e; }
+  .gd .commit .desc { height: 64px; }
+  .gd .bbtn { display: block; width: 100%; padding: 7px; border-radius: 5px; background: #0366d6; color: #fff; text-align: center; font-size: 13px; font-weight: 600; }
+  .gd .bbtn.dis { opacity: 0.5; }
+  .gd .right { position: relative; background: #fff; overflow: hidden; }
+  .gd .empty { padding: 34px 40px; }
+  .gd .empty h2 { margin: 0 0 18px; font-size: 22px; font-weight: 600; }
+  .gd .card { display: flex; align-items: center; gap: 16px; padding: 14px 16px; margin-bottom: 10px; border: 1px solid #e1e4e8; border-radius: 6px; font-size: 13px; }
+  .gd .card .tx { flex: 1; } .gd .card .tx b { display: block; font-size: 14px; }
+  .gd .card .btn { height: 30px; font-size: 13px; }
+  .gd .card .btn.blue { background: #0366d6; border-color: #0366d6; color: #fff; }
+  .diffh { padding: 8px 14px; border-bottom: 1px solid #e1e4e8; font-size: 13px; font-weight: 600; }
+  .diff { font: 13px/22px "JetBrains Mono", monospace; }
+  .diff div { display: flex; white-space: pre; } .diff span.ln { width: 44px; padding-right: 8px; text-align: right; color: #959da5; flex: none; }
+  .diff .h { background: #f1f8ff; color: #586069; } .diff .del { background: #ffeef0; } .diff .add { background: #e6ffed; }
+  .welcome { display: grid; place-items: center; height: 100%; background: #fff; }
+  .welcome .in { width: 460px; }
+  .welcome h1 { margin: 0 0 10px; font-size: 26px; font-weight: 300; }
+  .welcome p { color: #586069; font-size: 14px; }
+  .welcome .bbtn { margin: 14px 0 8px; padding: 10px; font-size: 14px; }
+  .welcome .lnk { color: #0366d6; font-size: 13px; margin: 6px 0; }
+  .welcome .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .start { display: grid; grid-template-columns: 1fr 330px; height: 100%; }
+  .start .l { padding: 40px; } .start .l h1 { margin: 0 0 8px; font-size: 26px; font-weight: 300; }
+  .start .l .opt { padding: 10px 14px; margin: 8px 0; border: 1px solid #e1e4e8; border-radius: 6px; font-size: 13px; }
+  .start .r { border-left: 1px solid #e1e4e8; display: flex; flex-direction: column; background: #f6f8fa; }
+  .start .r .rh { padding: 12px 16px; font-weight: 600; font-size: 14px; border-bottom: 1px solid #e1e4e8; }
+  .start .r .ri { padding: 8px 16px; font-size: 13px; } .start .r .ri.on { background: #0366d6; color: #fff; }
+  .start .r .bbtn { margin: auto 14px 14px; width: auto; }
+  .dlg { position: absolute; z-index: 8; background: #fff; border-radius: 8px; box-shadow: 0 8px 40px rgba(0,0,0,0.4); font-size: 13px; overflow: hidden; }
+  .dlg .dh { padding: 12px 16px; font-weight: 600; font-size: 15px; border-bottom: 1px solid #e1e4e8; }
+  .dlg .db { padding: 14px 16px; }
+  .dlg .df { display: flex; justify-content: flex-end; gap: 8px; padding: 10px 16px; border-top: 1px solid #e1e4e8; background: #f6f8fa; }
+  .dlg .df .btn { height: 30px; font-size: 13px; } .dlg .df .btn.blue { background: #0366d6; border-color: #0366d6; color: #fff; }
+  .prog { height: 8px; border-radius: 4px; background: #e1e4e8; overflow: hidden; } .prog i { display: block; height: 100%; background: #0366d6; }
+
+  /* Explorer / Finder */
+  .ex .exbar { display: flex; gap: 8px; align-items: center; padding: 6px 12px; border-bottom: 1px solid #e5e5e5; font-size: 13px; color: #333; }
+  .ex .exbar .path { flex: 1; padding: 4px 10px; border: 1px solid #ddd; border-radius: 4px; }
+  .ex .exmain { display: grid; grid-template-columns: 170px 1fr; height: 100%; }
+  .ex .nav { padding: 10px; font-size: 13px; color: #333; background: #fafafa; border-right: 1px solid #eee; }
+  .ex .nav div { padding: 4px 8px; } .ex .nav .h { color: #888; font-size: 11px; font-weight: 600; margin-top: 6px; }
+  .ex .nav .on { background: #e5e5e5; border-radius: 5px; }
+  .ex .list { font-size: 13px; }
+  .ex .list div { display: grid; grid-template-columns: 1fr 150px 130px; padding: 5px 12px; }
+  .ex .list .lh { color: #666; border-bottom: 1px solid #eee; }
+  .ex .list .on { background: #cce4f7; }
+  .desk.mac .ex .list .on { background: #2f6fd8; color: #fff; }
+  .ico { display: inline-block; width: 14px; height: 12px; margin-right: 8px; border-radius: 2px; background: #e8b931; vertical-align: -1px; }
+  .ico.f { background: #fff; border: 1px solid #888; height: 14px; width: 12px; }
+  .desk.mac .ico { background: #6cb6f2; }
+  .desk.mac .ico.f { background: #fff; }
+  .ctx { position: absolute; z-index: 9; min-width: 190px; padding: 5px; background: #fbfbfb; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.25); font-size: 13px; }
+  .ctx div { padding: 5px 12px; border-radius: 4px; display: flex; } .ctx div .ar { margin-left: auto; padding-left: 24px; }
+  .ctx div.hov { background: #2f6fd8; color: #fff; }
+  .desk.win .ctx div.hov { background: #e5f1fb; color: #000; }
+  .ctx hr { border: 0; border-top: 1px solid #ddd; margin: 4px 0; }
+
+  /* Notepad / TextEdit */
+  .ed .emenu { display: flex; gap: 18px; padding: 4px 12px; font-size: 13px; border-bottom: 1px solid #eee; }
+  .ed .txt { padding: 10px 14px; font: 14px/22px "JetBrains Mono", Consolas, monospace; white-space: pre; color: #111; }
+  .ed .txt.rich { font: 15px/1.6 "Liberation Serif", Georgia, serif; white-space: normal; }
+  .prefs .ptabs { display: flex; justify-content: center; gap: 4px; padding: 8px; border-bottom: 1px solid #ddd; background: #f3f3f3; }
+  .prefs .ptabs span { padding: 3px 14px; border-radius: 5px; font-size: 13px; } .prefs .ptabs span.on { background: #fff; box-shadow: 0 0 0 1px #ccc; }
+  .prefs .pb { padding: 18px 22px; font-size: 13px; line-height: 2; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="view">
+    <div id="screen"></div>
+    <div id="hl" class="hide"></div>
+    <div id="ring" class="hide"></div>
+    <svg id="cursor" viewBox="0 0 22 30"><path d="M2 2 L2 24 L8 18.5 L12 27.5 L16 25.8 L12 17 L20 17 Z" fill="#fff" stroke="#000" stroke-width="1.6" stroke-linejoin="round"/></svg>
+  </div>
+  <div id="keys" class="hide"></div>
+  <div id="cap" class="hide"><span class="n"></span><span class="t"></span></div>
+</div>
+<script>
+'use strict';
+const P = new URLSearchParams(location.search);
+const SCENE = P.get('scene') || 'fork';
+const OS = P.get('os') === 'mac' ? 'mac' : 'win';
+const U = 'yourname';
+const SITE = U + '.github.io';
+const W = 1000, H = 625;
+const $ = s => document.querySelector(s);
+const view = $('#view'), screenEl = $('#screen'), cursorEl = $('#cursor'), ring = $('#ring'), hl = $('#hl');
+
+/* ---------- timing: everything runs on setTimeout / requestAnimationFrame so the recorder's fake clock drives it ---------- */
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const ease = k => k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+function tween(ms, f) {
+  return new Promise(res => {
+    const t0 = performance.now();
+    (function tick() {
+      const k = Math.min(1, (performance.now() - t0) / ms);
+      f(ease(k), k);
+      if (k < 1) requestAnimationFrame(tick); else res();
+    })();
+  });
+}
+
+/* ---------- camera ---------- */
+let cam = { s: 1, x: 0, y: 0 };
+function applyCam() { view.style.transform = `translate(${cam.x}px, ${cam.y}px) scale(${cam.s})`; }
+function camFor(r, s) {
+  const cx = r.x + r.w / 2, cy = r.y + r.h / 2;
+  let x = W / 2 - cx * s, y = (H - 66) / 2 - cy * s;
+  x = Math.min(0, Math.max(W - W * s, x)); y = Math.min(0, Math.max(H - 66 - H * s, y));
+  return { s, x, y };
+}
+async function zoom(target, s, ms = 700) {
+  const to = s === 1 ? { s: 1, x: 0, y: 0 } : camFor(rect(target), s);
+  const from = { ...cam };
+  await tween(ms, k => { cam = { s: from.s + (to.s - from.s) * k, x: from.x + (to.x - from.x) * k, y: from.y + (to.y - from.y) * k }; applyCam(); });
+}
+const unzoom = (ms) => zoom(null, 1, ms);
+
+/* rect of an element in view coordinates (before the camera) */
+function rect(target) {
+  if (target && target.w !== undefined) return target;
+  const el = typeof target === 'string' ? $(target) : target;
+  if (!el) throw new Error('no element ' + target);
+  const r = el.getBoundingClientRect(), v = $('#stage').getBoundingClientRect();
+  return { x: (r.left - v.left - cam.x) / cam.s, y: (r.top - v.top - cam.y) / cam.s, w: r.width / cam.s, h: r.height / cam.s };
+}
+
+/* ---------- cursor ---------- */
+let cur = { x: 640, y: 420 };
+function placeCursor() { cursorEl.style.transform = `translate(${cur.x - 2}px, ${cur.y - 2}px)`; }
+async function move(target, ms = 800, dx = 0.5, dy = 0.5) {
+  const r = rect(target);
+  const to = { x: r.x + r.w * dx, y: r.y + r.h * dy }, from = { ...cur };
+  await tween(ms, k => { cur = { x: from.x + (to.x - from.x) * k, y: from.y + (to.y - from.y) * k }; placeCursor(); });
+}
+async function highlight(target, ms = 900) {
+  const r = rect(target), p = 6;
+  Object.assign(hl.style, { left: r.x - p + 'px', top: r.y - p + 'px', width: r.w + 2 * p + 'px', height: r.h + 2 * p + 'px' });
+  hl.classList.remove('hide');
+  await tween(ms, (k, raw) => { hl.style.opacity = String(0.55 + 0.45 * Math.abs(Math.sin(raw * Math.PI * 2))); });
+}
+function unhighlight() { hl.classList.add('hide'); }
+async function click() {
+  ring.classList.remove('hide');
+  await tween(380, k => {
+    const d = 10 + 34 * k;
+    Object.assign(ring.style, { left: cur.x - d / 2 + 'px', top: cur.y - d / 2 + 'px', width: d + 'px', height: d + 'px', opacity: String(1 - k) });
+  });
+  ring.classList.add('hide');
+  unhighlight();
+}
+/* point at it, flash a box round it, click it */
+async function press(target, opts = {}) {
+  await move(target, opts.ms || 850);
+  await highlight(target, opts.hl || 800);
+  await click();
+}
+async function type(el, text, per = 85) {
+  el = typeof el === 'string' ? $(el) : el;
+  for (const ch of text) { el.querySelector('.v').textContent += ch; await wait(per); }
+}
+async function keys(...ks) {
+  const k = $('#keys');
+  k.innerHTML = ks.map(x => '<kbd>' + x + '</kbd>').join('<span>+</span>');
+  k.classList.remove('hide');
+  await wait(1300);
+  k.classList.add('hide');
+}
+
+/* ---------- caption ---------- */
+function cap(n, html) {
+  const c = $('#cap');
+  if (!html) { c.classList.add('hide'); return; }
+  c.classList.remove('hide');
+  c.querySelector('.n').textContent = n;
+  c.querySelector('.n').style.display = n ? '' : 'none';
+  c.querySelector('.t').innerHTML = html;
+}
+
+function show(html) { screenEl.innerHTML = html; }
+
+/* ================= pieces ================= */
+function browser(tabs, url, body, chrome) {
+  const ts = tabs.map((t, i) => `<div class="tab${i === tabs.length - 1 ? '' : ' off'}" id="tab${i}"><span class="fav${t.notes ? ' notes' : ''}"></span><span class="tt">${t.title}</span><span class="x">×</span></div>`).join('');
+  return `<div class="browser">
+    <div class="tabstrip">${chrome === 'mac' ? '<span class="lights"><i></i><i></i><i></i></span>' : ''}${ts}<span style="align-self:center;padding:0 8px;color:#555">+</span>${chrome === 'win' ? '<span class="wc"><span>—</span><span>▢</span><span>✕</span></span>' : ''}</div>
+    <div class="toolbar"><span>←</span><span>→</span><span id="reload">⟳</span><div class="url"><span class="lock">🔒</span><span id="urltext">${url}</span></div></div>
+    <div class="page" id="page">${body}</div></div>`;
+}
+function ghHead(owner, repo, tab) {
+  const tabs = [['&lt;&gt;', 'Code'], ['◎', 'Issues'], ['⇄', 'Pull requests'], ['▷', 'Actions'], ['▦', 'Projects'], ['⛉', 'Security'], ['∿', 'Insights'], ['⚙', 'Settings']];
+  return `<div class="gh-head"><div class="gh-top"><span class="gh-ham">≡</span><span class="gh-logo"></span>
+      <span class="gh-crumb">${owner} / <b>${repo}</b></span><span class="gh-search">Type / to search</span><span class="gh-av">y</span></div>
+    <div class="gh-tabs">${tabs.map(([i, t]) => `<span id="t-${t.split(' ')[0].toLowerCase()}" class="${t === tab ? 'on' : ''}"><span class="ic">${i}</span>${t}</span>`).join('')}</div></div>`;
+}
+function repoPage(owner, repo, forked) {
+  return ghHead(owner, repo, 'Code') + `<div class="gh-main">
+    <div class="gh-title"><span class="av${forked ? ' you' : ''}"></span><h1>${repo}</h1><span class="pill">Public</span>
+      <span class="acts"><span class="btn">◉ Watch <span class="ct">${forked ? 0 : 1}</span></span><span class="btn" id="forkbtn">⑂ Fork <span class="ct">${forked ? 0 : 3}</span></span><span class="btn">☆ Star <span class="ct">0</span></span></span></div>
+    ${forked ? '<div class="forked" style="margin-top:6px">forked from <a>paleomitchelljs/notes</a></div>' : ''}
+    <div class="gh-grid"><div class="files">
+      <div class="bar"><span class="btn">⑂ main ▾</span><span class="sp"></span><span class="btn">Go to file</span><span class="btn green">&lt;&gt; Code ▾</span></div>
+      <div class="row head"><span>paleomitchelljs Notes app</span><span class="when">2 days ago</span></div>
+      <div class="row"><span class="dir">▰</span>css<span class="when">2 days ago</span></div>
+      <div class="row"><span class="dir">▰</span>js<span class="when">2 days ago</span></div>
+      <div class="row"><span class="doc">▭</span>index.html<span class="when">2 days ago</span></div>
+    </div><div class="about"><h3>About</h3><p>Web-based application for helping to organize notes.</p></div></div></div>`;
+}
+function settingsPage(state) {
+  const side = `<div class="side"><div>⚙ General</div><div class="grp">Access</div><div>Collaborators</div><div class="grp">Code and automation</div>
+    <div>Branches</div><div>Tags</div><div>Rules</div><div>Actions</div><div>Webhooks</div><div>Environments</div><div>Codespaces</div><div id="s-pages" class="${state ? 'on' : ''}">Pages</div></div>`;
+  let main;
+  if (!state) {
+    main = `<h2>General</h2><h3>Repository name</h3><div class="field" style="width:300px">${SITE}</div><h3>Default branch</h3><p>The default branch is considered the “base” branch in your repository.</p><div class="field" style="width:200px">main</div>`;
+  } else {
+    const live = state === 'live' ? `<div class="live"><span style="color:#1a7f37;font-size:22px">✓</span><div style="flex:1"><div class="t">Your site is live at <a id="liveurl">https://${SITE}/</a></div><div class="sm">Last deployed by ${U} 1 minute ago</div></div><span class="btn" id="visit">↗ Visit site</span></div>` : '';
+    const saved = state === 'saved' ? `<div class="flash">GitHub Pages source saved.</div>` : '';
+    const branch = state === 'off'
+      ? `<p>GitHub Pages is currently disabled. Select a source below to enable GitHub Pages for this repository.</p><div style="display:flex;gap:8px"><span class="btn" id="branchbtn">⑂ None ▾</span><span class="btn dis">Save</span></div>`
+      : `<p>Your GitHub Pages site is currently being built from the <code>main</code> branch.</p><div style="display:flex;gap:8px"><span class="btn" id="branchbtn">⑂ main ▾</span><span class="btn">▭ / (root) ▾</span><span class="btn" id="savebtn">Save</span></div>`;
+    main = saved + `<h2>GitHub Pages</h2>${live}<p>GitHub Pages is designed to host your personal, organization, or project pages from a GitHub repository.</p>
+      <h3>Build and deployment</h3><div class="lbl">Source</div><span class="btn" style="margin-bottom:12px">Deploy from a branch ▾</span><div class="lbl">Branch</div>${branch}`;
+  }
+  return ghHead(U, SITE, 'Settings') + `<div class="set">${side}<div id="setmain">${main}</div></div>`;
+}
+function actionsPage(done) {
+  return ghHead(U, SITE, 'Actions') + `<div class="act"><div class="side"><div style="font-size:20px;font-weight:600;margin-bottom:8px">Actions</div><div class="on">All workflows</div><div class="grp">Management</div><div>Caches</div><div>Runners</div></div>
+    <div><h2>All workflows</h2><p style="margin:0;color:#59636e">Showing runs from all workflows</p>
+    <div class="runs"><div class="rh">1 workflow run</div><div class="run"><span class="st ${done ? 'done' : 'go'}" id="runst">${done ? '✓' : ''}</span>
+      <div><div class="nm">pages build and deployment</div><div class="sub">pages-build-deployment #1: by ${U}</div></div><span class="br">main</span><span style="color:#59636e;font-size:12px" id="runtime">${done ? '1 minute ago' : 'In progress'}</span></div></div></div></div>`;
+}
+
+/* ---------- desktop pieces ---------- */
+function desk(inner) {
+  const bar = OS === 'mac' ? `<div class="macbar" id="macbar"><span id="mb-app">GitHub Desktop</span><span id="mb-file">File</span><span>Edit</span><span>View</span><span id="mb-repo">Repository</span><span>Branch</span><span>Window</span><span>Help</span></div>` : '';
+  const tbar = OS === 'win' ? '<div class="taskbar"><i></i><i></i><i></i><i></i></div>' : '';
+  return `<div class="desk ${OS}">${bar}${inner}${tbar}</div>`;
+}
+function winChrome(title, id) {
+  return OS === 'mac'
+    ? `<div class="tb"><span class="lights"><i></i><i></i><i></i></span><span class="ttl"${id ? ' id="' + id + '"' : ''}>${title}</span><span style="width:60px"></span></div>`
+    : `<div class="tb"><span class="ttl"${id ? ' id="' + id + '"' : ''}>${title}</span><span class="wc"><span>—</span><span>▢</span><span>✕</span></span></div>`;
+}
+function gdWindow(body, bar, style) {
+  const menu = OS === 'win' ? `<span class="gmenu"><span id="gm-file">File</span><span>Edit</span><span>View</span><span id="gm-repo">Repository</span><span>Branch</span><span>Help</span></span>` : '';
+  const tb = OS === 'mac'
+    ? `<div class="tb"><span class="lights"><i></i><i></i><i></i></span><span class="ttl">GitHub Desktop</span><span style="width:60px"></span></div>`
+    : `<div class="tb">${menu}<span class="ttl"></span><span class="wc" style="color:#fff"><span>—</span><span>▢</span><span>✕</span></span></div>`;
+  return `<div class="w gd" id="gdwin" style="${style || 'left:40px;top:34px;width:920px;height:508px'}">${tb}${bar || ''}<div class="wbody" id="gdbody">${body}</div></div>`;
+}
+function gdBar(push) {
+  return `<div class="gbar"><div class="repo"><small>Current repository</small>${SITE} ▾</div><div class="branch"><small>Current branch</small>⑂ main ▾</div>
+    <div class="fetch${push ? ' push' : ''}" id="fetchbtn">${push === 'pushing' ? '<span>Pushing to origin…</span><small>Writing objects</small>'
+      : push ? `<span>↑ Push origin<span class="up">1↑</span></span><small>Last fetched just now</small>` : '<span>⟳ Fetch origin</span><small>Last fetched just now</small>'}</div></div>`;
+}
+const SHOW_IN = OS === 'mac' ? 'Show in Finder' : 'Show in Explorer';
+function gdNoChanges() {
+  return `<div class="cols"><div class="left"><div class="ltabs"><span class="on">Changes</span><span>History</span></div><div class="chg">0 changed files</div>
+    <div class="commit"><div class="field ph">Summary (required)</div><div class="field ph desc">Description</div><span class="bbtn dis">Commit to main</span></div></div>
+    <div class="right"><div class="empty"><h2>No local changes</h2>
+      <div class="card"><div class="tx"><b>Open the repository in your external editor</b>Select your editor in Options</div><span class="btn">Open in editor</span></div>
+      <div class="card"><div class="tx"><b>View the files of your repository in ${OS === 'mac' ? 'Finder' : 'Explorer'}</b>Repository menu or ${OS === 'mac' ? '⇧⌘F' : 'Ctrl+Shift+F'}</div><span class="btn" id="showin">${SHOW_IN}</span></div>
+      <div class="card"><div class="tx"><b>Open the repository page on GitHub in your browser</b>Repository menu or ${OS === 'mac' ? '⇧⌘G' : 'Ctrl+Shift+G'}</div><span class="btn">View on GitHub</span></div>
+    </div></div></div>`;
+}
+const LINES = ['<!doctype html>', '<html lang="en">', '<head>', '  <meta charset="utf-8">', '  <meta name="viewport" content="width=device-width, initial-scale=1">',
+  '  <title>@</title>', '    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\'', '  <link rel="preconnect" href="https://fonts.googleapis.com">',
+  '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>', '  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=S',
+  '  <link rel="stylesheet" href="css/style.css">', '</head>', '<body>', '  <header class="topbar">'];
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+function codeText() {
+  return LINES.map(l => l.includes('@') ? esc(l).replace('@', '<span id="tword" class="v">Margins</span><span id="tcaret" class="caret hide"></span>') : esc(l)).join('\n');
+}
+function explorer(sel) {
+  const rows = [['css', 'File folder', 1], ['index.html', OS === 'mac' ? 'HTML text' : 'HTML Document', 0], ['js', 'File folder', 1]];
+  const order = OS === 'mac' ? rows : [rows[0], rows[2], rows[1]];
+  const list = order.map(([n, t, d]) => `<div id="${n === 'index.html' ? 'idx' : 'r-' + n}" class="${sel && n === 'index.html' ? 'on' : ''}"><span><span class="ico${d ? '' : ' f'}"></span>${n}</span><span>Today</span><span>${t}</span></div>`).join('');
+  const nav = OS === 'mac'
+    ? '<div class="h">Favorites</div><div>Recents</div><div>Applications</div><div>Desktop</div><div class="on">Documents</div><div>Downloads</div>'
+    : '<div>⌂ Home</div><div>Desktop</div><div>Downloads</div><div class="on">Documents</div><div>Pictures</div><div class="h">This PC</div>';
+  const pathbar = OS === 'mac' ? '' : `<div class="exbar"><span>← → ↑</span><span class="path">› Documents › GitHub › ${SITE}</span></div>`;
+  return `<div class="w ex" id="exwin" style="left:${OS === 'mac' ? 120 : 90}px;top:${OS === 'mac' ? 70 : 50}px;width:720px;height:380px">${winChrome(OS === 'mac' ? SITE : SITE)}${pathbar}
+    <div class="exmain"><div class="nav">${nav}</div><div class="list"><div class="lh"><span>Name</span><span>Date modified</span><span>${OS === 'mac' ? 'Kind' : 'Type'}</span></div>${list}</div></div></div>`;
+}
+function editorWin(title, rich) {
+  const menu = OS === 'mac' ? '' : '<div class="emenu"><span>File</span><span>Edit</span><span>View</span></div>';
+  const body = rich
+    ? `<div class="txt rich">☰ <b>Untitled</b> Source Outline Export ⚙<br><b>B</b> <i>I</i> <u>U</u> H1 H2 •≡ 1. ❝ ⌫<br><br><b>Summary</b><br><br>Outline Copy .md ×<br>Export ×<br>PDF · texlive.net Overleaf</div>`
+    : `<div class="txt" id="code">${codeText()}</div>`;
+  return `<div class="w ed" id="edwin" style="left:${OS === 'mac' ? 150 : 130}px;top:${OS === 'mac' ? 90 : 70}px;width:740px;height:420px">${winChrome(title, 'wt')}${menu}<div class="wbody">${body}</div></div>`;
+}
+
+/* ================= scenes ================= */
+const SCENES = {};
+
+SCENES.fork = async () => {
+  show(browser([{ title: 'paleomitchelljs/notes' }], 'github.com/paleomitchelljs/notes', repoPage('paleomitchelljs', 'notes')));
+  cap(0, 'This is the notes page from the link. You are signed in.');
+  await wait(1800);
+  cap(1, 'Click <b>Fork</b>, near the top right');
+  await zoom('#forkbtn', 1.8, 900);
+  await press('#forkbtn');
+  await wait(300);
+  await unzoom(500);
+  show(browser([{ title: 'Create a new fork' }], 'github.com/paleomitchelljs/notes/fork', ghHead('paleomitchelljs', 'notes', 'Code') + `<div class="fork">
+    <h2>Create a new fork</h2><p>A <i>fork</i> is a copy of a repository. Forking a repository allows you to freely experiment with changes without affecting the original project.</p>
+    <p style="font-style:italic">Required fields are marked with an asterisk (*).</p>
+    <div style="display:flex;gap:10px;align-items:flex-end"><div><div class="lbl">Owner *</div><span class="btn"><span class="gh-av" style="width:20px;height:20px;font-size:11px">y</span> ${U} ▾</span></div>
+      <div style="padding-bottom:6px;font-size:20px">/</div><div style="flex:1"><div class="lbl">Repository name *</div><div class="field" id="name"><span class="v">notes</span><span class="caret hide" id="ncaret"></span></div></div></div>
+    <div class="ok hide" id="avail">✓ ${SITE} is available.</div>
+    <p style="margin-top:8px;font-size:12px">By default, forks are named the same as their upstream repository. You can customize the name to distinguish it further.</p>
+    <div class="lbl">Description <span style="font-weight:400;color:#59636e">(optional)</span></div><div class="field">Web-based application for helping to organize notes.</div>
+    <p style="margin-top:12px;color:#1f2328"><span class="check">✓</span>Copy the <b>main</b> branch only</p>
+    <div class="note">ⓘ You are creating a fork in your personal account.</div><hr>
+    <div style="text-align:right"><span class="btn green" id="create">Create fork</span></div></div>`));
+  cap(2, 'Click the <b>Repository name</b> box and delete <b>notes</b>');
+  await wait(900);
+  await zoom('#name', 1.7, 800);
+  await press('#name');
+  $('#name').classList.add('focus'); $('#ncaret').classList.remove('hide');
+  await wait(300);
+  const v = $('#name .v');
+  while (v.textContent.length) { v.textContent = v.textContent.slice(0, -1); await wait(160); }
+  cap(3, `Type your username, then <b>.github.io</b>`);
+  await wait(500);
+  await type('#name', SITE, 110);
+  $('#avail').classList.remove('hide');
+  await wait(900);
+  cap(0, `It must be exactly <b>${SITE}</b>, with your own username`);
+  await wait(2600);
+  await unzoom(600);
+  cap(4, 'Scroll down and click <b>Create fork</b>');
+  await zoom('#create', 1.6, 800);
+  await press('#create');
+  $('#create').textContent = 'Forking…';
+  await wait(1200);
+  await unzoom(400);
+  show(browser([{ title: U + '/' + SITE }], 'github.com/' + U + '/' + SITE, repoPage(U, SITE, true)));
+  cap(0, 'Done. This copy is yours: <b>' + U + ' / ' + SITE + '</b>');
+  await zoom('.gh-title h1', 1.7, 900);
+  await wait(3200);
+};
+
+SCENES.pages = async () => {
+  show(browser([{ title: U + '/' + SITE }], 'github.com/' + U + '/' + SITE, repoPage(U, SITE, true)));
+  cap(0, 'Start on <b>your</b> copy (your name is at the top left)');
+  await zoom('.gh-crumb', 2, 900);
+  await wait(1600);
+  await unzoom(500);
+  cap(1, 'Click <b>Settings</b> (the last tab, with a gear)');
+  await zoom('#t-settings', 1.8, 800);
+  await press('#t-settings');
+  await unzoom(400);
+  show(browser([{ title: 'General' }], `github.com/${U}/${SITE}/settings`, settingsPage()));
+  cap(2, 'In the list on the left, click <b>Pages</b>');
+  await wait(700);
+  await zoom('#s-pages', 1.8, 800);
+  await press('#s-pages');
+  await unzoom(400);
+  show(browser([{ title: 'GitHub Pages' }], `github.com/${U}/${SITE}/settings/pages`, settingsPage('off')));
+  cap(3, 'Under <b>Branch</b>, click <b>None</b>');
+  await wait(800);
+  await zoom('#branchbtn', 1.8, 800);
+  await press('#branchbtn');
+  const r = rect('#branchbtn');
+  screenEl.insertAdjacentHTML('beforeend', `<div class="menu" id="bmenu" style="left:${r.x}px;top:${r.y + r.h + 4}px"><div class="mh">Select branch</div><div class="mi" id="mi-main">main</div><div class="mi ck">None</div></div>`);
+  cap(4, 'Pick <b>main</b>');
+  await wait(600);
+  await move('#mi-main', 600);
+  $('#mi-main').classList.add('hov');
+  await highlight('#mi-main', 600);
+  await click();
+  show(browser([{ title: 'GitHub Pages' }], `github.com/${U}/${SITE}/settings/pages`, settingsPage('chosen')));
+  cap(5, 'Leave <b>/ (root)</b> as it is and click <b>Save</b>');
+  await wait(700);
+  await press('#savebtn');
+  await wait(300);
+  show(browser([{ title: 'GitHub Pages' }], `github.com/${U}/${SITE}/settings/pages`, settingsPage('saved')));
+  await unzoom(600);
+  cap(0, 'Saved. GitHub is now building your website.');
+  await zoom('.flash', 1.4, 800);
+  await wait(3200);
+};
+
+SCENES.live = async () => {
+  show(browser([{ title: 'GitHub Pages' }], `github.com/${U}/${SITE}/settings/pages`, settingsPage('saved')));
+  cap(1, 'Click the <b>Actions</b> tab to watch it build');
+  await wait(900);
+  await zoom('#t-actions', 1.8, 800);
+  await press('#t-actions');
+  await unzoom(400);
+  show(browser([{ title: 'Actions' }], `github.com/${U}/${SITE}/actions`, actionsPage(false)));
+  cap(2, 'A <b>yellow circle</b> means it is still building. Wait.');
+  await zoom('.run .nm', 1.7, 800);
+  const st = $('#runst');
+  await tween(4200, (k, raw) => { st.style.transform = `rotate(${raw * 1440}deg)`; });
+  cap(0, 'This takes one or two minutes…');
+  await tween(2400, (k, raw) => { st.style.transform = `rotate(${raw * 860}deg)`; });
+  st.style.transform = ''; st.className = 'st done'; st.textContent = '✓'; $('#runtime').textContent = '1 minute ago';
+  cap(3, 'A <b>green check</b> means your site is up');
+  await wait(2200);
+  await unzoom(500);
+  cap(4, 'Go back to <b>Settings → Pages</b> and click <b>Visit site</b>');
+  show(browser([{ title: 'GitHub Pages' }], `github.com/${U}/${SITE}/settings/pages`, settingsPage('live')));
+  await wait(800);
+  await zoom('#liveurl', 1.6, 800);
+  await wait(1200);
+  await press('#visit');
+  await unzoom(400);
+  show(browser([{ title: 'GitHub Pages' }, { title: 'Margins', notes: true }], `${SITE}`, '<div class="notesapp" style="background-image:url(notes.png)"></div>'));
+  cap(0, `Your website: <b>${SITE}</b>. Bookmark it.`);
+  await zoom('#urltext', 2, 900);
+  await wait(3400);
+};
+
+SCENES.setup = async () => {
+  const welcome = `<div class="welcome"><div class="in"><h1>Welcome to GitHub Desktop</h1><p>GitHub Desktop is a seamless way to contribute to projects on GitHub and GitHub Enterprise. Sign in below to get started with your existing projects.</p>
+    <span class="bbtn" id="signin">Sign in to GitHub.com</span><span class="bbtn" style="background:#fff;color:#24292e;border:1px solid #d1d5da">Sign in to GitHub Enterprise</span><div class="lnk">Skip this step</div></div></div>`;
+  show(desk(gdWindow(welcome)));
+  cap(0, 'Open <b>GitHub Desktop</b> after it installs');
+  await wait(2000);
+  cap(1, 'Click <b>Sign in to GitHub.com</b>');
+  await press('#signin');
+  await wait(400);
+  const auth = `<div class="auth"><div class="apps"><i class="d"></i><span style="font-size:26px;color:#aaa">···</span><i></i></div><h2>Authorize GitHub Desktop</h2>
+    <div class="box"><b style="color:#1f2328">GitHub Desktop</b> by GitHub wants to access your <b style="color:#1f2328">${U}</b> account<br><br>Repositories · Personal user data · Workflow</div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:18px"><span class="btn">Cancel</span><span class="btn green" id="authz">Authorize desktop</span></div></div>`;
+  $('#screen .desk').insertAdjacentHTML('beforeend', `<div class="w" id="brwin" style="left:70px;top:${OS === 'mac' ? 40 : 20}px;width:860px;height:${OS === 'mac' ? 540 : 550}px">${browser([{ title: 'Authorize application' }], 'github.com/login/oauth/authorize', auth, OS)}</div>`);
+  cap(2, 'Your web browser opens. Sign in if it asks, then click <b>Authorize desktop</b>');
+  await wait(1200);
+  await zoom('#authz', 1.6, 800);
+  await press('#authz');
+  await unzoom(400);
+  $('#brwin .page').insertAdjacentHTML('beforeend', `<div class="prompt" id="openp"><b>Open GitHub Desktop?</b>github.com wants to open this application.<div class="row"><span class="pb">Cancel</span><span class="pb go" id="openbtn">Open GitHub Desktop</span></div></div>`);
+  cap(3, 'If the browser asks, click <b>Open GitHub Desktop</b>');
+  await wait(900);
+  await press('#openbtn');
+  await wait(300);
+  $('#brwin').remove();
+  const conf = `<div class="welcome"><div class="in"><h1>Configure Git</h1><p>This is used to identify the commits you create. Anyone will be able to see this information if you publish commits.</p>
+    <p style="color:#24292e"><span class="check" style="border-radius:50%">•</span>Use my GitHub account name and email address</p>
+    <div class="lbl" style="font-size:13px">Name</div><div class="field" style="margin-bottom:8px">${U}</div><div class="lbl" style="font-size:13px">Email</div><div class="field">${U}@users.noreply.github.com</div>
+    <span class="bbtn" id="finish" style="width:120px;margin-top:16px">Finish</span></div></div>`;
+  $('#gdbody').innerHTML = conf;
+  cap(4, 'Back in GitHub Desktop, leave these as they are and click <b>Finish</b>');
+  await wait(1600);
+  await press('#finish');
+  await wait(300);
+  $('#gdbody').innerHTML = startScreen(false);
+  cap(0, 'You are signed in. Next: get a copy of your site onto this computer.');
+  await wait(3200);
+};
+function startScreen(sel) {
+  return `<div class="start"><div class="l"><h1>Let’s get started!</h1><p style="color:#586069">Add a repository to GitHub Desktop to start collaborating</p>
+    <div class="opt">Create a tutorial repository…</div><div class="opt">Clone a repository from the Internet…</div><div class="opt">Create a New Repository on your hard drive…</div><div class="opt">Add an Existing Repository from your hard drive…</div></div>
+    <div class="r"><div class="rh">Your repositories</div><div class="field" style="margin:10px 14px;height:28px;font-size:12px;color:#8b949e">Filter your repositories</div>
+    <div class="ri${sel ? ' on' : ''}" id="myrepo">▭ ${U}/${SITE}</div><span class="bbtn${sel ? '' : ' dis'}" id="clonebtn">Clone ${U}/${SITE}</span></div></div>`;
+}
+
+SCENES.clone = async () => {
+  show(desk(gdWindow(startScreen(false))));
+  cap(1, `Under <b>Your repositories</b>, click <b>${SITE}</b>`);
+  await wait(1200);
+  await zoom('#myrepo', 1.7, 800);
+  await press('#myrepo');
+  $('#gdbody').innerHTML = startScreen(true);
+  cap(2, `Click the blue <b>Clone</b> button at the bottom`);
+  await wait(600);
+  await move('#clonebtn', 700);
+  await highlight('#clonebtn', 700);
+  await click();
+  await unzoom(500);
+  const path = OS === 'mac' ? `/Users/${U}/Documents/GitHub/${SITE}` : `C:\\Users\\${U}\\Documents\\GitHub\\${SITE}`;
+  $('#gdwin').insertAdjacentHTML('beforeend', `<div class="dlg" id="cdlg" style="left:180px;top:90px;width:560px"><div class="dh">Clone a repository</div>
+    <div class="db"><div style="display:flex;gap:18px;border-bottom:1px solid #e1e4e8;margin-bottom:10px"><span style="box-shadow:inset 0 -3px #f9826c;padding:4px 0;font-weight:600">GitHub.com</span><span style="padding:4px 0">GitHub Enterprise</span><span style="padding:4px 0">URL</span></div>
+    <div class="ri" style="padding:6px 10px;background:#0366d6;color:#fff;border-radius:4px">▭ ${U}/${SITE}</div>
+    <div class="lbl" style="font-size:13px;margin-top:12px">Local path</div><div style="display:flex;gap:8px"><div class="field" id="lpath" style="flex:1;font-size:12.5px">${path}</div><span class="btn" style="height:34px">Choose…</span></div></div>
+    <div class="df"><span class="btn">Cancel</span><span class="btn blue" id="cgo">Clone</span></div></div>`);
+  cap(0, 'This is where the folder will go on your computer. Leave it as it is.');
+  await zoom('#lpath', 1.6, 800);
+  await wait(2400);
+  await unzoom(500);
+  cap(3, 'Click <b>Clone</b>');
+  await press('#cgo');
+  $('#cdlg .db').innerHTML = `<div style="margin:6px 0 10px">Cloning ${SITE}…</div><div class="prog"><i id="pb" style="width:0"></i></div>`;
+  $('#cdlg .df').remove();
+  const pb = $('#pb');
+  await tween(1800, k => { pb.style.width = (k * 100) + '%'; });
+  $('#cdlg').remove();
+  $('#gdwin').remove();
+  $('#screen .desk').insertAdjacentHTML('beforeend', gdWindow(gdNoChanges(), gdBar()));
+  cap(0, 'Done. Your site is now a folder on this computer, too.');
+  await wait(3400);
+};
+
+async function openWith() {
+  await press('#idx');
+  $('#idx').classList.add('on');
+  const r = rect('#idx');
+  const x = r.x + 140, y = r.y + r.h - 4;
+  const items = OS === 'mac'
+    ? `<div>Open</div><div id="openwith">Open With<span class="ar">›</span></div><hr><div>Move to Trash</div><hr><div>Get Info</div><div>Rename</div><div>Duplicate</div>`
+    : `<div>Open</div><div id="openwith">Open with<span class="ar">›</span></div><hr><div>Copy as path</div><div>Rename</div><div>Delete</div><hr><div>Properties</div>`;
+  $('#screen .desk').insertAdjacentHTML('beforeend', `<div class="ctx" id="ctx" style="left:${x}px;top:${y}px">${items}</div>`);
+  if (!openWith.again) cap(3, OS === 'mac' ? 'Point at <b>Open With</b>, then click <b>TextEdit</b>' : 'Point at <b>Open with</b>, then click <b>Notepad</b>');
+  await wait(500);
+  await move('#openwith', 600);
+  $('#openwith').classList.add('hov');
+  const o = rect('#openwith');
+  const sub = OS === 'mac'
+    ? `<div>Safari (default)</div><div id="appitem">TextEdit</div><hr><div>Other…</div>`
+    : `<div>Google Chrome</div><div>Microsoft Edge</div><div id="appitem">Notepad</div><hr><div>Choose another app</div>`;
+  $('#screen .desk').insertAdjacentHTML('beforeend', `<div class="ctx" id="sub" style="left:${o.x + o.w + 4}px;top:${o.y - 6}px">${sub}</div>`);
+  await wait(300);
+  await move('#appitem', 600);
+  $('#appitem').classList.add('hov');
+  await highlight('#appitem', 600);
+  await click();
+  $('#ctx').remove(); $('#sub').remove();
+  openWith.again = true;
+}
+
+SCENES.edit = async () => {
+  show(desk(gdWindow(gdNoChanges(), gdBar())));
+  cap(1, `Click <b>${SHOW_IN}</b>`);
+  await wait(900);
+  await zoom('#showin', 1.6, 800);
+  await press('#showin');
+  await unzoom(400);
+  $('#screen .desk').insertAdjacentHTML('beforeend', explorer(false));
+  cap(0, 'These are your website’s files');
+  await wait(1800);
+  cap(2, `Right-click <b>index.html</b>`);
+  await openWith();
+
+
+  if (OS === 'mac') {
+    $('#screen .desk').insertAdjacentHTML('beforeend', editorWin('index.html', true));
+    cap(0, 'Words instead of code? TextEdit needs one setting changed. You only do this once.');
+    await wait(3000);
+    cap(4, 'In the menu bar at the top, click <b>TextEdit</b>, then <b>Settings…</b>');
+    $('#mb-app').textContent = 'TextEdit'; $('#mb-file').textContent = 'File';
+    await press('#mb-app');
+    $('#mb-app').classList.add('open');
+    const m = rect('#mb-app');
+    $('#screen .desk').insertAdjacentHTML('beforeend', `<div class="ctx" id="appmenu" style="left:${m.x}px;top:${m.y + m.h + 2}px"><div>About TextEdit</div><hr><div id="prefs">Settings…<span class="ar">⌘,</span></div><hr><div>Quit TextEdit</div></div>`);
+    await wait(300);
+    await move('#prefs', 600);
+    $('#prefs').classList.add('hov');
+    await click();
+    $('#appmenu').remove(); $('#mb-app').classList.remove('open');
+    $('#screen .desk').insertAdjacentHTML('beforeend', `<div class="w prefs" id="pwin" style="left:300px;top:110px;width:430px;height:300px">${winChrome('Open and Save')}
+      <div class="ptabs"><span>New Document</span><span id="ostab">Open and Save</span></div><div class="pb" id="pbody">Format: ◉ Rich text ○ Plain text<br>Window size: Width 75 Height 30</div></div>`);
+    cap(5, 'Click <b>Open and Save</b> at the top');
+    await press('#ostab');
+    $('#ostab').classList.add('on');
+    $('#pbody').innerHTML = `When Opening a File:<br><span class="check off" id="htmlck"></span>Display HTML files as HTML code instead of formatted text<br><span class="check off"></span>Display RTF files as RTF code instead of formatted text`;
+    cap(6, 'Tick <b>Display HTML files as HTML code</b>, then close this box');
+    await wait(500);
+    await zoom('#htmlck', 1.6, 700);
+    await press('#htmlck');
+    $('#htmlck').className = 'check'; $('#htmlck').textContent = '✓';
+    await wait(900);
+    await unzoom(400);
+    await press('#pwin .lights i');
+    $('#pwin').remove();
+    cap(7, 'Close the TextEdit window, then open <b>index.html</b> with TextEdit again');
+    await press('#edwin .lights i');
+    $('#edwin').remove();
+    await wait(500);
+    await openWith();
+    await wait(300);
+  }
+  $('#screen .desk').insertAdjacentHTML('beforeend', editorWin('index.html', false));
+  cap(0, 'Now you see the code. Find the line that says <b>&lt;title&gt;Margins&lt;/title&gt;</b>');
+  await wait(1200);
+  await zoom('#tword', 2.3, 900);
+  await wait(1500);
+  cap(OS === 'mac' ? 8 : 4, 'Double-click <b>Margins</b> to select it');
+  await move('#tword', 700);
+  await highlight('#tword', 600);
+  await click(); await wait(120); await click();
+  $('#tword').classList.add('sel');
+  await wait(600);
+  cap(OS === 'mac' ? 9 : 5, `Type <b>Notes by</b> and your name`);
+  $('#tword').classList.remove('sel'); $('#tword').textContent = ''; $('#tcaret').classList.remove('hide');
+  const span = $('#tword'); span.innerHTML = '';
+  for (const ch of 'Notes by ' + U) { span.textContent += ch; await wait(110); }
+  $('#wt').textContent = OS === 'mac' ? 'index.html — Edited' : '*index.html - Notepad';
+  await wait(700);
+  await unzoom(500);
+  cap(OS === 'mac' ? 10 : 6, OS === 'mac' ? 'Save: press <b>⌘ Command + S</b>' : 'Save: press <b>Ctrl + S</b>');
+  await zoom({ ...rect('#wt'), w: OS === 'mac' ? rect('#wt').w : 260 }, 1.6, 700);
+  await keys(OS === 'mac' ? '⌘' : 'Ctrl', 'S');
+  $('#wt').textContent = OS === 'mac' ? 'index.html' : 'index.html - Notepad';
+  await wait(1200);
+  cap(0, OS === 'mac' ? 'Saved: “Edited” is gone from the top of the window.' : 'Saved: the * is gone from the top of the window.');
+  await wait(3000);
+};
+
+SCENES.push = async () => {
+  const diffView = `<div class="cols"><div class="left"><div class="ltabs"><span class="on">Changes</span><span>History</span></div><div class="chg">1 changed file</div>
+    <div class="file"><span class="check" style="margin:0">✓</span>index.html<span class="m"></span></div>
+    <div class="commit"><div class="field ph" id="summary"><span class="v"></span></div><div class="field ph desc">Description</div><span class="bbtn" id="commitbtn">Commit to <b>main</b></span></div></div>
+    <div class="right"><div class="diffh">index.html</div><div class="diff">
+      <div class="h"><span class="ln"></span>@@ -3,7 +3,7 @@</div>
+      <div><span class="ln">3</span> &lt;head&gt;</div><div><span class="ln">4</span>   &lt;meta charset="utf-8"&gt;</div><div><span class="ln">5</span>   &lt;meta name="viewport" content="width=device-width…"&gt;</div>
+      <div class="del" id="dl"><span class="ln">6</span>-  &lt;title&gt;Margins&lt;/title&gt;</div>
+      <div class="add" id="al"><span class="ln">6</span>+  &lt;title&gt;Notes by ${U}&lt;/title&gt;</div>
+      <div><span class="ln">7</span>     &lt;link rel="icon" href="data:image/svg+xml,…"&gt;</div><div><span class="ln">8</span>   &lt;link rel="preconnect" …&gt;</div></div></div></div>`;
+  show(desk(gdWindow(diffView, gdBar())));
+  cap(0, 'Go back to <b>GitHub Desktop</b>. It has noticed your change.');
+  await wait(1200);
+  await zoom('#dl', 1.9, 900);
+  cap(0, '<b style="color:#ff8b7e">Red</b> is the old line, <b style="color:#6fd09a">green</b> is the new one');
+  await wait(3000);
+  await unzoom(500);
+  cap(1, 'Bottom left: click the <b>Summary</b> box and say what you changed');
+  await zoom('#summary', 1.8, 800);
+  await press('#summary');
+  $('#summary').classList.remove('ph'); $('#summary').classList.add('focus');
+  await type('#summary', 'Put my name on the tab', 95);
+  await wait(500);
+  $('#summary').classList.remove('focus');
+  cap(2, 'Click <b>Commit to main</b>. This saves a snapshot.');
+  await move('#commitbtn', 600);
+  await highlight('#commitbtn', 700);
+  await click();
+  await unzoom(500);
+  $('#gdwin').remove();
+  const pushView = `<div class="cols"><div class="left"><div class="ltabs"><span class="on">Changes</span><span>History</span></div><div class="chg">0 changed files</div>
+    <div style="padding:8px 10px;font-size:12px;color:#586069;border-bottom:1px solid #e1e4e8">Committed just now<br><b style="color:#24292e">Put my name on the tab</b></div>
+    <div class="commit"><div class="field ph">Summary (required)</div><div class="field ph desc">Description</div><span class="bbtn dis">Commit to main</span></div></div>
+    <div class="right"><div class="empty"><h2>No local changes</h2><div class="card"><div class="tx"><b>Push commits to the origin remote</b>You have 1 local commit waiting to be pushed to GitHub.</div><span class="btn blue" id="pushcard">Push origin</span></div></div></div></div>`;
+  $('#screen .desk').insertAdjacentHTML('beforeend', gdWindow(pushView, gdBar(true)));
+  cap(0, 'The snapshot is only on your computer so far. Pushing sends it to GitHub.');
+  await wait(2800);
+  cap(3, 'Click <b>Push origin</b> (top right, or the blue button)');
+  await zoom('#fetchbtn', 1.7, 800);
+  await press('#fetchbtn');
+  $('#fetchbtn').innerHTML = '<span>Pushing to origin…</span><small>Writing objects</small>';
+  await wait(1600);
+  $('#fetchbtn').className = 'fetch'; $('#fetchbtn').innerHTML = '<span>⟳ Fetch origin</span><small>Last fetched just now</small>';
+  $('#pushcard').closest('.card').remove();
+  cap(0, 'Pushed. GitHub has your change.');
+  await wait(1800);
+  await unzoom(500);
+  $('#gdwin').remove();
+  $('#screen .desk').insertAdjacentHTML('beforeend', `<div class="w" id="brwin" style="left:50px;top:${OS === 'mac' ? 40 : 18}px;width:900px;height:${OS === 'mac' ? 560 : 556}px">${browser([{ title: 'Margins', notes: true }], SITE, '<div class="notesapp" style="background-image:url(notes.png)"></div>', OS)}</div>`);
+  cap(4, 'Wait a minute, then go to your site and click <b>reload</b> ⟳');
+  await wait(1400);
+  await zoom('#reload', 1.8, 800);
+  await press('#reload');
+  await wait(500);
+  await unzoom(400);
+  cap(0, 'The tab at the top now has your name. You changed your website!');
+  await zoom('#tab0', 2, 900);
+  await wait(500);
+  $('#tab0 .tt').textContent = 'Notes by ' + U;
+  await wait(3600);
+};
+
+placeCursor();
+applyCam();
+window.__done = false;
+document.fonts.ready.then(() => (SCENES[SCENE] || SCENES.fork)()).then(() => { window.__done = true; }, e => { window.__error = String(e && e.stack || e); window.__done = true; });
+</script>
+</body>
+</html>
