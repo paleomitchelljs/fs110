@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Your own website</title>
-<meta name="description" content="Seven steps with short videos: fork the notes app, turn on your free username.github.io address, then change a file and push it with GitHub Desktop, on Windows or Mac.">
+<meta name="description" content="Short videos, step by step: get your own copy of the notes app (fork it, upload the ZIP, or send your clone), turn on your free username.github.io address, then change a file and push it with GitHub Desktop, on Windows or Mac.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="css/website.css?v=1">
+<link rel="stylesheet" href="css/website.css?v=2">
 </head>
 <body>
 <header class="top">
@@ -17,6 +17,10 @@
 </header>
 
 <section class="who" aria-label="About you">
+  <div class="how" role="group" aria-label="How you got the notes">
+    <span>Have you got my notes yet?</span>
+    <span class="seg paths" id="paths"></span>
+  </div>
   <label class="user">
     <span>Your GitHub username</span>
     <input id="user" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type it here">
@@ -61,7 +65,7 @@
 <dialog id="big" aria-label="Bigger video"><img id="biggif" alt=""><button type="button" id="close" class="small">Close</button></dialog>
 
 <noscript><p class="noscript">This page needs JavaScript.</p></noscript>
-<script src="js/steps.js?v=1"></script>
-<script src="js/app.js?v=1"></script>
+<script src="js/steps.js?v=2"></script>
+<script src="js/app.js?v=2"></script>
 </body>
 </html>

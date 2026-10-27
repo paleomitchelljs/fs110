@@ -1,7 +1,9 @@
-/* The seven steps: what each gif shows, in words, and what to do when it goes wrong. No DOM, so the tests can load it.
+/* The steps: what each gif shows, in words, and what to do when it goes wrong; and the three paths through them,
+ * one for each way a student got the notes (forked, downloaded the ZIP, cloned). No DOM, so the tests can load it.
  * Run the checks with:  node website/tests/steps.test.js
  *
- * Text markup: **bold**, `code`, [words](url). {U} is the student's username, {SITE} their web address (username.github.io).
+ * Text markup: **bold**, `code`, [words](url), [[text]] for text with a Copy button.
+ * {U} is the student's username, {SITE} their web address (username.github.io).
  * A line can be { win: '…', mac: '…' } when Windows and Mac differ. A step's gif is gif/<gif>.gif, or gif/<gif>-win.gif and
  * gif/<gif>-mac.gif when perOS is set. The numbers on the lines match the numbers in the gif's captions. */
 (function (root) {
@@ -10,13 +12,93 @@
 
   const STEPS = [
     {
-      id: 'fork', part: 'On GitHub', title: 'Make your own copy', gif: 'fork',
+      id: 'download', title: 'Download the files', gif: 'download', perOS: true,
+      word: 'A **ZIP** is a bundle of files squeezed into one, for downloading. You unzip it to get the files back.',
+      pre: [`Open [my notes page](${NOTES}).`],
+      lines: {
+        win: [
+          'Click the green **Code** button.',
+          'Click **Download ZIP**.',
+          'Open your **Downloads** folder. Right-click **notes-main.zip**, then click **Extract All…**',
+          'Click **Extract**.',
+          'A **notes-main** folder opens. Double-click the **notes-main** folder inside it, so you see **index.html**.',
+        ],
+        mac: [
+          'Click the green **Code** button.',
+          'Click **Download ZIP**.',
+          'Open **Downloads** in Finder and double-click **notes-main.zip**.',
+          'Double-click the new **notes-main** folder, so you see **index.html**.',
+        ],
+      },
+      after: 'Keep this folder open. You need it two steps from now.',
+      stuck: [
+        { win: ['I double-clicked the ZIP and I can see the files', 'That is only a peek inside the ZIP. Go back, right-click **notes-main.zip**, and use **Extract All…**. Files dragged out of a ZIP often don’t upload.'],
+          mac: ['There is already a notes-main folder', 'Safari often unzips downloads by itself. Skip to double-clicking the **notes-main** folder.'] },
+        ['I can’t find Downloads', { win: 'Open **File Explorer** (the folder at the bottom of the screen). **Downloads** is in the list on the left.', mac: 'Click **Finder** (the smiling face in the Dock). **Downloads** is in the list on the left.' }],
+      ],
+    },
+    {
+      id: 'newrepo', title: 'Make an empty project', gif: 'newrepo',
+      word: 'A **repository** (or **repo**) is a project: a folder of files that GitHub keeps for you. This one starts empty, named with your web address.',
+      lines: [
+        'At the top right of GitHub, click **+**, then **New repository**.',
+        'Click **Repository name** and type [[{SITE}]]: your username, then **.github.io**, all lowercase.',
+        'Leave it **Public**. Leave **Add README** off, so the project starts empty.',
+        'Click **Create repository**.',
+      ],
+      stuck: [
+        ['It says the name is already taken', 'You already have a project with that name. Open it from [your projects](https://github.com/{U}?tab=repositories). If it shows **Quick setup**, it is empty: use it. If not, open its **Settings**, rename it to anything else, and try again.'],
+        ['I turned on Add README by accident', 'If you downloaded the ZIP, it doesn’t matter. If you cloned the notes, delete this project (**Settings**, scroll to the bottom, **Delete this repository**) and make it again with **Add README** off.'],
+        ['I made it Private', 'A free account can only put a Public project on the web. Open **Settings**, scroll to the bottom, and use **Change visibility**.'],
+      ],
+    },
+    {
+      id: 'upload', title: 'Drag the files in', gif: 'upload', perOS: true,
+      word: '**Uploading** copies files from your computer to GitHub, like attaching files to an email.',
+      pre: ['Put your browser and the **notes-main** folder (the one with **index.html** in it) side by side.'],
+      lines: [
+        'On your empty project, click **uploading an existing file**.',
+        { win: 'Click inside the **notes-main** folder and press **Ctrl + A** to select everything.', mac: 'Click inside the **notes-main** folder and press **⌘ Command + A** to select everything.' },
+        'Drag them onto the box in your browser, and let go.',
+        'Check the list has **index.html** and files starting **css/** and **js/**. Then scroll down and click **Commit changes**.',
+      ],
+      stuck: [
+        ['I don’t see “uploading an existing file”', 'Your project isn’t empty (maybe it has a README). Click **Add file → Upload files** near the top instead.'],
+        ['Only index.html went up', 'The **css** and **js** folders didn’t come along. Drag those two folders onto the box, then **Commit changes** again.'],
+        ['I dragged the notes-main folder itself', 'Then your files are inside a **notes-main** folder on GitHub, where the website won’t look. Upload again, this time what is *inside* **notes-main**. The extra folder does no harm.'],
+        ['My browser opened the file instead', 'You let go outside the dashed box. Go back and drop right on the box.'],
+      ],
+    },
+    {
+      id: 'relink', title: 'Send your clone to your account', gif: 'relink', perOS: true,
+      word: 'Your clone still points at **my** project, which you can’t change. You’ll point it at your new empty project instead, then send it there.',
+      pre: [
+        'Open **GitHub Desktop** and pick **notes** under **Current repository** at the top left.',
+        'Not there, because you cloned it another way? Use **File → Add local repository…**, click **Choose…**, pick your **notes** folder, and click **Add repository**.',
+      ],
+      lines: [
+        { win: 'Click **Repository** in the menu at the top, then **Repository settings…**', mac: 'In the menu bar at the top of the screen, click **Repository**, then **Repository Settings…**' },
+        { win: 'Click the box under **Primary remote repository (origin)**, press **Ctrl + A**, and press **Delete**.', mac: 'Click the box under **Primary remote repository (origin)**, press **⌘ Command + A**, and press **Delete**.' },
+        'Paste in your project’s address: [[https://github.com/{U}/{SITE}.git]]',
+        'Click **Save**.',
+        'Click **Fetch origin** at the top. It turns into **Publish branch**.',
+        'Click **Publish branch**.',
+      ],
+      after: 'The folder on your computer is still called **notes**. That’s fine: GitHub Desktop now sends it to **{SITE}**.',
+      stuck: [
+        ['It says Push origin, not Publish branch', 'Click it. It does the same thing.'],
+        ['It says the push was rejected, or to fetch first', 'Your new project isn’t empty (it has a README). On GitHub, open it, click **Settings**, scroll to the bottom, click **Delete this repository**, and make it again with **Add README** off. Then click **Publish branch** again.'],
+        ['I typed the address myself and it fails', 'Use the **Copy** button above and paste it, or check it letter by letter: it ends in **.git**.'],
+      ],
+    },
+    {
+      id: 'fork', title: 'Make your own copy', gif: 'fork',
       word: '**Fork** means: make your own copy of someone else’s project, on GitHub.',
       pre: [`Open [my notes page](${NOTES}). If you see **Sign in** at the top right, sign in first.`],
       lines: [
         'Click **Fork**, near the top right.',
         'Click the **Repository name** box and delete **notes**.',
-        'Type **{SITE}** exactly: your username, then **.github.io**, all lowercase.',
+        'Type [[{SITE}]] exactly: your username, then **.github.io**, all lowercase.',
         'Scroll down and click the green **Create fork** button.',
       ],
       stuck: [
@@ -26,7 +108,7 @@
       ],
     },
     {
-      id: 'pages', part: 'On GitHub', title: 'Turn on your web address', gif: 'pages',
+      id: 'pages', title: 'Turn on your web address', gif: 'pages',
       word: '**GitHub Pages** is GitHub’s free website hosting. Every account gets one address: **{SITE}**.',
       lines: [
         'On your copy ([github.com/{U}/{SITE}](https://github.com/{U}/{SITE})), click **Settings**, the last tab, with a gear.',
@@ -42,7 +124,7 @@
       ],
     },
     {
-      id: 'live', part: 'On GitHub', title: 'Watch it go live', gif: 'live',
+      id: 'live', title: 'Watch it go live', gif: 'live',
       word: '**Deploy** means: put the files where the world can see them. GitHub does this for you each time your project changes.',
       lines: [
         'Click the **Actions** tab.',
@@ -59,9 +141,10 @@
       ],
     },
     {
-      id: 'setup', part: 'On your computer', title: 'Get GitHub Desktop', gif: 'setup', perOS: true,
+      id: 'setup', title: 'Get GitHub Desktop', gif: 'setup', perOS: true,
       word: '**GitHub Desktop** is a free app that moves your project between your computer and GitHub. No typing commands.',
       pre: [
+        'Already have GitHub Desktop, and signed in? Click **I did this** and go on.',
         'Go to [desktop.github.com](https://desktop.github.com) and click the big **Download** button.',
         {
           win: 'Open your **Downloads** folder and double-click **GitHubDesktopSetup**. It installs itself and opens. There is nothing to choose.',
@@ -80,7 +163,7 @@
       ],
     },
     {
-      id: 'clone', part: 'On your computer', title: 'Put your site on this computer', gif: 'clone', perOS: true,
+      id: 'clone', title: 'Put your site on this computer', gif: 'clone', perOS: true,
       word: '**Clone** means: download a copy of your project that stays linked to GitHub.',
       lines: [
         'Under **Your repositories** on the right, click **{U}/{SITE}**.',
@@ -93,7 +176,7 @@
       ],
     },
     {
-      id: 'edit', part: 'On your computer', title: 'Change one line', gif: 'edit', perOS: true,
+      id: 'edit', title: 'Change one line', gif: 'edit', perOS: true,
       word: 'Your website is just files in a folder. **index.html** is the page people see first.',
       lines: {
         win: [
@@ -125,7 +208,7 @@
       ],
     },
     {
-      id: 'push', part: 'On your computer', title: 'Commit and push', gif: 'push', perOS: true,
+      id: 'push', title: 'Commit and push', gif: 'push', perOS: true,
       word: '**Commit** saves a snapshot of your change on your computer. **Push** sends your snapshots to GitHub, and GitHub puts them on your website.',
       lines: [
         'Bottom left in GitHub Desktop: click the **Summary** box and say what you changed, like **Put my name on the tab**.',
@@ -142,6 +225,17 @@
       ],
     },
   ];
+
+  /* How the student got the notes decides where they start; the last steps are the same for everyone. */
+  const PATHS = [
+    { id: 'fork', label: 'Not yet', sub: 'Fork it on GitHub (easiest)',
+      groups: [['Get your copy', ['fork']], ['Put it online', ['pages', 'live']], ['Change it from your computer', ['setup', 'clone', 'edit', 'push']]] },
+    { id: 'zip', label: 'I downloaded the ZIP', sub: 'Upload it to a new project',
+      groups: [['Get your copy', ['download', 'newrepo', 'upload']], ['Put it online', ['pages', 'live']], ['Change it from your computer', ['setup', 'clone', 'edit', 'push']]] },
+    { id: 'cloned', label: 'I cloned it', sub: 'Send it to a new project',
+      groups: [['Get your copy', ['newrepo', 'setup', 'relink']], ['Put it online', ['pages', 'live']], ['Change it from your computer', ['edit', 'push']]] },
+  ];
+  const stepsOf = path => path.groups.flatMap(([, ids]) => ids.map(id => STEPS.find(s => s.id === id)));
 
   /* What the student typed into the username box, made into a GitHub username: drops a leading @, a pasted github.com link, a typed .github.io. */
   function cleanUser(raw) {
@@ -160,6 +254,6 @@
   }
   const gifFor = (step, os) => 'gif/' + step.gif + (step.perOS ? '-' + os : '') + '.gif';
 
-  const api = { STEPS, NOTES, cleanUser, siteFor, pick, fill, gifFor };
+  const api = { STEPS, PATHS, NOTES, stepsOf, cleanUser, siteFor, pick, fill, gifFor };
   if (typeof module === 'object' && module.exports) module.exports = api; else root.WebsiteSteps = api;
 })(this);

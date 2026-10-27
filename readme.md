@@ -11,7 +11,7 @@ Class tools for FS110. Each is a static page in its own folder: no build step, n
 | [`infernogallus/`](infernogallus/) | Dissecting a paper. A 50-minute lecture deck on one paper (the Infernogallus fruit-eater). Nine claims, each run as claim, evidence, alternatives, test, and a room vote on how sure. Ends with every claim sorted on one line. |
 | [`cv/`](cv/) | CV and resume. Walk a real CV a section at a time, take one line apart into its pieces, then rearrange and reword a one-page resume drawn from it. Also has `resume.tex`. |
 | [`exam/`](exam/) | Why 28 of 42? Four students with the same exam grade, shown column by column. A study-time model with strongly diminishing returns, claim cards you type into (words attach a test), and the reveal: the misses fell on particular chapters. |
-| [`website/`](website/) | Your own website. Seven steps, each a short video beside the same clicks in words: fork the notes app as `username.github.io`, turn on GitHub Pages, watch it deploy, then clone it with GitHub Desktop, change one line, commit and push. Windows and Mac versions of the computer steps. |
+| [`website/`](website/) | Your own website. Short videos, each beside the same clicks in words. Three ways in, depending on how the student got the notes (fork it, upload the downloaded ZIP to a new project, or send their clone to a new project). Then all three turn on GitHub Pages, watch it deploy, change one line with GitHub Desktop, commit and push. Windows and Mac versions of the computer steps. |
 
 `index.html` at the top is a landing page with a tile for each. Each folder has its own readme.
 

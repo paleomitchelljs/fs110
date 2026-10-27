@@ -32,25 +32,23 @@ check('site with no user', D.siteFor('') === 'yourname.github.io', D.siteFor('')
   });
 }));
 
-// the numbered lines match the numbered captions in the gif (scenes.html calls cap(n, …))
-const scenes = fs.readFileSync(path.join(ROOT, 'tools', 'scenes.html'), 'utf8');
-function captionCount(scene, os) {
-  const start = scenes.indexOf('SCENES.' + scene + ' = async');
-  const end = scenes.indexOf('\nSCENES.', start + 1);
-  let body = scenes.slice(start, end < 0 ? undefined : end);
-  if (scene === 'edit') body = scenes.slice(scenes.indexOf('async function openWith'), start) + body;
-  // on Windows the edit scene skips its Mac-only block (the TextEdit setting)
-  if (os === 'win') body = body.replace(/if \(OS === 'mac'\) \{[\s\S]*?editorWin\('index\.html', false\)/, '');
-  let top = 0;
-  // cap(3, …) counts as 3; cap(OS === 'mac' ? 8 : 4, …) as 8 on a Mac and 4 on Windows
-  for (const m of body.matchAll(/cap\((?:OS === 'mac' \? (\d+) : (\d+)|(\d+)),/g)) top = Math.max(top, +(m[3] || (os === 'mac' ? m[1] : m[2])));
-  return top;
-}
+// the numbered lines match the numbered captions in the gif (record.js counts them into gif/steps.json)
+const counts = JSON.parse(fs.readFileSync(path.join(ROOT, 'gif', 'steps.json'), 'utf8'));
 ['win', 'mac'].forEach(os => D.STEPS.forEach(s => {
   const n = D.pick(s.lines, os).length;
-  const c = captionCount(s.gif, os);
+  const c = counts[D.gifFor(s, os).replace(/^gif\/|\.gif$/g, '')];
   check(os + ' ' + s.id + ' ' + n + ' lines, ' + c + ' numbered captions', n === c, n + ' vs ' + c);
 }));
+
+// the paths: every step is on one, and every path ends by pushing a change
+const used = new Set();
+D.PATHS.forEach(p => {
+  const ids = p.groups.flatMap(g => g[1]);
+  ids.forEach(id => { used.add(id); check(p.id + ' step ' + id + ' exists', D.STEPS.some(s => s.id === id), id); });
+  check(p.id + ' has no step twice', new Set(ids).size === ids.length, ids.join(' '));
+  check(p.id + ' ends with push', ids[ids.length - 1] === 'push', ids.join(' '));
+});
+D.STEPS.forEach(s => check(s.id + ' is on a path', used.has(s.id), s.id));
 
 console.log(failed ? failed + ' failed' : 'all passed');
 process.exit(failed ? 1 : 0);

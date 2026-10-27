@@ -223,9 +223,33 @@
   .ex .list div { display: grid; grid-template-columns: 1fr 150px 130px; padding: 5px 12px; }
   .ex .list .lh { color: #666; border-bottom: 1px solid #eee; }
   .ex .list .on { background: #cce4f7; }
+  .ex.narrow .exmain { grid-template-columns: 1fr; } .ex.narrow .nav { display: none; }
+  .ex.narrow .list div { grid-template-columns: 1fr 70px; } .ex.narrow .list div span:last-child { display: none; }
   .desk.mac .ex .list .on { background: #2f6fd8; color: #fff; }
   .ico { display: inline-block; width: 14px; height: 12px; margin-right: 8px; border-radius: 2px; background: #e8b931; vertical-align: -1px; }
   .ico.f { background: #fff; border: 1px solid #888; height: 14px; width: 12px; }
+  .ico.z { background: repeating-linear-gradient(90deg, #e8b931 0 5px, #8a6100 5px 7px); }
+  .desk.mac .ico.z { background: repeating-linear-gradient(90deg, #ccc 0 5px, #777 5px 7px); }
+  #ghost { position: absolute; z-index: 51; padding: 6px 12px; border-radius: 6px; background: rgba(47,111,216,0.92); color: #fff; font-size: 13px; font-weight: 600; pointer-events: none; }
+  .ghmenu { position: absolute; z-index: 10; width: 300px; background: #fff; border: 1px solid #d1d9e0; border-radius: 12px; box-shadow: 0 8px 24px rgba(140,149,159,0.3); font-size: 14px; overflow: hidden; }
+  .ghmenu .mi { padding: 8px 16px; } .ghmenu .mi.hov { background: #eef1f4; } .ghmenu hr { border: 0; border-top: 1px solid #d1d9e0; margin: 4px 0; }
+  .ghmenu .mt { display: flex; gap: 18px; padding: 8px 16px 0; border-bottom: 1px solid #d1d9e0; } .ghmenu .mt span { padding-bottom: 8px; } .ghmenu .mt .on { box-shadow: inset 0 -2px #fd8c73; font-weight: 600; }
+  .dlb { position: absolute; right: 12px; top: 6px; z-index: 6; width: 300px; padding: 12px 14px; background: #fff; border-radius: 10px; box-shadow: 0 6px 24px rgba(0,0,0,0.3); font-size: 13px; }
+  .dlb b { display: block; font-size: 14px; } .dlb small { color: #5f6368; }
+  .newrepo { width: 680px; margin: 22px auto; }
+  .newrepo h2 { margin: 0 0 4px; font-size: 24px; font-weight: 600; }
+  .newrepo .sec { display: flex; gap: 14px; margin-top: 18px; } .newrepo .sec > i { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1px solid #d1d9e0; font-style: normal; font-size: 12px; text-align: center; line-height: 22px; }
+  .newrepo .sec > div { flex: 1; } .newrepo .sec h3 { margin: 0 0 8px; font-size: 16px; }
+  .cfg { border: 1px solid #d1d9e0; border-radius: 6px; } .cfg > div { display: flex; align-items: center; padding: 10px 14px; border-top: 1px solid #d1d9e0; font-size: 14px; } .cfg > div:first-child { border-top: 0; }
+  .cfg .r { margin-left: auto; } .tog { display: inline-block; width: 40px; height: 22px; border-radius: 11px; background: #d1d9e0; position: relative; vertical-align: middle; } .tog::after { content: ""; position: absolute; left: 3px; top: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; }
+  .cfg small { display: block; color: #59636e; font-size: 12px; }
+  .qs { margin: 16px 0; border: 1px solid #d1d9e0; border-radius: 6px; } .qs .h { padding: 12px 16px; background: #ddf4ff; font-weight: 600; font-size: 14px; }
+  .qs .b { padding: 12px 16px; font-size: 13px; color: #59636e; } .qs .b a { color: #0969da; }
+  .qs .u { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; } .qs .u .field { flex: 1; height: 30px; font: 12px/18px "JetBrains Mono", monospace; color: #1f2328; }
+  .drop { margin: 14px 0; padding: 36px 20px; border: 2px dashed #d1d9e0; border-radius: 6px; text-align: center; font-size: 18px; color: #59636e; } .drop.over { border-color: #0969da; background: #ddf4ff; color: #0969da; }
+  .drop small { display: block; font-size: 13px; margin-top: 6px; } .drop small a { color: #0969da; }
+  .ups div { display: flex; gap: 10px; padding: 5px 10px; border-bottom: 1px solid #eef1f4; font-size: 13px; } .ups .x { margin-left: auto; color: #59636e; }
+  .cbox { border: 1px solid #d1d9e0; border-radius: 6px; padding: 12px; margin-top: 12px; } .cbox .lbl { font-size: 15px; }
   .desk.mac .ico { background: #6cb6f2; }
   .desk.mac .ico.f { background: #fff; }
   .ctx { position: absolute; z-index: 9; min-width: 190px; padding: 5px; background: #fbfbfb; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 6px 20px rgba(0,0,0,0.25); font-size: 13px; }
@@ -249,6 +273,7 @@
     <div id="screen"></div>
     <div id="hl" class="hide"></div>
     <div id="ring" class="hide"></div>
+    <div id="ghost" class="hide"></div>
     <svg id="cursor" viewBox="0 0 22 30"><path d="M2 2 L2 24 L8 18.5 L12 27.5 L16 25.8 L12 17 L20 17 Z" fill="#fff" stroke="#000" stroke-width="1.6" stroke-linejoin="round"/></svg>
   </div>
   <div id="keys" class="hide"></div>
@@ -306,7 +331,23 @@ function rect(target) {
 
 /* ---------- cursor ---------- */
 let cur = { x: 640, y: 420 };
-function placeCursor() { cursorEl.style.transform = `translate(${cur.x - 2}px, ${cur.y - 2}px)`; }
+function placeCursor() {
+  cursorEl.style.transform = `translate(${cur.x - 2}px, ${cur.y - 2}px)`;
+  $('#ghost').style.transform = `translate(${cur.x + 16}px, ${cur.y + 18}px)`;
+}
+/* press on what's under the cursor and carry a label to the target */
+async function drag(target, label, ms = 1400, onOver) {
+  const g = $('#ghost');
+  g.textContent = label; g.classList.remove('hide'); placeCursor();
+  const r = rect(target), to = { x: r.x + r.w / 2, y: r.y + r.h / 2 }, from = { ...cur };
+  let over = false;
+  await tween(ms, k => {
+    cur = { x: from.x + (to.x - from.x) * k, y: from.y + (to.y - from.y) * k }; placeCursor();
+    if (!over && k > 0.8 && onOver) { over = true; onOver(); }
+  });
+  await wait(500);
+  g.classList.add('hide');
+}
 async function move(target, ms = 800, dx = 0.5, dy = 0.5) {
   const r = rect(target);
   const to = { x: r.x + r.w * dx, y: r.y + r.h * dy }, from = { ...cur };
@@ -348,6 +389,7 @@ async function keys(...ks) {
 
 /* ---------- caption ---------- */
 function cap(n, html) {
+  window.__steps = Math.max(window.__steps || 0, n || 0); // record.js writes the highest step number to gif/steps.json
   const c = $('#cap');
   if (!html) { c.classList.add('hide'); return; }
   c.classList.remove('hide');
@@ -357,6 +399,14 @@ function cap(n, html) {
 }
 
 function show(html) { screenEl.innerHTML = html; }
+/* scroll the browser page so the target sits mid-window */
+async function scrollTo(target, ms = 700) {
+  const pg = $('#page'), from = pg.scrollTop;
+  const by = rect(target).y - rect(pg).y - pg.clientHeight * 0.45;
+  await tween(ms, k => { pg.scrollTop = from + by * k; });
+}
+/* a menu or dialog dropped into the scene at view coordinates */
+function put(html) { screenEl.insertAdjacentHTML('beforeend', html); return screenEl.lastElementChild; }
 
 /* ================= pieces ================= */
 function browser(tabs, url, body, chrome) {
@@ -375,11 +425,11 @@ function ghHead(owner, repo, tab) {
 function repoPage(owner, repo, forked) {
   return ghHead(owner, repo, 'Code') + `<div class="gh-main">
     <div class="gh-title"><span class="av${forked ? ' you' : ''}"></span><h1>${repo}</h1><span class="pill">Public</span>
-      <span class="acts"><span class="btn">◉ Watch <span class="ct">${forked ? 0 : 1}</span></span><span class="btn" id="forkbtn">⑂ Fork <span class="ct">${forked ? 0 : 3}</span></span><span class="btn">☆ Star <span class="ct">0</span></span></span></div>
+      <span class="acts"><span class="btn">◉ Watch <span class="ct">${owner === U ? 0 : 1}</span></span><span class="btn" id="forkbtn">⑂ Fork <span class="ct">${owner === U ? 0 : 3}</span></span><span class="btn">☆ Star <span class="ct">0</span></span></span></div>
     ${forked ? '<div class="forked" style="margin-top:6px">forked from <a>paleomitchelljs/notes</a></div>' : ''}
     <div class="gh-grid"><div class="files">
-      <div class="bar"><span class="btn">⑂ main ▾</span><span class="sp"></span><span class="btn">Go to file</span><span class="btn green">&lt;&gt; Code ▾</span></div>
-      <div class="row head"><span>paleomitchelljs Notes app</span><span class="when">2 days ago</span></div>
+      <div class="bar"><span class="btn">⑂ main ▾</span><span class="sp"></span><span class="btn">Go to file</span><span class="btn green" id="codebtn">&lt;&gt; Code ▾</span></div>
+      <div class="row head"><span>${owner === U && !forked ? U + ' Add files via upload' : 'paleomitchelljs Notes app'}</span><span class="when">2 days ago</span></div>
       <div class="row"><span class="dir">▰</span>css<span class="when">2 days ago</span></div>
       <div class="row"><span class="dir">▰</span>js<span class="when">2 days ago</span></div>
       <div class="row"><span class="doc">▭</span>index.html<span class="when">2 days ago</span></div>
@@ -410,8 +460,8 @@ function actionsPage(done) {
 }
 
 /* ---------- desktop pieces ---------- */
-function desk(inner) {
-  const bar = OS === 'mac' ? `<div class="macbar" id="macbar"><span id="mb-app">GitHub Desktop</span><span id="mb-file">File</span><span>Edit</span><span>View</span><span id="mb-repo">Repository</span><span>Branch</span><span>Window</span><span>Help</span></div>` : '';
+function desk(inner, app) {
+  const bar = OS === 'mac' ? `<div class="macbar" id="macbar"><span id="mb-app">${app || 'GitHub Desktop'}</span><span id="mb-file">File</span><span>Edit</span><span>View</span><span id="mb-repo">Repository</span><span>Branch</span><span>Window</span><span>Help</span></div>` : '';
   const tbar = OS === 'win' ? '<div class="taskbar"><i></i><i></i><i></i><i></i></div>' : '';
   return `<div class="desk ${OS}">${bar}${inner}${tbar}</div>`;
 }
@@ -427,10 +477,12 @@ function gdWindow(body, bar, style) {
     : `<div class="tb">${menu}<span class="ttl"></span><span class="wc" style="color:#fff"><span>—</span><span>▢</span><span>✕</span></span></div>`;
   return `<div class="w gd" id="gdwin" style="${style || 'left:40px;top:34px;width:920px;height:508px'}">${tb}${bar || ''}<div class="wbody" id="gdbody">${body}</div></div>`;
 }
-function gdBar(push) {
-  return `<div class="gbar"><div class="repo"><small>Current repository</small>${SITE} ▾</div><div class="branch"><small>Current branch</small>⑂ main ▾</div>
-    <div class="fetch${push ? ' push' : ''}" id="fetchbtn">${push === 'pushing' ? '<span>Pushing to origin…</span><small>Writing objects</small>'
-      : push ? `<span>↑ Push origin<span class="up">1↑</span></span><small>Last fetched just now</small>` : '<span>⟳ Fetch origin</span><small>Last fetched just now</small>'}</div></div>`;
+const FETCH = { fetching: '<span>⟳ Fetching origin…</span><small>Hang on…</small>', publish: '<span>↑ Publish branch</span><small>Publish this branch to GitHub</small>',
+  publishing: '<span>↑ Publishing to origin…</span><small>Writing objects</small>', fetch: '<span>⟳ Fetch origin</span><small>Last fetched just now</small>' };
+function gdBar(push, repo) {
+  return `<div class="gbar"><div class="repo"><small>Current repository</small>${repo || SITE} ▾</div><div class="branch"><small>Current branch</small>⑂ main ▾</div>
+    <div class="fetch${push && push !== 'fetch' ? ' push' : ''}" id="fetchbtn">${FETCH[push] || (push === 'pushing' ? '<span>Pushing to origin…</span><small>Writing objects</small>'
+      : push ? `<span>↑ Push origin<span class="up">1↑</span></span><small>Last fetched just now</small>` : FETCH.fetch)}</div></div>`;
 }
 const SHOW_IN = OS === 'mac' ? 'Show in Finder' : 'Show in Explorer';
 function gdNoChanges() {
@@ -450,16 +502,23 @@ const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&
 function codeText() {
   return LINES.map(l => l.includes('@') ? esc(l).replace('@', '<span id="tword" class="v">Margins</span><span id="tcaret" class="caret hide"></span>') : esc(l)).join('\n');
 }
+/* a File Explorer / Finder window; rows are [name, kind, 'dir' | 'zip' | 'file'] */
+const rowId = n => n === 'index.html' ? 'idx' : 'r-' + n.replace(/\W/g, '-');
+function folder({ title, path, nav = 'Documents', rows, style, id = 'exwin', sel, narrow }) {
+  const list = rows.map(([n, t, k]) => `<div id="${rowId(n)}" class="${sel && sel.includes(n) ? 'on' : ''}"><span><span class="ico${k === 'file' ? ' f' : k === 'zip' ? ' z' : ''}"></span>${n}</span><span>Today</span><span>${t}</span></div>`).join('');
+  const navs = OS === 'mac' ? ['Recents', 'Applications', 'Desktop', 'Documents', 'Downloads'] : ['⌂ Home', 'Desktop', 'Downloads', 'Documents', 'Pictures'];
+  const navHtml = (OS === 'mac' ? '<div class="h">Favorites</div>' : '') + navs.map(x => `<div class="${x === nav ? 'on' : ''}">${x}</div>`).join('') + (OS === 'mac' ? '' : '<div class="h">This PC</div>');
+  const pathbar = OS === 'mac' ? '' : `<div class="exbar"><span>← → ↑</span><span class="path" id="${id}-path">› ${path}</span></div>`;
+  return `<div class="w ex${narrow ? ' narrow' : ''}" id="${id}" style="${style}">${winChrome(title, id + '-t')}${pathbar}
+    <div class="exmain"><div class="nav">${navHtml}</div><div class="list" id="${id}-list"><div class="lh"><span>Name</span><span>Date modified</span><span>${OS === 'mac' ? 'Kind' : 'Type'}</span></div>${list}</div></div></div>`;
+}
+const DIR = OS === 'mac' ? 'Folder' : 'File folder';
+const siteRows = () => OS === 'mac'
+  ? [['css', DIR, 'dir'], ['index.html', 'HTML text', 'file'], ['js', DIR, 'dir']]
+  : [['css', DIR, 'dir'], ['js', DIR, 'dir'], ['index.html', 'HTML Document', 'file']];
 function explorer(sel) {
-  const rows = [['css', 'File folder', 1], ['index.html', OS === 'mac' ? 'HTML text' : 'HTML Document', 0], ['js', 'File folder', 1]];
-  const order = OS === 'mac' ? rows : [rows[0], rows[2], rows[1]];
-  const list = order.map(([n, t, d]) => `<div id="${n === 'index.html' ? 'idx' : 'r-' + n}" class="${sel && n === 'index.html' ? 'on' : ''}"><span><span class="ico${d ? '' : ' f'}"></span>${n}</span><span>Today</span><span>${t}</span></div>`).join('');
-  const nav = OS === 'mac'
-    ? '<div class="h">Favorites</div><div>Recents</div><div>Applications</div><div>Desktop</div><div class="on">Documents</div><div>Downloads</div>'
-    : '<div>⌂ Home</div><div>Desktop</div><div>Downloads</div><div class="on">Documents</div><div>Pictures</div><div class="h">This PC</div>';
-  const pathbar = OS === 'mac' ? '' : `<div class="exbar"><span>← → ↑</span><span class="path">› Documents › GitHub › ${SITE}</span></div>`;
-  return `<div class="w ex" id="exwin" style="left:${OS === 'mac' ? 120 : 90}px;top:${OS === 'mac' ? 70 : 50}px;width:720px;height:380px">${winChrome(OS === 'mac' ? SITE : SITE)}${pathbar}
-    <div class="exmain"><div class="nav">${nav}</div><div class="list"><div class="lh"><span>Name</span><span>Date modified</span><span>${OS === 'mac' ? 'Kind' : 'Type'}</span></div>${list}</div></div></div>`;
+  return folder({ title: SITE, path: `Documents › GitHub › ${SITE}`, rows: siteRows(), sel: sel ? ['index.html'] : null,
+    style: `left:${OS === 'mac' ? 120 : 90}px;top:${OS === 'mac' ? 70 : 50}px;width:720px;height:380px` });
 }
 function editorWin(title, rich) {
   const menu = OS === 'mac' ? '' : '<div class="emenu"><span>File</span><span>Edit</span><span>View</span></div>';
@@ -837,6 +896,258 @@ SCENES.push = async () => {
   await wait(500);
   $('#tab0 .tt').textContent = 'Notes by ' + U;
   await wait(3600);
+};
+
+/* ---------- getting the files without a fork ---------- */
+function ghDash() {
+  return `<div class="gh-head" style="height:58px"><div class="gh-top"><span class="gh-ham">≡</span><span class="gh-logo"></span><span class="gh-crumb"><b>Dashboard</b></span>
+      <span class="gh-search">Type / to search</span><span class="btn" id="plus" style="padding:0 8px">+ ▾</span><span class="gh-av">y</span></div></div>
+    <div style="display:grid;grid-template-columns:260px 1fr;gap:28px;padding:22px 32px"><div><div style="display:flex;align-items:center;justify-content:space-between"><b>Top repositories</b><span class="btn green" style="height:28px">New</span></div>
+      <div class="field" style="margin:10px 0;height:30px;color:#59636e;font-size:13px">Find a repository…</div><div style="font-size:14px">▭ ${U}/hello-world</div></div>
+      <div><h2 style="margin:0 0 12px;font-size:20px">Home</h2><div class="files" style="height:180px"></div></div></div>`;
+}
+function emptyRepo() {
+  return ghHead(U, SITE, 'Code') + `<div class="gh-main"><div class="gh-title"><span class="av you"></span><h1>${SITE}</h1><span class="pill">Public</span></div>
+    <div class="qs"><div class="h">Quick setup — if you’ve done this kind of thing before</div><div class="b">
+      <div class="u"><span class="btn" style="height:30px">Set up in Desktop</span><span>or</span><span class="btn" style="height:30px">HTTPS</span><div class="field" id="giturl">https://github.com/${U}/${SITE}.git</div><span>⧉</span></div>
+      Get started by <a>creating a new file</a> or <a id="uplink">uploading an existing file</a>. We recommend every repository include a README, LICENSE, and .gitignore.</div></div></div>`;
+}
+
+SCENES.download = async () => {
+  const top = OS === 'mac' ? 34 : 14;
+  show(desk(`<div class="w" id="brwin" style="left:30px;top:${top}px;width:940px;height:${OS === 'mac' ? 510 : 530}px">${browser([{ title: 'paleomitchelljs/notes' }], 'github.com/paleomitchelljs/notes', repoPage('paleomitchelljs', 'notes'), OS)}</div>`, 'Chrome'));
+  cap(0, 'This is my notes page, from the link');
+  await wait(1600);
+  cap(1, 'Click the green <b>Code</b> button');
+  await zoom('#codebtn', 1.7, 800);
+  await press('#codebtn');
+  const r = rect('#codebtn');
+  put(`<div class="ghmenu" style="left:${r.x + r.w - 300}px;top:${r.y + r.h + 4}px"><div class="mt"><span class="on">Local</span><span>Codespaces</span></div>
+    <div class="mi"><b>Clone</b><div class="field" style="margin-top:6px;height:28px;font-size:12px">https://github.com/paleomitchelljs/notes.git</div></div><hr>
+    <div class="mi">Open with GitHub Desktop</div><div class="mi" id="mi-zip">Download ZIP</div></div>`);
+  cap(2, 'Click <b>Download ZIP</b>');
+  await zoom('#mi-zip', 1.6, 600);
+  await move('#mi-zip', 700);
+  $('#mi-zip').classList.add('hov');
+  await highlight('#mi-zip', 700);
+  await click();
+  screenEl.querySelector('.ghmenu').remove();
+  await unzoom(500);
+  $('#brwin .page').insertAdjacentHTML('beforeend', '<div class="dlb">⬇ <b>notes-main.zip</b><small>24.8 KB • Done</small></div>');
+  cap(0, 'It downloads a file called <b>notes-main.zip</b> into your <b>Downloads</b> folder');
+  await zoom('.dlb', 1.6, 800);
+  await wait(2200);
+  await unzoom(500);
+  const box = 'left:150px;top:' + (OS === 'mac' ? 80 : 70) + 'px;width:700px;height:360px';
+  const zipRow = ['notes-main.zip', OS === 'mac' ? 'ZIP archive' : 'Compressed (zipped) Folder', 'zip'];
+  put(folder({ title: 'Downloads', path: 'Downloads', nav: 'Downloads', rows: [zipRow], style: box, id: 'dlwin' }));
+  if (OS === 'win') {
+    cap(3, 'Open <b>Downloads</b>. Right-click <b>notes-main.zip</b>, then click <b>Extract All…</b>');
+    await wait(900);
+    await press('#r-notes-main-zip');
+    $('#r-notes-main-zip').classList.add('on');
+    const z = rect('#r-notes-main-zip');
+    put(`<div class="ctx" id="ctx" style="left:${z.x + 120}px;top:${z.y + z.h - 4}px"><div>Open</div><div>Open with<span class="ar">›</span></div><div id="exall">Extract All…</div><hr><div>Copy as path</div><div>Delete</div><div>Properties</div></div>`);
+    await wait(400);
+    await move('#exall', 600);
+    $('#exall').classList.add('hov');
+    await highlight('#exall', 600);
+    await click();
+    $('#ctx').remove();
+    put(`<div class="dlg" id="xdlg" style="left:230px;top:120px;width:540px"><div class="dh">Extract Compressed (Zipped) Folders</div>
+      <div class="db"><b style="font-size:15px;color:#1f4e9c">Select a Destination and Extract Files</b><div style="margin:12px 0 6px">Files will be extracted to this folder:</div>
+      <div style="display:flex;gap:8px"><div class="field" style="flex:1;font-size:12.5px">C:\\Users\\${U}\\Downloads\\notes-main</div><span class="btn" style="height:34px">Browse…</span></div>
+      <p style="margin:12px 0 0"><span class="check">✓</span>Show extracted files when complete</p></div>
+      <div class="df"><span class="btn blue" id="xgo">Extract</span><span class="btn">Cancel</span></div></div>`);
+    cap(4, 'Click <b>Extract</b>');
+    await wait(700);
+    await press('#xgo');
+    $('#xdlg').remove();
+    const nm = 'left:200px;top:110px;width:680px;height:340px';
+    put(folder({ title: 'notes-main', path: 'Downloads › notes-main', nav: 'Downloads', rows: [['notes-main', DIR, 'dir']], style: nm, id: 'nmwin' }));
+    cap(5, 'A <b>notes-main</b> folder opens. Double-click the <b>notes-main</b> folder inside it.');
+    await wait(1400);
+    await move('#r-notes-main', 700);
+    await highlight('#r-notes-main', 600);
+    await click(); await wait(120); await click();
+    $('#nmwin').remove();
+    put(folder({ title: 'notes-main', path: 'Downloads › notes-main › notes-main', nav: 'Downloads', rows: siteRows(), style: nm, id: 'nmwin' }));
+  } else {
+    cap(3, 'Open <b>Downloads</b> in Finder and double-click <b>notes-main.zip</b>');
+    await wait(900);
+    await move('#r-notes-main-zip', 800);
+    await highlight('#r-notes-main-zip', 700);
+    await click(); await wait(120); await click();
+    await wait(500);
+    $('#dlwin').remove();
+    put(folder({ title: 'Downloads', path: '', nav: 'Downloads', rows: [['notes-main', DIR, 'dir'], zipRow], style: box, id: 'dlwin', sel: ['notes-main'] }));
+    cap(4, 'Double-click the new <b>notes-main</b> folder');
+    await wait(1200);
+    await move('#r-notes-main', 700);
+    await highlight('#r-notes-main', 600);
+    await click(); await wait(120); await click();
+    $('#dlwin').remove();
+    put(folder({ title: 'notes-main', path: '', nav: 'Downloads', rows: siteRows(), style: box, id: 'nmwin' }));
+  }
+  cap(0, 'These are the files you need: <b>css</b>, <b>js</b> and <b>index.html</b>');
+  await zoom('#nmwin-list', 1.5, 800);
+  await wait(3200);
+};
+
+SCENES.newrepo = async () => {
+  show(browser([{ title: 'GitHub' }], 'github.com', ghDash()));
+  cap(1, 'At the top right of GitHub, click <b>+</b>, then <b>New repository</b>');
+  await wait(900);
+  await zoom('#plus', 1.9, 800);
+  await press('#plus');
+  const r = rect('#plus');
+  put(`<div class="ghmenu" style="width:220px;left:${r.x + r.w - 220}px;top:${r.y + r.h + 4}px"><div class="mi" id="mi-new">New repository</div><div class="mi">Import repository</div><hr><div class="mi">New codespace</div><div class="mi">New gist</div><hr><div class="mi">New organization</div></div>`);
+  await wait(400);
+  await move('#mi-new', 600);
+  $('#mi-new').classList.add('hov');
+  await highlight('#mi-new', 600);
+  await click();
+  await unzoom(400);
+  show(browser([{ title: 'New repository' }], 'github.com/new', ghDash().split('<div style="display:grid')[0] + `<div class="newrepo">
+    <h2>Create a new repository</h2><p style="margin:0;color:#59636e;font-size:14px">Repositories contain a project’s files and version history. Have a project elsewhere? <a style="color:#0969da">Import a repository</a>.</p>
+    <p style="font-style:italic;color:#59636e;font-size:13px">Required fields are marked with an asterisk (*).</p>
+    <div class="sec"><i>1</i><div><h3>General</h3><div style="display:flex;gap:10px;align-items:flex-end"><div><div class="lbl">Owner *</div><span class="btn"><span class="gh-av" style="width:20px;height:20px;font-size:11px">y</span> ${U} ▾</span></div>
+      <div style="padding-bottom:6px;font-size:20px">/</div><div style="flex:1"><div class="lbl">Repository name *</div><div class="field" id="name"><span class="v"></span><span class="caret hide" id="ncaret"></span></div></div></div>
+      <div class="ok hide" id="avail">✓ ${SITE} is available.</div><div class="lbl" style="margin-top:12px">Description</div><div class="field"></div></div></div>
+    <div class="sec"><i>2</i><div><h3>Configuration</h3><div class="cfg" id="cfg">
+      <div id="c-vis"><div>Choose visibility *<small>Choose who can see and commit to this repository</small></div><span class="r btn">◉ Public ▾</span></div>
+      <div id="c-readme"><div>Add README<small>READMEs can be used as longer descriptions.</small></div><span class="r"><span class="tog"></span> Off</span></div>
+      <div><div>Add .gitignore</div><span class="r btn">No .gitignore ▾</span></div><div><div>Add license</div><span class="r btn">No license ▾</span></div></div></div></div>
+    <div style="text-align:right;margin:16px 0 40px"><span class="btn green" id="create">Create repository</span></div></div>`));
+  cap(2, `Click <b>Repository name</b> and type <b>${SITE}</b>`);
+  await wait(800);
+  await zoom('#name', 1.7, 800);
+  await press('#name');
+  $('#name').classList.add('focus'); $('#ncaret').classList.remove('hide');
+  await type('#name', SITE, 110);
+  $('#avail').classList.remove('hide');
+  await wait(1200);
+  $('#name').classList.remove('focus'); $('#ncaret').classList.add('hide');
+  await unzoom(500);
+  cap(3, 'Leave it <b>Public</b>. Leave <b>Add README</b> off.');
+  await scrollTo('#cfg', 700);
+  await zoom('#c-vis', 1.5, 700);
+  await highlight('#c-vis', 1400);
+  unhighlight();
+  await highlight('#c-readme', 1400);
+  unhighlight();
+  await unzoom(500);
+  cap(4, 'Click <b>Create repository</b>');
+  await scrollTo('#create', 600);
+  await zoom('#create', 1.7, 700);
+  await press('#create');
+  await unzoom(400);
+  show(browser([{ title: U + '/' + SITE }], 'github.com/' + U + '/' + SITE, emptyRepo()));
+  cap(0, 'Done: an empty project, named with your web address');
+  await zoom('.gh-title h1', 1.7, 900);
+  await wait(3000);
+};
+
+SCENES.upload = async () => {
+  const top = OS === 'mac' ? 34 : 12;
+  show(desk(`<div class="w" id="brwin" style="left:20px;top:${top}px;width:640px;height:${OS === 'mac' ? 515 : 530}px">${browser([{ title: U + '/' + SITE }], 'github.com/' + U + '/' + SITE, emptyRepo(), OS)}</div>`, 'Chrome'));
+  put(folder({ title: 'notes-main', path: 'notes-main', nav: 'Downloads', rows: siteRows(), id: 'nmwin', narrow: true, style: `left:600px;top:${OS === 'mac' ? 250 : 240}px;width:380px;height:220px` }));
+  cap(0, 'Put your browser and the <b>notes-main</b> folder side by side');
+  await wait(2200);
+  cap(1, 'On your empty project, click <b>uploading an existing file</b>');
+  await zoom('#uplink', 1.8, 800);
+  await press('#uplink');
+  await unzoom(400);
+  $('#page').innerHTML = ghHead(U, SITE, 'Code') + `<div class="gh-main" style="padding:16px 22px"><div style="font-size:16px">${SITE} /</div>
+    <div class="drop" id="drop"><span id="droptx">Drag files here to add them to your repository</span><small>Or <a>choose your files</a></small></div>
+    <div class="ups" id="ups"></div><div class="cbox"><div class="lbl">Commit changes</div><div class="field">Add files via upload</div><div style="margin-top:10px"><span class="btn green" id="commit">Commit changes</span></div></div></div>`;
+  cap(2, OS === 'mac' ? 'Click inside the <b>notes-main</b> folder and press <b>⌘ Command + A</b> to select everything' : 'Click inside the <b>notes-main</b> folder and press <b>Ctrl + A</b> to select everything');
+  await wait(800);
+  await move('#nmwin-list', 800, 0.5, 0.85);
+  await click();
+  await keys(OS === 'mac' ? '⌘' : 'Ctrl', 'A');
+  ['css', 'js', 'index.html'].forEach(n => $('#' + rowId(n)).classList.add('on'));
+  await wait(500);
+  cap(3, 'Drag them onto the box in your browser, and let go');
+  await move('#r-css', 700);
+  await drag('#drop', '3 items', 1700, () => { $('#drop').classList.add('over'); $('#droptx').textContent = 'Drop to upload your files.'; });
+  $('#drop').classList.remove('over'); $('#droptx').textContent = 'Drag additional files here to add them to your repository';
+  const files = ['css/style.css', 'index.html', 'js/app.js', 'js/editor.js', 'js/latex.js', 'js/margins.js', 'js/outline.js', 'js/state.js'];
+  for (const f of files) { $('#ups').insertAdjacentHTML('beforeend', `<div><span>▭</span>${f}<span class="x">×</span></div>`); await wait(120); }
+  cap(0, 'Check the list: <b>index.html</b>, and files starting <b>css/</b> and <b>js/</b>');
+  await zoom('#ups', 1.4, 800);
+  await wait(2600);
+  await unzoom(500);
+  cap(4, 'Scroll down and click <b>Commit changes</b>');
+  await scrollTo('#commit', 700);
+  await zoom('#commit', 1.7, 700);
+  await press('#commit');
+  await unzoom(400);
+  $('#page').scrollTop = 0;
+  $('#page').innerHTML = repoPage(U, SITE, false);
+  cap(0, 'Done. Your files are on GitHub.');
+  await zoom('.files', 1.3, 900);
+  await wait(3000);
+};
+
+SCENES.relink = async () => {
+  show(desk(gdWindow(gdNoChanges(), gdBar(null, 'notes'))));
+  cap(0, 'Open <b>GitHub Desktop</b>, with your <b>notes</b> project showing');
+  await zoom('.gbar .repo', 1.8, 800);
+  await wait(1800);
+  await unzoom(500);
+  cap(1, OS === 'mac' ? 'In the menu bar at the top of the screen, click <b>Repository</b>, then <b>Repository Settings…</b>' : 'Click <b>Repository</b> in the menu, then <b>Repository settings…</b>');
+  const menuBtn = OS === 'mac' ? '#mb-repo' : '#gm-repo';
+  await press(menuBtn);
+  if (OS === 'mac') $(menuBtn).classList.add('open');
+  const m = rect(menuBtn);
+  put(`<div class="ctx" id="rmenu" style="left:${m.x}px;top:${m.y + m.h + 4}px"><div>Push</div><div>Pull</div><div>Fetch</div><div>Remove…</div><hr><div>View on GitHub</div>
+    <div>${OS === 'mac' ? 'Open in Terminal' : 'Open in Command Prompt'}</div><div>${SHOW_IN}</div><div>Open in external editor</div><hr><div id="rsitem">Repository ${OS === 'mac' ? 'Settings' : 'settings'}…</div></div>`);
+  await wait(400);
+  await move('#rsitem', 800);
+  $('#rsitem').classList.add('hov');
+  await highlight('#rsitem', 600);
+  await click();
+  $('#rmenu').remove();
+  if (OS === 'mac') $(menuBtn).classList.remove('open');
+  put(`<div class="dlg" id="rsdlg" style="left:190px;top:110px;width:620px"><div class="dh">Repository settings</div>
+    <div class="db" style="display:grid;grid-template-columns:150px 1fr;gap:18px;min-height:150px"><div style="line-height:2.2"><div style="background:#0366d6;color:#fff;border-radius:4px;padding:0 8px">Remote</div><div style="padding:0 8px">Ignored files</div><div style="padding:0 8px">Git config</div></div>
+      <div><div class="lbl" style="font-size:13px">Primary remote repository (origin)</div><div class="field" id="remote" style="font-size:12.5px"><span class="v">https://github.com/paleomitchelljs/notes.git</span><span class="caret hide" id="rcaret"></span></div></div></div>
+    <div class="df"><span class="btn blue" id="rsave">Save</span><span class="btn">Cancel</span></div></div>`);
+  cap(2, 'Click the box, select everything in it, and delete it');
+  await wait(700);
+  await zoom('#remote', 1.6, 800);
+  await press('#remote');
+  $('#remote').classList.add('focus'); $('#rcaret').classList.remove('hide');
+  await keys(OS === 'mac' ? '⌘' : 'Ctrl', 'A');
+  $('#remote .v').classList.add('sel');
+  await wait(500);
+  await keys('Delete');
+  $('#remote .v').classList.remove('sel'); $('#remote .v').textContent = '';
+  await wait(400);
+  cap(3, `Paste in your project’s address: <b>https://github.com/${U}/${SITE}.git</b>`);
+  await keys(OS === 'mac' ? '⌘' : 'Ctrl', 'V');
+  $('#remote .v').textContent = `https://github.com/${U}/${SITE}.git`;
+  await wait(1800);
+  $('#remote').classList.remove('focus'); $('#rcaret').classList.add('hide');
+  cap(4, 'Click <b>Save</b>');
+  await press('#rsave');
+  $('#rsdlg').remove();
+  await unzoom(500);
+  cap(5, 'Click <b>Fetch origin</b>. It turns into <b>Publish branch</b>.');
+  await zoom('#fetchbtn', 1.7, 800);
+  await press('#fetchbtn');
+  $('#fetchbtn').innerHTML = FETCH.fetching;
+  await wait(1300);
+  $('#fetchbtn').innerHTML = FETCH.publish; $('#fetchbtn').classList.add('push');
+  await wait(900);
+  cap(6, 'Click <b>Publish branch</b>');
+  await press('#fetchbtn');
+  $('#fetchbtn').innerHTML = FETCH.publishing;
+  await wait(1600);
+  $('#fetchbtn').innerHTML = FETCH.fetch; $('#fetchbtn').classList.remove('push');
+  cap(0, `Done. Your copy is on GitHub now, at <b>${U}/${SITE}</b>.`);
+  await wait(3200);
 };
 
 placeCursor();

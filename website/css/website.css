@@ -51,6 +51,10 @@ b, strong { font-weight: 700; }
 .seg button { height: 42px; padding: 0 18px; border: 0; background: var(--card); color: var(--muted); font-weight: 600; }
 .seg button + button { border-left: 2px solid var(--rule); }
 .seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--ink); }
+.how { flex-basis: 100%; }
+.paths button { height: auto; min-height: 42px; padding: 6px 16px; text-align: left; line-height: 1.15; }
+.paths button small { display: block; font-size: 14px; font-weight: 400; }
+.cp .small { height: 28px; margin-left: 6px; font-size: 14px; vertical-align: 1px; }
 .warn { flex-basis: 100%; margin: 0; color: var(--bad); font-size: 17px; }
 .small { height: 34px; padding: 0 12px; border: 2px solid var(--rule); border-radius: 9px; background: var(--card); font-size: 16px; font-weight: 600; }
 .small:hover { border-color: var(--accent-ink); }
@@ -112,4 +116,5 @@ dialog .small { margin-top: 10px; }
   .steps { flex-direction: column; }
   .steps .sep { display: none; }
   .steps .row { flex-wrap: wrap; }
+  .paths { flex-direction: column; } .paths button + button { border-left: 0; border-top: 2px solid var(--rule); }
 }
