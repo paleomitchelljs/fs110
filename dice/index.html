@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dice</title>
+<meta name="description" content="Roll a die, type in the rolls, and test whether it behaves like a fair one: a t-test on the mean and a chi-squared test on the faces.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="css/dice.css?v=1">
+</head>
+<body>
+<h1 class="sr-only">Dice</h1>
+<main>
+  <section class="rolls" aria-label="Rolls">
+    <div class="grid" id="grid"></div>
+    <button type="button" class="plus" id="addcol" title="Add a second die" aria-label="Add a column">+</button>
+    <button type="button" class="plus" id="addrows" title="Add 5 rows" aria-label="Add 5 rows">+</button>
+  </section>
+
+  <section class="tests">
+    <div class="box" id="tbox">
+      <div class="head"><h2>t-test</h2><button type="button" class="run" data-test="t" aria-label="Run the t-test"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg></button></div>
+      <div class="out" id="tout"></div>
+    </div>
+    <div class="box" id="cbox">
+      <div class="head"><h2>χ²</h2><button type="button" class="run" data-test="c" aria-label="Run the chi-squared test"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg></button></div>
+      <div class="out" id="cout"></div>
+    </div>
+  </section>
+</main>
+<noscript><p class="noscript">This page needs JavaScript.</p></noscript>
+<script src="js/model.js?v=1"></script>
+<script src="js/app.js?v=1"></script>
+</body>
+</html>
