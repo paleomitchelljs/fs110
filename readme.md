@@ -12,7 +12,7 @@ Class tools for FS110. Each is a static page in its own folder: no build step, n
 | [`cv/`](cv/) | CV and resume. Walk a real CV a section at a time, take one line apart into its pieces, then rearrange and reword a one-page resume drawn from it. Also has `resume.tex`. |
 | [`exam/`](exam/) | Why 28 of 42? Four students with the same exam grade, shown column by column. A study-time model with strongly diminishing returns, claim cards you type into (words attach a test), and the reveal: the misses fell on particular chapters. |
 | [`website/`](website/) | Your own website. Short videos, each beside the same clicks in words. Three ways in, depending on how the student got the notes (fork it, upload the downloaded ZIP to a new project, or send their clone to a new project). Then all three turn on GitHub Pages, watch it deploy, change one line with GitHub Desktop, commit and push. Windows and Mac versions of the computer steps. |
-| [`dice/`](dice/) | Dice. Type in your rolls (one column, + for five more rows, + for a second die) and run a t-test on the mean and a χ² test on the faces against a fair die. |
+| [`dice/`](dice/) | Dice. Type in your rolls (one column, + for five more rows, + for a second die) and run a t-test on the mean and a χ² test on the faces against a fair die. With two dice, a toggle compares them to each other. |
 
 `index.html` at the top is a landing page with a tile for each. Each folder has its own readme.
 

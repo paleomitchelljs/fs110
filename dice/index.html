@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap">
-<link rel="stylesheet" href="css/dice.css?v=1">
+<link rel="stylesheet" href="css/dice.css?v=2">
 </head>
 <body>
 <h1 class="sr-only">Dice</h1>
@@ -21,17 +21,17 @@
 
   <section class="tests">
     <div class="box" id="tbox">
-      <div class="head"><h2>t-test</h2><button type="button" class="run" data-test="t" aria-label="Run the t-test"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg></button></div>
+      <div class="head"><h2>t-test</h2><span class="btns"><button type="button" class="pair" data-pair="t" aria-pressed="false" hidden title="Compare the two dice" aria-label="Compare the two dice"><svg viewBox="0 0 32 24"><rect class="sa" x="2" y="4" width="14" height="14" rx="3"/><rect class="sb" x="14" y="8" width="14" height="14" rx="3"/></svg></button><button type="button" class="run" data-test="t" aria-label="Run the t-test"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg></button></span></div>
       <div class="out" id="tout"></div>
     </div>
     <div class="box" id="cbox">
-      <div class="head"><h2>χ²</h2><button type="button" class="run" data-test="c" aria-label="Run the chi-squared test"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg></button></div>
+      <div class="head"><h2>χ²</h2><span class="btns"><button type="button" class="pair" data-pair="c" aria-pressed="false" hidden title="Compare the two dice" aria-label="Compare the two dice"><svg viewBox="0 0 32 24"><rect class="sa" x="2" y="4" width="14" height="14" rx="3"/><rect class="sb" x="14" y="8" width="14" height="14" rx="3"/></svg></button><button type="button" class="run" data-test="c" aria-label="Run the chi-squared test"><svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg></button></span></div>
       <div class="out" id="cout"></div>
     </div>
   </section>
 </main>
 <noscript><p class="noscript">This page needs JavaScript.</p></noscript>
-<script src="js/model.js?v=1"></script>
-<script src="js/app.js?v=1"></script>
+<script src="js/model.js?v=2"></script>
+<script src="js/app.js?v=2"></script>
 </body>
 </html>

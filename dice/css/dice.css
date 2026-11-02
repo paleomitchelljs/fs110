@@ -62,6 +62,18 @@ main {
   width: 48px; height: 48px; border-radius: 12px; border: 2px solid var(--rule); background: var(--board);
   display: grid; place-items: center; padding: 0;
 }
+.btns { display: flex; gap: 10px; }
+.pair {
+  width: 48px; height: 48px; border-radius: 12px; border: 2px solid var(--rule); background: var(--board);
+  display: grid; place-items: center; padding: 0; opacity: 0.6;
+}
+.pair svg { width: 36px; height: 28px; }
+.pair .sa { fill: none; stroke: var(--a); stroke-width: 3; }
+.pair .sb { fill: none; stroke: var(--b); stroke-width: 3; }
+.pair:hover { border-color: var(--accent-ink); opacity: 1; }
+.pair[aria-pressed="true"] { opacity: 1; border-color: var(--accent-ink); background: var(--accent-soft); }
+.pair[aria-pressed="true"] .sa { fill: color-mix(in srgb, var(--a) 35%, transparent); }
+.pair[aria-pressed="true"] .sb { fill: color-mix(in srgb, var(--b) 35%, transparent); }
 .run:hover { border-color: var(--accent-ink); background: var(--accent-soft); }
 .run svg { width: 22px; height: 22px; fill: var(--ink); }
 .out:empty { display: none; }
@@ -69,6 +81,8 @@ main {
 .out.two { grid-template-columns: auto auto; justify-content: start; }
 .out .col { display: grid; gap: 4px; padding-left: 12px; border-left: 6px solid var(--a); }
 .out .col.c1 { border-left-color: var(--b); }
+.out .col.both { border-left: 0; padding-left: 18px; position: relative; }
+.out .col.both::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: linear-gradient(var(--a) 50%, var(--b) 50%); }
 .out .col > div { white-space: nowrap; }
 .out .p { font-weight: 700; }
 .out .k { color: var(--ink-2); }

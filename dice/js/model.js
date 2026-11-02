@@ -112,7 +112,46 @@
     return { n, counts, expected: e, chi2, df, p: pChi(chi2, df) };
   }
 
-  const Model = { SIDES, MU, parseRoll, lgamma, ibeta, gammq, pT, pChi, tTest, chiSq };
+  // Two dice: do their mean rolls differ? Welch's t-test (R's t.test default), two-sided.
+  function tTest2(x, y) {
+    const nx = x.length, ny = y.length;
+    if (nx === 0 || ny === 0) return null;
+    const mx = x.reduce((s, v) => s + v, 0) / nx;
+    const my = y.reduce((s, v) => s + v, 0) / ny;
+    const diff = mx - my;
+    if (nx < 2 || ny < 2) return { nx, ny, mx, my, diff, t: NaN, df: NaN, p: NaN };
+    const vx = x.reduce((s, v) => s + (v - mx) * (v - mx), 0) / (nx - 1);
+    const vy = y.reduce((s, v) => s + (v - my) * (v - my), 0) / (ny - 1);
+    const se2 = vx / nx + vy / ny;
+    if (se2 === 0) return { nx, ny, mx, my, diff, t: NaN, df: NaN, p: NaN };
+    const t = diff / Math.sqrt(se2);
+    const df = se2 * se2 / ((vx / nx) * (vx / nx) / (nx - 1) + (vy / ny) * (vy / ny) / (ny - 1));
+    return { nx, ny, mx, my, diff, t, df, p: pT(t, df) };
+  }
+
+  // Two dice: do the faces come up in the same shares on both? Chi-squared test of
+  // homogeneity on the 2 x SIDES table. Faces neither die rolled are dropped (they have
+  // no expected count), so df = (faces seen - 1).
+  function chiSq2(x, y, sides) {
+    if (sides == null) sides = SIDES;
+    const nx = x.length, ny = y.length, n = nx + ny;
+    if (nx === 0 || ny === 0) return null;
+    const cx = new Array(sides).fill(0), cy = new Array(sides).fill(0);
+    x.forEach(v => { cx[v - 1]++; });
+    y.forEach(v => { cy[v - 1]++; });
+    let chi2 = 0, seen = 0;
+    for (let k = 0; k < sides; k++) {
+      const col = cx[k] + cy[k];
+      if (col === 0) continue;
+      seen++;
+      const ex = nx * col / n, ey = ny * col / n;
+      chi2 += (cx[k] - ex) * (cx[k] - ex) / ex + (cy[k] - ey) * (cy[k] - ey) / ey;
+    }
+    const df = seen - 1;
+    return { nx, ny, cx, cy, chi2, df, p: df > 0 ? pChi(chi2, df) : NaN };
+  }
+
+  const Model = { SIDES, MU, parseRoll, lgamma, ibeta, gammq, pT, pChi, tTest, chiSq, tTest2, chiSq2 };
   if (typeof module !== 'undefined' && module.exports) module.exports = Model;
   else root.Dice = Model;
 })(this);

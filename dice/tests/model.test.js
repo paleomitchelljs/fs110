@@ -59,4 +59,23 @@ same('no rolls', M.tTest([]), null);
 same('one roll: p', Number.isNaN(M.tTest([3]).p), true);
 same('all same: p', Number.isNaN(M.tTest([2, 2, 2]).p), true);
 
+// Two dice
+const z = [3, 4, 2, 5, 3, 4, 1, 6, 3, 4];
+const w2 = M.tTest2(x, y);
+near('welch diff', w2.diff, -1.633333333, 1e-8);
+near('welch t', w2.t, -2.585092605, 1e-8);
+near('welch df', w2.df, 11.96392899, 1e-7);
+near('welch p', w2.p, 0.02392161802, 1e-8);
+near('welch xz p', M.tTest2(x, z).p, 0.5962918862, 1e-8);
+const h = M.chiSq2(x, y);
+near('homog chi2', h.chi2, 7.53968254, 1e-8);
+same('homog df', h.df, 5);
+near('homog p', h.p, 0.1834959287, 1e-8);
+near('homog xz p', M.chiSq2(x, z).p, 0.7714668508, 1e-8);
+const e = M.chiSq2([1, 1, 2, 2, 3], [1, 2, 3, 3, 3]);  // faces 4-6 never rolled
+same('homog empty faces dropped: df', e.df, 2);
+near('homog empty faces dropped: p', e.p, 0.4345982085, 1e-8);
+same('two-sample, one empty', M.tTest2(x, []), null);
+same('welch, both constant: p', Number.isNaN(M.tTest2([2, 2], [3, 3]).p), true);
+
 process.exit(failed ? 1 : 0);

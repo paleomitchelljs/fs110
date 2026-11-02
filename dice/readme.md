@@ -9,7 +9,10 @@ Each student rolls a die, types the rolls in, and tests whether it is clearly di
 - **Right:** two boxes. ▶ runs the test. Editing any cell clears the results, so they always match what's on the left.
   - **t-test.** One-sample, two-sided, against the fair mean 3.5. Shows n, mean, t, p-value.
   - **χ².** Goodness of fit to 1/6 per face, df = 5. Shows n, χ², p-value.
-- With two columns, each box shows each die tested on its own against a fair die, side by side in the column's color. The two dice are not compared with each other.
+- With two columns, each box shows each die tested on its own against a fair die, side by side in the column's color.
+- **Compare** (the two-squares button, only there with two columns) switches that box to a two-sample test of die 1 against die 2. Toggle it per box; ▶ runs whichever is on.
+  - **t-test:** Welch's two-sample t-test (R's `t.test(x, y)` default), two-sided. Shows difference (die 1 − die 2), t, p-value.
+  - **χ²:** test of homogeneity on the 2 × 6 table of counts (R's `chisq.test(rbind(cx, cy))`, no correction). Shows χ², p-value. A face neither die rolled is dropped, so df = faces seen − 1.
 
 Nothing is saved. Reloading starts over.
 
@@ -29,4 +32,4 @@ Nothing is saved. Reloading starts over.
 node dice/tests/model.test.js
 ```
 
-The p-value functions are checked against numerical integration of the t and χ² densities, and two example sets of rolls against hand-computed statistics. In R the same numbers come from `t.test(x, mu = 3.5)` and `chisq.test(table(factor(x, levels = 1:6)))`.
+The p-value functions are checked against numerical integration of the t and χ² densities, and example sets of rolls (one die and two) against the statistics computed by hand. In R the same numbers come from `t.test(x, mu = 3.5)` and `chisq.test(table(factor(x, levels = 1:6)))`.
