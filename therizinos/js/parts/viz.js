@@ -20,102 +20,6 @@
   };
   D.vizTools = { svg, text };
 
-  /* ---------- fig: a figure with zones ---------- */
-  D.parts.fig = function (def, host) {
-    const BX = def.box || [40, 8, 1010, 672];
-    host.innerHTML = '<div class="fg"><div class="fg-img"><img draggable="false"><div class="fg-hole"></div></div><div class="fg-cap"></div><div class="fg-pills"></div></div>';
-    const root = host.firstChild, wrap = root.querySelector('.fg-img'), img = wrap.querySelector('img'), hole = wrap.querySelector('.fg-hole');
-    const cap = root.querySelector('.fg-cap'), pills = root.querySelector('.fg-pills');
-    img.src = def.src; img.alt = def.alt || '';
-    const s = Math.min(BX[2] / def.w, (BX[3] - 30) / def.h), W = Math.round(def.w * s), H = Math.round(def.h * s);
-    wrap.style.cssText = `left:${BX[0] + Math.round((BX[2] - W) / 2)}px;top:${BX[1]}px;width:${W}px;height:${H}px;`;
-    cap.style.cssText = `left:${BX[0]}px;width:${BX[2]}px;top:${BX[1] + H + 6}px;`;
-    cap.innerHTML = D.fmt(def.cap || '');
-    const zs = def.zones.map((z, i) => {
-      const e = D.el('button', 'fg-pill', pills, (z.dot ? `<i style="background:${z.dot}"></i>` : '') + `<span>${D.fmt(z.label)}</span>`);
-      e.type = 'button';
-      e.style.top = (i * (def.pitch || 76)) + 'px';
-      e.addEventListener('click', (ev) => { ev.stopPropagation(); focus(cur === i ? -1 : i); });
-      return { z, e };
-    });
-    let cur = -1;
-    function focus(i) {
-      cur = i;
-      if (i < 0) { hole.style.cssText = 'left:0;top:0;width:100%;height:100%;box-shadow:0 0 0 0 transparent;'; }
-      else {
-        const r = def.zones[i].rect;
-        hole.style.cssText = `left:${r[0] * 100}%;top:${r[1] * 100}%;width:${r[2] * 100}%;height:${r[3] * 100}%;box-shadow:0 0 0 4000px var(--veil);`;
-      }
-      zs.forEach((k, j) => k.e.classList.toggle('on', j === i));
-    }
-    focus(-1);
-    return {
-      show(b) { const i = b - (def.from == null ? 1 : def.from); focus(i >= 0 && i < def.zones.length ? i : -1); },
-      reset() { focus(-1); }
-    };
-  };
-
-  /* ---------- traits: the Falcarius grid ---------- */
-  D.viz.traits = function (layer, v) {
-    const W = 740, H = 480, LX = 0, CX = v.cx || [410, 540, 670], R0 = 74, RP = 35;
-    const s = svg(layer, W, H);
-    const col = v.cols.length;
-    const band = D.svg('rect', { class: 'tr-band', x: CX[0] - 62, y: 6, width: 124, height: R0 + RP * v.rows.length - 28, rx: 16 }, s);
-    const heads = v.cols.map((c, j) => {
-      const parts = c.split('|');
-      const h = text(s, CX[j], parts.length > 1 ? 22 : 44, parts[0], 'tr-head', 'middle');
-      if (parts.length > 1) { const h2 = text(s, CX[j], 46, parts[1], 'tr-head', 'middle'); const on = h.classList; h._more = h2; }
-      return h;
-    });
-    v.rows.forEach((r, i) => {
-      const y = R0 + i * RP;
-      if (i % 2 === 0) D.svg('rect', { class: 'tr-zebra', x: 0, y: y - 25, width: W, height: RP, rx: 8 }, s);
-      text(s, LX + 6, y + 5, r.t, 'tr-lab');
-      r.s.forEach((st, j) => {
-        const g = D.svg('g', { class: 'tr-cell c' + j, transform: `translate(${CX[j]} ${y})` }, s);
-        if (st === 'P') D.svg('rect', { class: 'tr-p', x: -11, y: -11, width: 22, height: 22, rx: 3 }, g);
-        else if (st === 'D') D.svg('circle', { class: 'tr-d', r: 13 }, g);
-        else if (st === 'I') D.svg('path', { class: 'tr-i', d: 'M0 -14 L14 11 L-14 11 Z' }, g);
-        else text(g, 0, 8, '?', 'tr-q', 'middle');
-      });
-    });
-    const cy = R0 + v.rows.length * RP + 14;
-    const cnt = {};
-    [['P', 0], ['I', 1], ['D', 2]].forEach(([k, n]) => {
-      const x = 330 + n * 130;
-      const g = D.svg('g', { transform: `translate(${x} ${cy})` }, s);
-      if (k === 'P') D.svg('rect', { class: 'tr-p', x: -11, y: -11, width: 22, height: 22, rx: 3 }, g);
-      if (k === 'I') D.svg('path', { class: 'tr-i', d: 'M0 -14 L14 11 L-14 11 Z' }, g);
-      if (k === 'D') D.svg('circle', { class: 'tr-d', r: 13 }, g);
-      cnt[k] = text(s, x + 26, cy + 11, '0', 'tr-n');
-    });
-    let sel = 0, stop = null;
-    const nearest = (x) => CX.reduce((b, c, j) => (Math.abs(x - c) < Math.abs(x - CX[b]) ? j : b), 0);
-    function paint(k, anim) {
-      sel = k;
-      const x = CX[k] - 62, from = +band.getAttribute('x');
-      if (stop) stop();
-      if (anim && !D.reduced) stop = D.tween(300, (t) => band.setAttribute('x', from + (x - from) * D.ease(t)));
-      else band.setAttribute('x', x);
-      heads.forEach((h, j) => { h.classList.toggle('on', j === k); if (h._more) h._more.classList.toggle('on', j === k); });
-      s.querySelectorAll('.tr-cell').forEach((g) => g.classList.toggle('dim', !g.classList.contains('c' + k)));
-      const c = { P: 0, I: 0, D: 0 };
-      v.rows.forEach((r) => { if (c[r.s[k]] != null) c[r.s[k]]++; });
-      cnt.P.textContent = c.P; cnt.I.textContent = c.I; cnt.D.textContent = c.D;
-    }
-    layer.classList.add('grab');
-    layer.addEventListener('pointerdown', (e) => {
-      e.preventDefault(); e.stopPropagation();
-      layer.setPointerCapture(e.pointerId);
-      const at = (m) => { const p = D.local(layer, m); paint(nearest(p.x), true); };
-      at(e);
-      const up = () => { layer.removeEventListener('pointermove', at); layer.removeEventListener('pointerup', up); layer.removeEventListener('pointercancel', up); };
-      layer.addEventListener('pointermove', at); layer.addEventListener('pointerup', up); layer.addEventListener('pointercancel', up);
-    });
-    paint(0, false);
-    return { reset() { paint(0, false); } };
-  };
-
   /* ---------- predict: how many of 27 hold up? ---------- */
   D.viz.predict = function (layer, v, c) {
     const s = svg(layer, 740, 480), N = v.total, K = v.hit, COLS = 9, P = 64, X0 = 12, Y0 = 20;
@@ -142,7 +46,7 @@
       knob.classList.add('on'); knob.classList.remove('idle'); gtxt.textContent = g;
     }
     let shown = false;
-    const toVal = (m) => { const p = D.local(layer, m); return ((p.x - X0) / (COLS * P - 10)) * N; };
+    const toVal = (m) => { const p = D.localv(layer, m); return ((p.x - X0) / (COLS * P - 10)) * N; };
     hit.addEventListener('pointerdown', (e) => {
       e.preventDefault(); e.stopPropagation();
       hit.setPointerCapture(e.pointerId); setG(toVal(e));

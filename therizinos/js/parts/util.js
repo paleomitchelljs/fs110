@@ -3,6 +3,10 @@
 (function () {
   'use strict';
   const D = window.Deck;
+  D.viz = {};
+  D.DIST = ['Bone', 'Measure', 'Model', 'Analogy', 'Beyond'];
+  /* Pointer position inside a layer that may be CSS-scaled by layer._k (stage pixels / k). */
+  D.localv = function (layer, ev) { const p = D.local(layer, ev), k = layer._k || 1; return { x: p.x / k, y: p.y / k }; };
 
   /* _Genus_ in italics, *stress* in the accent colour, ==hedge== marked. */
   D.fmt = function (s) {

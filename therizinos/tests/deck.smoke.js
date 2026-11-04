@@ -59,57 +59,63 @@ function open(level) {
   const goTo = (id) => { const t = segs.findIndex((s) => s.id === id); while (D.where().s < t) key(']'); while (D.where().s > t) key('['); return segs[t]; };
   const press = (n) => { for (let i = 0; i < n; i++) key('ArrowRight'); };
 
-  // level key cycles 3 -> 1 and lands on a shown segment
   key('l'); key('l');
   check('L key cycles levels', D.flags.level === 2 || D.flags.level === 1, 'level ' + D.flags.level);
   D.setLevel(3);
 
-  // sort slide: all cards dealt, final build snaps every card with a target
-  const sort = goTo('sort'); press(sort.builds.length - 1);
+  // sort slide: ten cards dealt, final build snaps every card to its bin
+  const sort = goTo('sort1'); press(sort.builds.length - 1);
   let host = d.querySelector('.seg:not(.off) .item-sort');
-  check('sort: 10 cards dealt', host.querySelectorAll('.pl-card:not(.off)').length === 10);
-  check('sort: cards revealed', host.querySelectorAll('.pl-card.revealed').length === 10);
-  const counts = [...host.querySelectorAll('.pl-n')].map((e) => e.textContent);
-  await wait(900);
+  check('sort: 10 cards dealt and revealed', host.querySelectorAll('.pl-card:not(.off)').length === 10 && host.querySelectorAll('.pl-card.revealed').length === 10);
+  check('sort: no prompt text on screen', d.querySelector('.prompt-text').textContent === '');
 
-  // timeline: last build puts the cursor at the last year
+  // timeline: 14 events, found-row first
   const g = goTo('guess'); press(g.builds.length - 1);
   await wait(1200);
   host = d.querySelector('.seg:not(.off) .item-guess');
-  check('guess: all pills on at the end', host.querySelectorAll('.gs-pill.on').length === 8, host.querySelectorAll('.gs-pill.on').length + ' pills');
+  check('guess: all 14 pills on at the end', host.querySelectorAll('.gs-pill.on').length === 14, host.querySelectorAll('.gs-pill.on').length + ' pills');
 
-  // claim page: votes
-  const c = goTo('theropod'); press(c.builds.length - 2);
-  host = d.querySelector('.seg:not(.off) .item-claim');
+  // figure scene: pills come one per build, a zone lights, the vote bar arrives last
+  const th = goTo('theropod'); press(2);
+  host = d.querySelector('.seg:not(.off) .item-fig');
+  check('theropod: two pills shown at build 2', host.querySelectorAll('.fg-pill.shown').length === 2);
+  check('theropod: the second pill is lit', host.querySelectorAll('.fg-pill.on').length === 1);
+  press(th.builds.length - 3);
+  host = d.querySelector('.seg:not(.off)');
+  const sure = host.querySelector('.item-sure');
+  check('theropod: vote bar present', !!sure && !sure.classList.contains('off'));
   key('3', { code: 'Digit3' }); key('3', { code: 'Digit3' }); key('4', { code: 'Digit4' });
-  const dots = [...host.querySelectorAll('.g-col')].map((x) => x.children.length);
+  const dots = [...sure.querySelectorAll('.g-col')].map((x) => x.children.length);
   check('votes counted', JSON.stringify(dots) === '[0,0,2,1,0]', JSON.stringify(dots));
+  check('call saved for the last sort', D.callOf('theropod') != null);
 
-  // falcarius traits: counts for the first column (8 primitive, 1 derived)
-  const f = goTo('falcarius'); press(1);
-  host = d.querySelector('.seg:not(.off) .item-claim');
-  const tn = [...host.querySelectorAll('.tr-n')].map((e) => e.textContent);
-  check('traits: Falcarius 8 primitive · 0 in between · 1 derived', JSON.stringify(tn) === '["8","0","1"]', JSON.stringify(tn));
+  // trait grid: columns arrive, counts are right, photos at the end
+  const f = goTo('falcarius');
+  host = d.querySelector('.seg:not(.off) .item-traitgrid');
+  const cnt = () => [...host.querySelectorAll('.tr-n')].map((e) => e.textContent).join(',');
+  check('traits: Falcarius column 8 primitive, 0 in between, 1 derived', cnt() === '8,0,1', cnt());
+  press(3);
+  check('traits: photo of the teeth shown', host.querySelector('.tg-r').classList.contains('on'));
+  press(1);
+  check('traits: second photo shown', host.querySelector('.tg-r img').getAttribute('src').indexOf('feat-jaw') >= 0);
 
-  // lever: sheath +40% gives ×1.26
-  const du = goTo('duonychus'); press(du.builds.length - 2);
-  host = d.querySelector('.seg:not(.off) .item-claim');
+  // solo: lever, density, dots
+  const du = goTo('lever');
+  host = d.querySelector('.seg:not(.off) .item-solo');
   check('lever: starts at × 1.00', host.querySelector('.lv-ratio').textContent === '× 1.00', host.querySelector('.lv-ratio').textContent);
-
-  // density: the threshold line counts sites
-  const nest = goTo('nest'); press(1);
-  host = d.querySelector('.seg:not(.off) .item-claim');
-  const cnt = host.querySelector('.dn-cnt').textContent;
-  check('density: line at 1 per 100 m² keeps 4 of 8', cnt === '4 of 8', cnt);
+  const nest = goTo('nest');
+  host = d.querySelector('.seg:not(.off) .item-solo');
+  check('density: line at 1 per 100 m² keeps 4 of 8', host.querySelector('.dn-cnt').textContent === '4 of 8', host.querySelector('.dn-cnt').textContent);
 
   // rank: chips fill by level
-  const r = goTo('rank');
+  goTo('rank');
   host = d.querySelector('.seg:not(.off) .item-rank');
-  check('rank: 17 chips at level 3', [...host.querySelectorAll('.rk-chip')].filter((e) => e.style.display !== 'none').length === 17);
+  const shown = () => [...host.querySelectorAll('.rk-chip')].filter((e) => e.style.display !== 'none').length;
+  check('rank: 14 chips at level 3', shown() === 14, shown() + ' chips');
   D.setLevel(1);
   host = d.querySelector('.seg:not(.off) .item-rank');
-  const n1 = [...host.querySelectorAll('.rk-chip')].filter((e) => e.style.display !== 'none').length;
-  check('rank: fewer chips at level 1', n1 > 0 && n1 < 17, n1 + ' chips');
+  const n1 = shown();
+  check('rank: fewer chips at level 1', n1 > 0 && n1 < 14, n1 + ' chips');
   check('no script errors', errors.length === 0, errors[0] || '');
   console.log(`\n${checks - fails}/${checks} checks passed`);
   process.exit(fails ? 1 : 0);

@@ -3,14 +3,10 @@
   'use strict';
   const D = window.Deck;
 
-  /* Cover: the animal, the title, and (next build) one claim to pick apart. */
+  /* Cover: the animal, whole, and the title. Nothing else. */
   D.parts.cover = function (def, host) {
-    host.innerHTML =
-      `<div class="cover"><img class="cv-pic cv-photo" src="${D.esc(def.pic)}" alt="" draggable="false">` +
-      `<div class="cv-title">${D.fmt(def.title)}</div><div class="cv-cite">${D.fmt(def.cite)}</div>` +
-      `<div class="cv-claim">${D.fmt(def.claim)}</div></div>`;
-    const claim = host.querySelector('.cv-claim');
-    return { show(b) { claim.classList.toggle('on', b >= def.claimAt); } };
+    host.innerHTML = `<div class="cover"><img class="cv-pic cv-photo" src="${D.esc(def.pic)}" alt="" draggable="false"><div class="cv-title">${D.fmt(def.title)}</div></div>`;
+    return {};
   };
 
   /* Big plain text, optionally with a part number. */

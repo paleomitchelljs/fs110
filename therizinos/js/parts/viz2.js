@@ -62,10 +62,10 @@
       if (save) { st().e = e; D.save(); }
     }
     const fromTip = (m) => {
-      const p = D.local(layer, m), a = Math.atan2(p.y - C[1], p.x - C[0]) * 180 / Math.PI;   // −90 at the base of the arc
+      const p = D.localv(layer, m), a = Math.atan2(p.y - C[1], p.x - C[0]) * 180 / Math.PI;   // −90 at the base of the arc
       set((a + 90) / TH - 1, true);
     };
-    const fromSlide = (m) => { const p = D.local(layer, m); set(((p.x - TX0) / (TX1 - TX0)) * MAXE, true); };
+    const fromSlide = (m) => { const p = D.localv(layer, m); set(((p.x - TX0) / (TX1 - TX0)) * MAXE, true); };
     const wire = (el, fn) => el.addEventListener('pointerdown', (ev) => {
       ev.preventDefault(); ev.stopPropagation();
       el.setPointerCapture(ev.pointerId); fn(ev);
@@ -122,7 +122,7 @@
       rows.forEach((k) => { const on = k.val >= t; if (on) n++; k.g.classList.toggle('hit', on); });
       cnt.textContent = n + ' of ' + rows.length;
     }
-    const mv = (m) => { const p = D.local(layer, m); set(Math.pow(10, LO + (D.clamp(p.x, X0, X1) - X0) / (X1 - X0) * (HI - LO))); };
+    const mv = (m) => { const p = D.localv(layer, m); set(Math.pow(10, LO + (D.clamp(p.x, X0, X1) - X0) / (X1 - X0) * (HI - LO))); };
     const catcher = D.svg('rect', { x: X0 - 10, y: 0, width: X1 - X0 + 20, height: AXY + 4, fill: 'transparent', class: 'grab' }, s);
     s.insertBefore(catcher, line);
     [catcher, knob].forEach((el) => el.addEventListener('pointerdown', (ev) => {
