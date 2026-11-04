@@ -61,6 +61,8 @@ python3 tools/grid.py out.jpg <key> <page> ...    # page with a 10% grid, for ve
 python3 tools/crop_figs.py [name]                 # cut everything in tools/figs_table.py
 python3 tools/montage.py out.jpg name ...         # contact sheet, to check edges
 python3 tools/dims.py                             # regenerate js/dims.js after adding pictures
+python3 tools/wiki.py search "Rugops"             # find Commons pictures with licence and author
+python3 tools/wiki.py get "File:X.jpg" img/x.jpg   # fetch one (standard widths only)
 ```
 
 Test: `JSDOM=/path/to/node_modules/jsdom node tests/deck.smoke.js`.
@@ -73,6 +75,11 @@ Test: `JSDOM=/path/to/node_modules/jsdom node tests/deck.smoke.js`.
 
 ## Credits
 
+Photos and restorations from Wikimedia Commons, each credited in its on-screen caption: *Carnotaurus* skull (AStrangerintheAlps, CC BY-SA 3.0); *Majungasaurus* mount (Kumiko, CC BY-SA 2.0) and skull cast (WehaveaTrex, CC BY-SA 4.0); *Eoabelisaurus* mount (Jl FilpoC, CC BY-SA 4.0); *Masiakasaurus* bones (CaptMondo, CC BY-SA 3.0); *Abelisaurus* skull (Christophe Hendrickx, CC BY-SA 3.0); *Rajasaurus* replica (Swapnil Karambelkar, CC BY-SA 4.0); *Rugops* snout bones (Ibrahim, Sereno et al., CC BY 4.0); *Arcovenator* leg bones (Tylwyth Eldar, CC BY-SA 4.0); *Koleken* bones (Amalia Villafañe, CC BY 2.5 ar); *Llukalkan* cast (Brancasaurio, CC BY 4.0); *Limusaurus* holotype (Kumiko, CC BY-SA 2.0); *Vespersaurus* (Ildarotyrannus, CC BY-SA 4.0); *Aucasaurus* (Conty, CC BY 3.0). The *Skorpiovenator* in-ground photo came from you; I do not have its credit.
+
 - *Rugops* restoration: king-the-kong (shared by the course instructor; used with credit on screen).
+- Cover: *Majungasaurus* size chart, Eotyrannu5-Returns, CC BY-SA 4.0 (Wikimedia Commons, "Majungasaurus size chart.png").
+- *Chenanisaurus* restoration: Nick Longrich, CC BY-SA 4.0. *Arcovenator*: Danny Cicchetti, CC BY-SA 3.0. *Skorpiovenator*: Dinosauria-Freak, public domain. All from Wikimedia Commons; the credit is in each caption on screen.
+- Five abelisaurids and a person: Slate Weasel, public domain ("Abelisauridae Scale.svg").
 - Paleomaps: Scotese, Vérard, Burgener, Elling and Kocsis, PALEOMAP, CC BY 4.0, via Wikimedia Commons.
 - Figure crops are from the papers named in each caption.

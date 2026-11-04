@@ -48,7 +48,7 @@
     /* ---------------------------------------------------------- cover */
     {
       id: 'title', title: 'Abelisaurs', min: 1, tier: 1, builds: [{}],
-      items: [{ kind: 'cover', box: [0, 0, 1600, 790], pic: 'img/per11-life.jpg', title: 'Abelisaurs' }]
+      items: [{ kind: 'cover', box: [0, 0, 1600, 790], pic: 'img/wiki-majungasaurus-size.jpg', title: 'Abelisaurs' }]
     },
 
     /* ---------------------------------------------------------- part 1 */
@@ -70,18 +70,25 @@
         { label: 'Aucasaurus', rect: [0, 0.38, 1, 0.17] },
         { label: 'Majungasaurus', rect: [0, 0.55, 1, 0.17] },
         { label: 'Eoabelisaurus', rect: [0, 0.72, 1, 0.17] },
-        { label: 'Masiakasaurus', rect: [0, 0.89, 1, 0.11] }
+        { label: 'Masiakasaurus', rect: [0, 0.89, 1, 0.11] },
+        S('photo-maj-mount.jpg', 'Majungasaurus, mounted · photo: Kumiko, CC BY-SA 2.0', { label: 'Majungasaurus: the mount' }),
+        S('photo-eoabel-mount.jpg', 'Eoabelisaurus, mounted · photo: Jl FilpoC, CC BY-SA 4.0', { label: 'Eoabelisaurus: the mount' }),
+        S('photo-masia-fossil.jpg', 'Masiakasaurus, partial skeleton · photo: CaptMondo, CC BY-SA 3.0', { label: 'Masiakasaurus: the bones' }),
+        S('wiki-abelisauridae-scale.jpg', 'Five abelisaurids and a person · Slate Weasel, public domain', { label: 'Next to a person' })
       ]
     })),
 
-    figSeg('skulls', 'Six skulls', 2, 3, Object.assign(F('del18-fig2.jpg', 'Ceratosaur skulls · Delcourt 2018'), {
+    figSeg('skulls', 'Skulls', 2, 3.5, Object.assign(F('del18-fig2.jpg', 'Ceratosaur skulls · Delcourt 2018'), {
       pitch: 76, zones: [
         { label: 'Ceratosaurus', rect: [0, 0, 0.5, 0.33] },
         { label: 'Skorpiovenator', rect: [0, 0.33, 0.5, 0.33] },
         { label: 'Carnotaurus', rect: [0, 0.66, 0.5, 0.34] },
         { label: 'Noasaurus', rect: [0.5, 0, 0.5, 0.33] },
         { label: 'Masiakasaurus', rect: [0.5, 0.33, 0.5, 0.33] },
-        { label: 'Limusaurus', rect: [0.5, 0.66, 0.5, 0.34] }
+        { label: 'Limusaurus', rect: [0.5, 0.66, 0.5, 0.34] },
+        S('photo-abel-skull.jpg', 'Abelisaurus · photo: Christophe Hendrickx, CC BY-SA 3.0', { label: 'Abelisaurus' }),
+        S('photo-maj-skull.jpg', 'Majungasaurus, cast of FMNH PR 2100 · photo: WehaveaTrex, CC BY-SA 4.0', { label: 'Majungasaurus' }),
+        S('photo-raja-exhibit.jpg', 'Rajasaurus skull replica, Bhopal · photo: Swapnil Karambelkar, CC BY-SA 4.0', { label: 'Rajasaurus, India' })
       ]
     })),
 
@@ -152,27 +159,30 @@
     figSeg('rugops', 'Rugops', 1, 2.5, Object.assign(F('rugops-art.jpg', 'Rugops, restored · art by king-the-kong'), {
       zones: [
         { label: 'Rugops, Niger, 95 Ma' },
+        S('photo-rugops-maxilla.jpg', 'Rugops snout bones · Ibrahim, Sereno et al., CC BY 4.0', { label: 'The fossil: a snout' }),
         S('ser04-fig3.jpg', 'Rugops skull · Sereno et al. 2004', { label: 'Pits on the snout', rect: [0, 0.1, 1, 0.24] }),
         { label: 'No horns', role: 'evidence', rect: [0, 0.38, 1, 0.24] }
       ]
     })),
 
-    figSeg('arco', 'Arcovenator', 1, 3.5, Object.assign(F('tor14-fig2.jpg', 'Arcovenator, France · Tortosa et al. 2014'), {
+    figSeg('arco', 'Arcovenator', 1, 3.5, Object.assign(F('arco-art.jpg', 'Arcovenator, restored · Danny Cicchetti, CC BY-SA 3.0'), {
       zones: [
         { label: 'Abelisaurid in Europe?', role: 'claim' },
-        { label: 'A braincase', role: 'evidence', rect: [0, 0, 1, 0.55] },
+        S('tor14-fig2.jpg', 'Arcovenator, France · Tortosa et al. 2014', { label: 'A braincase', role: 'evidence', rect: [0, 0, 1, 0.55] }),
+        S('photo-arco-cruzy.jpg', 'Arcovenator leg bones, Cruzy · photo: Tylwyth Eldar, CC BY-SA 4.0', { label: 'Its leg bones' }),
         S('tor14-fig7.jpg', 'Tortosa et al. 2014', { label: 'Kin: India and Madagascar', role: 'evidence', rect: [0.5, 0.7, 0.45, 0.22] }),
         S('map80.jpg', '80 Ma · ' + MAP, { label: 'So: across the sea', role: 'else', rect: [0.46, 0.12, 0.2, 0.24] }),
         { label: 'A tree says it; nothing tests it', role: 'test' }
       ]
     })),
 
-    figSeg('chena', 'Chenanisaurus', 1, 3.5, Object.assign(F('lon17-fig3.jpg', 'Chenanisaurus, Morocco · Longrich et al. 2017'), {
-      imgBox: [40, 4, 640, 634], zones: [
-        { label: 'A partial jaw, a few teeth', role: 'evidence' },
+    figSeg('chena', 'Chenanisaurus', 1, 3.5, Object.assign(F('chena-art.jpg', 'Chenanisaurus, restored · Nick Longrich, CC BY-SA 4.0'), {
+      zones: [
+        { label: 'Chenanisaurus, Morocco' },
+        S('lon17-fig3.jpg', 'Chenanisaurus jaw · Longrich et al. 2017', { label: 'A partial jaw, a few teeth', role: 'evidence' }),
         S('lon17-fig8.jpg', 'Jaws · Longrich et al. 2017', { label: 'Short, deep, bowed', rect: [0, 0.75, 1, 0.25] }),
         S('lon17-fig9.jpg', 'Longrich et al. 2017', { label: '7–8 m' }),
-        S('lon17-fig11.jpg', 'Latest Cretaceous abelisaurids · Longrich et al. 2017', { label: 'Africa: still abelisaurids at the end', role: 'claim', rect: [0.35, 0.3, 0.3, 0.25] }),
+        S('lon17-fig11.jpg', 'Latest Cretaceous abelisaurids · Longrich et al. 2017', { label: 'Africa: still abelisaurids at the end', role: 'claim', rect: [0.3, 0.28, 0.4, 0.2] }),
         { label: 'Press: "smaller brain", scales', role: 'else' },
         { label: 'Not from a jaw', role: 'test' }
       ]
@@ -194,18 +204,18 @@
       ]
     })),
 
-    figSeg('vesper', 'Vespersaurus', 2, 2.5, Object.assign(F('lan19-fig10.jpg', 'Vespersaurus, Brazil · Langer et al. 2019'), {
+    figSeg('vesper', 'Vespersaurus', 2, 2.5, Object.assign(F('photo-vesper-art.jpg', 'Vespersaurus, restored · Ildarotyrannus, CC BY-SA 4.0'), {
       zones: [
         { label: 'Vespersaurus: 1 m, desert', role: 'claim' },
-        { label: 'Thin outer toes, blade claws', role: 'evidence', rect: [0, 0.5, 1, 0.5] },
+        S('lan19-fig10.jpg', 'Vespersaurus, Brazil · Langer et al. 2019', { label: 'Thin outer toes, blade claws', role: 'evidence', rect: [0, 0.5, 1, 0.5] }),
         { label: 'Same rocks: footprints', role: 'test' }
       ]
     })),
 
-    figSeg('koleken', 'Koleken', 2, 2.5, Object.assign(F('pol24-fig2.jpg', 'Koleken, Patagonia · Pol et al. 2024'), {
+    figSeg('koleken', 'Koleken', 2, 2.5, Object.assign(F('photo-koleken-holo.jpg', 'Koleken, the bones laid out · photo: Amalia Villafañe, CC BY 2.5 ar'), {
       zones: [
         { label: 'Koleken, with Carnotaurus', role: 'claim' },
-        { label: 'Own set of skull features', role: 'evidence' },
+        S('pol24-fig2.jpg', 'Koleken, Patagonia · Pol et al. 2024', { label: 'Own set of skull features', role: 'evidence' }),
         S('pol24-fig17.jpg', 'Tibia bone · Pol et al. 2024', { label: 'Six years old, still growing', role: 'evidence' })
       ]
     })),
@@ -236,7 +246,7 @@
     /* ---------------------------------------------------------- part 4 */
     partTitle('p4', 4, 'What did they eat?'),
 
-    figSeg('bite', 'The bite', 1, 3.5, Object.assign(F('maz09-fig1.jpg', 'Carnotaurus skull · Mazzetta et al. 2009'), {
+    figSeg('bite', 'The bite', 1, 3.5, Object.assign(F('photo-carno-skull.jpg', 'Carnotaurus skull · photo: AStrangerintheAlps, CC BY-SA 3.0'), {
       zones: [
         { label: 'Short, deep, horned skull' },
         S('maz09-fig4.jpg', 'Stress in a bite (light: low) · Mazzetta et al. 2009', { label: 'Computer model of a bite', role: 'evidence' }),
@@ -251,6 +261,7 @@
       zones: [
         { label: 'Ate its own kind?', role: 'claim' },
         { label: 'Grooves on 21+ bones, two individuals', role: 'evidence' },
+        S('photo-maj-skull.jpg', 'Majungatholus jaw, cast of FMNH PR 2100 · photo: WehaveaTrex, CC BY-SA 4.0', { label: 'Its jaw' }),
         S('rog03-fig2.jpg', 'Marks and the teeth that fit · Rogers et al. 2003', { label: 'Spacing matches its jaw', role: 'evidence' }),
         S('rog03-fig4.jpg', 'Other jaws in the same rocks · Rogers et al. 2003', { label: 'Crocodiles: too blunt, uneven', role: 'else' }),
         { label: 'Killed, or scavenged? Unknown', role: 'test' }
@@ -276,19 +287,22 @@
       ]
     })),
 
-    figSeg('skorp', 'Skorpiovenator', 2, 3, Object.assign(F('can09-fig1.jpg', 'Skorpiovenator, Patagonia · Canale et al. 2009'), {
+    figSeg('skorp', 'Skorpiovenator', 2, 3, Object.assign(F('photo-skorp-field.jpg', 'Skorpiovenator, as found (museum display)'), {
       zones: [
-        { label: 'Found in plaster', rect: [0.5, 0, 0.5, 0.45] },
+        { label: 'Skorpiovenator, Patagonia' },
+        S('can09-fig1.jpg', 'Skorpiovenator, Patagonia · Canale et al. 2009', { label: 'Found in plaster', rect: [0.5, 0, 0.5, 0.45] }),
         { label: '6 m', rect: [0, 0.5, 1, 0.5] },
         S('can09-fig2.jpg', 'Canale et al. 2009', { label: 'Teeth like a giant meat-eater', role: 'evidence', rect: [0, 0.78, 1, 0.22] }),
         { label: 'So: isolated teeth may be abelisaurs', role: 'claim' },
-        { label: 'Or: carcharodontosaurs, as thought', role: 'else' }
+        { label: 'Or: carcharodontosaurs, as thought', role: 'else' },
+        S('skorp-art.jpg', 'Skorpiovenator, restored · Dinosauria-Freak, public domain', { label: 'A pencil restoration' })
       ]
     })),
 
-    figSeg('limus', 'Limusaurus', 2, 3.5, Object.assign(F('wan17-fig1.jpg', 'Limusaurus, six ages · Wang et al. 2017'), {
+    figSeg('limus', 'Limusaurus', 2, 3.5, Object.assign(F('photo-limus-holo.jpg', 'Limusaurus, the holotype slab · photo: Kumiko, CC BY-SA 2.0'), {
       zones: [
-        { label: 'Toothed young, toothless adult', role: 'claim' },
+        { label: 'Limusaurus, China' },
+        S('wan17-fig1.jpg', 'Limusaurus, six ages · Wang et al. 2017', { label: 'Toothed young, toothless adult', role: 'claim' }),
         { label: 'Six ages', role: 'evidence', rect: [0, 0, 0.55, 1] },
         S('wan17-fig2.jpg', 'Jaws by age · Wang et al. 2017', { label: 'Teeth lost, beak formed', role: 'evidence' }),
         S('wan17-fig3.jpg', 'Isotopes · Wang et al. 2017', { label: 'Adults: plant-eater chemistry', role: 'evidence' })
@@ -338,9 +352,9 @@
       ]
     })),
 
-    figSeg('ear', 'Llukalkan', 2, 3.5, Object.assign(F('gia21-fig17.jpg', 'Llukalkan, Patagonia · Gianechini et al. 2021'), {
+    figSeg('ear', 'Llukalkan', 2, 3.5, Object.assign(F('photo-llukalkan-cast.jpg', 'Llukalkan skull cast, being assembled · photo: Brancasaurio, CC BY 4.0'), {
       zones: [
-        { label: 'Llukalkan, Santonian, Patagonia' },
+        S('gia21-fig17.jpg', 'Llukalkan, Patagonia · Gianechini et al. 2021', { label: 'Llukalkan, Santonian, Patagonia' }),
         S('gia21-fig12.jpg', 'Braincase, from CT · Gianechini et al. 2021', { label: 'A pocket behind the ear bone', role: 'evidence' }),
         S('gia21-fig15.jpg', 'Brain and inner ear, rendered · Gianechini et al. 2021', { label: 'Inner ear: hard to see in the scan', role: 'else' }),
         { label: 'So: different hearing?', role: 'claim' },
@@ -366,9 +380,10 @@
       ]
     })),
 
-    figSeg('auca', 'Aucasaurus', 3, 2.5, Object.assign(F('bai23-fig1.jpg', 'Aucasaurus · Baiano et al. 2023'), {
+    figSeg('auca', 'Aucasaurus', 3, 2.5, Object.assign(F('photo-auca-mount.jpg', 'Aucasaurus, restored · Conty, CC BY 3.0'), {
       zones: [
-        { label: 'Most complete tail known', rect: [0, 0.1, 0.7, 0.4] },
+        { label: 'Aucasaurus, Patagonia' },
+        S('bai23-fig1.jpg', 'Aucasaurus · Baiano et al. 2023', { label: 'Most complete tail known', rect: [0, 0.1, 0.7, 0.4] }),
         S('bai23-fig33.jpg', 'Bone honeycomb · Baiano et al. 2023', { label: 'Air spaces in the tail', role: 'evidence' })
       ]
     })),
