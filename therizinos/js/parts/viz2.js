@@ -61,12 +61,12 @@
       keratin.style.opacity = e > 0.004 ? 1 : 0;
       segs.forEach((g, k) => {
         const m = pt(TH * (k + 0.5) / N), dist = Math.hypot(tip[0] - m[0], tip[1] - m[1]);
-        g.setAttribute('stroke', mix(dist / L0 / VMAX));
+        g.setAttribute('stroke', mix(dist / L0 / VMAX / (1 + e * 1.5)));
       });
       handle.setAttribute('cx', tip[0]); handle.setAttribute('cy', tip[1]);
       force.setAttribute('d', `M${tail[0]} ${tail[1]} L${tip[0]} ${tip[1]} M${tip[0] - 22} ${tip[1] + 3} L${tip[0]} ${tip[1]} L${tip[0] - 7} ${tip[1] + 22}`);
       knob.setAttribute('cx', xE(e));
-      ratio.textContent = '× ' + (chord(deg) / L0).toFixed(2);
+      ratio.textContent = '× ' + (1 / (1 + e)).toFixed(2);
       const bm = pt(TH * 0.55); lbBone.setAttribute('x', bm[0] + 30); lbBone.setAttribute('y', bm[1] - 6);
       lbKer.setAttribute('x', Math.min(tip[0] + 30, 400)); lbKer.setAttribute('y', Math.min(tip[1] + 44, 410));
       lbKer.style.opacity = e > 0.004 ? 1 : 0;

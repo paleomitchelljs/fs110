@@ -197,7 +197,8 @@
         { label: 'Small conical teeth', role: 'evidence', rect: [0.07, 0.63, 0.93, 0.2] },
         { label: 'Chin hooks down', role: 'evidence', rect: [0, 0.85, 1, 0.15] },
         { label: 'Meat-eaters: serrated blades', role: 'else' },
-        { label: '27 tested: 21 hold up', role: 'test' }
+        { label: '27 tested: 21 hold up', role: 'test' },
+        { label: 'Held up: gut contents, gizzard stones', src: 'img/zm11-fig2.jpg', w: 950, h: 1261, cap: 'Green: plant-eating evidence · red: meat-eating · Zanno & Makovicky 2011' }
       ]
     }), 'diet'),
 
@@ -250,7 +251,7 @@
         { label: 'Digging', role: 'evidence', rect: [0.18, 0.04, 0.26, 0.94] },
         { label: 'Hooking', role: 'evidence', rect: [0.45, 0.04, 0.24, 0.94] },
         { label: 'Short claw: blue every time', role: 'evidence', rect: [0, 0.465, 1, 0.17] },
-        { label: 'One push; sheath a thin coat', role: 'else' }
+        { label: 'Thickness of keratin sheath important', role: 'else' }
       ]
     }), 'fea'),
 
@@ -305,7 +306,7 @@
       ]
     }), 'duonychus'),
 
-    soloSeg('lever', 'A longer lever', 1, 3, { kind: 'lever', lab: { bone: 'bone', sheath: 'sheath', ref: 'bending at the base', hi: 'High stress: likely to break', lo: 'Low stress: unlikely to break', note: 'diagram: same pull, longer lever', slide: 'extra sheath', mark: 'Duonychus' } }, 1, null, 1.4),
+    soloSeg('lever', 'A longer lever', 1, 3, { kind: 'lever', lab: { bone: 'bone', sheath: 'sheath', ref: 'stress on the bone', hi: 'High stress: likely to break', lo: 'Low stress: unlikely to break', note: 'diagram: sheath shares the load', slide: 'extra sheath', mark: 'Duonychus' } }, 1, null, 1.4),
 
     figSeg('didactyl', 'Fingers lost', 3, 2, Object.assign(FIG('kob25-fig7.jpg', 1507, 1544, 'Kobayashi et al. 2025'), {
       zones: [{ label: '5 clades lost a finger' }]

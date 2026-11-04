@@ -102,7 +102,7 @@ function open(level) {
   // solo: lever, density, dots
   goTo('lever');
   host = d.querySelector('.seg:not(.off) .item-solo');
-  check('lever: opens at the Duonychus sheath, × 1.26', host.querySelector('.lv-ratio').textContent === '× 1.26', host.querySelector('.lv-ratio').textContent);
+  check('lever: opens at the Duonychus sheath, × 0.71', host.querySelector('.lv-ratio').textContent === '× 0.71', host.querySelector('.lv-ratio').textContent);
   check('lever: bone drawn in 30 coloured pieces', host.querySelectorAll('.lv-seg').length === 30);
   goTo('nest');
   host = d.querySelector('.seg:not(.off) .item-solo');
