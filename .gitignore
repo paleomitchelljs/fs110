@@ -3,3 +3,7 @@ infernogallus/*.pdf
 
 # Therizinosaur reference papers stay local.
 therizinos/papers/
+therizinos/transcript/
+
+# Abelisaur reference papers stay local.
+abelisaurs/papers/
