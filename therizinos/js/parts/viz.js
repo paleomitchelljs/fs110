@@ -78,7 +78,7 @@
     const other = new Set(); let seed = 7;
     const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
     while (other.size < Math.round(COLS * ROWS * 0.01)) other.add(Math.floor(rnd() * COLS * ROWS));
-    const nums = D.el('div', 'bn-nums', layer, `<div class="bn-a"><b>${D.fmt(v.total)}</b><span>${D.fmt(v.l1)}</span></div><div class="bn-b reveal"><b>99%</b><span>${D.fmt(v.l2)}</span></div>`);
+    const nums = D.el('div', 'bn-nums', layer, `<div class="bn-a"><b>${D.fmt(v.total)}</b><span>${D.fmt(v.l1)}</span></div><div class="bn-b reveal"><div class="bn-key"><i class="g"></i><b>99%</b><span>${D.fmt(v.l2)}</span></div><div class="bn-key"><i class="y"></i><b>1%</b><span>${D.fmt(v.l3)}</span></div></div>`);
     const bb = nums.querySelector('.bn-b');
     let stage = 0, on = false;
     function css(n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim() || '#888'; }

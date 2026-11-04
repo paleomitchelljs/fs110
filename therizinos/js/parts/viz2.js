@@ -9,39 +9,49 @@
   const D = window.Deck, { svg, text } = D.vizTools;
   const rad = (d) => d * Math.PI / 180;
 
-  /* ---------- lever ---------- */
+  /* ---------- lever: a sheath makes the claw a longer lever ----------
+   * A diagram, not data. Pull on the tip of a bent claw and the bending at each
+   * point is the force times its straight-line distance to the tip, so the base
+   * takes the most. Colour is that bending, blue (low) to red (high), on the same
+   * scale as the claw stress figures. Drag the claw tip (or the slider) to add
+   * sheath beyond the bone; the base goes redder. */
   D.viz.lever = function (layer, v) {
     const s = svg(layer, 740, 480);
-    const R = 190, B = [150, 62], C = [B[0], B[1] + R], TH = 90, MAXE = 0.6, SNAP = 0.4;
+    const R = 190, B = [150, 62], C = [B[0], B[1] + R], TH = 90, MAXE = 0.6, SNAP = 0.4, N = 30, VMAX = 1.3;
     const pt = (deg) => [C[0] + R * Math.sin(rad(deg)), C[1] - R * Math.cos(rad(deg))];
     const arc = (a, b) => { const p = pt(a), q = pt(b); return `M${p[0].toFixed(1)} ${p[1].toFixed(1)} A${R} ${R} 0 ${b - a > 180 ? 1 : 0} 1 ${q[0].toFixed(1)} ${q[1].toFixed(1)}`; };
     const chord = (deg) => 2 * R * Math.sin(rad(deg) / 2);
     const L0 = chord(TH);
+    const BL = [45, 95, 208], RD = [208, 59, 59];
+    const mix = (k) => { k = D.clamp(k, 0, 1); return `rgb(${BL.map((b, n) => Math.round(b + (RD[n] - b) * k)).join(',')})`; };
 
-    D.svg('path', { class: 'lv-bone', d: arc(0, TH) }, s);
     const keratin = D.svg('path', { class: 'lv-ker', d: arc(TH, TH) }, s);
+    const segs = [];
+    for (let k = 0; k < N; k++) segs.push(D.svg('path', { class: 'lv-seg', d: arc(TH * k / N, TH * (k + 1) / N) }, s));
     D.svg('circle', { class: 'lv-joint', cx: B[0], cy: B[1], r: 15 }, s);
-    const lever = D.svg('line', { class: 'lv-lever', x1: B[0], y1: B[1], x2: 0, y2: 0 }, s);
     const force = D.svg('path', { class: 'lv-force', d: '' }, s);
     const handle = D.svg('circle', { class: 'lv-handle grab', r: 22 }, s);
-    text(s, B[0] - 24, B[1] - 26, 'joint', 'ms-lab', 'end');
-    const lbBone = text(s, 20, 330, v.lab.bone, 'lv-lab-b'); lbBone.setAttribute('y', 300);
-    const lbKer = text(s, 20, 336, v.lab.sheath, 'lv-lab-k');
+    text(s, B[0] + 28, B[1] - 28, 'joint', 'ms-lab');
+    const lbBone = text(s, 0, 0, v.lab.bone, 'lv-lab-b');
+    const lbKer = text(s, 0, 0, v.lab.sheath, 'lv-lab-k');
 
-    // readout and bars on the right
-    D.svg('rect', { class: 'lv-bar0', x: 470, y: 218, width: 220, height: 26, rx: 6 }, s);
-    const bar = D.svg('rect', { class: 'lv-bar', x: 470, y: 262, width: 220, height: 26, rx: 6 }, s);
-    text(s, 470, 206, v.lab.ref, 'ms-lab');
-    const ratio = text(s, 470, 150, '', 'lv-ratio');
-    text(s, 470, 326, v.lab.note, 'ms-lab');
+    // readout
+    text(s, 440, 118, v.lab.ref, 'lv-cap');
+    const ratio = text(s, 440, 206, '', 'lv-ratio');
+    // colour key, same wording as the stress figures
+    const key = (y, rgb, lab) => { D.svg('rect', { x: 440, y, width: 34, height: 34, rx: 8, fill: rgb, stroke: 'var(--outline)', 'stroke-width': 3 }, s); text(s, 486, y + 27, lab, 'lv-key'); };
+    key(268, mix(1), v.lab.hi);
+    key(318, mix(0), v.lab.lo);
+    text(s, 440, 392, v.lab.note, 'lv-note');
 
-    // slider under the claw
-    const TX0 = 60, TX1 = 420, TY = 446, xE = (e) => TX0 + (e / MAXE) * (TX1 - TX0);
+    // slider: how much sheath beyond the bone
+    const TX0 = 40, TX1 = 400, TY = 446, xE = (e) => TX0 + (e / MAXE) * (TX1 - TX0);
+    text(s, TX0, TY - 34, v.lab.slide, 'lv-cap2');
     D.svg('path', { class: 'ms-axis', d: `M${TX0} ${TY} H${TX1}` }, s);
-    [0, SNAP, MAXE].forEach((e) => { D.svg('path', { class: 'ms-axis', d: `M${xE(e)} ${TY - 8} v16` }, s); text(s, xE(e), TY + 34, e ? '+' + Math.round(e * 100) + '%' : '0', 'ms-tick', 'middle'); });
+    [[0, '0'], [SNAP, '+40%'], [MAXE, '+60%']].forEach(([e, l]) => { D.svg('path', { class: 'ms-axis', d: `M${xE(e)} ${TY - 8} v16` }, s); text(s, xE(e), TY + 34, l, 'ms-tick', 'middle'); });
+    text(s, xE(SNAP), TY + 62, v.lab.mark, 'lv-mark', 'middle');
     const knob = D.svg('circle', { class: 'ms-me grab', cx: TX0, cy: TY, r: 15 }, s);
-    const stateKey = 'lever';
-    const st = () => D.get(stateKey, () => ({ e: 0 }));
+    const st = () => D.get('lever', () => ({ e: 0.4 }));
     let e = 0;
     function set(x, save) {
       e = D.clamp(x, 0, MAXE);
@@ -49,20 +59,21 @@
       const deg = TH * (1 + e), tip = pt(deg), tail = [tip[0] - 0.9 * 86, tip[1] + 0.44 * 86];
       keratin.setAttribute('d', arc(TH, TH + Math.max(0.0001, deg - TH)));
       keratin.style.opacity = e > 0.004 ? 1 : 0;
+      segs.forEach((g, k) => {
+        const m = pt(TH * (k + 0.5) / N), dist = Math.hypot(tip[0] - m[0], tip[1] - m[1]);
+        g.setAttribute('stroke', mix(dist / L0 / VMAX));
+      });
       handle.setAttribute('cx', tip[0]); handle.setAttribute('cy', tip[1]);
-      lever.setAttribute('x2', tip[0]); lever.setAttribute('y2', tip[1]);
       force.setAttribute('d', `M${tail[0]} ${tail[1]} L${tip[0]} ${tip[1]} M${tip[0] - 22} ${tip[1] + 3} L${tip[0]} ${tip[1]} L${tip[0] - 7} ${tip[1] + 22}`);
       knob.setAttribute('cx', xE(e));
-      const r = chord(deg) / L0;
-      ratio.textContent = '× ' + r.toFixed(2);
-      bar.setAttribute('width', (220 * r).toFixed(1));
-      lbKer.setAttribute('x', Math.min(tip[0] + 34, 430)); lbKer.setAttribute('y', Math.min(tip[1] + 6, 440));
+      ratio.textContent = '× ' + (chord(deg) / L0).toFixed(2);
+      const bm = pt(TH * 0.55); lbBone.setAttribute('x', bm[0] + 30); lbBone.setAttribute('y', bm[1] - 6);
+      lbKer.setAttribute('x', Math.min(tip[0] + 30, 400)); lbKer.setAttribute('y', Math.min(tip[1] + 44, 410));
       lbKer.style.opacity = e > 0.004 ? 1 : 0;
-      lbBone.setAttribute('x', pt(TH / 2)[0] + 22); lbBone.setAttribute('y', pt(TH / 2)[1] - 14);
       if (save) { st().e = e; D.save(); }
     }
     const fromTip = (m) => {
-      const p = D.localv(layer, m), a = Math.atan2(p.y - C[1], p.x - C[0]) * 180 / Math.PI;   // −90 at the base of the arc
+      const p = D.localv(layer, m), a = Math.atan2(p.y - C[1], p.x - C[0]) * 180 / Math.PI;
       set((a + 90) / TH - 1, true);
     };
     const fromSlide = (m) => { const p = D.localv(layer, m); set(((p.x - TX0) / (TX1 - TX0)) * MAXE, true); };

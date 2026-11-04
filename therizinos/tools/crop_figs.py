@@ -34,6 +34,7 @@ P = {
     'qin23': '2023-qin-maniraptoran_unguals.pdf',
     'fre25': '2025-freimuth-falcarius_utahensis.pdf',
     'kob25': '2025-kobayashi-duonychus_tsogtbaatari.pdf',
+    'cgq': '2007-suarez-falcarius_quarry.pdf',
     'smi25': '2025-smith-falcarius_utahensis.pdf',
 }
 

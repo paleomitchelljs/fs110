@@ -79,14 +79,14 @@
 
   /* ---------- the timeline of guesses ---------- */
   D.parts.guess = function (def, host) {
-    const X0 = 270, X1 = 1500, Y0 = def.y0, Y1 = def.y1, TOP = 62, LANE = 46;
+    const X0 = 270, X1 = 1450, Y0 = def.y0, Y1 = def.y1, TOP = 62, LANE = 46;
     const xOf = (y) => X0 + (y - Y0) * (X1 - X0) / (Y1 - Y0);
     host.innerHTML = '<div class="gs"></div>';
     const root = host.firstChild;
     // lanes by overlap within a row, then each row as tall as its lanes
     const laneEnd = def.rows.map(() => []);
     const plan = def.events.map((e) => {
-      const w = Math.round(e.label.length * 12.6 + 112), right = e.right || xOf(e.year) + w > 1580;
+      const w = Math.round(e.label.length * 12.6 + 112), right = e.right || (!def.rows[e.row].chrono && xOf(e.year) - 18 + w > 1595);
       const x0 = right ? xOf(e.year) - w + 18 : xOf(e.year) - 18;
       const ends = laneEnd[e.row];
       let lane = ends.findIndex((end) => x0 > end + 8);

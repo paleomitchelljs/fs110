@@ -185,7 +185,7 @@
     }
     function showRow(i) {
       imgRow = i;
-      const im = i >= 0 ? def.rows[i].img : null;
+      const im = i >= 0 ? def.rows[i].img : (def.introImg || null);
       right.classList.toggle('on', !!im);
       rowEls.forEach((l, j) => l.classList.toggle('hot', j === i));
       if (im) { img.src = im.src; cap.innerHTML = D.fmt(im.cap || ''); }
@@ -211,6 +211,75 @@
         pick(Math.min(sel, shownCols - 1), false);
       },
       reset() { sel = 1; showRow(-1); pick(1, false); }
+    };
+  };
+
+  /* ---------- quarry: five time steps, oldest at the bottom, then the stats ---------- */
+  D.parts.quarry = function (def, host) {
+    host.innerHTML = '<div class="qy"></div>';
+    const root = host.firstChild;
+    const W = def.w || 560, X = 40;
+    const steps = def.steps.map((s) => {
+      const e = D.el('div', 'qy-step', root, `<img src="${D.esc(s.src)}" alt="" draggable="false">`);
+      e.style.width = W + 'px';
+      return { e, s, h: s.h };
+    });
+    // stack: step 1 at the bottom
+    let y = 6; const order = steps.slice().reverse();
+    order.forEach((k) => { k.e.style.left = X + 'px'; k.e.style.top = y + 'px'; y += Math.round(W * k.h / 1392) + 8; });
+    const side = D.el('div', 'qy-side', root);
+    side.innerHTML = `<img class="qy-sed" src="${D.esc(def.sed)}" alt="" draggable="false"><div class="qy-sedcap">${D.fmt(def.sedCap || '')}</div>` +
+      `<div class="qy-n"><b>${D.fmt(def.total)}</b><span>${D.fmt(def.l1)}</span></div>` +
+      `<img class="qy-dots" src="${D.esc(def.dots)}" alt="" draggable="false">` +
+      `<div class="qy-key"><i class="g"></i><b>99%</b><span>${D.fmt(def.l2)}</span><i class="y"></i><b>1%</b><span>${D.fmt(def.l3)}</span></div>`;
+    return {
+      show(b, how) {
+        steps.forEach((k, i) => {
+          const on = b >= i + 1, was = k.e.classList.contains('on');
+          k.e.classList.toggle('on', on);
+          k.e.classList.toggle('now', b === i + 1);
+          if (on && !was && how === 'step') D.replay(k.e, 'play');
+        });
+        side.classList.toggle('on', b >= steps.length + 1);
+      }
+    };
+  };
+
+  /* ---------- wall: one picture of evidence per claim, with the room's call ---------- */
+  D.parts.wall = function (def, host) {
+    host.innerHTML = '<div class="wl"></div>';
+    const root = host.firstChild;
+    let b0 = 0, zoomEl = null;
+    const tiles = def.tiles.map((x) => {
+      const e = D.el('div', 'wl-tile', root);
+      e.innerHTML = `<img src="${D.esc(x.src)}" alt="" draggable="false" style="object-position:${x.pos || '50% 50%'}"><div class="wl-lab">${D.fmt(x.label)}</div><div class="wl-bar"><i></i><i></i><i></i><i></i><i></i><b></b></div>`;
+      e.addEventListener('click', (ev) => { ev.stopPropagation(); zoom(x); });
+      return { x, e, mark: e.querySelector('b') };
+    });
+    function zoom(x) {
+      if (zoomEl) { zoomEl.remove(); zoomEl = null; return; }
+      zoomEl = D.el('div', 'wl-zoom', root, `<img src="${D.esc(x.src)}" alt="" draggable="false"><div>${D.fmt(x.label)}</div>`);
+      zoomEl.addEventListener('click', (ev) => { ev.stopPropagation(); zoomEl.remove(); zoomEl = null; });
+    }
+    function live() { return tiles.filter((k) => (k.x.tier || 1) <= D.flags.level); }
+    function layout() {
+      const vis = live(), n = vis.length, cols = n <= 8 ? 4 : (n === 9 ? 3 : 4), rows = Math.ceil(n / cols), GAP = 18;
+      const w = (1520 - GAP * (cols - 1)) / cols, h = (676 - GAP * (rows - 1)) / rows;
+      tiles.forEach((k) => { k.e.style.display = vis.includes(k) ? '' : 'none'; });
+      vis.forEach((k, i) => {
+        k.e.style.cssText += `;left:${40 + (i % cols) * (w + GAP)}px;top:${6 + Math.floor(i / cols) * (h + GAP)}px;width:${w}px;height:${h}px;`;
+        const c = D.callOf(k.x.id);
+        k.mark.style.display = b0 >= 1 && c != null ? '' : 'none';
+        if (c != null) k.mark.style.left = (c * 100) + '%';
+        k.e.classList.toggle('votes', b0 >= 1);
+      });
+    }
+    D.on('level', layout);
+    layout();
+    return {
+      show(b) { b0 = b; layout(); },
+      hide() { if (zoomEl) { zoomEl.remove(); zoomEl = null; } },
+      reset() { layout(); }
     };
   };
 })();

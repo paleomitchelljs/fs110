@@ -541,3 +541,64 @@ mark { background: var(--accent-soft); color: var(--accent-ink); font-style: nor
 .cv-photo { left: 70px; top: 330px; width: 1460px; height: 440px; object-fit: contain; }
 .cv-title { left: 90px; top: 110px; width: 1200px; font-size: 120px; }
 .tg .tr-head { font-size: 20px; }
+
+/* ---------- pills: two lines allowed ---------- */
+.fg-pill { font-size: 27px; line-height: 1.05; }
+.fg-pill span { display: block; }
+
+/* ---------- lever, redrawn ---------- */
+.lv-seg { fill: none; stroke-width: 26; stroke-linecap: butt; }
+.lv-ker { stroke: #cdb98a; stroke-width: 26; stroke-linecap: round; fill: none; transition: opacity 0.25s; }
+.lv-cap { font: 600 25px var(--font-ui); fill: var(--muted); }
+.lv-cap2 { font: 600 23px var(--font-ui); fill: var(--muted); }
+.lv-key { font: 600 25px var(--font-ui); fill: var(--ink); }
+.lv-note { font: italic 600 22px var(--font-ui); fill: var(--muted); }
+.lv-mark { font: 700 21px var(--font-ui); fill: var(--accent-ink); }
+.lv-force { stroke: var(--ink); }
+
+/* ---------- bone dots legend ---------- */
+.bn-b { display: flex; gap: 46px; align-items: center; }
+.bn-key { display: flex; align-items: center; gap: 12px; }
+.bn-key i { width: 22px; height: 22px; border-radius: 50%; flex: none; }
+.bn-key i.g { background: var(--ink-2); opacity: 0.8; }
+.bn-key i.y { background: var(--accent); border: 3px solid var(--outline); }
+.bn-key b { font: 700 64px/1 var(--font-ui); color: var(--ink); }
+.bn-key span { font: 600 28px var(--font-ui); color: var(--ink-2); }
+
+/* ---------- the wall of evidence ---------- */
+.wl { position: absolute; inset: 0; }
+.wl-tile { position: absolute; overflow: hidden; border-radius: 16px; border: 2px solid var(--ink-2); background: #fff; cursor: pointer; transition: transform 0.2s; }
+.wl-tile:hover { transform: scale(1.02); z-index: 3; }
+.wl-tile img { width: 100%; height: 100%; object-fit: cover; display: block; user-select: none; -webkit-user-drag: none; }
+.wl-lab { position: absolute; left: 0; right: 0; bottom: 0; padding: 10px 16px 18px; font: 700 28px/1.05 var(--font-ui); color: var(--ink); background: var(--veil); }
+.wl-bar { position: absolute; left: 14px; right: 14px; bottom: 6px; height: 8px; display: flex; gap: 3px; opacity: 0; transition: opacity 0.4s; }
+.wl-tile.votes .wl-bar { opacity: 1; }
+.wl-bar i { flex: 1; background: var(--hide-far); border-radius: 3px; }
+.wl-bar b { position: absolute; top: -7px; width: 14px; height: 22px; margin-left: -7px; border-radius: 5px; background: var(--ink); border: 2px solid var(--board); }
+.wl-zoom { position: absolute; inset: 0; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: var(--veil); cursor: zoom-out; }
+.wl-zoom img { max-width: 1400px; max-height: 590px; border-radius: 14px; background: #fff; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25); }
+.wl-zoom div { font: 700 36px var(--font-ui); }
+
+/* ---------- quarry time series ---------- */
+.qy { position: absolute; inset: 0; }
+.qy-step { position: absolute; opacity: 0; transform: translateY(14px); transition: opacity 0.4s, transform 0.4s; border-radius: 6px; outline: 3px solid transparent; }
+.qy-step.on { opacity: 0.55; transform: none; }
+.qy-step.on.now { opacity: 1; outline-color: var(--accent-ink); }
+.qy-step.play { animation: rise 0.45s ease both; }
+.qy-step img { display: block; width: 100%; border-radius: 4px; }
+.qy-side { position: absolute; left: 650px; top: 0; width: 900px; height: 690px; opacity: 0; transition: opacity 0.5s; }
+.qy-side.on { opacity: 1; }
+.qy-sed { position: absolute; left: 0; top: 4px; width: 372px; border-radius: 10px; border: 2px solid var(--ink-2); }
+.qy-sedcap { position: absolute; left: 0; top: 284px; font: 400 19px var(--font-ui); color: var(--muted); }
+.qy-n { position: absolute; left: 410px; top: 20px; }
+.qy-n b { display: block; font: 700 118px/1 var(--font-ui); }
+.qy-n span { font: 600 32px var(--font-ui); color: var(--ink-2); }
+.qy-dots { position: absolute; left: 0; top: 330px; width: 760px; border-radius: 8px; }
+.qy-key { position: absolute; left: 0; top: 650px; display: flex; align-items: center; gap: 12px; white-space: nowrap; }
+.qy-key i { width: 20px; height: 20px; border-radius: 50%; flex: none; }
+.qy-key i.g { background: var(--ink-2); opacity: 0.8; }
+.qy-key i.y { background: var(--accent); border: 3px solid var(--outline); margin-left: 26px; }
+.qy-key b { font: 700 40px var(--font-ui); }
+.qy-key span { font: 600 25px var(--font-ui); color: var(--ink-2); }
+.qy-dots { width: 700px; top: 326px; }
+.qy-key { top: 662px; }

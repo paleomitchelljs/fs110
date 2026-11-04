@@ -473,3 +473,24 @@ None.
 
 ## Not a paper: livjurfgy2rvjjarcujsn0k41_33_53_PM_UnofficialTranscript.pdf
 This is a one-page Coe College unofficial student transcript. It is not a paper, has no figures, and I did not summarize it or rename it. It is also a student record, so it probably should not sit in a folder that gets shared with the class.
+
+---
+
+## 2007 Suarez Crystal Geyser Quarry
+*(was palo.2006.p06-014r.pdf; Suarez, Suarez, Kirkland, González, Grandstaff et al. 2007, PALAIOS 22:513-527, "Sedimentology, stratigraphy, and depositional environment of the Crystal Geyser dinosaur quarry, east-central Utah")*
+
+### Key facts
+- Quarry at the base of the Yellow Cat Member, Cedar Mountain Formation (Barremian), near Green River, Utah. Nearly monospecific for *Falcarius utahensis*.
+- Sediments and cements (pisolites, travertine fragments, tufa clasts, radial-fibrous calcite) point to nearby springs, with bones buried by spring and overbank flood deposits. Evaporative component in the cements.
+- At least two episodes of bone accumulation from stratigraphy and lithology: one at the level of the basal carbonate and at least one above. A companion study (Suarez et al. 2007, geochemistry) suggests three.
+- Time 1 bones are partly rain-washed colluvium from topographic lows: east-west orientation, small parallel scratch marks, short transport by flowing water, some pre-fossilization spiral fractures. Later bones include many fragments and flakes (short transport) and some good-condition partial skeletons that need in-situ or nearby burial.
+- At the top of the bone-bearing section, many isolated limb bones are near vertical, read as trampling of carcasses; small pneumatic vertebrae in good condition could not have been trampled.
+- The authors' conclusion: "either one episode of bone accumulation that has been reworked or two or more episodes… Regardless of the number of events, such a large, monospecific accumulation suggests that Falcarius utahensis was gregarious and may have been attracted to the area due to local springs."
+- Comparison: Cleveland-Lloyd (*Allosaurus*) is read as drought-induced, not mired (Gates 2005); Asian therizinosauroids are isolated individuals, not bone beds.
+- Number of animals: "probably >100 individuals", the most prolific therizinosauroid locality in the world. (The 4,500-specimen and 99% figures are in Freimuth & Zanno 2025, not in this paper.)
+- Three more bone beds found nearby since the study began.
+
+### Figures used in the deck
+**Fig. 4A (p. 6): quarry wall, Profile 2.** Photo of a pale-grey wall with yellow dashed lines at the caprock, an interbedded mudstone-and-limestone unit, an erosion surface, the bone-bearing unit and a pisolite horizon, 10 cm-interval scale pole. Main point: the layers around the bones. Art: clear, labelled on the photo. Claims: none tested.
+
+**Fig. 10 (p. 13): five time steps.** Five stacked cross-sections, Time 1 (1st bone accumulation, basal carbonate) at the bottom to Time 5 (caprock deposited in a pond) at the top, with bones as black shapes in a depression on the Morrison surface (Jm), a small theropod at Time 2, roots at Time 3 and trench labels T1-T5, Q1-Q2 along the top. Main point: the quarry formed in stages, not in one catastrophe. Art: good schematic, grey on white, small type. Claims: the stage model, tested against stratigraphy and lithology (the paper gives "at least two periods").

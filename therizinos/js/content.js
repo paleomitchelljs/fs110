@@ -16,6 +16,7 @@
   'use strict';
 
   const SURE = { box: [330, 744, 940, 104] };
+  const SURE_LOW = { box: [330, 792, 940, 100] };
   const sureItem = (id, at) => Object.assign({ kind: 'sure', id, at }, SURE);
 
   /* A figure scene: one build per pill; a last build for the room's call if sure is set. */
@@ -73,7 +74,7 @@
       builds: Array.from({ length: 15 }, () => ({})),
       items: [{
         kind: 'guess', box: [0, 100, 1600, 690], y0: 1950, y1: 2012,
-        rows: [{ label: 'Found' }, { label: 'Turtle' }, { label: 'Ornithischia' }, { label: 'Sauropodomorpha' }, { label: 'Own order' }, { label: 'Theropoda', hot: true }],
+        rows: [{ label: 'Found', chrono: true }, { label: 'Turtle' }, { label: 'Ornithischia' }, { label: 'Sauropodomorpha' }, { label: 'Own order' }, { label: 'Theropoda', hot: true }],
         events: [
           { year: 1954, label: 'Therizinosaurus', row: 0 },
           { year: 1954, label: 'Maleev: turtle', row: 1 },
@@ -108,16 +109,6 @@
         { id: 'k10', text: 'Wishbone', to: 'the', basis: 'theropod' }
       ]),
 
-    figSeg('theropod', 'Theropod?', 1, 3, Object.assign(FIG('xu99-fig2.jpg', 991, 1239, 'Beipiaosaurus · Xu et al. 1999'), {
-      zones: [
-        { label: 'Theropod?', role: 'claim' },
-        { label: 'Wrist: a raptor’s', role: 'evidence', rect: [0, 0.3, 1, 0.35] },
-        { label: 'Three toes; splint', role: 'evidence', rect: [0, 0.66, 1, 0.34] },
-        { label: 'Four toes; leaf teeth', role: 'else' },
-        { label: 'Older fossils?', role: 'test' }
-      ]
-    }), 'theropod'),
-
     figSeg('tree', 'The tree', 2, 3, Object.assign(FIG('zanno10-fig6.jpg', 1500, 1300, 'Zanno 2010'), {
       zones: [
         { label: 'Where on the tree?', role: 'claim' },
@@ -146,6 +137,7 @@
             { t: 'Cheek region rotated', s: ['P', 'P', 'I', 'D'] },
             { t: 'Jaw ledge lost', s: ['P', 'P', 'D', 'I'] }
           ],
+          introImg: I('xu99-fig2.jpg', 'Beipiaosaurus · Xu et al. 1999'),
           imgAt: { 3: 0, 4: 2 }
         },
         sureItem('falcarius', 5)
@@ -198,17 +190,16 @@
     /* ---------------------------------------------------------- part 2 */
     partTitle('p2', 2, 'What did it eat?'),
 
-    soloSeg('predict', '27 traits', 1, 3, { kind: 'predict', total: 27, hit: 21, at: 1 }, 2, 'diet', 1.4),
-
-    figSeg('gutfig', 'The gut', 1, 3, Object.assign(FIG('zanno09-fig1.jpg', 1388, 1262, 'Nothronychus · Zanno et al. 2009'), {
+    figSeg('traits', 'Skull traits', 1, 3.5, Object.assign(FIG('zm11-fig1.jpg', 584, 1152, 'Zanno & Makovicky 2011'), {
       zones: [
-        { label: 'Big gut?', role: 'claim' },
-        { label: 'Wide ribs', role: 'evidence', rect: [0.19, 0.33, 0.3, 0.28] },
-        { label: 'Flared hips', role: 'evidence', rect: [0.4, 0.4, 0.18, 0.2] },
-        { label: 'Fat? Eggs?', role: 'else' },
-        { label: 'A fossil gut', role: 'test' }
+        { label: 'Skull traits tell the diet?', role: 'claim' },
+        { label: 'Toothless beak', role: 'evidence', rect: [0.07, 0.215, 0.93, 0.19] },
+        { label: 'Small conical teeth', role: 'evidence', rect: [0.07, 0.63, 0.93, 0.2] },
+        { label: 'Chin hooks down', role: 'evidence', rect: [0, 0.85, 1, 0.15] },
+        { label: 'Meat-eaters: serrated blades', role: 'else' },
+        { label: '27 tested: 21 hold up', role: 'test' }
       ]
-    }), 'gut'),
+    }), 'diet'),
 
     figSeg('skulls', 'Six skulls', 2, 3, Object.assign(FIG('zm11-fig1.jpg', 584, 1152, 'Zanno & Makovicky 2011'), {
       pitch: 78, zones: [
@@ -248,28 +239,29 @@
     /* ---------------------------------------------------------- part 3 */
     partTitle('p3', 3, 'The claws'),
 
-    figSeg('clawsize', 'Claws', 1, 1.5, Object.assign(FIG('lau14-fig1.jpg', 1256, 654, 'Lautenschlager 2014'), {
+    figSeg('clawsize', 'Claws', 1, 1.5, Object.assign(FIG('lau14-sil.jpg', 1380, 395, 'Lautenschlager 2014'), {
       zones: [{ label: '50 cm+' }]
     })),
 
     figSeg('fea', 'Hook or dig?', 1, 3, Object.assign(FIG('lau14-fig3.jpg', 1174, 1419, 'Lautenschlager 2014'), {
       zones: [
-        { label: 'Hook or dig?', role: 'claim' },
-        { label: 'Digging: red', role: 'evidence', rect: [0.18, 0.04, 0.26, 0.94] },
-        { label: 'Hooking: blue', role: 'evidence', rect: [0.45, 0.04, 0.24, 0.94] },
-        { label: 'Short claw: always blue', role: 'evidence', rect: [0, 0.465, 1, 0.17] },
-        { label: 'Same push; thin sheath', role: 'else' }
+        { label: 'Red: high stress, likely to break', dot: '#d03b3b' },
+        { label: 'Blue: low stress, unlikely to break', dot: '#2d5fd0' },
+        { label: 'Digging', role: 'evidence', rect: [0.18, 0.04, 0.26, 0.94] },
+        { label: 'Hooking', role: 'evidence', rect: [0.45, 0.04, 0.24, 0.94] },
+        { label: 'Short claw: blue every time', role: 'evidence', rect: [0, 0.465, 1, 0.17] },
+        { label: 'One push; sheath a thin coat', role: 'else' }
       ]
     }), 'fea'),
 
     figSeg('display', 'Display?', 1, 3.5, Object.assign(FIG('qin23-fig2.jpg', 1438, 1619, 'Qin et al. 2023'), {
       zones: [
-        { label: 'Giant claw: display?', role: 'claim' },
-        { label: 'Alvarezsaurs: low stress', role: 'evidence', rect: [0.5, 0.17, 0.5, 0.46] },
-        { label: 'Therizinosaurs: low', role: 'evidence', rect: [0.5, 0.74, 0.5, 0.25] },
-        { label: 'Therizinosaurus: high', role: 'evidence', rect: [0.5, 0.665, 0.5, 0.075] },
-        { label: 'Failing three ≠ one more', role: 'else' },
-        { label: 'What would show it?', role: 'test' }
+        { label: 'Giant claw: for display?', role: 'claim' },
+        { label: 'Alvarezsaurs: blue, can dig', role: 'evidence', rect: [0.26, 0.2, 0.66, 0.45] },
+        { label: 'Other therizinosaurs: blue', role: 'evidence', rect: [0.26, 0.715, 0.66, 0.285] },
+        { label: 'Therizinosaurus: red', role: 'evidence', rect: [0.26, 0.665, 0.66, 0.05] },
+        { label: 'Unfit for feeding is not evidence for display', role: 'else' },
+        { label: 'What would show display?', role: 'test' }
       ]
     }), 'display'),
 
@@ -302,18 +294,18 @@
       ]
     })),
 
-    figSeg('duofig', 'Two fingers', 1, 3, Object.assign(FIG('kob25-fig4.jpg', 1365, 1239, 'Duonychus · Kobayashi et al. 2025'), {
+    figSeg('duofig', 'New evidence: the sheath', 1, 3.5, Object.assign(FIG('kob25-fig4.jpg', 1365, 1239, 'Duonychus · Kobayashi et al. 2025'), {
       zones: [
-        { label: 'Two fingers: grasp?', role: 'claim' },
-        { label: 'Reach and bend', role: 'evidence', rect: [0, 0, 1, 0.4] },
-        { label: 'Claw plus sheath', role: 'evidence', rect: [0, 0.4, 0.66, 0.6] },
-        { label: 'Sheath surface', role: 'evidence', rect: [0.66, 0.4, 0.34, 0.6] },
-        { label: 'One specimen', role: 'else' },
-        { label: 'More sheaths', role: 'test' }
+        { label: 'Test: a claw that kept its sheath', role: 'test' },
+        { label: 'Sheath 40%+ longer than the bone', role: 'evidence', rect: [0, 0.4, 0.66, 0.6] },
+        { label: 'Strong curve; elbow and wrist bend', role: 'evidence', rect: [0, 0, 1, 0.4] },
+        { label: 'Models used bone only', role: 'else' },
+        { label: 'Tips toward grasping, not display', role: 'claim' },
+        { label: 'Still: defense, courtship, play', role: 'else' }
       ]
-    })),
+    }), 'duonychus'),
 
-    soloSeg('lever', 'The sheath', 1, 3, { kind: 'lever', lab: { bone: 'bone', sheath: 'sheath', ref: 'bone only', note: 'same tip force' } }, 1, 'duonychus', 1.4),
+    soloSeg('lever', 'A longer lever', 1, 3, { kind: 'lever', lab: { bone: 'bone', sheath: 'sheath', ref: 'bending at the base', hi: 'High stress: likely to break', lo: 'Low stress: unlikely to break', note: 'diagram: same pull, longer lever', slide: 'extra sheath', mark: 'Duonychus' } }, 1, null, 1.4),
 
     figSeg('didactyl', 'Fingers lost', 3, 2, Object.assign(FIG('kob25-fig7.jpg', 1507, 1544, 'Kobayashi et al. 2025'), {
       zones: [{ label: '5 clades lost a finger' }]
@@ -322,7 +314,27 @@
     /* ---------------------------------------------------------- part 4 */
     partTitle('p4', 4, 'Alone or together?'),
 
-    soloSeg('bonebed', 'Falcarius bonebed', 1, 3, { kind: 'bones', total: '4,500+', l1: 'bones, one quarry', l2: 'Falcarius', at: 1 }, 2, 'bonebed', 1.4),
+{
+      id: 'bonebed', title: 'Crystal Geyser', min: 4, tier: 1,
+      builds: [{}, {}, {}, {}, {}, {}, { rail: 'evidence' }, { rail: 'sure' }],
+      items: [{
+        kind: 'quarry', box: [0, 100, 1600, 690], w: 560,
+        steps: [
+          { src: 'img/cgq-t1.jpg', h: 279 }, { src: 'img/cgq-t2.jpg', h: 330 }, { src: 'img/cgq-t3.jpg', h: 343 },
+          { src: 'img/cgq-t4.jpg', h: 369 }, { src: 'img/cgq-t5.jpg', h: 393 }
+        ],
+        sed: 'img/cgq-sed.jpg', sedCap: 'Quarry wall · Suarez et al. 2007',
+        total: '4,500+', l1: 'bones, one quarry', dots: 'img/bonebed-dots.png', l2: 'Falcarius', l3: 'other'
+      }, Object.assign(sureItem('bonebed', 7), SURE_LOW)]
+    },
+
+    figSeg('eggs', 'In the egg', 1, 3, Object.assign(FIG('emb-egg.png', 638, 586, 'Nanchao embryo, still in its egg · Kundrát et al. 2008'), {
+      zones: [
+        { label: 'Still in its egg' },
+        { label: 'Its skull', src: 'img/emb-skull.png', w: 706, h: 500, cap: 'Embryo skull, etched from the egg · Kundrát et al. 2008' },
+        { label: 'Restored: curled to hatch', src: 'img/emb-restore.png', w: 586, h: 490, cap: 'Restoration · P. Riha, in Kundrát et al. 2008' }
+      ]
+    })),
 
     figSeg('embfig', 'Embryos', 2, 3, Object.assign(FIG('kun08-fig7.jpg', 1322, 1499, 'Kundrát et al. 2008'), {
       zones: [
@@ -333,6 +345,14 @@
         { label: 'Nests with young', role: 'test' }
       ]
     }), 'embryos'),
+
+    figSeg('nestsite', 'A nesting ground', 1, 3, Object.assign(FIG('tan19-dr1.jpg', 1309, 770, 'Javkhlant · Tanaka et al. 2019'), {
+      zones: [
+        { label: 'Javkhlant, Mongolia' },
+        { label: 'An egg, where it was laid', src: 'img/tan19-dr2.jpg', w: 1309, h: 1694, cap: 'Javkhlant · Tanaka et al. 2019' },
+        { label: 'Its shell up close', src: 'img/tan19-dr2.jpg', w: 1309, h: 1694, cap: 'Javkhlant · Tanaka et al. 2019', rect: [0, 0.65, 1, 0.22] }
+      ]
+    })),
 
     soloSeg('nest', 'Javkhlant', 1, 3, {
       kind: 'density', axis: 'clutches per 100 m²',
@@ -367,30 +387,26 @@
 
     /* ---------------------------------------------------------- the end */
     {
-      id: 'rank', title: 'Sort the claims', min: 2, tier: 1,
-      builds: [{ rail: 'sure' }, {}, {}],
-      items: [{ kind: 'rank', box: [0, 100, 1600, 690], chips: [] }]
+      id: 'wall', title: 'The evidence', min: 2, tier: 1,
+      builds: [{ rail: 'evidence' }, { rail: 'sure' }],
+      items: [{
+        kind: 'wall', box: [0, 100, 1600, 690], tiles: [
+          { id: 'falcarius', label: 'Transitional', src: 'img/feat-jaw.png' },
+          { id: 'filaments', label: 'Display filaments', src: 'img/xu09-fig1.jpg', pos: '50% 20%' },
+          { id: 'diet', label: 'Diet from skulls', src: 'img/zm11-fig1.jpg', pos: '50% 35%' },
+          { id: 'twofig', label: 'Two skull designs', src: 'img/but20-fig2.jpg', pos: '50% 80%' },
+          { id: 'beak', label: 'A beak helps', src: 'img/lau13-fig2.jpg', pos: '50% 30%', tier: 2 },
+          { id: 'fea', label: 'Hook, not dig', src: 'img/lau14-fig3.jpg', pos: '50% 35%' },
+          { id: 'display', label: 'Claws for display', src: 'img/qin23-fig2.jpg', pos: '70% 85%' },
+          { id: 'duonychus', label: 'Grasping', src: 'img/kob25-fig4.jpg', pos: '30% 70%' },
+          { id: 'bonebed', label: 'Group living', src: 'img/bonebed-dots.png' },
+          { id: 'embryos', label: 'Hatchlings alone', src: 'img/kun08-fig1.jpg', pos: '50% 70%', tier: 2 },
+          { id: 'nest', label: 'A colony', src: 'img/tan19-dr2.jpg', pos: '50% 20%' },
+          { id: 'tracks', label: 'With a herd', src: 'img/fio18-fig2.jpg', tier: 3 }
+        ]
+      }]
     }
   ];
-
-  /* The last sort lists every scene that took a vote. */
-  const RANK = [
-    { id: 'theropod', n: 1, label: 'Theropod', step: 2, tier: 1, word: 'unequivocally' },
-    { id: 'falcarius', n: 1, label: 'Transitional', step: 2, tier: 1, word: 'primitive morphology' },
-    { id: 'filaments', n: 1, label: 'Filaments', step: 3, tier: 1, word: 'might' },
-    { id: 'diet', n: 2, label: 'Bones → diet', step: 3, tier: 1, word: 'purported' },
-    { id: 'gut', n: 2, label: 'Big gut', step: 3, tier: 1, word: 'as estimated by' },
-    { id: 'beak', n: 2, label: 'Beak helps', step: 2, tier: 2, word: 'would have helped' },
-    { id: 'twofig', n: 2, label: 'Two designs', step: 2, tier: 1, word: 'observed' },
-    { id: 'fea', n: 3, label: 'Hook not dig', step: 2, tier: 1, word: 'no clear correlation' },
-    { id: 'display', n: 3, label: 'Display', step: 4, tier: 1, word: 'might have been used' },
-    { id: 'duonychus', n: 3, label: 'Grasping', step: 3, tier: 1, word: 'could have' },
-    { id: 'bonebed', n: 4, label: 'Group living', step: 4, tier: 1, word: 'suggests' },
-    { id: 'embryos', n: 4, label: 'Hatchlings alone', step: 4, tier: 2, word: 'we assume' },
-    { id: 'nest', n: 4, label: 'Colony', step: 3, tier: 1, word: 'likely' },
-    { id: 'tracks', n: 4, label: 'With a herd', step: 3, tier: 3, word: 'different times' }
-  ];
-  segments[segments.length - 1].items[0].chips = RANK;
 
   root.THERIZ = {
     rail: [

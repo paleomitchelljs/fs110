@@ -76,18 +76,18 @@ function open(level) {
   check('guess: all 14 pills on at the end', host.querySelectorAll('.gs-pill.on').length === 14, host.querySelectorAll('.gs-pill.on').length + ' pills');
 
   // figure scene: pills come one per build, a zone lights, the vote bar arrives last
-  const th = goTo('theropod'); press(2);
+  const th = goTo('display'); press(2);
   host = d.querySelector('.seg:not(.off) .item-fig');
-  check('theropod: two pills shown at build 2', host.querySelectorAll('.fg-pill.shown').length === 2);
-  check('theropod: the second pill is lit', host.querySelectorAll('.fg-pill.on').length === 1);
+  check('display: two pills shown at build 2', host.querySelectorAll('.fg-pill.shown').length === 2);
+  check('display: the second pill is lit', host.querySelectorAll('.fg-pill.on').length === 1);
   press(th.builds.length - 3);
   host = d.querySelector('.seg:not(.off)');
   const sure = host.querySelector('.item-sure');
-  check('theropod: vote bar present', !!sure && !sure.classList.contains('off'));
+  check('display: vote bar present', !!sure && !sure.classList.contains('off'));
   key('3', { code: 'Digit3' }); key('3', { code: 'Digit3' }); key('4', { code: 'Digit4' });
   const dots = [...sure.querySelectorAll('.g-col')].map((x) => x.children.length);
   check('votes counted', JSON.stringify(dots) === '[0,0,2,1,0]', JSON.stringify(dots));
-  check('call saved for the last sort', D.callOf('theropod') != null);
+  check('call saved for the wall', D.callOf('display') != null);
 
   // trait grid: columns arrive, counts are right, photos at the end
   const f = goTo('falcarius');
@@ -100,22 +100,23 @@ function open(level) {
   check('traits: second photo shown', host.querySelector('.tg-r img').getAttribute('src').indexOf('feat-jaw') >= 0);
 
   // solo: lever, density, dots
-  const du = goTo('lever');
+  goTo('lever');
   host = d.querySelector('.seg:not(.off) .item-solo');
-  check('lever: starts at × 1.00', host.querySelector('.lv-ratio').textContent === '× 1.00', host.querySelector('.lv-ratio').textContent);
-  const nest = goTo('nest');
+  check('lever: opens at the Duonychus sheath, × 1.26', host.querySelector('.lv-ratio').textContent === '× 1.26', host.querySelector('.lv-ratio').textContent);
+  check('lever: bone drawn in 30 coloured pieces', host.querySelectorAll('.lv-seg').length === 30);
+  goTo('nest');
   host = d.querySelector('.seg:not(.off) .item-solo');
   check('density: line at 1 per 100 m² keeps 4 of 8', host.querySelector('.dn-cnt').textContent === '4 of 8', host.querySelector('.dn-cnt').textContent);
 
-  // rank: chips fill by level
-  goTo('rank');
-  host = d.querySelector('.seg:not(.off) .item-rank');
-  const shown = () => [...host.querySelectorAll('.rk-chip')].filter((e) => e.style.display !== 'none').length;
-  check('rank: 14 chips at level 3', shown() === 14, shown() + ' chips');
+  // the wall of evidence
+  goTo('wall');
+  host = d.querySelector('.seg:not(.off) .item-wall');
+  const shown = () => [...host.querySelectorAll('.wl-tile')].filter((e) => e.style.display !== 'none').length;
+  check('wall: 12 tiles at level 3', shown() === 12, shown() + ' tiles');
   D.setLevel(1);
-  host = d.querySelector('.seg:not(.off) .item-rank');
-  const n1 = shown();
-  check('rank: fewer chips at level 1', n1 > 0 && n1 < 14, n1 + ' chips');
+  host = d.querySelector('.seg:not(.off) .item-wall');
+  check('wall: 9 tiles at level 1', shown() === 9, shown() + ' tiles');
+  check('wall: no prompt text on screen', d.querySelector('.prompt-text').textContent === '');
   check('no script errors', errors.length === 0, errors[0] || '');
   console.log(`\n${checks - fails}/${checks} checks passed`);
   process.exit(fails ? 1 : 0);
