@@ -1,0 +1,20 @@
+{
+ "clone-mac": 3,
+ "clone-win": 3,
+ "download-mac": 4,
+ "download-win": 5,
+ "edit-mac": 10,
+ "edit-win": 6,
+ "fork": 4,
+ "live": 4,
+ "newrepo": 4,
+ "pages": 5,
+ "push-mac": 4,
+ "push-win": 4,
+ "relink-mac": 6,
+ "relink-win": 6,
+ "setup-mac": 4,
+ "setup-win": 4,
+ "upload-mac": 4,
+ "upload-win": 4
+}

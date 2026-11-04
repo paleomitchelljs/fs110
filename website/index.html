@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your own website</title>
+<meta name="description" content="Short videos, step by step: get your own copy of the notes app (fork it, upload the ZIP, or send your clone), turn on your free username.github.io address, then change a file and push it with GitHub Desktop, on Windows or Mac.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="css/website.css?v=3">
+</head>
+<body>
+<header class="top"><h1>Your own website</h1></header>
+
+<section class="who" aria-label="About you">
+  <span class="seg paths" id="paths" role="group" aria-label="How you got the notes"></span>
+  <input id="user" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="username" aria-label="Your GitHub username">
+  <span class="site"><b id="site">yourname.github.io</b><button type="button" id="copy" class="small">Copy</button></span>
+  <span class="seg os" role="group" aria-label="Your computer"><button type="button" data-os="win" aria-pressed="false">Windows</button><button type="button" data-os="mac" aria-pressed="false">Mac</button></span>
+  <span class="warn" id="userwarn" hidden>Not a GitHub username</span>
+</section>
+
+<nav class="steps" id="steps" aria-label="Steps"></nav>
+
+<main id="step">
+  <figure class="vid">
+    <img id="gif" alt="" width="1000" height="625">
+    <figcaption><button type="button" id="replay" class="small">↺ Replay</button><button type="button" id="bigger" class="small">⤢ Zoom</button></figcaption>
+  </figure>
+  <div class="text">
+    <div class="head"><h2 id="title"></h2><a id="link" class="go" target="_blank" rel="noopener"></a></div>
+    <ul class="pre" id="pre"></ul>
+    <ol class="lines" id="lines"></ol>
+    <details class="stuck" id="stuck"><summary>Help</summary><dl id="stucklist"></dl></details>
+    <div class="nav">
+      <button type="button" id="prev">← Back</button>
+      <button type="button" id="done" class="done" aria-pressed="false">Done</button>
+      <button type="button" id="next">Next →</button>
+    </div>
+  </div>
+</main>
+
+<dialog id="big" aria-label="Bigger video"><img id="biggif" alt=""><button type="button" id="close" class="small">Close</button></dialog>
+
+<noscript><p class="noscript">This page needs JavaScript.</p></noscript>
+<script src="js/steps.js?v=3"></script>
+<script src="js/app.js?v=3"></script>
+</body>
+</html>
