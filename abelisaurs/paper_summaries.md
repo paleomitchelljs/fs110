@@ -31,6 +31,7 @@ Prepared for a lecture deck modeled on `therizinos/`. Papers live in `abelisaurs
 | 17 | `2018-delcourt-ceratosauria.pdf` | Delcourt 2018, *Scientific Reports* 8:9730 | Ceratosaur palaeobiology |
 | 18 | `2019-langer-vespersaurus.pdf` | Langer et al. 2019, *Scientific Reports* 9:9379 | *Vespersaurus*, Brazil |
 | 19 | `2009-canale-skorpiovenator.pdf` | Canale et al. 2009, *Naturwissenschaften* | *Skorpiovenator*; Brachyrostra |
+| 20 | `2021-gianechini-llukalkan.pdf` | Gianechini et al. 2021, *J. Vert. Paleontol.* 41(1):e1877151 | *Llukalkan*; ear region |
 
 ---
 
@@ -433,6 +434,27 @@ Prepared for a lecture deck modeled on `therizinos/`. Papers live in `abelisaurs
 - *Fig. 3.* A cladogram at left; at right a small *Skorpiovenator* skeleton surrounded by four photographs (a caudal vertebra, a skull piece, a proximal tibia, a distal tibia) with leader lines to numbered characters (79(1), 46(1), 100(1), 107(1)).
 
 **Assessment.** The tooth-reassignment claim is an easy "what else could it be?" activity.
+
+---
+
+## 20. Gianechini et al. 2021: "A new furileusaurian abelisaurid from La Invernada (Upper Cretaceous, Santonian, Bajo de la Carpa Formation), northwestern Patagonia, Argentina" (*Llukalkan aliocranianus*)
+
+**Central claim.** A new furileusaurian abelisaurid from the same area and rock unit as *Viavenator*, distinguished by "a possible caudal tympanic recess posterior to the columellar recess" and other skull features. Its coexistence with *Viavenator* shows abelisaurids were "likely the main" predators of Late Cretaceous Patagonia.
+
+**Key facts**
+- Holotype MAU-Pv-LI-581: cranial remains from the Bajo de la Carpa Formation (Santonian); a skull with a very well preserved, uncrushed braincase. The cranial endocast measures 132 mm from the olfactory bulbs to the foramen magnum.
+- Probably a sub-adult, from the lacrimal shape. The authors reject the idea that it is a juvenile *Viavenator* because the caudal tympanic recess is absent in *Viavenator* and "it is scarcely probable that this recess has closed along ontogeny."
+- Hearing: "the presence of the caudal tympanic recess in the new species suggests a different hearing adaptation from other coetaneous abelisaurids." The recess is called "possible" in the abstract. In the CT, "the fenestra ovalis and the lagena are difficult to discern."
+- Other features: a T-shaped lacrimal with no suborbital process, wide separation of the caudal middle cerebral vein foramina, tall paroccipital processes, a triangular basisphenoid recess.
+
+**Figures (viewed: 1, 4, 12, 15, 17)**
+- *Fig. 1.* Three panels: a map (South America, Neuquén and Río Negro provinces, the site starred at La Invernada); a photo of the holotype in the red soil with an orange brush for scale; a desert-scrub landscape with a black arrow at the dig.
+- *Fig. 4.* The articulated skull in right view: a long, low, orange-brown specimen photographed over a gray line drawing that labels each bone.
+- *Fig. 12.* The braincase: a photograph above and a gray CT rendering below, with cranial nerve openings coloured blue and labelled with roman numerals; an inset at upper right boxes the tympanic region.
+- *Fig. 15.* Blue renderings of the brain with the inner ear in pink, from above, side, front and below, with cranial nerve stumps marked yellow and black. The authors label the semicircular canals; the lagena is not clear.
+- *Fig. 17.* A full skull-and-jaw restoration: the preserved bone as a tan photograph, the rest as a white line drawing. The only whole-skull picture of the animal.
+
+**Assessment.** A good example of an inference chain: a bony pocket, then a suggestion about hearing, with the authors' own hedge ("possible", "suggests"). The press coverage went further than the paper.
 
 ---
 

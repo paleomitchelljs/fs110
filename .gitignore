@@ -7,3 +7,6 @@ therizinos/transcript/
 
 # Abelisaur reference papers stay local.
 abelisaurs/papers/
+
+# macOS
+.DS_Store
