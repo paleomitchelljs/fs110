@@ -11,6 +11,10 @@
  * Labels say the plain thing. Use the paper's own term where one exists (caudofemoralis,
  * low-motion headbutting), and give the number rather than an adjective.
  * Show the published figure, even a contentious one, rather than redrawing it.
+ * A caption is the citation, plus only what the label above it does not already say.
+ * Nothing on a slide repeats what sits next to it. Where evidence is ambiguous, ask
+ * the question and give no verdict (unknown, speculation, untested); the readme keeps
+ * the papers' wording for saying it aloud.
  *
  * Sources are the papers in abelisaurs/papers/ (see ../paper_summaries.md and
  * ../readme.md). Pills marked "own" in the readme are the deck's, not the paper's.
@@ -103,7 +107,7 @@
     plateSeg('biggest', 'Largest abelisaurid', 2, 3.5, {
       head: { claim: 'Largest: _Pycnonemosaurus_, 8.9 m' },
       panels: [
-        S('gri17-fig2.jpg', 'Tail bones · Grillo & Delcourt 2017', { label: 'Its tail bones, and the same bone in other species', role: 'evidence' }),
+        S('gri17-fig2.jpg', 'Grillo & Delcourt 2017', { label: 'Its tail bones, and the same bone in other species', role: 'evidence' }),
         S('gri17-fig7.jpg', 'Body length, 37 specimens · Grillo & Delcourt 2017', { label: '_Carnotaurus_: 7.8 m', role: 'evidence' })
       ],
       foot: [{ text: 'Most skull and arm measurements predict length poorly', role: 'else' }]
@@ -123,8 +127,8 @@
       head: { name: '_Limusaurus_', facts: 'China · Jurassic', claim: 'Toothed young, toothless adult' },
       panels: [
         S('photo-limus-holo.jpg', 'The holotype slab · photo: Kumiko, CC BY-SA 2.0'),
-        S('wan17-fig1.jpg', 'Growth series · Wang et al. 2017', { label: 'Six growth stages', role: 'evidence' }),
-        S('wan17-fig2.jpg', 'Jaws by age · Wang et al. 2017', { label: 'Teeth lost, beak formed', role: 'evidence' })
+        S('wan17-fig1.jpg', 'Wang et al. 2017', { label: 'Six growth stages', role: 'evidence' }),
+        S('wan17-fig2.jpg', 'Wang et al. 2017', { label: 'Teeth lost, beak formed', role: 'evidence' })
       ],
       foot: [{ text: 'Adult isotopes plot with herbivores', role: 'evidence' }]
     }, 'limus'),
@@ -176,16 +180,15 @@
 
     plateSeg('endemic', 'Regional lineages', 2, 3, {
       head: { claim: 'Continents split, then regional lineages' },
-      panels: [S('lon17-fig10.jpg', 'Longrich et al. 2017')],
-      foot: [{ text: 'Tree weakly supported', role: 'else' }]
+      panels: [S('lon17-fig10.jpg', 'Longrich et al. 2017')]
     }),
 
     plateSeg('rugops', 'Rugops', 1, 2.5, {
       head: { name: '_Rugops_', facts: 'Niger · 95 Ma', claim: 'Pitted snout, no horns', role: 'claim' },
       panels: [
         S('rugops-art.jpg', 'Restored · art by king-the-kong'),
-        S('photo-rugops-maxilla.jpg', 'Maxilla · Ibrahim, Sereno et al., CC BY 4.0', { label: 'Maxilla: gray in the skull drawing', role: 'evidence' }),
-        S('ser04-fig3.jpg', 'Skull · Sereno et al. 2004', { crop: [0, 0.37, 1, 0.6], label: 'Pits, no horns', role: 'evidence' })
+        S('photo-rugops-maxilla.jpg', 'Ibrahim, Sereno et al., CC BY 4.0', { label: 'Maxilla: gray in the skull drawing', role: 'evidence' }),
+        S('ser04-fig3.jpg', 'Sereno et al. 2004', { crop: [0, 0.37, 1, 0.6], label: 'Skull', role: 'evidence' })
       ]
     }),
 
@@ -197,11 +200,11 @@
     plateSeg('marks', 'Tooth marks', 1, 4, {
       head: { name: '_Majungasaurus_', claim: 'Cannibalism?' },
       panels: [
-        S('rog03-fig1.jpg', 'Tooth-marked bones · Rogers et al. 2003', { label: 'Tooth marks on 21+ bones, 2 individuals', role: 'evidence' }),
-        S('rog03-fig2.jpg', 'Marks, and the teeth that fit · Rogers et al. 2003', { label: 'Mark spacing matches its teeth', role: 'evidence' }),
-        S('rog03-fig4.jpg', 'Other jaws in the same rocks · Rogers et al. 2003', { label: 'Crocodyliform teeth: too blunt, irregular', role: 'else' })
+        S('rog03-fig1.jpg', 'Rogers et al. 2003', { label: 'Tooth marks on 21+ bones, 2 individuals', role: 'evidence' }),
+        S('rog03-fig2.jpg', 'Rogers et al. 2003', { label: 'Mark spacing matches its teeth', role: 'evidence' }),
+        S('rog03-fig4.jpg', 'Rogers et al. 2003', { label: 'Crocodyliform teeth: too blunt, irregular', role: 'else' })
       ],
-      foot: [{ text: 'Killed or scavenged: unknown', role: 'test' }]
+      foot: [{ text: 'Killed or scavenged', role: 'test' }]
     }, 'marks'),
 
     sortSeg('who', 'Which animal made the marks?', 2, 3,
@@ -214,42 +217,40 @@
       ]),
 
     plateSeg('teeth', 'Tooth replacement', 1, 3.5, {
-      head: { name: '_Majungasaurus_', claim: 'Fast tooth replacement' },
+      head: { name: '_Majungasaurus_' },
       panels: [
-        S('dem19-fig3.jpg', 'Tooth replacement · D\'Emic et al. 2019', { crop: [0, 0.02, 1, 0.5], label: '56 days per tooth. _Allosaurus_: 104', role: 'evidence' }),
-        S('dem19-fig3.jpg', 'Tooth replacement · D\'Emic et al. 2019', { crop: [0, 0.53, 1, 1], label: 'Body mass: no relationship', role: 'evidence' })
+        S('dem19-fig3.jpg', 'D\'Emic et al. 2019', { crop: [0, 0, 1, 0.5525] }),
+        S('dem19-fig3.jpg', 'D\'Emic et al. 2019', { crop: [0, 0.5515, 1, 1] })
       ],
-      foot: [{ text: 'Cause: tooth wear from eating bone? A hypothesis', role: 'else' }]
+      between: { text: 'High tooth replacement rate', role: 'evidence' },
+      foot: [{ text: 'Why replace teeth quickly?', role: 'else' }]
     }),
 
     plateSeg('arms', 'Arms', 1, 3.5, {
       head: { name: '_Majungasaurus_', claim: 'Reduced arms, no grasping. Display?' },
       panels: [
-        S('bur12-fig2.jpg', 'Shoulder and arm · Burch & Carrano 2012', { label: 'Forearm: a quarter of the upper arm', role: 'evidence' }),
-        S('bur12-fig8.jpg', 'Hand · Burch & Carrano 2012', { label: 'Four fingers, no ossified wrist bones', role: 'evidence' }),
-        S('del18-fig3.jpg', '_Deltadromeus_ · Delcourt 2018', { crop: [0.02, 0.03, 0.54, 0.48], label: '_Deltadromeus_: long arms' })
+        S('bur12-fig2.jpg', 'Burch & Carrano 2012', { label: 'Forearm: a quarter of the upper arm', role: 'evidence' }),
+        S('bur12-fig8.jpg', 'Burch & Carrano 2012', { label: 'Four fingers, no ossified wrist bones', role: 'evidence' }),
+        S('del18-fig3.jpg', 'Delcourt 2018', { crop: [0.011, 0.011, 0.46, 0.558], label: '_Deltadromeus_: slender humerus' })
       ],
-      foot: [{ text: 'Arm use: unknown', role: 'else' }]
+      foot: [{ text: 'How were the arms used?', role: 'else' }]
     }, 'arms'),
 
     plateSeg('chena', 'Chenanisaurus', 1, 3.5, {
       head: { name: '_Chenanisaurus_', facts: 'Morocco · latest Cretaceous', claim: 'In Africa until just before the extinction' },
       panels: [
         S('chena-art.jpg', 'Restored · Nick Longrich, CC BY-SA 4.0'),
-        S('lon17-fig3.jpg', 'The jaw · Longrich et al. 2017', { crop: [0, 0.06, 1, 0.62], label: 'A partial jaw, a few teeth', role: 'evidence' }),
-        S('lon17-fig11.jpg', 'Latest Cretaceous abelisaurids · Longrich et al. 2017', { label: 'No. 1 is _Chenanisaurus_', role: 'claim' })
+        S('lon17-fig3.jpg', 'Longrich et al. 2017', { crop: [0, 0.06, 1, 0.62], label: 'A partial jaw, a few teeth', role: 'evidence' }),
+        S('lon17-fig11.jpg', 'Campanian–Maastrichtian abelisaurids · Longrich et al. 2017', { label: 'No. 1 is _Chenanisaurus_', role: 'claim' })
       ],
-      foot: [{ text: 'Body size from a jaw alone: uncertain', role: 'test' }, { text: 'Press claims, not in the paper: smaller brain, scales', role: 'else' }]
+      foot: [{ text: 'Jaw-Body size scaling difficult', role: 'test' }]
     }, 'chena'),
 
     plateSeg('arco', 'Arcovenator', 1, 3.5, {
       head: { name: '_Arcovenator_', facts: 'France · late Campanian', claim: 'An abelisaurid in Europe' },
-      panels: [
-        S('arco-art.jpg', 'Restored · Danny Cicchetti, CC BY-SA 3.0'),
-        S('tor14-fig2.jpg', 'Braincase · Tortosa et al. 2014', { label: 'Holotype: a braincase', role: 'evidence' }),
-        S('tor14-fig7.jpg', 'Tortosa et al. 2014', { label: 'Closest relatives: India and Madagascar', role: 'evidence' })
-      ],
-      foot: [{ text: 'Crossed a marine barrier? Inferred from the tree', role: 'else' }]
+      panels: [S('arco-art.jpg', 'Restored · Danny Cicchetti, CC BY-SA 3.0')],
+      tall: S('tor14-fig7.jpg', 'Tortosa et al. 2014', { label: 'Closest relatives: India and Madagascar', role: 'evidence' }),
+      foot: [{ text: 'How did it get to Europe?', role: 'else' }]
     }),
 
     /* ---------------------------------------------------------- part: South America */
@@ -269,17 +270,17 @@
       head: { name: '_Aucasaurus_', facts: 'Patagonia', claim: 'Injuries differ by taxon and body region' },
       panels: [
         S('photo-auca-mount.jpg', 'Restored · Conty, CC BY 3.0'),
-        S('bai24-fig1.jpg', 'Damaged bones · Baiano et al. 2024', { label: 'Born with two tail bones fused', role: 'evidence' }),
-        S('bai24-fig8.jpg', 'Where injuries are found · Baiano et al. 2024', { label: 'More than 337 damaged bones, 39 genera', role: 'evidence' })
+        S('bai24-fig1.jpg', 'Baiano et al. 2024', { label: 'Born with two tail bones fused', role: 'evidence' }),
+        S('bai24-fig8.jpg', 'Baiano et al. 2024', { label: 'More than 337 damaged bones, 39 genera', role: 'evidence' })
       ],
-      foot: [{ text: 'Sample biased toward large theropods', role: 'else' }]
+      foot: [{ text: 'Sample mostly medium to large theropods', role: 'else' }]
     }),
 
     plateSeg('auca', 'Tail air spaces', 3, 2.5, {
       head: { name: '_Aucasaurus_', claim: 'Air spaces in the tail' },
       panels: [
         S('bai23-fig1.jpg', 'Most complete brachyrostran tail known · Baiano et al. 2023'),
-        S('bai23-fig33.jpg', 'Camellate bone · Baiano et al. 2023', { label: 'Air spaces in the bone', role: 'evidence' })
+        S('bai23-fig33.jpg', 'Baiano et al. 2023', { label: 'Camellate bone', role: 'evidence' })
       ]
     }),
 
@@ -288,9 +289,9 @@
       panels: [
         S('photo-llukalkan-cast.jpg', 'Skull cast, being assembled · photo: Brancasaurio, CC BY 4.0'),
         S('gia21-fig12.jpg', 'Braincase, from CT · Gianechini et al. 2021', { label: 'Possible caudal tympanic recess', role: 'evidence' }),
-        S('gia21-fig15.jpg', 'Brain and inner ear · Gianechini et al. 2021', { label: 'Inner ear: hard to discern in CT', role: 'else' })
+        S('gia21-fig15.jpg', 'Gianechini et al. 2021', { label: 'Inner ear: hard to discern in CT', role: 'else' })
       ],
-      foot: [{ text: 'From recess to hearing: untested', role: 'test' }, { text: 'Juvenile _Viavenator_? No: it lacks the recess', role: 'else' }]
+      foot: [{ text: 'Juvenile _Viavenator_? It lacks the recess', role: 'else' }]
     }, 'ear'),
 
     plateSeg('koleken', 'Koleken', 2, 2.5, {
@@ -303,8 +304,8 @@
     }),
 
     plateSeg('vito', 'Vitosaura', 3, 2.5, {
-      head: { name: '_Vitosaura_', facts: 'La Rioja · named 2025', claim: 'Position in the tree: uncertain', role: 'else' },
-      panels: [S('vel25-fig5.jpg', 'Velandia et al. 2025'), S('vel25-fig1.jpg', 'La Rioja · Velandia et al. 2025')]
+      head: { name: '_Vitosaura_', facts: 'La Rioja · named 2025', claim: 'Recovered in multiple positions in the tree', role: 'else' },
+      panels: [S('vel25-fig5.jpg', 'Velandia et al. 2025'), S('vel25-fig1.jpg', 'Velandia et al. 2025')]
     }),
 
     /* ---------------------------------------------------------- part: Carnotaurus, last */
@@ -312,7 +313,7 @@
 
     plateSeg('meet', 'Carnotaurus', 1, 2, {
       head: { name: '_Carnotaurus_', facts: 'Patagonia · 70 Ma · 7.8 m' },
-      panels: [S('hen21-fig2.jpg', 'Carnotaurus, with the six pieces of skin found · Hendrickx & Bell 2021')]
+      panels: [S('hen21-fig2.jpg', 'With the six pieces of skin found · Hendrickx & Bell 2021')]
     }),
 
     plateSeg('bite', 'Bite force', 1, 3.5, {
@@ -321,22 +322,21 @@
         S('photo-carno-skull.jpg', 'photo: AStrangerintheAlps, CC BY-SA 3.0', { crop: [0, 0.12, 1, 0.78] }),
         S('maz09-fig4.jpg', 'Stress in a bite (light: low) · Mazzetta et al. 2009', { crop: [0, 0, 1, 0.5], label: 'Bite force 3,341–5,274 N (two models)', role: 'evidence' })
       ],
-      foot: [{ text: '_Allosaurus_: 3,573 N. _Giganotosaurus_: 13,258 N', role: 'evidence' }, { text: 'Small prey: jaw speed matters more than force', role: 'else' }, { text: 'Hatchet-like biting: the skull could withstand it', role: 'else' }]
+      foot: [{ text: '_Allosaurus_: 3,573 N. _Giganotosaurus_: 13,258 N', role: 'evidence' }, { text: 'Small prey?', role: 'else' }, { text: 'Hatchet-bite?', role: 'else' }]
     }, 'bite'),
 
     plateSeg('horns', 'Horns', 1, 4, {
-      head: { name: '_Carnotaurus_', claim: 'Horns for headbutting?' }, side: true,
+      head: { name: '_Carnotaurus_', claim: 'Headbutting?' },
       panels: [
-        S('maz09-fig6.jpg', 'Blow on the horn, modelled · Mazzetta et al. 2009', { label: 'Severe, rapid blows: the skull would fail', role: 'evidence' }),
-        S('del18-fig4.jpg', 'Soft tissue on the skull · Delcourt 2018', { label: 'Low-motion headbutting, over soft tissue?', role: 'else' })
-      ],
-      foot: [{ text: 'Or display', role: 'else' }]
+        S('del18-fig4.jpg', 'Delcourt 2018', { label: 'Low-motion headbutting, over soft tissue?', role: 'else' }),
+        S('maz09-fig6.jpg', 'Finite element model · Mazzetta et al. 2009', { label: 'Severe, rapid blows: the skull would fail', role: 'evidence', at: 1 })
+      ]
     }, 'horns'),
 
     plateSeg('orn', 'Ornaments and body size', 3, 3, {
       head: { claim: 'Ornamented lineages reached large size 20× faster' },
       panels: [
-        S('gat16-fig2.jpg', 'Ornaments and body mass · Gates et al. 2016', { label: 'Red: crest or horn', role: 'evidence' }),
+        S('gat16-fig2.jpg', 'Gates et al. 2016', { label: 'Red: crest or horn', role: 'evidence' }),
         S('gat16-fig1.jpg', 'Gates et al. 2016', { label: 'Ornaments do not originate below about 55 kg', role: 'evidence' })
       ]
     }),
@@ -344,19 +344,19 @@
     plateSeg('skin', 'Skin', 1, 3.5, {
       head: { name: '_Carnotaurus_', claim: 'Scales, not feathers' }, side: true,
       panels: [S('hen21-fig5.jpg', 'Skin from the ribs · Hendrickx & Bell 2021', { label: 'Conical scales, 20–65 mm, randomly scattered', role: 'evidence' })],
-      foot: [{ text: 'Most completely preserved skin of any theropod', role: 'evidence' }, { text: 'As armor: very little protection from bites', role: 'else' }, { text: 'Display or heat loss: speculation', role: 'else' }]
+      foot: [{ text: 'Most completely preserved skin of any theropod', role: 'evidence' }, { text: 'As armor: very little protection from bites', role: 'else' }, { text: 'Display or heat loss?', role: 'else' }]
     }, 'skin'),
 
     plateSeg('skin12', 'Skin across dinosaurs', 2, 2.5, {
       head: { name: '_Carnotaurus_', claim: 'Scales compared across dinosaurs', role: '' },
-      panels: [S('hen21-fig12.jpg', 'Dinosaur skin · Hendrickx & Bell 2021')]
+      panels: [S('hen21-fig12.jpg', 'Hendrickx & Bell 2021')]
     }),
 
     plateSeg('tail', 'Tail muscles', 1, 4, {
       head: { name: '_Carnotaurus_', claim: 'Short-burst sprinter?' }, side: true,
       panels: [
         S('per11-fig5.jpg', 'Tail cross-section · Persons & Currie 2011', { label: 'Caudofemoralis (tail-to-thigh muscle): 222 kg', role: 'evidence' }),
-        S('per11-fig1.jpg', 'Tail bone · Persons & Currie 2011', { label: 'Interlocking tail ribs: reduced turning', role: 'else' })
+        S('per11-fig1.jpg', 'Persons & Currie 2011', { label: 'Interlocking tail ribs: reduced turning', role: 'else' })
       ],
       foot: [{ text: 'Caudofemoralis: 15% of body mass. _T. rex_: 9%', role: 'evidence' }, { text: 'No speed calculated: inferred from muscle mass', role: 'test' }]
     }, 'sprint'),

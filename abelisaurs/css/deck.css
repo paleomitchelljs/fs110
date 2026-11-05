@@ -620,6 +620,7 @@ mark { background: var(--accent-soft); color: var(--accent-ink); font-style: nor
 .pl2-lab.r-else svg, .pl2-lab.r-test svg { color: var(--accent-ink); }
 .pl2-lab.r-claim { border-color: var(--ink-2); color: var(--ink); }
 .pl2-lab.big { position: static; transform: none; white-space: normal; margin: 0; font-size: 27px; min-height: 60px; padding: 6px 24px; }
+.pl2-lab.big.pl2-mid { position: absolute; transform: translateY(-50%); }
 .pl2-cap { position: absolute; left: 0; right: 0; text-align: center; font: 400 17px/1.2 var(--font-ui); color: var(--muted); }
 .pl2-foot { position: absolute; left: 40px; right: 40px; bottom: 6px; display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; }
 .pl2-key { position: absolute; left: 1050px; right: 40px; top: 8px; bottom: 8px; display: grid; grid-template-columns: auto 1fr; gap: 12px 14px; align-content: center; font: 600 24px/1.15 var(--font-ui); color: var(--ink-2); }

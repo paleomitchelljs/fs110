@@ -112,6 +112,29 @@ function open(level) {
   check('map: the published figure', host.querySelector('.pl2-img img').getAttribute('src').indexOf('lon17-fig11') >= 0);
   check('map: 13 rows in the key', host.querySelectorAll('.pl2-key span').length === 13);
 
+  // tooth replacement: one card between the figures, only a citation under each
+  goTo('teeth');
+  host = d.querySelector('.seg:not(.off) .item-plate');
+  check('teeth: one card between the figures, none under them', host.querySelectorAll('.pl2-mid').length === 1 && host.querySelectorAll('.pl2-p .pl2-lab').length === 0);
+  check('teeth: a citation under each figure', [...host.querySelectorAll('.pl2-cap')].every((e) => e.textContent === "D'Emic et al. 2019"));
+
+  // Arcovenator: the reconstruction, and the tree in its own column
+  goTo('arco');
+  host = d.querySelector('.seg:not(.off) .item-plate');
+  check('arco: reconstruction and tree only', host.querySelectorAll('.pl2-p').length === 2 && JSON.stringify(segs[at('arco')]).indexOf('tor14-fig2') < 0);
+
+  // horns: the horns first, the stress model on the next build
+  const horns = goTo('horns');
+  host = d.querySelector('.seg:not(.off) .item-plate');
+  const hornsOn = () => [...host.querySelectorAll('.pl2-p.shown img')].map((e) => e.getAttribute('src')).join();
+  check('horns: horns only at first', hornsOn() === 'img/del18-fig4.jpg', hornsOn());
+  press(1);
+  check('horns: stress model on advance', hornsOn().indexOf('maz09-fig6') >= 0 && horns.builds.length === 3, hornsOn());
+
+  // no verdicts on ambiguous evidence, whichever paper they came from
+  const words = JSON.stringify(segs).match(/unknown|untested|speculation|weakly supported|a hypothesis|: uncertain/gi);
+  check('no verdict words on the slides', !words, (words || []).join());
+
   // the question rail says the plain words
   const rail = [...d.querySelectorAll('.ri span')].map((e) => e.textContent).join();
   check('rail words', rail === 'Claim,Evidence,Alternatives,Test,Certainty', rail);

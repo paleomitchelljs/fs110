@@ -42,9 +42,9 @@ Part numbers count the parts shown, so at level 1 they run 1 to 3. Ends with the
 ## Things the outline said that the papers in the folder do not
 
 - **Burch & Carrano on grasping.** The paper does not say grasping is ruled out or that there is no modern analog. It says the stoutness of the hand bones "makes it unlikely that the individual digits retained much autonomy, and it is possible that the manus was employed as a functional unit." It says it is unclear whether claws were present. The "lost the ability to grasp" line is Delcourt's, not theirs. The slide follows the papers.
-- **Mazzetta and *Allosaurus* slashing.** In the paper, the comparison is Rayfield et al. 2001's *Allosaurus* "hatchet-like" model, which Mazzetta applies to *Carnotaurus* and finds the skull can survive. The "small prey" reading is Mazzetta's own, via crocodilians ("jaw speed is much more important than bite force in capturing small prey"). The slide gives those two. The claim that other researchers see *Carnotaurus* as a slasher against large prey is not in these papers; I did not include it.
-- **Chenanisaurus press coverage.** Not in the paper. It comes from the University of Bath release (May 2017): a smaller brain than *T. rex*, scales, short arms. I paraphrased it from a search summary of that release, not from the release itself. Read the original before using the pill.
-- **Llukalkan hearing.** The paper is in the folder now. Its hedge is "the presence of the caudal tympanic recess in the new species suggests a different hearing adaptation from other coetaneous abelisaurids." The recess is listed as "possible" in the abstract, and the fenestra ovalis and lagena are "difficult to discern in the CT scans." So the step from a bone pocket to hearing is the authors' suggestion, and the ear slide marks it as untested.
+- **Mazzetta and *Allosaurus* slashing.** In the paper, the comparison is Rayfield et al. 2001's *Allosaurus* "hatchet-like" model, which Mazzetta applies to *Carnotaurus* and finds the skull can survive. The "small prey" reading is Mazzetta's own, via crocodilians ("jaw speed is much more important than bite force in capturing small prey"). The slide asks about those two. The claim that other researchers see *Carnotaurus* as a slasher against large prey is not in these papers; I did not include it.
+- **Chenanisaurus press coverage.** Not in the paper. It comes from the University of Bath release (May 2017): a smaller brain than *T. rex*, scales, short arms. I paraphrased it from a search summary of that release, not from the release itself, so read the original before using it. The slide no longer mentions it.
+- **Llukalkan hearing.** The paper is in the folder now. Its hedge is "the presence of the caudal tympanic recess in the new species suggests a different hearing adaptation from other coetaneous abelisaurids." The recess is listed as "possible" in the abstract, and the fenestra ovalis and lagena are "difficult to discern in the CT scans." So the step from a bone pocket to hearing is the authors' suggestion, and the ear slide puts it as a question.
 - **Mazzetta's DOI.** Not checked. Check before citing.
 
 ## Where the slides and papers need care
@@ -56,12 +56,29 @@ Part numbers count the parts shown, so at level 1 they run 1 to 3. Ends with the
 - **The locality map.** Longrich et al. 2017 Fig. 11 covers only the Campanian and Maastrichtian, and predates several papers here. So *Rugops*, *Skorpiovenator*, *Llukalkan*, *Koleken*, *Vitosaura* and *Vespersaurus* are not on it. The key follows the paper's caption; "Unnamed" stands for its "Abelisauridae indet." and site names like "Idfu abelisaurid". The caption spells it "Columbia"; the key says Colombia.
 - **"Example Abelisaurs".** *Masiakasaurus* on that slide is a noasaurid and *Eoabelisaurus* has moved around between trees, so "abelisaurs" is loose there. The caption, from Grillo & Delcourt, says "six ceratosaurs".
 
+## Said aloud, not on the slides
+
+Where evidence is ambiguous, the slides ask the question and give no verdict. The papers' own wording, for class:
+
+- **Tooth marks.** "Whether Majungatholus killed both individuals and thus practised intraspecific predation, or opportunistically scavenged the carcasses, is unknown." (Rogers et al. 2003). The crocodyliform jaws on that slide come from the same rocks.
+- **Tooth replacement.** 56 days per tooth, against 104 in *Allosaurus*, with no relationship to body mass. The rate "may be a response to high rates of tooth wear in Majungasaurus." (D'Emic et al. 2019).
+- **Arms.** "The specific functional capabilities of the abelisaurid forelimb remain enigmatic" (Burch & Carrano 2012).
+- ***Deltadromeus*.** "the humeri of noasaurids are slenderer than those of abelisaurids"; "The forearms of noasaurids are poorly known" (Delcourt 2018). An earlier label said "long arms", which the paper does not say, and the forearm in the figure stops at a short section of radius and ulna.
+- **Regional lineages.** Of *Chenanisaurus*: "this phylogenetic position, supported by a single character, should not be considered robust." (Longrich et al. 2017).
+- ***Arcovenator*.** "This apparently implies dispersal of Majungasaurinae across a marine barrier" (Tortosa et al. 2014).
+- ***Llukalkan*.** A juvenile *Viavenator* "is discarded based mainly on the presence of a caudal tympanic recess" (Gianechini et al. 2021), and the same abstract lists that recess as "possible".
+- **Skin.** "we speculate that the skin may have played a vital role in thermoregulation" (Hendrickx & Bell 2021).
+
 ## Labels that are the deck's, not a paper's
 
-- *Chenanisaurus*: "Body size from a jaw alone: uncertain" (test), "Press claims, not in the paper: smaller brain, scales" (else).
-- Arms: "Arm use: unknown".
+- *Chenanisaurus*: "Jaw-Body size scaling difficult" (test).
+- Tooth marks: "Killed or scavenged".
+- Tooth replacement: "High tooth replacement rate", "Why replace teeth quickly?".
+- Arms: "How were the arms used?".
+- *Arcovenator*: "How did it get to Europe?".
+- Bite: "Small prey?", "Hatchet-bite?".
+- Horns: "Headbutting?".
 - Tail: "No speed calculated: inferred from muscle mass".
-- Horns: "Or display".
 - Header facts from memory, not the papers: *Carnotaurus* "70 Ma", *Majungasaurus* "70 Ma", *Rugops* "95 Ma" (from the old deck), *Vespersaurus* "1 m", *Limusaurus* "Jurassic". Check before class.
 
 ## Figures
