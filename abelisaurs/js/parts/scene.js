@@ -18,6 +18,18 @@
     host.innerHTML = '<div class="fg"><div class="fg-img"><img draggable="false"><div class="fg-hole"></div></div><div class="fg-cap"></div><div class="fg-pills"></div></div>';
     const root = host.firstChild, wrap = root.querySelector('.fg-img'), img = wrap.querySelector('img'), hole = wrap.querySelector('.fg-hole');
     const cap = root.querySelector('.fg-cap'), pills = root.querySelector('.fg-pills');
+    /* def.aside = [x, y, w, h]: a panel beside the figure showing the focused zone zoomed, with its own picture (zone.aside) next to it. */
+    const asideEl = def.aside ? D.el('div', 'fg-aside', root) : null;
+    let asideShown = [];
+    function setAside(z) {
+      if (!asideEl) return;
+      asideEl.innerHTML = '';
+      const ps = [];
+      if (z && z.rect && !z.src) { const r = z.rect; ps.push({ src: def.src, w: def.w, h: def.h, crop: [r[0], r[1], r[0] + r[2], r[1] + r[3]], label: z.label }); }
+      if (z && z.aside) ps.push(Object.assign({ label: z.aside.label }, z.aside));
+      if (ps.length) D.plateRow(asideEl, ps, def.aside, 'col');
+    }
+    if (def.pills === false) pills.style.display = 'none';
     function layout(w, h) {
       const s = Math.min(BX[2] / w, (BX[3] - 30) / h), W = Math.round(w * s), H = Math.round(h * s);
       wrap.style.cssText = `left:${BX[0] + Math.round((BX[2] - W) / 2)}px;top:${BX[1]}px;width:${W}px;height:${H}px;`;
@@ -48,8 +60,17 @@
         hole.style.cssText = `left:${r[0] * 100}%;top:${r[1] * 100}%;width:${r[2] * 100}%;height:${r[3] * 100}%;box-shadow:0 0 0 4000px var(--veil);`;
       }
       zs.forEach((k, j) => k.e.classList.toggle('on', j === i));
+      setAside(z);
     }
     focus(-1);
+    if (asideEl && def.pills === false) {
+      wrap.classList.add('pick');
+      wrap.addEventListener('click', (ev) => {
+        const r = wrap.getBoundingClientRect(), fx = (ev.clientX - r.left) / r.width, fy = (ev.clientY - r.top) / r.height;
+        const j = def.zones.findIndex((z, k) => z.rect && fx >= z.rect[0] && fx <= z.rect[0] + z.rect[2] && fy >= z.rect[1] && fy <= z.rect[1] + z.rect[3] && zs[k].e.classList.contains('shown'));
+        if (j >= 0) { ev.stopPropagation(); focus(cur === j ? -1 : j); }
+      });
+    }
     return {
       show(b) {
         zs.forEach((k, j) => k.e.classList.toggle('shown', b >= j + from));

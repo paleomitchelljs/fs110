@@ -602,3 +602,44 @@ mark { background: var(--accent-soft); color: var(--accent-ink); font-style: nor
 .qy-key span { font: 600 25px var(--font-ui); color: var(--ink-2); }
 .qy-dots { width: 700px; top: 326px; }
 .qy-key { top: 662px; }
+
+/* ---------- plain slides: plate and pins ---------- */
+.pl2 { position: absolute; inset: 0; }
+.pl2-head { position: absolute; left: 40px; right: 40px; top: 0; height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+.pl2-who { display: flex; align-items: baseline; gap: 22px; white-space: nowrap; }
+.pl2-who b { font: italic 600 50px/1 var(--font-ui); color: var(--ink); }
+.pl2-who span { font: 600 27px var(--font-ui); color: var(--muted); }
+.pl2-claim { display: flex; align-items: center; gap: 14px; height: 68px; padding: 0 28px; font: 600 31px/1.05 var(--font-ui); color: var(--ink); background: var(--card); border: 2px solid var(--ink-2); border-radius: 34px; }
+.pl2-claim.solo { margin: 0 auto; }
+.pl2-claim svg { flex: none; width: 36px; height: 36px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.pl2-p { position: absolute; }
+.pl2-img { position: absolute; overflow: hidden; border-radius: 10px; background: #fff; box-shadow: 0 0 0 2px var(--rule); }
+.pl2-img img { position: absolute; max-width: none; user-select: none; -webkit-user-drag: none; }
+.pl2-lab { position: absolute; left: 50%; transform: translateX(-50%); width: max-content; max-width: 100%; text-align: left; display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 6px 18px; font: 600 25px/1.1 var(--font-ui); color: var(--ink-2); background: var(--card); border: 2px solid var(--rule); border-radius: 28px; text-align: left; }
+.pl2-lab svg { flex: none; width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.pl2-lab.r-else svg, .pl2-lab.r-test svg { color: var(--accent-ink); }
+.pl2-lab.r-claim { border-color: var(--ink-2); color: var(--ink); }
+.pl2-lab.big { position: static; transform: none; white-space: normal; margin: 0; font-size: 27px; min-height: 60px; padding: 6px 24px; }
+.pl2-cap { position: absolute; left: 0; right: 0; text-align: center; font: 400 17px/1.2 var(--font-ui); color: var(--muted); }
+.pl2-foot { position: absolute; left: 40px; right: 40px; bottom: 6px; display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; }
+.pl2-x { opacity: 0; transition: opacity 0.4s; }
+.pl2-x.shown { opacity: 1; }
+.pl2-p.pl2-x, .pl2-lab.pl2-x { pointer-events: none; }
+.pl2-x.shown { pointer-events: auto; }
+.fg-aside { position: absolute; inset: 0; pointer-events: none; }
+.fg-aside .pl2-x { opacity: 1; }
+.fg-img.pick { cursor: pointer; }
+.pn { position: absolute; inset: 0; }
+.pn-map { position: absolute; overflow: hidden; border-radius: 10px; background: #fff; box-shadow: 0 0 0 2px var(--rule); }
+.pn-map img { position: absolute; max-width: none; user-select: none; -webkit-user-drag: none; }
+.pn-cap { position: absolute; text-align: center; font: 400 17px var(--font-ui); color: var(--muted); }
+.pn-svg { position: absolute; left: 0; top: 0; pointer-events: none; }
+.pn-dot { fill: var(--accent); stroke: #1a1405; stroke-width: 3; }
+.pn-line { stroke: #fff; stroke-width: 3; opacity: 0.9; }
+.pn-lab { position: absolute; padding: 6px 14px; font: 600 25px/1.15 var(--font-ui); color: var(--ink); background: var(--card); border: 2px solid var(--rule); border-radius: 14px; white-space: nowrap; transform: translate(0, -50%); }
+.pn-lab.l { transform: translate(-100%, -50%); text-align: right; }
+.pn-lab.c { transform: translate(-50%, -100%); text-align: center; }
+.pn-lab b { display: block; font: 700 20px var(--font-ui); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.pn-lab i { font-style: italic; }
+.pl2-foot.side { left: auto; right: 40px; top: 120px; bottom: 20px; width: 440px; flex-direction: column; justify-content: center; align-items: stretch; gap: 22px; }
+.pl2-foot.side .pl2-lab.big { width: auto; max-width: none; border-radius: 30px; }
