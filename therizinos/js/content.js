@@ -413,9 +413,9 @@
     rail: [
       { key: 'claim', label: 'Claim' },
       { key: 'evidence', label: 'Evidence' },
-      { key: 'else', label: 'Else?' },
+      { key: 'else', label: 'Alternatives' },
       { key: 'test', label: 'Test' },
-      { key: 'sure', label: 'Sure?' }
+      { key: 'sure', label: 'Certainty' }
     ],
     railTitle: '',
     segments

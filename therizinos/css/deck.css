@@ -96,7 +96,7 @@ body:not(.answers) .ans-only { display: none !important; }
 .rail.off { opacity: 0; pointer-events: none; }
 .rail-title { font: 600 19px var(--font-ui); color: var(--muted); margin-left: 6px; }
 .rail-icons { display: flex; gap: 6px; }
-.ri { display: flex; flex-direction: column; align-items: center; width: 86px; padding: 4px 0 1px; border-radius: 12px; color: var(--muted); transition: background 0.3s, color 0.3s; }
+.ri { display: flex; flex-direction: column; align-items: center; min-width: 86px; padding: 4px 8px 1px; border-radius: 12px; color: var(--muted); transition: background 0.3s, color 0.3s; }
 .ri svg { width: 36px; height: 36px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .ri span { font: 600 19px/1.2 var(--font-ui); }
 .ri.lit { background: var(--accent); color: #1a1405; }
