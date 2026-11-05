@@ -91,6 +91,15 @@ const check = (name, ok, detail) => { checks++; if (!ok) fails++; console.log(`$
   d.querySelector('#reset').click(); d.querySelector('#reset').click();
   check('reset clears votes', D.callOf('c2') === null);
 
+  // ] and [ skip the extra claims when extras are off
+  if (D.flags.extras) key('x');
+  for (let i = 0; i < 400; i++) key('ArrowLeft');
+  for (let i = 0; i < 200; i++) { const a = D.where().s; key(']'); if (D.where().s === a) break; }
+  const lastShown = segs.map((s, i) => (s.extra ? -1 : i)).reduce((a, b) => Math.max(a, b));
+  check('extras off: ] reaches the last segment', D.where().s === lastShown, 'stopped at ' + segs[D.where().s].id);
+  for (let i = 0; i < 200; i++) { const a = D.where().s; key('['); if (D.where().s === a) break; }
+  check('extras off: [ reaches the first segment', D.where().s === 0, 'stopped at ' + segs[D.where().s].id);
+
   console.log(errors.length ? '\nERRORS:\n' + errors.join('\n') : '\nno script errors');
   console.log(`${checks - fails}/${checks} checks`);
   process.exit(fails || errors.length ? 1 : 0);

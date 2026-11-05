@@ -210,10 +210,12 @@
     for (let k = b - 1; k >= 0; k--) if (allowed(s, k)) return go(s, k, 'back');
     for (let t = s - 1; t >= 0; t--) { const l = lastOf(t); if (l !== null) return go(t, l, 'back'); }
   }
-  function jumpSeg(t) {
-    if (t < 0 || t >= segs.length) return;
-    const f = firstOf(t);
-    if (f !== null) go(t, f, 'jump');
+  /* Jump to a segment. A hidden one (an extra, with extras off) is skipped, going the direction of dir. */
+  function jumpSeg(t, dir) {
+    for (; t >= 0 && t < segs.length; t += dir || 1) {
+      const f = firstOf(t);
+      if (f !== null) return go(t, f, 'jump');
+    }
   }
   Deck.next = next; Deck.prev = prev;
   Deck.where = () => ({ s: S.pos.s, b: S.pos.b });
@@ -317,7 +319,7 @@
       const k = e.key, lower = k.toLowerCase();
       if (k === 'ArrowRight' || k === ' ' || k === 'PageDown' || k === 'Enter') next();
       else if (k === 'ArrowLeft' || k === 'PageUp' || k === 'Backspace') prev();
-      else if (k === '[') jumpSeg(S.pos.s - 1);
+      else if (k === '[') jumpSeg(S.pos.s - 1, -1);
       else if (k === ']') jumpSeg(S.pos.s + 1);
       else if (/^Digit[0-9]$/.test(e.code) && active('digit')) active('digit').part.digit(+e.code.slice(5), e.shiftKey);
       else if (lower === 'n' && active('add')) active('add').part.add();

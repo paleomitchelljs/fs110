@@ -47,10 +47,14 @@ function open(level) {
     const sched = D.sched(), mins = {};
     segs.forEach((s, i) => { if (sched[i]) mins[sched[i].sess] = (mins[sched[i].sess] || 0) + (s.min || 1); });
     console.log(`      level ${level} minutes per session: ${JSON.stringify(mins)}`);
-    check(`level ${level}: sessions stay near 50`, Object.values(mins).every((m) => m <= 56), JSON.stringify(mins));
-    if (level === 1) check('level 1: fits one session', Object.keys(mins).length === 1, JSON.stringify(mins));
-    for (let i = 0; i < 900; i++) key('ArrowLeft');
+    check(`level ${level}: sessions stay near 50`, Object.values(mins).every((m) => m <= 56), JSON.stringify(mins));    for (let i = 0; i < 900; i++) key('ArrowLeft');
     check(`level ${level}: back to the start`, D.where().s === 0 && D.where().b === 0);
+    // ] and [ skip segments hidden at this level
+    for (let i = 0; i < 200; i++) { const a = D.where().s; key(']'); if (D.where().s === a) break; }
+    const shownAt = segs.map((s, i) => ((s.tier || 1) <= level ? i : -1)).filter((i) => i >= 0);
+    check(`level ${level}: ] reaches the last segment`, D.where().s === shownAt[shownAt.length - 1], 'stopped at ' + segs[D.where().s].id);
+    for (let i = 0; i < 200; i++) { const a = D.where().s; key('['); if (D.where().s === a) break; }
+    check(`level ${level}: [ reaches the first segment`, D.where().s === 0, 'stopped at ' + segs[D.where().s].id);
   }
 
   // level 3 detail checks

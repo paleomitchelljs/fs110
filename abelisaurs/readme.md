@@ -6,7 +6,7 @@ This is a first draft. Read `Questions for you` below before class.
 
 ## Levels
 
-Press **L** (or `#L1` `#L2` `#L3` on the address). About 54 / 90 / 98 minutes of slides; the clock splits them into sessions, starting a new one past 54 minutes. Level 1 is at that limit, so anything added there pushes the wall of evidence into a second session.
+Press **L** (or `#L1` `#L2` `#L3` on the address). Roughly 55 / 90 / 100 minutes of slides, before any questions; the clock splits them into sessions.
 
 ## How it is built
 
