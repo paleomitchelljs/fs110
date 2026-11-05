@@ -219,8 +219,8 @@
     plateSeg('teeth', 'Tooth replacement', 1, 3.5, {
       head: { name: '_Majungasaurus_' },
       panels: [
-        S('dem19-fig3.jpg', 'D\'Emic et al. 2019', { crop: [0, 0, 1, 0.5525] }),
-        S('dem19-fig3.jpg', 'D\'Emic et al. 2019', { crop: [0, 0.5515, 1, 1] })
+        S('dem19-fig3.jpg', 'D\'Emic et al. 2019', { crop: [0, 0, 1, 0.5345] }),
+        S('dem19-fig3.jpg', 'D\'Emic et al. 2019', { crop: [0, 0.5585, 1, 1] })
       ],
       between: { text: 'High tooth replacement rate', role: 'evidence' },
       foot: [{ text: 'Why replace teeth quickly?', role: 'else' }]
