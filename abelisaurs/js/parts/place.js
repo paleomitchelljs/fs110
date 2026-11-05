@@ -12,7 +12,7 @@
 
   D.parts.sort = function (def, host) {
     const N = def.bins.length, GAP = 20, BW = Math.floor((1520 - (N - 1) * GAP) / N), BH = 352;
-    const CW = Math.min(470, BW - 20), CH = 52;
+    const CW = Math.min(700, BW - 20), CH = 52;
     host.innerHTML = '<div class="pl"></div>';
     const root = host.firstChild;
     const bins = def.bins.map((b, i) => {

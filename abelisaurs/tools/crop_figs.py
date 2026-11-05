@@ -16,6 +16,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PAPERS = os.path.join(HERE, '..', 'papers')
 OUT = os.path.join(HERE, '..', 'img')
 DPI = 200
+# Figures shown zoomed get more resolution. gat16-fig2 has vector labels, so they stay sharp.
+DPI_FOR = {'gat16-fig2': 400}
 
 P = {
     'sereno': '2004-sereno-rugops.pdf',
@@ -52,11 +54,12 @@ def page_size(pdf, page):
 def crop(name, key, page, box):
     pdf = os.path.join(PAPERS, P[key])
     w, h = page_size(pdf, page)
-    pw, ph = w / 72 * DPI, h / 72 * DPI
+    dpi = DPI_FOR.get(name, DPI)
+    pw, ph = w / 72 * dpi, h / 72 * dpi
     l, t, r, b = box
     x, y, W, H = int(pw * l), int(ph * t), int(pw * (r - l)), int(ph * (b - t))
     stem = os.path.join(OUT, name)
-    subprocess.check_call(['pdftoppm', '-jpeg', '-jpegopt', 'quality=88', '-singlefile', '-r', str(DPI),
+    subprocess.check_call(['pdftoppm', '-jpeg', '-jpegopt', 'quality=88', '-singlefile', '-r', str(dpi),
                            '-f', str(page), '-l', str(page), '-x', str(x), '-y', str(y), '-W', str(W), '-H', str(H), pdf, stem])
 
 if __name__ == '__main__':

@@ -4,7 +4,7 @@
  *           in a row, each with an optional label carrying one of the five question
  *           icons, and a foot of short chips. Everything is on screen at once unless
  *           a panel or chip carries at: n (it comes on at build n).
- *   pins    A map with every locality marked at once.
+ *           def.key puts a numbered key beside a figure that labels things by number.
  *
  * D.plateRow lays pictures out inside a box and is shared with fig (the aside).
  * A picture can carry crop: [left, top, right, bottom] as fractions of the file;
@@ -104,37 +104,14 @@
       });
       if (def.side) { f.classList.add('side'); right = 1070; } else bottom = H - 84;
     }
+    if (def.key) {
+      const k = D.el('div', 'pl2-key', root);
+      def.key.forEach((r) => { D.el('b', '', k, D.esc(r.n)); D.el('span', '', k, D.fmt(r.text)); });
+      right = 1040;
+    }
     const els = D.plateRow(root, def.panels, [40, top + 8, right - 40, bottom - top - 8]);
     return {
       show(b) { els.concat(timed).forEach((k) => k.e.classList.toggle('shown', b >= k.at)); }
     };
-  };
-
-  /* ---------- pins: a map with every locality at once ---------- */
-  D.parts.pins = function (def, host) {
-    const BX = def.imgBox || [40, 0, 1520, 640];
-    const c = def.crop || [0, 0, 1, 1];
-    const cw = def.w * (c[2] - c[0]), ch = def.h * (c[3] - c[1]);
-    const s = Math.min(BX[2] / cw, (BX[3] - 30) / ch), W = Math.round(cw * s), Hh = Math.round(ch * s);
-    const L = BX[0] + Math.round((BX[2] - W) / 2), T = BX[1];
-    host.innerHTML = '<div class="pn"></div>';
-    const root = host.firstChild;
-    const fr = D.el('div', 'pn-map', root);
-    fr.style.cssText = `left:${L}px;top:${T}px;width:${W}px;height:${Hh}px;`;
-    const im = D.el('img', '', fr);
-    im.draggable = false; im.src = def.src; im.alt = '';
-    im.style.cssText = `width:${def.w * s}px;height:${def.h * s}px;left:${-c[0] * def.w * s}px;top:${-c[1] * def.h * s}px;`;
-    D.el('div', 'pn-cap', root, D.fmt(def.cap || '')).style.cssText = `left:${L}px;width:${W}px;top:${T + Hh + 6}px;`;
-    const sv = D.svg('svg', { class: 'pn-svg', viewBox: '0 0 1600 690', width: 1600, height: 690 }, root);
-    const at = (p) => ({ x: L + (p.x * def.w - c[0] * def.w) * s, y: T + (p.y * def.h - c[1] * def.h) * s });
-    def.pins.forEach((p) => {
-      const q = at(p), lx = q.x + (p.dx || 0), ly = q.y + (p.dy || 0);
-      D.svg('line', { class: 'pn-line', x1: q.x, y1: q.y, x2: lx, y2: ly }, sv);
-      D.svg('circle', { class: 'pn-dot', cx: q.x, cy: q.y, r: 11 }, sv);
-      const names = (p.names || []).map((n) => `<i>${D.esc(n)}</i>`).join('<br>');
-      const lab = D.el('div', 'pn-lab ' + (p.side || 'r'), root, (p.place ? `<b>${D.esc(p.place)}</b>` : '') + names);
-      lab.style.cssText = `left:${lx}px;top:${ly}px;`;
-    });
-    return {};
   };
 })();

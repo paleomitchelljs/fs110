@@ -9,10 +9,19 @@
     return {};
   };
 
-  /* Big plain text, optionally with a part number. */
-  D.parts.title = function (def, host) {
-    host.innerHTML = (def.n ? `<div class="pt-num">${def.n}</div>` : '') + `<div class="title-text">${D.fmt(def.text)}</div>`;
-    return { show(b, how) { if (how === 'step') D.replay(host, 'play'); } };
+  /* Big plain text, optionally with a part number. The number counts the part cards
+   * shown at the current level, so a level that skips a part does not skip a number. */
+  D.parts.title = function (def, host, seg) {
+    host.innerHTML = (def.n ? '<div class="pt-num"></div>' : '') + `<div class="title-text">${D.fmt(def.text)}</div>`;
+    const num = host.querySelector('.pt-num');
+    const renumber = () => {
+      if (!num) return;
+      const cards = D.content.segments.filter((s) => (s.tier || 1) <= D.flags.level && s.items.some((i) => i.kind === 'title' && i.n));
+      num.textContent = cards.indexOf(seg) + 1;
+    };
+    renumber();
+    D.on('level', renumber);
+    return { show(b, how) { renumber(); if (how === 'step') D.replay(host, 'play'); } };
   };
 
   /* The five questions, one more per build from def.from. The newest is lit. */

@@ -30,15 +30,17 @@
       if (ps.length) D.plateRow(asideEl, ps, def.aside, 'col');
     }
     if (def.pills === false) pills.style.display = 'none';
-    function layout(w, h) {
-      const s = Math.min(BX[2] / w, (BX[3] - 30) / h), W = Math.round(w * s), H = Math.round(h * s);
-      wrap.style.cssText = `left:${BX[0] + Math.round((BX[2] - W) / 2)}px;top:${BX[1]}px;width:${W}px;height:${H}px;`;
-      cap.style.cssText = `left:${BX[0]}px;width:${BX[2]}px;top:${BX[1] + H + 6}px;`;
+    function layout(w, h, box) {
+      const B = box || BX;
+      const s = Math.min(B[2] / w, (B[3] - 30) / h), W = Math.round(w * s), H = Math.round(h * s);
+      wrap.style.cssText = `left:${B[0] + Math.round((B[2] - W) / 2)}px;top:${B[1]}px;width:${W}px;height:${H}px;`;
+      cap.style.cssText = `left:${B[0]}px;width:${B[2]}px;top:${B[1] + H + 6}px;`;
     }
     let curSrc = null;
-    function setSrc(src, w, h, c) {
+    /* box: a zone with its own picture can have its own box (zone.imgBox) instead of the figure's. */
+    function setSrc(src, w, h, c, box) {
       if (src !== curSrc) { img.src = src; curSrc = src; }
-      layout(w, h); cap.innerHTML = D.fmt(c || '');
+      layout(w, h, box); cap.innerHTML = D.fmt(c || '');
     }
     setSrc(def.src, def.w, def.h, def.cap); img.alt = def.alt || '';
     const from = def.from == null ? 1 : def.from;
@@ -53,7 +55,7 @@
     function focus(i) {
       cur = i;
       const z = i >= 0 ? def.zones[i] : null;
-      if (z && z.src) setSrc(z.src, z.w, z.h, z.cap); else setSrc(def.src, def.w, def.h, def.cap);
+      if (z && z.src) setSrc(z.src, z.w, z.h, z.cap, z.imgBox); else setSrc(def.src, def.w, def.h, def.cap);
       if (!z || !z.rect) hole.style.cssText = 'left:0;top:0;width:100%;height:100%;box-shadow:0 0 0 0 transparent;';
       else {
         const r = z.rect;

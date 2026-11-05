@@ -1,6 +1,7 @@
 /* Smoke test in jsdom: every build of every segment at every level, the clock's
- * session packing, a vote, the sort slide's snap, the timeline cursor, the
- * vote bar and the wall. Needs jsdom, which this repo doesn't ship:
+ * session packing, the order of the parts and their numbers, the theropod tree, the
+ * example species, the sort slide's snap, a vote and the wall. jsdom does no layout, so this
+ * cannot see overflow or overlap. Needs jsdom, which this repo doesn't ship:
  *   JSDOM=/path/to/node_modules/jsdom node abelisaurs/tests/deck.smoke.js */
 'use strict';
 const path = require('path');
@@ -47,6 +48,7 @@ function open(level) {
     segs.forEach((s, i) => { if (sched[i]) mins[sched[i].sess] = (mins[sched[i].sess] || 0) + (s.min || 1); });
     console.log(`      level ${level} minutes per session: ${JSON.stringify(mins)}`);
     check(`level ${level}: sessions stay near 50`, Object.values(mins).every((m) => m <= 56), JSON.stringify(mins));
+    if (level === 1) check('level 1: fits one session', Object.keys(mins).length === 1, JSON.stringify(mins));
     for (let i = 0; i < 900; i++) key('ArrowLeft');
     check(`level ${level}: back to the start`, D.where().s === 0 && D.where().b === 0);
   }
@@ -56,7 +58,13 @@ function open(level) {
   await ready(w);
   const D = w.Deck, segs = D.content.segments;
   const key = (k, x) => d.body.dispatchEvent(new w.KeyboardEvent('keydown', Object.assign({ key: k, bubbles: true }, x)));
-  const goTo = (id) => { const t = segs.findIndex((s) => s.id === id); while (D.where().s < t) key(']'); while (D.where().s > t) key('['); return segs[t]; };
+  const goTo = (id) => {
+    const t = segs.findIndex((s) => s.id === id);
+    for (let i = 0; D.where().s < t && i < 100; i++) key(']');
+    for (let i = 0; D.where().s > t && i < 100; i++) key('[');
+    if (D.where().s !== t) check(`goTo reached ${id}`, false, `stuck at ${segs[D.where().s].id}`);
+    return segs[t];
+  };
   const press = (n) => { for (let i = 0; i < n; i++) key('ArrowRight'); };
   const fs = require('fs');
 
@@ -65,24 +73,56 @@ function open(level) {
   const missing = [...srcs].filter((f) => !fs.existsSync(path.join(__dirname, '..', f)));
   check('all ' + srcs.size + ' pictures exist', missing.length === 0, missing.join(' '));
 
+  // order: the tree first, the overview before any one animal, Carnotaurus after the rest
+  const at = (id) => segs.findIndex((s) => s.id === id);
+  check('tree right after the cover', at('title') === 0 && at('theropods') === 1);
+  check('example species before any single animal', at('family') < Math.min(at('limus'), at('rugops'), at('skorp'), at('meet')));
+  check('Carnotaurus after every other animal', ['vesper', 'arco', 'chena', 'koleken', 'vito'].every((id) => at(id) < at('p-carnotaurus')));
+
+  // the theropod tree: the published figure whole, then a zoom on the abelisaurs
+  goTo('theropods');
+  let host = d.querySelector('.seg:not(.off) .item-fig');
+  check('tree: the published figure, with no zoom yet', host.querySelector('.fg-img img').getAttribute('src').indexOf('gat16-fig2') >= 0 && host.querySelectorAll('.fg-aside .pl2-p').length === 0);
+  press(1);
+  check('tree: second build zooms', host.querySelectorAll('.fg-aside .pl2-p').length === 1);
+
+  // example species: each zooms beside the figure; the last picture gets its own wide box
+  const fam = goTo('family'); press(1);
+  host = d.querySelector('.seg:not(.off) .item-fig');
+  check('family: first species zooms, with its picture', host.querySelectorAll('.fg-aside .pl2-p').length === 2);
+  press(fam.builds.length - 2);
+  check('family: last build shows the scale picture', host.querySelector('.fg-img img').getAttribute('src').indexOf('abelisauridae-scale') >= 0);
+  check('family: scale picture is wide', parseInt(host.querySelector('.fg-img').style.width, 10) > 1000, host.querySelector('.fg-img').style.width);
+
+  // the ceratosaur tree: the published figure, then a zoom on each clade
+  const del = goTo('tree');
+  host = d.querySelector('.seg:not(.off) .item-fig');
+  check('Delcourt tree shows at level 1', (del.tier || 1) === 1);
+  check('Delcourt tree: the published figure', host.querySelector('.fg-img img').getAttribute('src').indexOf('del18-fig1') >= 0);
+  press(2);
+  check('Delcourt tree: second zoom is the abelisaurids', host.querySelector('.fg-aside').textContent.indexOf('Abelisaurids') >= 0);
+
+  // the locality map: the published figure, with a key to its numbers
+  goTo('found');
+  host = d.querySelector('.seg:not(.off) .item-plate');
+  check('map: the published figure', host.querySelector('.pl2-img img').getAttribute('src').indexOf('lon17-fig11') >= 0);
+  check('map: 13 rows in the key', host.querySelectorAll('.pl2-key span').length === 13);
+
+  // the question rail says the plain words
+  const rail = [...d.querySelectorAll('.ri span')].map((e) => e.textContent).join();
+  check('rail words', rail === 'Claim,Evidence,Alternatives,Test,Certainty', rail);
+
   // sort slide: four cards dealt, final build snaps every card to its bin
   const sort = goTo('who'); press(sort.builds.length - 1);
-  let host = d.querySelector('.seg:not(.off) .item-sort');
+  host = d.querySelector('.seg:not(.off) .item-sort');
   check('sort: 4 cards dealt and revealed', host.querySelectorAll('.pl-card:not(.off)').length === 4 && host.querySelectorAll('.pl-card.revealed').length === 4);
   check('sort: no prompt text on screen', d.querySelector('.prompt-text').textContent === '');
 
-  // timeline: 12 discoveries
-  const g = goTo('found'); press(g.builds.length - 1);
-  await wait(1200);
-  host = d.querySelector('.seg:not(.off) .item-guess');
-  check('found: all 12 pills on at the end', host.querySelectorAll('.gs-pill.on').length === 12, host.querySelectorAll('.gs-pill.on').length + ' pills');
-
-  // figure scene: pills one per build, a zone lights, the vote bar arrives last
-  const th = goTo('chena'); press(2);
-  host = d.querySelector('.seg:not(.off) .item-fig');
-  check('chena: two pills shown at build 2', host.querySelectorAll('.fg-pill.shown').length === 2);
-  check('chena: the second pill is lit', host.querySelectorAll('.fg-pill.on').length === 1);
-  press(th.builds.length - 3);
+  // claim slide: everything on screen at once, the vote bar arrives last
+  const th = goTo('chena');
+  host = d.querySelector('.seg:not(.off) .item-plate');
+  check('chena: three pictures on at the first build', host.querySelectorAll('.pl2-p.shown').length === 3);
+  press(th.builds.length - 1);
   host = d.querySelector('.seg:not(.off)');
   const sure = host.querySelector('.item-sure');
   check('chena: vote bar present', !!sure && !sure.classList.contains('off'));
@@ -91,19 +131,23 @@ function open(level) {
   check('votes counted', JSON.stringify(dots) === '[0,0,2,1,0]', JSON.stringify(dots));
   check('call saved for the wall', D.callOf('chena') != null);
 
-  // a map scene swaps the picture
-  goTo('world'); press(2);
-  host = d.querySelector('.seg:not(.off) .item-fig');
-  check('world: second build shows the 100 Ma map', host.querySelector('.fg-img img').getAttribute('src').indexOf('map100') >= 0);
+  // part numbers count only the parts shown at the level, so none is skipped
+  for (const lv of [3, 1]) {
+    D.setLevel(lv);
+    const cards = segs.filter((s) => (s.tier || 1) <= lv && s.items.some((i) => i.kind === 'title'));
+    const nums = cards.map((s) => { goTo(s.id); return d.querySelector('.seg:not(.off) .pt-num').textContent; });
+    check(`level ${lv}: part numbers run 1 to ${cards.length}`, nums.join() === cards.map((_, i) => i + 1).join(), nums.join());
+  }
+  D.setLevel(3);
 
   // the wall of evidence
   const wl = goTo('wall');
   host = d.querySelector('.seg:not(.off) .item-wall');
   const shown = () => [...host.querySelectorAll('.wl-tile')].filter((e) => e.style.display !== 'none').length;
-  check('wall: 10 tiles at level 3', shown() === 10, shown() + ' tiles');
+  check('wall: 9 tiles at level 3', shown() === 9, shown() + ' tiles');
   D.setLevel(1);
   host = d.querySelector('.seg:not(.off) .item-wall');
-  check('wall: 8 tiles at level 1', shown() === 8, shown() + ' tiles');
+  check('wall: 7 tiles at level 1', shown() === 7, shown() + ' tiles');
   check('wall: no prompt text on screen', d.querySelector('.prompt-text').textContent === '');
   check('no script errors', errors.length === 0, errors[0] || '');
   console.log(`\n${checks - fails}/${checks} checks passed`);
