@@ -90,6 +90,17 @@ function open(level) {
   check('tree: the published figure, with no zoom yet', host.querySelector('.fg-img img').getAttribute('src').indexOf('gat16-fig2') >= 0 && host.querySelectorAll('.fg-aside .pl2-p').length === 0);
   press(th0.builds.length - 1);
   check('tree: last zoom is the spinosaurids', host.querySelector('.fg-aside').textContent.indexOf('Spinosaurids') >= 0);
+  const zoneNames = th0.items[0].zones.map((z) => z.label.split(':')[0]).join();
+  check('tree: walks up the tree with spinosaurids in order, then ends on them', zoneNames === 'Ceratosaurs,Spinosaurids,Allosauroids,Tyrannosauroids,Maniraptorans,Spinosaurids', zoneNames);
+
+  // the timeline: every pill starts at its year, inside its row
+  goTo('who');
+  host = d.querySelector('.seg:not(.off) .item-guess');
+  const pills = [...host.querySelectorAll('.gs-pill')].map((e) => ({ year: +e.querySelector('.gs-yr').textContent, left: parseFloat(e.style.left), right: parseFloat(e.style.left) + parseFloat(e.style.width) }));
+  const dotAt = [...host.querySelectorAll('.gs-dot')].map((e) => parseFloat(e.style.left));
+  check('timeline: each pill starts at the dot for its year', pills.every((p, i) => Math.abs(p.left + 18 - dotAt[i]) < 0.01));
+  check('timeline: later years start further right', pills.every((p, i) => i === 0 || (p.year === pills[i - 1].year ? p.left === pills[i - 1].left : p.left > pills[i - 1].left)));
+  check('timeline: no pill runs past its row', pills.every((p) => p.right <= 1552), Math.max(...pills.map((p) => p.right)).toFixed(0));
 
   // the composite: one build per source, each lighting a zone
   const comp = goTo('composite');
@@ -98,11 +109,22 @@ function open(level) {
   check('composite: a pill per source', host.querySelectorAll('.fg-pill').length === comp.builds.length - 1);
 
   // every skeleton figure names what it shows
-  const skeletons = ['sereno', 'suchomimus', 'neotype', 'bone', 'ibero'];
+  const skeletons = ['sereno', 'suchomimus', 'neotype', 'bone', 'ibero', 'sail'];
   skeletons.forEach((id) => {
     const cap = JSON.stringify(segs[at(id)]);
     check(`${id}: caption says what the colors or specimens are`, /Red:|Orange:|FSAC-KK/.test(cap));
   });
+
+  // Gordon's method: a build-up right before the result, with a step per build, ending on archosaurs
+  check('Gordon method comes right before the result', at('gormethod') === at('gordon') - 1);
+  const gm = goTo('gormethod');
+  host = d.querySelector('.seg:not(.off) .item-fig');
+  const gmSrc = () => host.querySelector('.fg-img img').getAttribute('src');
+  const gmShown = () => host.querySelectorAll('.fg-pill.shown').length;
+  check('Gordon method: opens on Fig. 1 with no steps yet', gmSrc() === 'img/gor25-fig1.jpg' && gmShown() === 0, gmSrc());
+  press(gm.builds.length - 1);
+  check('Gordon method: every step is on screen at the end', gmShown() === gm.items[0].zones.length, String(gmShown()));
+  check('Gordon method: ends on the archosaur curves', gmSrc() === 'img/gor25-fig3a.jpg', gmSrc());
 
   // Stromer's plates: one, then the other on advance
   const st = goTo('stromer');
@@ -115,6 +137,10 @@ function open(level) {
   // no verdicts on ambiguous evidence, whichever paper they came from
   const words = JSON.stringify(segs).match(/unknown|untested|speculation|weakly supported|a hypothesis|: uncertain/gi);
   check('no verdict words on the slides', !words, (words || []).join());
+
+  // from the buoyancy slide on, header cards are a topic or a paper's claim; Brusatte's quote is the exception
+  const asked = segs.slice(at('float')).flatMap((s) => s.items.map((i) => i.head && i.head.claim)).filter((c) => c && c.includes('?') && !c.includes('grizzly'));
+  check('no question cards from the buoyancy slide on', asked.length === 0, asked.join(' | '));
 
   // the question rail says the plain words
   const rail = [...d.querySelectorAll('.ri span')].map((e) => e.textContent).join();

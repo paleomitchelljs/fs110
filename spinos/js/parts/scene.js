@@ -69,7 +69,9 @@
       wrap.classList.add('pick');
       wrap.addEventListener('click', (ev) => {
         const r = wrap.getBoundingClientRect(), fx = (ev.clientX - r.left) / r.width, fy = (ev.clientY - r.top) / r.height;
-        const j = def.zones.findIndex((z, k) => z.rect && fx >= z.rect[0] && fx <= z.rect[0] + z.rect[2] && fy >= z.rect[1] && fy <= z.rect[1] + z.rect[3] && zs[k].e.classList.contains('shown'));
+        const hit = (z, k) => z.rect && fx >= z.rect[0] && fx <= z.rect[0] + z.rect[2] && fy >= z.rect[1] && fy <= z.rect[1] + z.rect[3] && zs[k].e.classList.contains('shown');
+        // a zone can come up twice in one figure, so a click on the zone in view always closes it
+        const j = cur >= 0 && hit(def.zones[cur], cur) ? cur : def.zones.findIndex(hit);
         if (j >= 0) { ev.stopPropagation(); focus(cur === j ? -1 : j); }
       });
     }

@@ -3,14 +3,15 @@
  * Order: where spinosaurids sit among theropods; the species one at a time, moving up the
  * tree toward Spinosaurus; then Spinosaurus in historical order, specimens and studies
  * together, by year. Each kind of evidence gets one slide, so the argument does not repeat:
- * floating and rolling appear once (Henderson), the composite skeleton is taken apart once
- * (Ibrahim Fig. S3), and the sail as display is left to the readme.
+ * floating and rolling appear once (Henderson), and the composite skeleton is taken apart
+ * once (Ibrahim Fig. S3).
  *
  * Labels say the plain thing. Use the paper's own term and a number. Show the published
  * figure rather than redrawing it. A caption is the citation, plus which specimens a
  * skeleton shows. Nothing on a slide repeats what sits next to it. Where evidence is
- * ambiguous, ask the question and give no verdict; the readme keeps the papers' wording
- * for saying it aloud.
+ * ambiguous, give no verdict; the readme keeps the papers' wording for saying it aloud.
+ * From the buoyancy slide on, a header card is a topic (role: null, no icon) or the claim
+ * of the paper named beside it, not a question. Brusatte's quoted question is the exception.
  *
  * Sources are the papers in spinos/papers/ (see ../notes/ and ../readme.md).
  *
@@ -53,6 +54,7 @@
   const partTitle = (id, text, tier) => ({ id, title: text.replace(/_/g, ''), min: 0.3, tier: tier || 1, builds: [{}], items: [{ kind: 'title', box: [100, 200, 1400, 500], n: true, text }] });
 
   const SERENO1A = 'Red: holotype BSPG 1912 VIII 19. Blue: neotype FSAC-KK 11888. Yellow: referred · Sereno et al. 2022';
+  const SPINO_TIPS = [0.165, 0.7845, 0.18, 0.0187]; // Irritator and Baryonyx on the Gates tree
 
   const segments = [
     /* ---------------------------------------------------------- cover */
@@ -65,10 +67,11 @@
     figSeg('theropods', 'Spinosaurids among theropods', 1, 3.5, Object.assign(F('gat16-fig2.jpg', 'Theropods; red = ornamented · Gates et al. 2016'), {
       imgBox: [40, 8, 690, 672], aside: [770, 130, 790, 420], pills: false, zones: [
         { label: 'Ceratosaurs', rect: [0.165, 0.8465, 0.32, 0.0855] },
-        { label: 'Allosauroids', rect: [0.18, 0.665, 0.26, 0.09] },
-        { label: 'Tyrannosauroids', rect: [0.17, 0.52, 0.30, 0.14] },
-        { label: 'Maniraptorans', rect: [0.02, 0.02, 0.52, 0.40] },
-        { label: 'Spinosaurids: two tips on this tree', rect: [0.165, 0.783, 0.18, 0.022] }
+        { label: 'Spinosaurids', rect: SPINO_TIPS },
+        { label: 'Allosauroids', rect: [0.16, 0.6656, 0.26, 0.1024] },
+        { label: 'Tyrannosauroids', rect: [0.16, 0.507, 0.335, 0.1579] },
+        { label: 'Maniraptorans', rect: [0.07, 0.008, 0.425, 0.3792] },
+        { label: 'Spinosaurids: two tips on this tree', rect: SPINO_TIPS }
       ]
     })),
 
@@ -92,7 +95,7 @@
     })),
 
     plateSeg('ibero', '_Iberospinus_', 2, 1.5, {
-      head: { name: '_Iberospinus natarioi_', facts: 'Papo Seco Fm, Portugal · early Barremian · Mateus & Estraviz-López 2022' },
+      head: { name: '_Iberospinus natarioi_', facts: 'Portugal · early Barremian · Mateus & Estraviz-López 2022' },
       panels: [
         S('mat22-fig3.jpg', 'Dentary, ML 1190-1'),
         S('mat22-fig2.jpg', 'Red: ML 1190. Rest: Scott Hartman\'s drawing, no specimen named')
@@ -101,7 +104,7 @@
     }),
 
     plateSeg('baryonyx', '_Baryonyx_', 1, 3, {
-      head: { name: '_Baryonyx walkeri_', facts: 'Ockley, Surrey · claw found by William Walker, 7 Jan 1983 · Charig & Milner 1986' },
+      head: { name: '_Baryonyx walkeri_', facts: 'England · claw found by William Walker, 7 Jan 1983 · Charig & Milner 1986' },
       tall: S('cha97-front.jpg', 'John Sibbick · Charig & Milner 1997'),
       panels: [
         S('hh17-fig5d.jpg', 'Thumb claw, BMNH R9951 · Hone & Holtz 2017'),
@@ -121,13 +124,13 @@
     }, 'stomach'),
 
     plateSeg('wessex', '_Ceratosuchops_ and _Riparovenator_', 2, 1.5, {
-      head: { name: '_Ceratosuchops_ and _Riparovenator_', facts: 'Chilton Chine, Isle of Wight · Barker et al. 2021' },
+      head: { name: '_Ceratosuchops_ and _Riparovenator_', facts: 'England · Barker et al. 2021' },
       panels: [S('bar21-fig1.jpg', 'White: recovered bones. Rear: _Ceratosuchops_. Front: _Riparovenator_')],
       foot: [{ text: 'Two baryonychines in one formation', role: 'evidence' }]
     }),
 
     plateSeg('suchomimus', '_Suchomimus_', 1, 2.5, {
-      head: { name: '_Suchomimus tenerensis_', facts: 'Gadoufaoua, Niger · about 110 Ma · Sereno et al. 1998' },
+      head: { name: '_Suchomimus tenerensis_', facts: 'Niger · about 110 Ma · Sereno et al. 1998' },
       panels: [S('ser22-fig1f.jpg', 'Red: holotype MNBH GAD500. Blue: MNBH GAD70. Yellow: other referred · Sereno et al. 2022')],
       foot: [{ text: 'Same animal as _Cristatusaurus_?', role: 'else' }]
     }),
@@ -166,7 +169,7 @@
     }),
 
     plateSeg('irritator', '_Irritator_', 1, 3, {
-      head: { name: '_Irritator challengeri_', facts: 'Romualdo Fm, Brazil · Martill et al. 1996' },
+      head: { name: '_Irritator challengeri_', facts: 'Brazil · Martill et al. 1996' },
       panels: [
         S('sal17-fig2.jpg', 'Holotype SMNS 58022 · Sales & Schultz 2017', { label: 'Most complete spinosaurid skull' }),
         S('sch20-fig1.jpg', 'SMNS 58022 · Schade et al. 2020', { crop: [0.18, 0, 0.92, 0.52], label: 'Inner ear: snout down about 45°', role: 'evidence' })
@@ -175,7 +178,7 @@
     }),
 
     plateSeg('pterosaur', 'Tooth in a pterosaur neck', 1, 2, {
-      head: { name: 'WDC-SFB-001', facts: 'Santana Fm, Brazil · Buffetaut et al. 2004', claim: 'Predation or scavenging?' }, side: true,
+      head: { name: 'WDC-SFB-001', facts: 'Brazil · Buffetaut et al. 2004', claim: 'Predation or scavenging?' }, side: true,
       panels: [S('buf04-fig1.jpg', 'Buffetaut et al. 2004')],
       foot: [{ text: 'Tooth crosses the neural canal', role: 'evidence' }, { text: 'Neck still articulated, not digested', role: 'evidence' }]
     }),
@@ -292,7 +295,7 @@
         { label: 'Foramina like crocodilian pressure receptors', rect: [0, 0.69, 0.22, 0.31], role: 'evidence' },
         { label: 'Ilium about half the area of most theropods', rect: [0.66, 0.02, 0.34, 0.27], role: 'evidence' },
         { label: 'Hindlimb just over 25% of body length', rect: [0.50, 0.68, 0.30, 0.32], role: 'evidence' },
-        { label: 'Flat claws: webbed for paddling?', rect: [0.79, 0.68, 0.21, 0.32], role: 'else' },
+        { label: 'Flattened unguals', rect: [0.79, 0.68, 0.21, 0.32], role: 'evidence' },
         Object.assign({ label: 'Solid femur, unlike _Suchomimus_', role: 'evidence' }, S('ibr14-fig4.jpg', 'A: neotype femur. B: _Suchomimus_ MNN GAD608. C, D: neotype. E: chameleon · Ibrahim et al. 2014')),
         { label: '"an obligate quadruped on land"', role: 'claim' }
       ]
@@ -325,14 +328,34 @@
       ]
     }),
 
-    plateSeg('sail', 'Sail', 3, 1.5, {
-      head: { name: 'Gimsa et al. 2016', claim: 'A sail for use underwater?' }, side: true,
-      panels: [S('gim16-fig1.jpg', 'Outlines after Ibrahim et al. 2014 · Gimsa et al. 2016')],
-      foot: [{ text: 'Compared with sailfish', role: 'evidence' }, { text: 'Sereno 2022: sail adds 33.4% drag', role: 'test' }]
+    plateSeg('sail', 'Sail', 1, 2.5, {
+      head: { name: 'Dorsal sail', facts: 'Ibrahim 2014: "the tallest axial structure documented among dinosaurs"', claim: 'What shape?' },
+      panels: [
+        S('hen18-fig2.jpg', 'After Ibrahim et al. 2014 · Henderson 2018', { label: 'With a notch: 6.60 m²', role: 'evidence' }),
+        S('ser22-fig1a.jpg', 'Red: holotype BSPG 1912 VIII 19. Blue: neotype FSAC-KK 11888. Both × 1.32. Gray: not preserved · Sereno et al. 2022', { crop: [0.254, 0.219, 0.52, 0.489], label: 'No notch', role: 'else', at: 1 })
+      ],
+      foot: [
+        { text: 'Sereno: trunk sail 1.93 m tall, 3.53 m long', role: 'evidence', at: 1 },
+        { text: 'Arden: holotype spines "much more expanded." Age, sex, species?', role: 'else', at: 1 }
+      ]
+    }),
+
+    plateSeg('sailwhy', 'What the sail was for', 1, 3, {
+      head: { claim: 'What was the sail for?' },
+      panels: [
+        S('ibr14-fig4.jpg', '_Trioceros cristatus_, cleared and stained · Ibrahim et al. 2014', { crop: [0.5425, 0.563, 1, 0.94], label: 'Crested chameleon: Stromer 1915, Ibrahim 2014', role: 'claim' }),
+        S('ser22-fig4b.jpg', '_Basiliscus plumifrons_ FMNH 112993 · Sereno et al. 2022', { label: 'Display: basilisks "do not use their sails while swimming"', role: 'evidence', at: 1 }),
+        S('gim16-fig1.jpg', 'Outlines after Ibrahim et al. 2014 · Gimsa et al. 2016', { label: 'Sailfish: a sail for use underwater?', role: 'else', at: 2 })
+      ],
+      foot: [
+        { text: 'Fat hump: "extremely improbable," Stromer 1915', role: 'else' },
+        { text: 'Heat exchange?', role: 'else' },
+        { text: 'Sereno: sail adds 33.4% drag', role: 'test', at: 2 }
+      ]
     }),
 
     plateSeg('float', 'Floating model', 1, 3.5, {
-      head: { name: 'Donald Henderson 2018', claim: 'Could it sink? Would it stay upright?' },
+      head: { name: 'Donald Henderson 2018', claim: 'Modeling buoyancy', role: null },
       panels: [
         S('hen18-fig5.jpg', 'A: from Fig. S3. B: _Suchomimus_ · Henderson 2018', { label: 'Floats with lungs 75% deflated', role: 'evidence' }),
         S('hen18-fig9.jpg', 'Cross-section tipped 20° · Henderson 2018', { label: 'Rolls onto its side', role: 'evidence', at: 1 })
@@ -344,13 +367,13 @@
     }, 'float'),
 
     plateSeg('calcium', 'Calcium isotopes', 2, 2, {
-      head: { name: 'Gadoufaoua, Niger', facts: 'Hassler et al. 2018', claim: 'How much fish?' },
+      head: { name: 'Gadoufaoua, Niger', facts: 'Hassler et al. 2018' },
       panels: [S('has18-fig4.jpg', 'a: other theropods. b: _Sarcosuchus_. c: spinosaurids · Hassler et al. 2018', { label: 'Calcium from fish: 0–30%, 0–58%, 0–100%', role: 'evidence' })],
       foot: [{ text: 'Spinosaurids: a mix of fish and dinosaurs?', role: 'else' }]
     }),
 
     plateSeg('eyes', 'Eyes', 1, 3, {
-      head: { name: 'Arden 2019 · Hone & Holtz 2019', claim: 'Eyes on top of the skull?' },
+      head: { name: 'Arden 2019 · Hone & Holtz 2019' },
       panels: [
         S('ard19-fig6.jpg', 'FSAC-KK-3210, MSNM V4047, Stromer\'s dentary, _Irritator_ · Arden et al. 2019', { crop: [0, 0, 1, 0.6], label: '"placed the eyes atop the skull"', role: 'claim' }),
         S('hh21-fig6.jpg', 'Composite skull; angle from _Irritator_ · Hone & Holtz 2021', { label: 'Nares "retracted posteriorly but not dorsally"', role: 'else', at: 1 })
@@ -384,7 +407,7 @@
     }), 'flume'),
 
     plateSeg('teeth', 'Tooth counts', 2, 2.5, {
-      head: { name: 'Tarda, Morocco', facts: 'Beevor et al. 2021', claim: 'Living in the river?' }, side: true,
+      head: { name: 'Tarda, Morocco', facts: 'Beevor et al. 2021', claim: '"living mostly within the river"' }, side: true,
       panels: [S('bee21-fig6.jpg', 'A, B: Site 1. C, D: Site 2. Blue: _Spinosaurus_ · Beevor et al. 2021')],
       foot: [
         { text: 'Teeth: 47.9% and 43.9% _Spinosaurus_', role: 'evidence' },
@@ -412,13 +435,13 @@
     })),
 
     plateSeg('depth', 'Depth', 3, 1, {
-      head: { name: 'Hone & Holtz 2021', claim: 'Water deep enough to avoid wave drag?' }, side: true,
+      head: { name: 'Hone & Holtz 2021', claim: 'Depth to avoid wave drag', role: null }, side: true,
       panels: [S('hh21-fig8.jpg', 'Outline from Ibrahim et al. 2020 · Hone & Holtz 2021')],
       foot: [{ text: 'At least 6.1 m', role: 'evidence' }]
     }),
 
     plateSeg('bone', 'Bone density', 1, 3.5, {
-      head: { name: 'Matteo Fabbri 2022', claim: 'Underwater forager?' }, side: true,
+      head: { name: 'Matteo Fabbri 2022', claim: 'Underwater forager' }, side: true,
       panels: [S('fab22-fig1.jpg', '_Baryonyx_ NHM R 9951. _Suchomimus_ G51, G70, G94. FSAC-KK 11888. Orange: preserved · Fabbri et al. 2022', { crop: [0, 0.305, 1, 1] })],
       foot: [
         { text: 'Femur compactness: _Baryonyx_ 0.876, _Suchomimus_ 0.682, _Spinosaurus_ 0.968', role: 'evidence' },
@@ -440,13 +463,13 @@
     }),
 
     plateSeg('twoskel', 'Two skeletons', 2, 2, {
-      head: { name: 'Sereno against Ibrahim', claim: 'Which proportions?' }, side: true,
+      head: { name: 'Sereno against Ibrahim' }, side: true,
       panels: [S('ser22-fig9.jpg', 'Top: Sereno et al. 2022. Bottom: Ibrahim et al. 2020. Aligned at the ilium')],
       foot: [{ text: 'Sereno: presacrals, ribcage, forelimb over by about 10, 25, 30%', role: 'claim' }]
     }),
 
     plateSeg('physics', 'Flesh model', 1, 4, {
-      head: { name: 'Sereno et al. 2022', claim: 'A wader that could not dive?' }, side: true,
+      head: { name: 'Sereno et al. 2022', claim: 'A wader that could not dive' }, side: true,
       panels: [S('ser22-fig2.jpg', 'Flesh on the Fig. 1A composite · Sereno et al. 2022')],
       foot: [
         { text: 'Floats at about 2.6 m of water', role: 'evidence' },
@@ -457,7 +480,7 @@
     }, 'physics'),
 
     plateSeg('cm', 'Center of mass', 1, 4, {
-      head: { name: 'Sereno, 2014 to 2024', claim: 'Why did the center of mass move?' }, side: true,
+      head: { name: 'Sereno, 2014 to 2024', claim: 'Center of mass', role: null }, side: true,
       panels: [
         S('ibrsm-figS3.jpg', 'Red dot · Ibrahim et al. 2014', { crop: [0, 0.05, 0.62, 0.88], label: '2014: mid trunk' }),
         S('ser22-fig2.jpg', 'Red cross · Sereno et al. 2022', { crop: [0, 0, 1, 0.35], label: '2022: over the feet', at: 1 })
@@ -470,7 +493,7 @@
     }, 'cm'),
 
     plateSeg('femur', 'A second femur', 1, 2.5, {
-      head: { name: 'CMN 41869', facts: 'Isolated femur · Myhrvold et al. 2024', claim: 'Is the neotype typical?' }, side: true,
+      head: { name: 'CMN 41869', facts: 'Isolated femur · Myhrvold et al. 2024' }, side: true,
       panels: [S('myh24-fig4.jpg', 'A, B: CMN 41869. C: neotype femur. D: UCRC PV8 · Myhrvold et al. 2024')],
       foot: [
         { text: 'Compactness 0.804–0.888, with a cavity', role: 'evidence' },
@@ -479,7 +502,7 @@
     }),
 
     plateSeg('myhrvold', 'Bone density exchange', 2, 3, {
-      head: { name: 'Nathan Myhrvold and Sereno', claim: 'Does bone density show underwater foraging?' }, side: true,
+      head: { name: 'Nathan Myhrvold and Sereno', claim: 'Bone density', role: null }, side: true,
       panels: [S('myh24-fig8.jpg', 'A, B: _Suchomimus_. C: neotype. D: CMN 41869. E: CMN 50382. Same length · Myhrvold et al. 2024')],
       foot: [
         { text: 'Apr 2022: "undermined by selective sampling"', at: 0 },
@@ -490,7 +513,7 @@
     }),
 
     plateSeg('smart', 'Skull shape', 3, 1.5, {
-      head: { name: 'Smart & Sakamoto 2024', claim: 'Does skull shape separate them?' }, side: true,
+      head: { name: 'Smart & Sakamoto 2024', claim: 'Skull shape', role: null }, side: true,
       panels: [S('sma24-fig1.jpg', 'Smart & Sakamoto 2024')],
       foot: [
         { text: 'Land apart from semi- and fully aquatic', role: 'evidence' },
@@ -499,7 +522,7 @@
     }),
 
     plateSeg('word', 'What counts as aquatic', 1, 2.5, {
-      head: { claim: 'What counts as "aquatic"?' }, side: true,
+      head: { claim: 'Defining "aquatic"', role: null }, side: true,
       panels: [S('gor25-fig1a.jpg', 'Five bins · Gordon et al. 2025')],
       foot: [
         { text: 'Sereno: "severely reduced functional capacity on land"', role: 'claim' },
@@ -508,8 +531,20 @@
       ]
     }),
 
+    figSeg('gormethod', 'Hand length: method', 1, 3.5, Object.assign(F('gor25-fig1.jpg', 'Fig. 1 · Gordon et al. 2025'), {
+      zones: [
+        { label: 'Animals of known habit: highly or fully aquatic, or not', rect: [0.083, 0.392, 0.153, 0.219] },
+        { label: 'Four bone traits from earlier papers', rect: [0.484, 0, 0.516, 0.712] },
+        Object.assign({ label: 'Measure hand ÷ forearm, no claw: 759 specimens', imgBox: [40, 130, 1010, 420] }, S('gor25-fig1d.jpg', 'Zeugopod = forearm. Acropod = hand: digit III in reptiles. No specimen named · Gordon et al. 2025')),
+        Object.assign({ label: 'Highly or fully aquatic: longer hands' }, S('gor25-fig2f.jpg', 'Fig. 2F · Gordon et al. 2025')),
+        Object.assign({ label: 'Train on ⅔, test on ⅓, 100 runs: hand ÷ forearm predicts best', role: 'test' }, S('gor25-fig2g.jpg', 'Fig. 2G. Green: hand ÷ forearm · Gordon et al. 2025')),
+        Object.assign({ label: 'Probability cutoff 0.66: finds 76%, flags 2% of others', role: 'test', rect: [0, 0.02, 0.32, 0.235] }, S('gor25-fig2g.jpg', 'Fig. 2G. White circle: best cutoff · Gordon et al. 2025')),
+        Object.assign({ label: 'Archosaurs only: finds 32%, flags 1%', role: 'else' }, S('gor25-fig3a.jpg', 'Fig. 3A, n = 46. Green: hand ÷ forearm. Pink: foot ÷ shin · Gordon et al. 2025'))
+      ]
+    })),
+
     plateSeg('gordon', 'Hand length', 1, 3.5, {
-      head: { name: 'Gordon et al. 2025', claim: 'Highly aquatic: "only occasionally leaves water"?' },
+      head: { name: 'Gordon et al. 2025', claim: 'Highly aquatic: "only occasionally leaves water"' },
       panels: [
         S('gor25-fig5a.jpg', 'Gordon et al. 2025', { label: 'Positive: one of two _Spinosaurus_ forelimbs', role: 'evidence' }),
         S('ser22-fig1a.jpg', 'Yellow: referred. Blue: neotype · Sereno et al. 2022', { crop: [0.225, 0.425, 0.345, 0.645], label: 'That forelimb: Sereno 2022', role: 'else', at: 1 })
@@ -521,7 +556,7 @@
     }, 'gordon'),
 
     plateSeg('salt', 'Salt glands', 2, 2, {
-      head: { name: 'Cau et al. 2026', facts: 'NHMUK PV R 16423, OPH 2103', claim: 'Salt glands above the eyes?' }, side: true,
+      head: { name: 'Cau et al. 2026', facts: 'NHMUK PV R 16423, OPH 2103', claim: 'Salt glands above the eyes' }, side: true,
       panels: [S('ard19-fig2.jpg', 'Other Kem Kem frontals: FSAC-KK-3209, FSAC-KK-3210 · Arden et al. 2019')],
       foot: [
         { text: 'Fossae, orbital notch, ventral sulcus', role: 'evidence' },
@@ -542,7 +577,7 @@
     }),
 
     plateSeg('inland', 'Inland river', 1, 3, {
-      head: { name: 'Sirig Taghat, Niger', claim: 'Does an inland river make it a wader?' }, side: true,
+      head: { name: 'Sirig Taghat, Niger', claim: 'Inland river, so a wader' }, side: true,
       panels: [
         S('ser26-fig1.jpg', 'Sereno et al. 2026'),
         S('ser26-fig3.jpg', 'Blue: _S. mirabilis_, scaled to subadult JEN1. Rest from _S. aegyptiacus_ · Sereno et al. 2026', { at: 1 })
@@ -555,7 +590,7 @@
     }, 'inland'),
 
     plateSeg('pca', 'Predatory modes', 1, 2.5, {
-      head: { name: 'Sereno et al. 2026', claim: 'Wader or diver?' }, side: true,
+      head: { name: 'Sereno et al. 2026', claim: 'Wader by shape' }, side: true,
       panels: [S('ser26-fig4.jpg', 'Red: _Spinosaurus_ (1), _Suchomimus_ (2) · Sereno et al. 2026')],
       foot: [
         { text: 'Between herons and darters', role: 'evidence' },
@@ -568,8 +603,8 @@
     {
       id: 'who', title: 'Who said what', min: 3, tier: 1, builds: Array.from({ length: 18 }, () => ({})),
       items: [{
-        kind: 'guess', box: [0, 100, 1600, 690], y0: 1995, y1: 2028,
-        rows: [{ label: 'Specimens', chrono: true }, { label: 'Shore and shallows' }, { label: 'In the water', hot: true }],
+        kind: 'guess', box: [0, 100, 1600, 690], y0: 1995, y1: 2027,
+        rows: [{ label: 'Specimens' }, { label: 'Shore and shallows' }, { label: 'In the water', hot: true }],
         events: [
           { year: 1997, label: 'Charig & Milner: bank', row: 1 },
           { year: 2005, label: 'Dal Sasso: snout', row: 0 },
@@ -578,7 +613,7 @@
           { year: 2014, label: 'Ibrahim: paddler', row: 2 },
           { year: 2018, label: 'Henderson: floats', row: 1 },
           { year: 2019, label: 'Arden: eyes', row: 2 },
-          { year: 2020, label: 'Ibrahim: tail', row: 0, right: true },
+          { year: 2020, label: 'Ibrahim: tail', row: 0 },
           { year: 2020, label: 'Ibrahim: swimmer', row: 2 },
           { year: 2021, label: 'Hone & Holtz: wading', row: 1 },
           { year: 2021, label: 'Beevor: teeth', row: 2 },
@@ -586,7 +621,7 @@
           { year: 2022, label: 'Sereno: no diving', row: 1 },
           { year: 2024, label: 'Myhrvold: bone', row: 1 },
           { year: 2025, label: 'Gordon: hands', row: 2 },
-          { year: 2026, label: 'Sereno: S. mirabilis', row: 0, right: true },
+          { year: 2026, label: 'Sereno: S. mirabilis', row: 0 },
           { year: 2026, label: 'Sereno: inland', row: 1 }
         ].sort((a, b) => a.year - b.year)
       }]

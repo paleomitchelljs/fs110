@@ -19,7 +19,7 @@ Model source:
 - No dorsal view available, so widths "were guided by reconstructions showing dorsal views of other large dinosaurs by palaeoartists, for example Greg Paul (1988)."
 - Assumptions: axial tissue 1,000 gm/l; pre-caudal axial reduced 15% to 850 gm/l for air sacs; limbs 1,050; lung ~9% of axial volume.
 
-Sail: lateral area 6.60 m2, bone 2.45 m2, assumed thickness 4.25 cm, mass 335 kg. 7.5% of axial mass.
+Sail: lateral area 6.60 m2, bone 2.45 m2, assumed thickness 4.25 cm, mass 335 kg. 7.5% of axial mass. These are from the outline in Ibrahim 2014, not from a new reconstruction. [Sereno 2022](sereno-2022.md) gets about 5.03 m2 a side from its own model.
 
 Results:
 - CM: "the center of mass of Spinosaurus was much closer to the hips than previously estimated." Relative CM 15.3% of gleno-acetabular distance, less than *T. rex* at 20.9%.

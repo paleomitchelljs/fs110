@@ -4,17 +4,17 @@ A lecture deck on the same engine as `abelisaurs/`. Per-paper notes are in `note
 
 ## Levels
 
-Press **L** (or `#L1` `#L2` `#L3`). 40 / 55 / 59 slides, about 112 / 145 / 151 minutes before questions. The therizinosaur deck is 100 at its full level, so L3 is about 1.5 times that. L1 is about twice the therizinosaur L1; move slides to tier 2 in `js/content.js` to shorten it.
+Press **L** (or `#L1` `#L2` `#L3`). 43 / 58 / 61 slides, about 121 / 154 / 158 minutes before questions. The therizinosaur deck is 100 at its full level, so L3 is about 1.5 times that. L1 is about twice the therizinosaur L1; move slides to tier 2 in `js/content.js` to shorten it.
 
 ## How it is built
 
 | Part | Slides |
 |---|---|
-| No card | Cover; Gates 2016 tree, zoomed by group, ending on spinosaurids |
+| No card | Cover; Gates 2016 tree, zoomed by group going up the tree, with spinosaurids in order and again at the end |
 | 1 Spinosaurids by branch | Sereno 2026 tree; Barker tree (L2); *Iberospinus* (L2); *Baryonyx*; stomach; Wessex pair (L2); *Suchomimus*; snout nerves (L2); jaws (L2); conger (L3); *Ichthyovenator* (L2); *Irritator*; pterosaur tooth; *Angaturama* and *Oxalaia* |
 | 2 Lost fossils | Stromer 1915 plates; "*Spinosaurus* B"; Munich 1944; CMN 50791 under three names (L2); snout MSNM V4047; oxygen isotopes |
-| 3 2014 neotype | site; neotype alone; Fig S3 by source; claims; Hartman (L2); one species; two forms (L2); sail (L3); Henderson; calcium (L2); eyes |
-| 4 2020 tail | tail; flume; tooth counts (L2); grizzly or crocodile; tail spines (L2); depth (L3); bone density; Sereno skeleton; two skeletons (L2); flesh model; center of mass; second femur; bone exchange (L2); skull shape (L3); what counts as aquatic; hand length; salt glands (L2); *S. mirabilis*; inland; predatory modes |
+| 3 2014 neotype | site; neotype alone; Fig S3 by source; claims; Hartman (L2); one species; two forms (L2); sail shape; sail function; Henderson; calcium (L2); eyes |
+| 4 2020 tail | tail; flume; tooth counts (L2); grizzly or crocodile; tail spines (L2); depth (L3); bone density; Sereno skeleton; two skeletons (L2); flesh model; center of mass; second femur; bone exchange (L2); skull shape (L3); what counts as aquatic; hand length method; hand length; salt glands (L2); *S. mirabilis*; inland; predatory modes |
 | End | who said what, by year; wall of evidence |
 
 Each kind of evidence appears once. Floating is only Henderson. Fig S3 is taken apart once.
@@ -27,6 +27,10 @@ Each kind of evidence appears once. Floating is only Henderson. Fig S3 is taken 
 - ***Ichthyovenator*, Aptian, Allain 2012,** and ***Suchomimus*, Sereno 1998:** cited through other papers. Neither original is in the folder.
 - **Salt glands.** Cau 2026 in hand has no figures, so the slide shows Arden's frontals, and the caption says they are other specimens.
 - **Who said what.** The row each paper sits in is the deck's sorting, not the authors'.
+- **Sail shape.** "With a notch" and "No notch" are my reading of Henderson Fig 2 and Sereno Fig 1A. The "M" for Ibrahim's outline is Hone & Holtz 2021's word. Neither Sereno paper names its shape, and the rear spines in Fig 1A are gray.
+- **Stromer quote.** "Extremely improbable" is my translation of "äußerst unwahrscheinlich," and it's about a fat hump in a predator.
+- **Hand length method, "100 runs."** Main text and Methods say 100. Methods also says "each of the 1,000 iterations," and Table 1 says "10,000 times."
+- **Which model scores theropods.** The paper doesn't say outright. By eye the Fig 5A lines sit at about 0.64 and 0.18, which match the all-amniote cutoffs (0.66, 0.18), not the archosaur ones (0.23, 0.37). The supplement on Figshare may settle it, and it isn't in the folder.
 
 ## Said aloud, not on the slides
 
@@ -35,7 +39,20 @@ Each kind of evidence appears once. Floating is only Henderson. Fig S3 is taken 
 - Charig & Milner 1997: "no flipper-like modifications of the limbs." They read side-set nostrils as "disadvantageous" in water. Later authors read retracted nostrils the other way.
 - Sereno argues against "aquatic," not "semiaquatic": "a semiaquatic bipedal ambush piscivore."
 - Gordon: "Such predictions are nevertheless tentative." Press: "We confidently recovered highly aquatic habits."
+- Gordon's 0.66 is a predicted probability, not a hand ratio. The slide says "probability cutoff" for that reason, and it's an easy thing for students to mix up.
+- Gordon's two groups are "highly/fully aquatic" or not, so the model can't test wading. "our results were able to directly predict or reject highly/fully aquatic lifestyles but not transiently/moderately aquatic (i.e., semi-aquatic) habits."
+- Archosaurs only: AUC 0.49, which is coin-flip territory, and 68% of aquatic archosaurs missed. Gordon calls this "overly cautious" and argues it makes a positive more believable. My arithmetic: accuracy 0.91 at those rates means about 6 of 46 are positives, so answering "no" every time scores about 88%.
+- Gordon's Fig 1C includes flat claws, the trait Ibrahim 2014 used for webbing. Result: "no consistent osteological correlates for interdigital webbing."
+- Gordon's fossil call is a t-test on 10,000 simulated probabilities. At that n, very small differences come out significant. My point, not theirs.
+- Most theropods in Gordon's Fig 5A aren't predicted at all: white circles are "fixed based on morphological considerations or direct observation."
+- ROC curves: "originally developed by the U.S. Army Signal Corps in World War II."
 - *Irritator*'s name and the dealer story: Martill 1996, not in the folder, so secondhand.
+- Stromer worked through the sail in 1915. Muscle: spines "dürften ... kaum" have anchored it. Fat hump: "äußerst unwahrscheinlich" in a predator. He settled on a tall narrow crest, and he still found it striking that the spines were "so schwer und massiv." He also guessed the sexes might differ, because only male *Chamaeleo montanus* have the crest.
+- Arden 2019 on holotype and neotype spines: "ontogenetic change or sexual dimorphism," or "taxonomic significance." That last one would make the neotype a different species from the holotype.
+- Heat. Hone & Holtz 2021: "Thermoregulation, however, cannot be ruled out," and "specific modelling... would be needed." Sails also show up outside the hot Cenomanian: *Ouranosaurus*, *Concavenator*, *Ichthyovenator*.
+- *Ichthyovenator*'s spines look very different from *Spinosaurus*'s. Hone & Holtz 2021 read that as "at least one of these was not under strong selection based on their mechanical performance."
+- The sail can't fold. Gimsa admits "sailfish can fully withdraw" their fins, and Sereno 2022 calls the sailfish fin "fully retractable." Hone & Holtz 2021: the sail "would offer enormous pressure drag," and the M shape adds "further drag with two tips."
+- Sereno 2026: the *S. mirabilis* crest "adds to the evidence that visual display, rather than aquatic propulsion," was the main function. The same paper says "a trunk sail of unknown shape," so the *S. mirabilis* sail in its skeleton is borrowed.
 
 ## Figure credits
 
@@ -99,7 +116,7 @@ Inherit someone else's composite:
 
 Real bones: Hone & Holtz 2017 Fig 2 (holotype); Ibrahim 2020 Figs 1b, 2; Sales & Schultz Fig 2 (*Irritator*).
 
-No skeletal figure: Buffetaut 2004, Beevor 2021, Cooper 2026, Cau 2026 (skull roof only), Pittet 2026 (snout CT), Gordon 2025 (silhouettes as symbols, limbs of other animals).
+No skeletal figure: Buffetaut 2004, Beevor 2021, Cooper 2026, Cau 2026 (skull roof only), Pittet 2026 (snout CT), Gordon 2025 (silhouettes as symbols, limbs of other animals; the measured flipper in Fig 1D names no specimen).
 
 ## Conflicts between papers
 
@@ -115,5 +132,8 @@ No skeletal figure: Buffetaut 2004, Beevor 2021, Cooper 2026, Cau 2026 (skull ro
 - ***Suchomimus*.** Fabbri 2022: not a subaqueous forager. Gordon 2025: forelimb highly aquatic. Myhrvold 2024 doubts Fabbri's *Suchomimus* sections are *Suchomimus*.
 - **Webbing.** Ibrahim 2014 infers it from flat claws. Gordon 2025: "no unambiguous osteological correlates of interdigital webbing."
 - **Length.** Over 15 m (Ibrahim 2014), 15 or 16 m (Brusatte 2021), under 14 m (Sereno 2022).
+- **Sail size.** Henderson 2018, from Ibrahim's outline: 6.60 m2 in side view, 2.45 m2 of it bone, 335 kg. Sereno 2022: trunk sail 10.06 m2 on both sides, so about 5.03 a side, and 441 kg with the tail sail.
+- **Sail shape.** Notched "M" (Ibrahim 2014, 2020, per Hone & Holtz 2021). "almost rectangular" (Gimsa 2016). No notch (Sereno 2022 Fig 1A).
+- **Sail function.** Display (Ibrahim 2014, Arden 2019, Hone & Holtz 2021, Sereno 2022, 2026). Submerged use (Gimsa 2016).
 - **Prey.** Hone & Holtz 2021 suggest hard prey. D'Amore 2024 (Hone coauthor): not durophagous.
 - **Stromer on diet.** Sereno 2022: he stressed piscivory. Hone & Holtz 2017: he "did not speculate."

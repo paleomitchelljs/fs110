@@ -17,7 +17,7 @@ PAPERS = os.path.join(HERE, '..', 'papers')
 OUT = os.path.join(HERE, '..', 'img')
 DPI = 260
 # Figures shown zoomed get more resolution. gat16-fig2 has vector labels, so they stay sharp.
-DPI_FOR = {'ser22-fig1a': 420, 'ser22-fig1f': 420, 'ser22-fig2': 350, 'ser22-fig9': 350, 'ser26-fig1': 350, 'ser26-fig2': 350, 'ser26-fig3': 350, 'ser26-fig4': 350, 'ser26-fig5b': 350, 'gor25-fig1a': 420, 'gor25-fig5a': 450, 'ibr14-fig2': 350, 'fab22-fig1': 350, 'hh21-fig1': 350, 'hh21-fig6': 350, 'hh21-fig9': 350, 'mat22-fig2': 350, 'bar21-fig1': 350, 'bru21-fig1': 300, 'ibrsm-figS3': 400}
+DPI_FOR = {'ser22-fig1a': 420, 'ser22-fig1f': 420, 'ser22-fig2': 350, 'ser22-fig9': 350, 'ser26-fig1': 350, 'ser26-fig2': 350, 'ser26-fig3': 350, 'ser26-fig4': 350, 'ser26-fig5b': 350, 'gor25-fig1a': 420, 'gor25-fig5a': 450, 'ibr14-fig2': 350, 'fab22-fig1': 350, 'hh21-fig1': 350, 'hh21-fig6': 350, 'hh21-fig9': 350, 'mat22-fig2': 350, 'bar21-fig1': 350, 'bru21-fig1': 300, 'ibrsm-figS3': 400, 'ser22-fig4b': 450, 'hen18-fig2': 300, 'gor25-fig1': 350, 'gor25-fig1d': 420, 'gor25-fig2f': 420, 'gor25-fig2g': 420, 'gor25-fig3a': 420}
 FULLPAGE = {'buf04'}  # pages with printer's marks: render the whole page, then cut by fraction
 
 P = {

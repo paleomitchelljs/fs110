@@ -31,7 +31,7 @@ A partial subadult skeleton from Morocco, made the neotype, plus referred bones,
 - Quadruped: "Spinosaurus must have been an obligate quadruped on land, the first discovered among theropod dinosaurs."
 - Stromer cross-check: reduced pelvis, short hindlimb, short femur, flat unguals "can be verified in the second partial skeleton described by Stromer as 'Spinosaurus B'."
 - Tail, as of 2014: "Spinosaurus used lateral undulation of the tail," with "flexibility of the tail and the form of the neural spines" supporting "tail-assisted swimming." Propulsion is credited to the feet. Ibrahim 2020 changes this.
-- Sail: compared with the crested chameleon *Trioceros cristatus*. "they were wrapped snugly in skin and functioned as a display structure that would have remained visible while swimming."
+- Sail: "the tallest axial structure documented among dinosaurs, has been argued to be a thermoregulatory surface, a muscle- or fat-lined hump (30), or a display structure." Compared with the crested chameleon *Trioceros cristatus*, following Stromer. "The striated surface, sharp edges, and dense, poorly vascularized internal bone of the spines suggest that they were wrapped snugly in skin and functioned as a display structure that would have remained visible while swimming." Supplement: spine height "up to ten times greater than centrum height."
 - Diet: "primarily a piscivore, subsisting on sharks, sawfish, coelacanths, lungfish, and actinopterygians."
 
 ## Figures

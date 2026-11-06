@@ -6,7 +6,7 @@ Files:
 - `spinos/papers/gordon-2025-current-biology.pdf`, published, 25 pages, 300 dpi images. PDF page = journal page minus 5980. Copied from `abelisaurs/papers/`, where the original still sits.
 - `spinos/papers/2025.06.25.661573.full.pdf`, bioRxiv preprint, 27 June 2025. Has no theropod results at all. They were added in review. Use the published one.
 
-Read in full apart from the methods details and the Figshare supplement (https://doi.org/10.6084/m9.figshare.30395887), which isn't in the folder. Figs 1, 5 and preprint Fig 4 (= published Fig 6) viewed. Figs 2, 3, 4 from captions. Fig 5A viewed at 420 dpi.
+Read in full, including STAR Methods. The Figshare supplement (https://doi.org/10.6084/m9.figshare.30395887) isn't in the folder. Figs 1, 2, 3, 5, 6 viewed. Fig 4 from its caption. Fig 5A viewed at 420 dpi.
 
 ## Claim
 
@@ -48,10 +48,28 @@ Conflicts:
 - [Sereno 2022](sereno-2022.md): "incapable of diving, given its buoyancy and incompressible trunk." Gordon's category is "only occasionally leaves water," which a floating animal could meet, so those aren't strictly exclusive. Gordon's press line, "submerged," does conflict. Limb proportions don't address buoyancy.
 - *Juravenator* comes out highly aquatic, which the authors accept: "make sense of its piscivorous dentition and hypothesized integumentary sense organs." See [Pittet 2026](pittet-2026.md) for that skin argument. Jaime Headden on the same list: "a lot of these assumptions were dealt with in Hone and Holtz (2021)."
 
+## Method
+
+The order the deck's method slide follows. Methods are on PDF pp. 20-25 (journal e2-e7).
+
+1. Score. "In most cases, we scored extant taxa for aquatic affinity using field guides and primary natural history literature. However, for a select few fossil groups (i.e., ichthyosaurs, plesiosaurs, mosasaurids, and metriorhynchids), morphological considerations were used to infer fully aquatic habits a priori." The five bins collapse to two: "binary 'highly/fully aquatic' and 'not highly/fully aquatic' categories." Their reason is that "the most drastic change in forelimb morphometry" falls at that line.
+2. Candidates, Fig 1C: hand outline, limb region proportions, proximal phalanx shape, claw shape. "flattened unguals" is the trait [Ibrahim 2014](ibrahim-2014.md) used for webbing.
+3. Measure. "Linear measurements were collected on 759 specimens: 469 extant, 290 extinct." Physical skeletons 365, 3D meshes 115, photographs 279. Hand: "the combined length of the metacarpal and the un-clawed phalanges of either digit III (for reptiles) or the longest digit (for mammals and outgroups)." Forearm: "Radius and ulna lengths were averaged."
+4. Compare. Fig 2F, phylogenetic ANOVA and Levene's tests. By eye, the aquatic pan-archosaur median is about 0.5, below the non-aquatic median of about 0.9, with a very long upper range. So many aquatic archosaurs in the sample don't have long hands, which fits the 32% below.
+5. Train and test. "the dataset of taxa with known phenotypes was split randomly into thirds, two thirds of the data was used to fit (or 'train') a phybLR model, and the remaining third was fed into the trained model to test its performance." Repeated across eight supertrees for the sensitivity tests. ROC analysis "was originally developed by the U.S. Army Signal Corps in World War II."
+   - Run counts don't agree within the paper. Main text and Methods: 100 runs. Methods also: "each of the 1,000 iterations." Table 1: "fit to the data 10,000 times." The slide says 100.
+6. Cutoff, from Youden's J (TPR minus FPR). Table 1, highly/fully aquatic from hand/zeugopodium: AUC 0.91, cutoff 0.66, n 466, TPR 0.76, FPR 0.02, TNR 0.98, FNR 0.24, accuracy 0.91. The cutoff is a predicted probability, not a hand ratio.
+7. Archosaurs only. Fig 3B, hand/zeugopodium: AUC 0.49, cutoff 0.23, n 46, TPR 0.32, FPR 0.01, TNR 0.99, FNR 0.68, accuracy 0.91. Foot/zeugopodium: AUC 0.69, cutoff 0.37, n 68, TPR 0.48, FPR <0.01, TNR >0.99, FNR 0.52, accuracy 0.96. Their words: "significant but overly cautious predictors."
+   - My arithmetic, not theirs. Accuracy 0.91 at those rates implies about 12% positives, so about 6 of 46, which fits their "n < 10." Answering "no" every time would score about 88%. An AUC of 0.49 is what a coin flip gets.
+8. Fossils. "these 'best' phybLR models were used to derive a normal distribution of n=10,000 predicted probabilities for each of the tip taxa in our dataset with ambiguous phenotypes." A taxon gets the phenotype "if and only if its mean predicted probability of having the phenotype was significantly higher than the ideal binary classification threshold," by one-tailed t-test.
+   - Which model scores theropods? Not stated outright. By eye the Fig 5A lines sit at about 0.64 and 0.18. Those match Table 1's all-amniote cutoffs (0.66, 0.18), not the archosaur ones (0.23, 0.37). So the archosaur numbers look like the argument for trusting a positive, not the model doing the scoring. My reading.
+   - With n = 10,000 simulated values, a t-test calls very small differences significant, so "significantly higher" depends partly on how many simulations were drawn. My point, not theirs. Worth asking about for a *Spinosaurus* point whose range straddles the line.
+   - Fig 5 legend: white circles are "fixed based on morphological considerations or direct observation." That covers most theropods in Fig 5A. Filled forelimb points are only *Suchomimus*, *Spinosaurus*, *Juravenator* and *Halszkaraptor*.
+
 ## Other facts and quotes
 
 - Five bins, Fig 1: Fully Terrestrial "never intentionally enters water"; Transiently Aquatic "only occasionally enters water"; Moderately Aquatic "regularly crosses land and water"; Highly Aquatic "only occasionally leaves water"; Fully Aquatic "never intentionally leaves water." Useful definitions for the argument over the word "aquatic" between [Sereno 2022](sereno-2022.md) and [Fabbri 2022](fabbri-2022.md).
-- Sample: "more than 11,000" measurements. Preprint: "11,410 linear measurements on n = 747 specimens."
+- Sample: ">11,000 original measurements," 759 specimens. Preprint: "11,410 linear measurements on n = 747 specimens."
 - Webbing, a direct hit on [Ibrahim 2014](ibrahim-2014.md)'s foot, which says flat claws "suggest that the foot may have been adapted to traversing soft substrates or webbed for paddling." Preprint highlights: "Interdigital webbing cannot be predicted from the bones alone using previously suggested correlates." Also "interdigital webbing is most typical of moderately aquatic species."
 - Long hands come late: "a lineage's limb morphometry reflects its adaptation to aquatic habits only once it spends the vast majority of its time in the water."
 - Scoring of living animals is "from the natural history literature (see Table S1)."
@@ -64,9 +82,11 @@ No dinosaur skeletons. Silhouettes and limbs of other animals.
 
 **Fig 1 (PDF p4).** a: five labelled bins with cartoon water levels. b: webbed vs flippered limb icons. c: proposed correlates. d: where measurements are taken, on a flipper. Clean.
 
-**Fig 2 (PDF p5, caption only).** Ternary plots, box plots of relative hand length, ROC curves.
+**Fig 1D (PDF p4).** One flippered forelimb with the measurements drawn on it. The legend names no species or specimen.
 
-**Fig 3 (PDF p8, caption only).** ROC by clade. This is where archosaur forelimb accuracy is shown.
+**Fig 2 (PDF p5).** Ternary plots, box plots of relative hand length (F), ROC curves (G). G's left panel compares the four candidate traits for highly/fully aquatic habits.
+
+**Fig 3 (PDF p8).** ROC by clade with a table of rates. This is where archosaur forelimb accuracy is shown.
 
 **Fig 4 (PDF p10, caption only).** Trees with probabilities for extinct pan-reptiles.
 

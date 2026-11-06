@@ -24,6 +24,7 @@ Raised orbits and arched frontals put the eyes on top of the skull. The authors 
 - Gradient: baryonychines lack pachyostosis, so "they may have waded into lakes and rivers to fish, like herons and Kodiak bears." Spinosaurines are "highly specialized semiaquatic predators." Compared to whales, a radiation that "varied in their degree of specialization."
 - Ecology: giant pholidosaurs like *Sarcosuchus* are absent from the Cenomanian of North Africa. Largest croc *Elosuchus*, skull ~100 cm. Spinosaurids either took vacant niches or drove them out "via competitive displacement." No test is offered between those.
 - Phylogeny: 12 shortest trees, length 795.56, CI .5780. Stratigraphy used as a tie-breaker (.01 step per stage), and continent as a binary character. Tree therefore carries time and place as data. Neotype excluded "pending a full description."
+- Sail (PDF p7): "the neural spines of the holotype (Stromer, 1915a) are much more expanded than those of the neotype (Ibrahim et al., 2014). Given that the sail probably served a display function, these differences could easily result from ontogenetic change or sexual dimorphism in sail morphology. However, it is also possible that they are of taxonomic significance, in which case the neotype might conceivably represent a species other than the S. aegyptiacus holotype."
 
 ## Figures
 

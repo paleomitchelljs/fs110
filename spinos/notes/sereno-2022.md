@@ -52,12 +52,14 @@ Flesh model and physics:
 - Flotation at ~2.6 m water depth.
 - Speed: "~0.8 m/s" surface, "~1.4 m/s" submerged. The text also gives "maximum velocity is only 1.2 m/s," the abstract "<1 m/s," conclusion 8 "~1 m/s." Quote the specific number you mean. Pursuit predators "10-33 m/s."
 - Tail: "820 Watts (683 N or 154 lbs)," assuming an Alligator-like tail.
-- Sail adds 33.4% drag.
+- Sail adds 33.4% drag: "The addition of the sail increases the drag on the body of S. aegyptiacus by 33.4%."
+- Sail size, adult flesh model: trunk sail depth at mid trunk 1.93 m, length at base 3.53 m (Table 7). Trunk sail area 10.06 m2 on both sides, so about 5.03 m2 a side, and tail sail 3.17 m2 (Table 8). Dorsocaudal sail 441 kg, density 1196 kg/m3 (Table 6). Compare [Henderson 2018](henderson-2018.md).
+- "No primary or secondary vertebrate swimmer has a comparable drag-magnifying, rigid dorsal sail including sailfish, the dorsal fin of which is fully retractable and composed of pliable spines in membrane."
 - Dive: "~17,000 N," "~25 times the maximum force output of the tail." "Even with lizard-like internal air space, diving still requires ~15 times."
 - Stability: stable equilibrium "when floating on its side." "Righting requires substantial torque (~5000 Nm)."
 - Tail: "functioned more as a pliant billboard than flexible fluke."
 - Foot: "for which there is no hard evidence to establish as likely." Crocodylian webbing adds "<20%" area.
-- Lizards: spine-supported sails "have evolved multiple times for intraspecific display rather than aquatic propulsion."
+- Lizards: spine-supported sails "have evolved multiple times for intraspecific display rather than aquatic propulsion." "Semiaquatic sailfin and basilisk lizards (Figure 4B), for example, do not use their sails while swimming, spend very little time submerged, and are not aquatic pursuit predators."
 
 Inland fossils (Appendix 4), "pertaining to Spinosaurus," genus level:
 - MNBH EGA1, both maxillae + dentary edge, Égaro North, Chad Basin, Niger.

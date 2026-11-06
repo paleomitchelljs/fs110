@@ -79,15 +79,17 @@
 
   /* ---------- the timeline of guesses ---------- */
   D.parts.guess = function (def, host) {
-    const X0 = 270, X1 = 1450, Y0 = def.y0, Y1 = def.y1, TOP = 62, LANE = 46;
-    const xOf = (y) => X0 + (y - Y0) * (X1 - X0) / (Y1 - Y0);
+    const X0 = 250, Y0 = def.y0, Y1 = def.y1, TOP = 62, LANE = 46, LEAD = 18, ROW_END = 1552;
+    const widthOf = (e) => Math.round(e.label.length * 12.6 + 112);
+    // every pill starts at its year, so the scale is the largest that keeps the last pills inside the row
+    const perYear = Math.min(...def.events.map((e) => (ROW_END + LEAD - widthOf(e) - X0) / (e.year - Y0)));
+    const xOf = (y) => X0 + (y - Y0) * perYear, X1 = xOf(Y1);
     host.innerHTML = '<div class="gs"></div>';
     const root = host.firstChild;
     // lanes by overlap within a row, then each row as tall as its lanes
     const laneEnd = def.rows.map(() => []);
     const plan = def.events.map((e) => {
-      const w = Math.round(e.label.length * 12.6 + 112), right = e.right || (!def.rows[e.row].chrono && xOf(e.year) - 18 + w > 1595);
-      const x0 = right ? xOf(e.year) - w + 18 : xOf(e.year) - 18;
+      const w = widthOf(e), x0 = xOf(e.year) - LEAD;
       const ends = laneEnd[e.row];
       let lane = ends.findIndex((end) => x0 > end + 8);
       if (lane < 0) lane = ends.length;

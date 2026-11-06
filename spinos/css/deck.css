@@ -404,7 +404,7 @@ mark { background: var(--accent-soft); color: var(--accent-ink); font-style: nor
 .gs-axis { position: absolute; height: 0; border-top: 4px solid var(--ink-2); }
 .gs-tick { position: absolute; transform: translateX(-50%); font: 600 23px var(--font-ui); color: var(--muted); font-variant-numeric: tabular-nums; }
 .gs-pill { position: absolute; display: flex; align-items: center; gap: 10px; height: 42px; padding: 0 16px 0 14px; white-space: nowrap; font: 600 25px var(--font-ui); background: var(--card); border: 2px solid var(--ink-2); border-radius: 21px; box-shadow: 0 3px 0 var(--rule); opacity: 0; transform: translateY(8px); transition: opacity 0.35s, transform 0.35s; }
-.gs-pill.on { opacity: 1; transform: none; }
+.gs-pill.on { opacity: 1; transform: none; z-index: 6; }
 .gs-pill i { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid var(--outline); flex: none; }
 .gs-yr { margin-left: auto; padding-left: 14px; font: 600 21px var(--font-ui); color: var(--muted); font-variant-numeric: tabular-nums; }
 .gs-dot { position: absolute; width: 16px; height: 16px; margin: -9px 0 0 -8px; border-radius: 50%; background: var(--accent); border: 3px solid var(--outline); opacity: 0; transition: opacity 0.3s; }

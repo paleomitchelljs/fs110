@@ -43,6 +43,9 @@ Drag and depth:
 - Hyposphene-hypantra: "it is not overly restricted with for example hyposphene-hypantra articulations." [Sereno 2022](sereno-2022.md) says "trunk and sacral vertebrae are immobilized by interlocking articulations (hyposphene-hypantrum)." Direct conflict.
 
 Sail: signaling. Extant comparisons *Hydrosaurus* and *Basiliscus*, which swim, but "the extra tail flukes are not for improved swimming as these are typically kept clear of the water." "Thermoregulation, however, cannot be ruled out." Display and propulsion are "not mutually exclusive."
+- Heat (PDF p19): "a prominent broad surface would almost certainly change the environmental thermal exchange of an animal," but "specific modelling... would be needed." Sails "are not restricted to the tropics of the Cenomanian-Turonian 'supergreenhouse'": *Hypselospinus*, *Ouranosaurus*, *Concavenator*, *Ichthyovenator*.
+- Shape as evidence: "it is notable how different the form of the dorsal spines are in Ichthyovenator (Allain et al., 2012) compared to Spinosaurus suggesting that at least one of these was not under strong selection based on their mechanical performance."
+- Shape and drag (PDF p15): "the 'M' shaped arrangement of the sail with a distinctive notch in the middle (as favoured by Ibrahim et al., 2014a, 2020a) would generate further drag with two tips than would a more typical D-shaped arrangement."
 
 Diet: Hassler 2018 calcium isotopes: some "possibly even exclusively piscivorous," others with dinosaurs as "a notable part of their diet." Direct evidence listed: fish, dinosaurs, pterosaurs. See [Buffetaut 2004](buffetaut-2004.md).
 
