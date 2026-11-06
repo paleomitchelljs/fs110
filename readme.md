@@ -9,6 +9,7 @@ Class tools for FS110. Each is a static page in its own folder: no build step, n
 | [`tanis/`](tanis/) | Tanis fact cards. A balance for an evidence activity: students hold numbered fact cards, you add each by number, and the room places it on one of two typed-in hypotheses. Also prints the cards (`cards.tex`). |
 | [`stats/`](stats/) | Stats. A short quiz (two kids, a rare disease, three doors), then one manipulable picture for each: sample families under two different clues, drag the disease rarity and test accuracy, play Monty Hall with a host who knows or doesn't. |
 | [`infernogallus/`](infernogallus/) | Dissecting a paper. A 50-minute lecture deck on one paper (the Infernogallus fruit-eater). Nine claims, each run as claim, evidence, alternatives, test, and a room vote on how sure. Ends with every claim sorted on one line. |
+| [`spinos/`](spinos/) | Spinosaurs. A lecture deck in the same style: the species up the tree, then *Spinosaurus* by year, specimens and aquatic studies together. |
 | [`therizinos/`](therizinos/) | Therizinosaurs. A lecture deck in the same style as `infernogallus/`, on the plant-eating theropods: what kind of dinosaur, what they ate, what the claws were for, and whether they lived in groups. Three levels (one, two or three class sessions). Papers, figure notes and the deck's sources are in the folder; the PDFs are gitignored. |
 | [`cv/`](cv/) | CV and resume. Walk a real CV a section at a time, take one line apart into its pieces, then rearrange and reword a one-page resume drawn from it. Also has `resume.tex`. |
 | [`exam/`](exam/) | Why 28 of 42? Four students with the same exam grade, shown column by column. A study-time model with strongly diminishing returns, claim cards you type into (words attach a test), and the reveal: the misses fell on particular chapters. |
@@ -36,6 +37,7 @@ node website/tests/steps.test.js
 node dice/tests/model.test.js
 JSDOM=/path/to/node_modules/jsdom node infernogallus/tests/deck.smoke.js
 JSDOM=/path/to/node_modules/jsdom node therizinos/tests/deck.smoke.js
+JSDOM=/path/to/node_modules/jsdom node spinos/tests/deck.smoke.js
 JSDOM=/path/to/node_modules/jsdom node bones/tests/deck.smoke.js
 ```
 

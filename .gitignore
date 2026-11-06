@@ -8,5 +8,8 @@ therizinos/transcript/
 # Abelisaur reference papers stay local.
 abelisaurs/papers/
 
+# Spinosaur reference papers stay local.
+spinos/papers/
+
 # macOS
 .DS_Store
