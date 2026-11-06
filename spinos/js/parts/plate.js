@@ -1,6 +1,6 @@
 /* Plain slides: pictures laid out for you, with a few short labels.
  *
- *   plate   A header (animal name, where and when, the claim), one to four pictures
+ *   plate   A header (animal name, where and when, the topic), one to four pictures
  *           in a row, each with an optional label carrying one of the five question
  *           icons, and a foot of short chips. Everything is on screen at once unless
  *           a panel or chip carries at: n (it comes on at build n).
@@ -98,7 +98,7 @@
         const who = D.el('div', 'pl2-who', h, `<b>${D.fmt(hd.name)}</b>` + (hd.facts ? `<span>${D.fmt(hd.facts)}</span>` : ''));
         void who;
       }
-      if (hd.claim) D.el('div', 'pl2-claim' + (hd.name ? '' : ' solo'), h, ROLE(hd.role === undefined ? 'claim' : hd.role) + `<span>${D.fmt(hd.claim)}</span>`);
+      if (hd.topic) D.el('div', 'pl2-topic' + (hd.name ? '' : ' solo'), h, `<span>${D.fmt(hd.topic)}</span>`);
       top = 96;
     }
     if (def.foot && def.foot.length) {

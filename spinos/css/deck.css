@@ -609,9 +609,8 @@ mark { background: var(--accent-soft); color: var(--accent-ink); font-style: nor
 .pl2-who { display: flex; align-items: baseline; gap: 22px; white-space: nowrap; }
 .pl2-who b { font: italic 600 50px/1 var(--font-ui); color: var(--ink); }
 .pl2-who span { font: 600 27px var(--font-ui); color: var(--muted); }
-.pl2-claim { display: flex; align-items: center; gap: 14px; height: 68px; padding: 0 28px; font: 600 31px/1.05 var(--font-ui); color: var(--ink); background: var(--card); border: 2px solid var(--ink-2); border-radius: 34px; }
-.pl2-claim.solo { margin: 0 auto; }
-.pl2-claim svg { flex: none; width: 36px; height: 36px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.pl2-topic { display: flex; align-items: center; height: 68px; padding: 0 28px; font: 600 31px/1.05 var(--font-ui); color: var(--ink); background: var(--card); border: 2px solid var(--ink-2); border-radius: 34px; }
+.pl2-topic.solo { margin: 0 auto; }
 .pl2-p { position: absolute; }
 .pl2-img { position: absolute; overflow: hidden; border-radius: 10px; background: #fff; box-shadow: 0 0 0 2px var(--rule); }
 .pl2-img img { position: absolute; max-width: none; user-select: none; -webkit-user-drag: none; }

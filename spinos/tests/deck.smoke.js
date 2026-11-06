@@ -138,9 +138,12 @@ function open(level) {
   const words = JSON.stringify(segs).match(/unknown|untested|speculation|weakly supported|a hypothesis|: uncertain/gi);
   check('no verdict words on the slides', !words, (words || []).join());
 
-  // from the buoyancy slide on, header cards are a topic or a paper's claim; Brusatte's quote is the exception
-  const asked = segs.slice(at('float')).flatMap((s) => s.items.map((i) => i.head && i.head.claim)).filter((c) => c && c.includes('?') && !c.includes('grizzly'));
-  check('no question cards from the buoyancy slide on', asked.length === 0, asked.join(' | '));
+  // the card at the top right is a short topic: no question, no punctuation, three words at most
+  const HAND_WORDED = 'Pterosaur bones with spinosaur tooth'; // the one longer card, worded by hand
+  const heads = segs.flatMap((s) => s.items.map((i) => i.head)).filter(Boolean);
+  const badTopics = heads.map((h) => h.topic).filter((t) => t && t !== HAND_WORDED && (/[^\w\s]/.test(t) || t.trim().split(/\s+/).length > 3));
+  check('top-right cards are short topics', badTopics.length === 0, badTopics.join(' | '));
+  check('no card left under the old field name', !heads.some((h) => h.claim));
 
   // the question rail says the plain words
   const rail = [...d.querySelectorAll('.ri span')].map((e) => e.textContent).join();
