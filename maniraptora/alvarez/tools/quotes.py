@@ -1,0 +1,123 @@
+"""The lines the deck highlights: id -> (paper, first words, last words[, page]).
+
+Copy the words from the paper exactly (punctuation and citation numbers don't
+matter; letters and digits do). tools/lines.py turns these into js/lines.js.
+"""
+QUOTES = {
+    # ---------------------------------------------------------------- Makovicky et al. 2026
+    # abstract
+    'm-abs-clade':   ('mak26', 'Alvarezsauroids are an enigmatic clade', 'Asia and South America'),
+    'm-abs-dig':     ('mak26', 'Late Cretaceous alvarezsauroids possess', 'interpreted as myrmecophagous'),
+    'm-abs-mini':    ('mak26', 'They are hypothesized to', 'coupled to their dietary specialization'),
+    'm-abs-grade':   ('mak26', 'Fragmentary South American taxa are traditionally', 'their disjunct distributions'),
+    'm-abs-alna':    ('mak26', 'Here we describe a skeleton of', 'smallest South American taxon to date'),
+    'm-abs-two':     ('mak26', 'We also recognize', 'from the Northern Hemisphere'),
+    'm-abs-poly':    ('mak26', 'Phylogenetic analysis recovers', 'rendering South American taxa polyphyletic'),
+    'm-abs-pan':     ('mak26', 'our biogeographical analyses infer', 'early history of the clade'),
+    'm-abs-size':    ('mak26', 'The early branching position of', 'within a narrow body size range'),
+    # introduction
+    'm-int-birds':   ('mak26', 'Originally interpreted as flightless stem birds', 'to exhibit evolutionary miniaturization'),
+    'm-int-limb':    ('mak26', 'late-diverging, parvicursorine alvarezsauroids are characterized', 'adapted for digging'),
+    'm-int-insects': ('mak26', 'Owing to these', 'eating social insects'),
+    'm-int-record':  ('mak26', 'The alvarezsauroid fossil record is disjunct', 'described only for Asian taxa'),
+    # anatomy
+    'm-specimen':    ('mak26', 'The new specimen MPCA Pv 377', 'Paleontological Area'),
+    'm-missing':     ('mak26', 'It is missing only the skull roof', 'much of the tail'),
+    'm-assign':      ('mak26', 'It can confidently be assigned', 'digit III phalanges'),
+    'm-pmx':         ('mak26', 'The premaxilla bears four small unserrated teeth', 'Extended Data Fig. 3a,b'),
+    'm-teeth':       ('mak26', 'There are 25', 'Shuvuuia and Jaculinykus'),
+    'm-cerv':        ('mak26', 'Some posterior cervical vertebrae bear pneumatic', 'Extended Data Fig. 4a,d'),
+    'm-sternum':     ('mak26', 'In contrast to Asian alvarezsaurids, in which sternal plates', 'which are unossified'),
+    'm-forelimb':    ('mak26', 'The forelimb is 61% the length', 'the length of the femur alone'),
+    'm-olec':        ('mak26', 'The ulna bears a sharp olecranon ridge', 'hypertrophied one of alvarezsaurids'),
+    'm-manus':       ('mak26', 'The manus is tridactyl', 'reduced or lost, as in parvicursorines'),
+    'm-claw':        ('mak26', 'Digit I exhibits several alvarezsaurid synapomorphies', 'as also observed in Alvarezsaurus'),
+    'm-fig2-sil':    ('mak26', 'the silhouettes illustrate the relative difference in forelimb length', 'Shuvuuia (3.1 kg)'),
+    # macroevolution
+    'm-poly':        ('mak26', 'Phylogenetic analysis incorporating new information from Alnashetri', 'from other South American species'),
+    'm-lacks':       ('mak26', 'Alnashetri lacks many alvarezsaurid synapomorphies', 'fully procoelous caudal vertebrae'),
+    'm-mosaic':      ('mak26', 'Nevertheless, Alnashetri exhibits patterns of mosaic trait evolution', 'humerus and forearm of Alvarezsauridae'),
+    'm-dyad':        ('mak26', 'Our analyses recovered a dyad', 'long ghost lineages for several taxa'),
+    'm-twotaxa':     ('mak26', 'In reviewing the Late Jurassic', 'Isle of Wight'),
+    'm-synap':       ('mak26', 'Both are represented by vertebral material', 'flanked by raised ridges'),
+    'm-dispersal':   ('mak26', 'Earlier analyses that were restricted', 'during much of the Cretaceous'),
+    'm-widespread':  ('mak26', 'Model-based biogeographical analyses incorporating', 'before the Late Cretaceous'),
+    'm-vicar':       ('mak26', 'The disjunct Late Cretaceous distribution', 'preservation and collection efforts'),
+    'm-dryo':        ('mak26', 'Among other terrestrial vertebrate clades', 'widespread Jurassic ancestral distribution'),
+    'm-mass':        ('mak26', 'With an estimated body mass of under 1 kg', 'species yet collected from South'),
+    'm-histo':       ('mak26', 'Histological examination of both specimens', 'reliable body mass estimate for macroevolutionary analyses'),
+    'm-medul':       ('mak26', 'It also exhibits possible medullary bone', 'sexually maturity'),
+    'm-indep':       ('mak26', 'Reconstructed body mass evolution', 'evolved small body size independently'),
+    'm-myrm':        ('mak26', 'Clade-wide body mass reduction in parvicursorines', 'weak jaws of parvicursorine taxa'),
+    'm-limb2':       ('mak26', 'However, the forelimbs of Alnashetri are only incipiently modified', 'or fossorial specialization'),
+    'm-teeth2':      ('mak26', 'Likewise, although the dentition in Alnashetri', 'linked to evolutionary miniaturization'),
+    'm-ecol':        ('mak26', 'Our results instead suggest', 'independent of forelimb and dental reduction'),
+    'm-updown':      ('mak26', 'our analyses reveal multiple instances of body size increase', 'possibly, reduced dentitions'),
+    'm-models':      ('mak26', 'However, in contrast to previous studies', 'mammalian myrmecophages'),
+    # reference list entries (p5)
+    'm-ref2':        ('mak26', 'Qin, Z. et al. Growth and miniaturization', '(2020)', 5),
+    'm-ref3':        ('mak26', 'Meso, J. G. et al. Revised alvarezsaurian phylogeny', 'Cladistics 41', 5),
+    'm-ref11':       ('mak26', 'Xu, X. et al. Two Early Cretaceous fossils', '2853', 5),
+    'm-ref20':       ('mak26', 'Xu, X. et al. A monodactyl nonavian dinosaur', '2338', 5),
+    'm-title':       ('mak26', 'Argentine fossil rewrites evolutionary', 'baffling dinosaur clade', 1),
+    # methods
+    'm-meth-tnt':    ('mak26', 'Parsimony analyses were conducted using TNT', 'implied weighting (IW)'),
+    'm-meth-k':      ('mak26', 'On the basis of', 'we used K = 15 for all IW analyses'),
+    'm-meth-wild':   ('mak26', 'For both EW and IW, a strict consensus', 'irresolution in the consensus'),
+    'm-meth-supp':   ('mak26', 'Bootstraps and symmetric resampling were calculated', 'for EW trees only'),
+    'm-meth-cal':    ('mak26', 'For each topology, we generated 100 calibrated trees', 'normally distributed around 0.25'),
+    'm-meth-ger':    ('mak26', 'Time-scaled trees were then sorted by modified gap excess ratio', 'reconstructions in Fig. 2b'),
+    'm-meth-sa':     ('mak26', 'in the second', 'South American members of the clade'),
+    'm-meth-d':      ('mak26', 'implementing a version of their dispersal matrix', 'during a given geological time slice'),
+    'm-meth-models': ('mak26', 'We fit four different models', 'Extended Data Fig. 9a'),
+    'm-ed9-cap':     ('mak26', 'Despite the observed uncertainty', 'body mass evolution in the clade'),
+
+    # ---------------------------------------------------------------- Qin et al. 2021
+    'q-def':         ('qin21', 'Sustained miniaturization, here defined as', 'from ancestors to descendants'),
+    'q-rapid':       ('qin21', 'Our analyses show that alvarezsauroid body mass underwent rapid miniaturization', 'in the Late Cretaceous'),
+    'q-driven':      ('qin21', 'our study suggests that alvarezsauroid miniaturization', 'myrmecophagous ecological niche'),
+    'q-hatch':       ('qin21', 'the holotype of Aorun zhaoi is even younger', 'likely a hatchling'),
+    'q-anc':         ('qin21', 'The inferred ancestral body mass of alvarezsauroids is around 23 kg', '23 kg'),
+    'q-plunge':      ('qin21', 'From 110 to 85 Ma', 'mean body mass of <5 kg'),
+    'q-ou':          ('qin21', 'the Ornstein-Uhlenbeck model is preferred', 'Brownian motion model'),
+    'q-juv':         ('qin21', 'With juvenile specimens included', 'for the corrected dataset'),
+    'q-check':       ('qin21', 'Therefore, we suggest that an ontogenetic stage check is essential', 'members of the target group'),
+    'q-remove':      ('qin21', 'In cases where some taxa are represented only by very young specimens', 'across the tree'),
+    'q-corr-ou':     ('qin21', 'we arbitrarily chose the', 'returns a preference for a BM model', 15),
+    'q-corr-no':     ('qin21', 'Because the fit of a given evolutionary model', 'remain unaffected', 15),
+    'q-optimal':     ('qin21', 'The preference for the Ornstein-Uhlenbeck model', 'relative to other theropods'),
+    'q-dig':         ('qin21', 'The coincidence of substantial and rapid size reduction', 'insectivore feeding habit'),
+
+    # ---------------------------------------------------------------- Choiniere et al. 2010
+    'c-abs':         ('cho10', 'A new theropod from the earliest Late Jurassic', 'than Archaeopteryx'),
+    'c-asia':        ('cho10', 'The basal phylogenetic position and early temporal position of Haplocheirus', 'rather than South America'),
+    'c-ghost':       ('cho10', 'The Middle to Late Jurassic', 'of ~63 million years'),
+    'c-fit':         ('cho10', 'The addition of the earliest Late Jurassic', 'from a mean fit of 0.41 to 0.48'),
+    'c-largest':     ('cho10', 'Haplocheirus is the largest alvarezsauroid', 'known from complete material'),
+    'c-mini':        ('cho10', 'basal phylogenetic position suggests a pattern of', 'convergently evolved in Paraves'),
+    'c-carniv':      ('cho10', 'but Haplocheirus has recurved, serrated teeth', 'primitive condition for the clade'),
+
+    # ---------------------------------------------------------------- Xu et al. 2011
+    'x11-mosaic':    ('xu11', 'The unexpected combination of features seen in the hand of Linhenykus', 'change in the form of digit II'),
+    'x11-asia':      ('xu11', 'Under this interpretation, the Alvarezsauroidea originated in Asia', 'from Asia to North America'),
+
+    # ---------------------------------------------------------------- Xu et al. 2018
+    'x18-gap':       ('xu18', 'A 70-million-year ghost', 'Alvarezsauria has recently been questioned'),
+    'x18-mosaic':    ('xu18', 'Comprehensive analyses incorporating data', 'a mosaic fashion during the Cretaceous'),
+    'x18-firm':      ('xu18', 'Our phylogenetic analysis places Xiyunykus and Bannykus', 'Haplocheirus firmly within Alvarezsauria'),
+    'x18-dispersal': ('xu18', 'and Bannykus along the stem of Alvarezsauria suggest that', 'given that all of these taxa are Asian'),
+    'x18-vicar':     ('xu18', 'The alternative vicariance hypothesis would involve', 'as Pangaea broke apart'),
+    'x18-late':      ('xu18', 'Our results show that this extreme arm reduction', 'estimated around 24 kg'),
+    'x18-fossorial': ('xu18', 'Bannykus and Xiyunykus share many of', 'plesiomorphically longer forelimb'),
+
+    # ---------------------------------------------------------------- Longrich & Currie 2009
+    'l-sa':          ('lon09', 'Phylogenetic analysis shows that Albertonykus', 'dispersed to Asia via North America'),
+    'l-dig':         ('lon09', 'As in other alvarezsaurs, the forelimbs of Albertonykus', 'dig into insect nests'),
+    'l-ants':        ('lon09', 'Ants were a minor part of the ecosystem', 'until the Eocene'),
+    'l-teeth':       ('lon09', 'needle-like teeth packed into each dentary in Shuvuuia', 'tooth counts of any theropod'),
+    'l-conform':     ('lon09', 'In all respects, alvarezsaurs conform', 'the skull and forelimbs'),
+
+    # ---------------------------------------------------------------- Lü et al. 2018, Lee et al. 2019
+    'lu-eggs':       ('lu18', 'The alvarezsaurid skeleton associated with eggshell fragments', 'may be egg-eaters'),
+    'lee-origin':    ('lee19', 'It was initially suggested that alvarezsaurs originated in South America', 'Asian origin of this clade'),
+}

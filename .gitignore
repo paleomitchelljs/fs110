@@ -11,5 +11,11 @@ abelisaurs/papers/
 # Spinosaur reference papers stay local.
 spinos/papers/
 
+# Maniraptoran reference papers stay local.
+maniraptora/*/papers/
+
 # macOS
 .DS_Store
+
+# Python bytecode
+__pycache__/
