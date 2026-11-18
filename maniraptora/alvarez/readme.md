@@ -29,17 +29,17 @@ Press **L** (or `#L1` `#L2` `#L3`). 19 / 23 / 28 slides, about 54 / 66 / 83 minu
 | | Other fields | Mammals as support: dryolestoids, living ant-eaters |
 | 5 Claims and limits | Sized claims | "likely," "presumably," "possible," "not necessarily" |
 | | What next (L2) | The last paragraph says what would change the answer |
-| End | Synthesis matrix | Five papers by three questions. Read by paper, write by question |
+| End | Where claims came from | Five papers by three questions, in four builds: organize your reading by others' papers; find claims from your readings; structure your paper by claims; synthesize & evaluate by comparing a claim across papers |
 | | Your five papers | The empty matrix for their report |
-| Appendix (L3) | Four models, Akaike weights, ghost lineages, land and sea | The numbers behind the claims, as small models |
+| Appendix (L3) | Evolutionary patterns, Akaike weights, ghost lineages, land and sea | The numbers behind the claims, as small models |
 
 ## The models
 
 None of them is the paper's analysis. Each shows what one number means. The support, olecranon and growth-line models are still in `js/parts/sims.js`, unused.
-- **Four models.** One fixed tree, a trait run four ways. BM wanders. Lambda pulls the internal branches toward a star as λ drops. OU pulls toward θ, with α as a half-life. White noise ignores the tree. "Again" redraws.
+- **Evolutionary patterns.** One fixed tree with fixed tip values (made up, log mass), as data are. Each model draws its own route to the same tips: nodes are that model's estimate (pruning on its branch lengths), branches are bridges between nodes. BM: straight-line means plus wiggle. Lambda: internal branches shrink as λ drops, so the nodes collapse toward one value (a star). OU: the exact OU bridge mean, pulled toward θ, with α as a half-life; nodes shrink toward θ (a toy rule, not ML). White noise: flat at the tip mean, then a jump at each tip. "Again" redraws the wiggle only.
 - **Akaike weights.** Drag an AICc score. weight ∝ e^(−Δ/2). The scores are made up.
 - **Ghost lineages.** First appearances read by eye from Makovicky Fig 2b. Node ages are the oldest descendant. MIG sums every branch. GER = 1 − (MIG − Gmin)/(Gmax − Gmin). This is GER, not GER*, which needs permutations.
-- **Land and sea.** P(at least one dispersal) = 1 − e^(−d·m·T), with d = 0.0098 from ED Fig 8d, m = 1 or 0.0001, and T dragged.
+- **Land and sea.** A three-tip tree: Asian ancestor, two Asian tips, one South American tip at 97 Ma. Drag the node to set the length T of the branch to the South American tip; that branch has to disperse. Below, P(at least one dispersal on it) = 1 − e^(−d·m·T) over land (m = 1) and across sea (m = 0.0001), side by side. d = 0.0098 from ED Fig 8d, scrubbable. The second build is ED Fig 8b alone, enlarged.
 - **Ancestor.** Brownian ML root (contrasts) on a toy tree. Polytomies wherever the papers disagree. Masses from Qin 2021 Table 1; *Alnashetri* 0.7 kg from Makovicky Fig 2; *Aorun*, the Morrison taxon and *Calamosaurus* read by eye from Makovicky ED Fig 9b. Ages from Makovicky Fig 2b, *Haplocheirus* from Choiniere 2010.
 
 Numbers the models give, checked in `tests/data.test.js`:

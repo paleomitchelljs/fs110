@@ -201,16 +201,20 @@
 
     /* ---------------------------------------------------------- end: the matrix */
     {
-      id: 'matrix', title: 'Synthesis matrix', min: 6, tier: 1, builds: [{}, {}, {}, {}],
-      items: [head('Five papers', 'Synthesis matrix'), {
-        kind: 'matrix', box: [24, 124, 1552, 662], labelW: 210,
+      id: 'matrix', title: 'Where claims came from', min: 6, tier: 1, builds: [{}, {}, {}, {}],
+      items: [head('Five papers', 'Where claims came from'), {
+        kind: 'matrix', box: [24, 124, 1552, 662], labelW: 210, cellsAt: 1, labelsAt: 2,
         cols: ['lon09', 'cho10', 'xu18', 'qin21', 'mak26'],
         rows: [
           { label: 'Origin', cells: { lon09: '"originated in South America"', cho10: '"originated in Asia rather than South America"', xu18: '"originated in Asia and remained there"', mak26: '"a Pangaean ancestral distribution"' } },
           { label: 'Body size', cells: { cho10: '"a pattern of miniaturization"', xu18: '"extreme arm reduction occurred late"', qin21: '"rapid miniaturization"', mak26: '"no support for evolutionary miniaturization"' } },
           { label: 'Diet', cells: { lon09: '"to dig into insect nests"', cho10: '"carnivory was the primitive condition"', qin21: '"myrmecophagous ecological niche"', mak26: '"under different ecologies"' } }
         ],
-        focus: [{ at: 1, col: 'qin21', label: 'Read by paper' }, { at: 2, row: 0, label: 'Write by question' }, { at: 3, row: 1, label: 'Write by question' }]
+        focus: [
+          { at: 0, label: "Organize your reading by others' papers" },
+          { at: 1, label: 'Find claims from your readings' },
+          { at: 2, label: 'Structure your paper by claims' },
+          { at: 3, row: 0, label: 'Synthesize & evaluate by comparing a claim across papers' }]
       }]
     },
 
@@ -226,8 +230,8 @@
     /* ---------------------------------------------------------- appendix: the numbers (full level) */
     partTitle('p-numbers', 'The numbers behind the claims', 3),
 
-    walk('models', 'Four models', 3, 5, {
-      crumb: 'Methods', topic: 'Four models',
+    walk('models', 'Evolutionary patterns', 3, 5, {
+      crumb: 'Methods', topic: 'Evolutionary patterns',
       left: [['m-meth-models', 0]],
       right: [sim('models', span(0, 3), { model: 'BM', steps: [{ model: 'BM', at: 0 }, { model: 'Lambda', at: 1 }, { model: 'OU', at: 2 }, { model: 'WN', at: 3 }] })],
       last: 3
@@ -253,7 +257,7 @@
       left: [['m-meth-d', 0], ['m-meth-sa', 1]],
       right: [
         sim('disperse', [0], { T: 64, d: 0.0098 }),
-        pic([V('mak-ed8.jpg', 'S-DEC: a, open; b, South America cut off after the Aptian · Makovicky et al. 2026 ED Fig 8a,b', 1, [0, 0, 1, 0.5])], [1])
+        pic([V('mak-ed8.jpg', 'South America cut off from Laurasia after the Aptian · Makovicky et al. 2026 ED Fig 8b', 1, [0.52, 0, 0.86, 0.43])], [1])
       ]
     })
   ];

@@ -1,11 +1,11 @@
 /* Small models for the numbers in the methods. Each draws in its own box and is
  * driven by the mouse; none of them is the paper's analysis.
  *
- *   models    One tree, four ways a trait can evolve on it (BM, Lambda, OU, White noise).
+ *   models    One tree with fixed tip values; the routes four models take to reach them.
  *   aic       AICc scores to Akaike weights: drag a score, watch the weights move.
  *   root      Ancestral body mass on a toy tree; switch taxa in and out.
  *   ghost     Ghost lineages, MIG and GER on a ladder of real first appearances.
- *   disperse  A dispersal rate across land and across sea.
+ *   disperse  One branch of a tree that must disperse: its length, and land or sea.
  *   resample  Characters for and against a group, resampled; Bremer support.
  *   lever     The ulna as a lever: olecranon over shaft.
  *   growth    Lines of arrested growth and a growth curve.
@@ -59,8 +59,12 @@
   }
 
   /* ---------- models ---------- */
-  /* A fixed tree: [start Ma, end Ma, children]. A tip's end is its fossil's age. */
+  /* A fixed tree: [start Ma, end Ma, children]. A tip's end is its fossil's age.
+   * The tip values are fixed, as data are: switching model changes only the routes taken
+   * to reach them. Nodes are each model's estimate (pruning on the model's branch lengths);
+   * branches are bridges from node to node, wiggled by "Again". */
   const TREE = [170, 165, [[165, 155], [165, 140, [[140, 120], [140, 115]]], [165, 150, [[150, 125, [[125, 97], [125, 90]]], [150, 110, [[110, 95, [[95, 70], [95, 72]]], [110, 100, [[100, 85], [100, 88, [[88, 75], [88, 82, [[82, 70], [82, 68]]]]]]]]]]]]];
+  const TIPS = [1.5, 1.2, 1.3, -0.15, 1.45, 1.6, 1.85, 0.0, 0.5, -0.8, 0.6]; /* log10 kg, in tree order */
   D.parts.models = function (def, host) {
     const W = def.box[2], H = def.box[3];
     host.innerHTML = '<div class="sim"></div>';
@@ -77,7 +81,26 @@
     const PADL = 96, PADR = 24, top = 20, bot = H - 130 - 70;
     const X = (t) => PADL + (170 - t) / (170 - 66) * (W - PADL - PADR);
     const Y = LOGY(-1, 2, top, bot);
-    const SIG = 0.075, X0 = 0.9, OUX0 = 1.4, THETA = 0.2, WNM = 0.6, WNSD = 0.45;
+    const SIG = 0.06, THETA = 0.2;
+    const MEAN = TIPS.reduce((a, v) => a + v, 0) / TIPS.length;
+    /* Copy the tree into nodes: { t0, t1, kids, tip value, depth from root }. */
+    function build() {
+      let k = 0;
+      const mk = (br, depth) => { const [t0, t1, kids] = br; const n = { t0, t1, depth, len: t0 - t1 }; if (kids) n.kids = kids.map((c) => mk(c, depth + t0 - t1)); else n.v = TIPS[k++]; return n; };
+      return mk(TREE, 0);
+    }
+    /* Branch length the model sees: lambda shrinks internal branches and lengthens tips. */
+    const effLen = (n) => model === 'Lambda' ? (n.kids ? lambda * n.len : n.len + (1 - lambda) * n.depth) : n.len;
+    function estimate(n) {
+      if (!n.kids) return { x: n.v, v: effLen(n) };
+      const rs = n.kids.map(estimate);
+      const w = rs.map((r) => 1 / Math.max(r.v, 1e-3)), ws = w.reduce((a, b) => a + b, 0);
+      let x = rs.reduce((a, r, i) => a + r.x * w[i], 0) / ws;
+      if (model === 'OU') { const h = n.kids.reduce((a, c) => a + c.len, 0) / n.kids.length; x = THETA + (x - THETA) * Math.exp(-alpha * h); }
+      if (model === 'WN') x = MEAN;
+      n.v = x;
+      return { x, v: effLen(n) + 1 / ws };
+    }
     function draw() {
       tabs.set(model);
       lamS.r.parentNode.style.display = model === 'Lambda' ? '' : 'none';
@@ -89,33 +112,33 @@
       if (model === 'OU') { S('line', { x1: PADL, x2: W - PADR, y1: Y(THETA), y2: Y(THETA), class: 'theta' }, g); txt(g, W - PADR - 4, Y(THETA) - 8, 'θ', 'ax th', 'end'); }
       const R = rng(seed * 7919 + model.length);
       const clip = (v) => D.clamp(v, -1.15, 2.15);
-      /* depth: time from the root to a branch's start, for the λ transform of tip branches */
-      function walk(br, x, depth, isRoot) {
-        const [t0, t1, kids] = br, len = t0 - t1, tip = !kids;
-        let pts = [], xe;
-        if (model === 'WN') {
-          xe = tip ? WNM + WNSD * R.n() : WNM;
-          pts = [[t0, tip ? WNM : WNM], [t1, WNM]];
-          if (tip) pts.push([t1, xe]);
-        } else if (model === 'OU') {
-          let v = x; const n = Math.max(2, Math.round(len)); pts.push([t0, v]);
-          for (let k = 1; k <= n; k++) { const dt = len / n; v += alpha * (THETA - v) * dt + SIG * Math.sqrt(dt) * R.n(); pts.push([t0 - k * dt, v]); }
-          xe = v;
-        } else {
-          const lam = model === 'BM' ? 1 : lambda;
-          const eff = tip ? len + (1 - lam) * depth : lam * len;
-          xe = x + SIG * Math.sqrt(Math.max(eff, 0)) * R.n();
-          const n = Math.max(2, Math.round(len)); let w = 0; const ws = [0];
-          for (let k = 1; k <= n; k++) { w += R.n(); ws.push(w); }
-          const sc = SIG * Math.sqrt(Math.max(eff, 0) / n);
-          for (let k = 0; k <= n; k++) { const f = k / n; pts.push([t0 - f * len, x + f * (xe - x) + sc * (ws[k] - f * ws[n])]); }
-        }
+      const tree = build();
+      estimate(tree);
+      /* Mean path from a to b over a branch, then a bridge of noise pinned at both ends. */
+      function path(n, a) {
+        const b = n.v, L = n.len, steps = Math.max(2, Math.round(L));
+        const mean = (s) => {
+          if (model === 'WN') return n.kids ? MEAN : (s < L ? MEAN : b);
+          if (model === 'OU' && alpha > 0) { const sh = Math.sinh(alpha * L); return THETA + ((a - THETA) * Math.sinh(alpha * (L - s)) + (b - THETA) * Math.sinh(alpha * s)) / sh; }
+          return a + (b - a) * s / L;
+        };
+        const amp = model === 'WN' ? 0 : SIG * Math.sqrt(Math.max(effLen(n), 0) / steps);
+        let w = 0; const ws = [0];
+        for (let k = 1; k <= steps; k++) { w += R.n(); ws.push(w); }
+        const pts = [];
+        for (let k = 0; k <= steps; k++) { const s = L * k / steps; pts.push([n.t0 - s, mean(s) + amp * (ws[k] - (k / steps) * ws[steps])]); }
+        if (model === 'WN' && !n.kids) pts.push([n.t1, b]);
+        return pts;
+      }
+      function walk(n, a, isRoot) {
+        const pts = isRoot ? [[n.t0, n.v], [n.t1, n.v]] : path(n, a);
         const d = pts.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ',' + Y(clip(p[1])).toFixed(1)).join('');
         S('path', { d, class: 'br' + (isRoot ? ' rootbr' : '') }, g);
-        if (tip) S('circle', { cx: X(t1), cy: Y(clip(xe)), r: 7, class: 'tipdot' }, g);
-        else kids.forEach((k) => walk(k, xe, depth + len, false));
+        if (n.kids) n.kids.forEach((k) => walk(k, n.v, false));
       }
-      walk(TREE, model === 'OU' ? OUX0 : model === 'WN' ? WNM : X0, 0, true);
+      walk(tree, tree.v, true);
+      /* Tips last, so they sit on top. They are the same in every model. */
+      (function dots(n) { if (n.kids) n.kids.forEach(dots); else S('circle', { cx: X(n.t1), cy: Y(clip(n.v)), r: 7, class: 'tipdot' }, g); })(tree);
     }
     draw();
     return {
@@ -325,37 +348,71 @@
   };
 
   /* ---------- disperse ---------- */
+  /* A small tree: an Asian ancestor, two Asian tips and one South American tip. The
+   * lineage to the South American tip has to disperse somewhere along its branch.
+   * Drag the node to change that branch's length T. P(at least one dispersal on the
+   * branch) = 1 − e^(−d·m·T), m = 1 over land and 0.0001 across sea (Makovicky Methods). */
   D.parts.disperse = function (def, host) {
     const W = def.box[2], H = def.box[3];
     host.innerHTML = '<div class="sim"></div>';
     const root = host.firstChild;
-    const svg = S('svg', { width: W, height: H - 150, class: 'sim-svg' }, root);
+    const SH = H - 110;
+    const svg = S('svg', { width: W, height: SH, class: 'sim-svg' }, root);
     const ctl = D.el('div', 'sim-ctl', root);
-    let T = def.T || 64, d = def.d || 0.0098;
+    let d = def.d || 0.0098;
+    const TIP_SA = 97, ROOT = 168, LO = TIP_SA + 2, HI = ROOT - 2;
+    let node = TIP_SA + (def.T || 64);
     const knobs = D.el('div', 'sim-knobs', ctl);
-    slider(knobs, 'Branch length', 1, 100, 1, T, (v) => { T = v; draw(); }, (v) => v + ' My');
     const dN = D.el('div', 'sim-sl', knobs, '<span class="sl-l">d</span>');
     const dv = D.el('b', 'sl-v scrub', dN);
     D.scrub(dv, () => d * 1e4, (v) => { d = D.clamp(Math.round(v) / 1e4, 0.0001, 0.1); draw(); }, 1);
-    const lanes = [{ m: 1, label: 'Land connection', mult: '× 1' }, { m: 0.0001, label: 'Sea', mult: '× 0.0001' }];
+    const PADL = 30, PADR = 30, top = 40, bot = top + 196;
+    const X = (t) => PADL + (172 - t) / (172 - 66) * (W - PADL - PADR);
+    const yA1 = top + 20, yA2 = top + 92, ySA = top + 164;
+    const P = (m, T) => 1 - Math.exp(-d * m * T);
+    const fmtP = (p) => { if (p >= 0.001) return p.toFixed(2); const [m, e] = p.toExponential(1).split('e'); return m + ' × 10<tspan dy="-14" font-size="22">' + e.replace('-', '−') + '</tspan>'; };
     function draw() {
       dv.textContent = d.toFixed(4) + ' per My';
       svg.innerHTML = '';
       const g = S('g', {}, svg);
-      const laneH = (H - 150 - 40) / 2;
-      lanes.forEach((l, i) => {
-        const y0 = 10 + i * laneH, cx = 40, w = W - 80, bh = laneH - 120, by = y0 + 44;
-        txt(g, cx + w / 2, y0 + 26, l.label + '   d ' + l.mult, 'ln', 'middle');
-        S('rect', { x: cx, y: by, width: 150, height: bh, rx: 18, class: 'cont' }, g);
-        S('rect', { x: cx + w - 150, y: by, width: 150, height: bh, rx: 18, class: 'cont' }, g);
-        if (l.m === 1) S('rect', { x: cx + 150, y: by + bh / 2 - 16, width: w - 300, height: 32, class: 'cont bridge' }, g);
-        else S('path', { d: `M${cx + 190},${by + bh / 2} q 20,-14 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0`, class: 'sea' }, g);
-        const rate = d * l.m, ex = rate * T, p = 1 - Math.exp(-ex);
-        txt(g, cx + w / 2, by + bh + 46, 'P(at least one dispersal) = ' + (p < 0.001 ? p.toExponential(1) : p.toFixed(2)), 'big', 'middle');
+      timeAxis(g, X, bot + 4, 170, 70, 20);
+      const T = node - TIP_SA, yN = (yA2 + ySA) / 2, yR = (yA1 + yN) / 2;
+      /* root and the Asian branches */
+      S('line', { x1: X(ROOT), x2: X(ROOT), y1: yA1, y2: yN, class: 'br' }, g);
+      S('line', { x1: X(ROOT) - 24, x2: X(ROOT), y1: yR, y2: yR, class: 'br' }, g);
+      S('line', { x1: X(ROOT), x2: X(80), y1: yA1, y2: yA1, class: 'br' }, g);
+      S('line', { x1: X(ROOT), x2: X(node), y1: yN, y2: yN, class: 'br' }, g);
+      S('line', { x1: X(node), x2: X(node), y1: yA2, y2: ySA, class: 'br' }, g);
+      S('line', { x1: X(node), x2: X(72), y1: yA2, y2: yA2, class: 'br' }, g);
+      /* the branch that has to disperse */
+      S('line', { x1: X(node), x2: X(TIP_SA), y1: ySA, y2: ySA, class: 'brhot' }, g);
+      txt(g, (X(node) + X(TIP_SA)) / 2, ySA - 16, 'T = ' + T + ' My', 'ln', 'middle');
+      [[80, yA1, 'Asia', 'a'], [72, yA2, 'Asia', 'a'], [TIP_SA, ySA, 'South America', 'c']].forEach(([t, y, lab, c]) => {
+        S('circle', { cx: X(t), cy: y, r: 11, class: 'area ' + c }, g);
+        txt(g, X(t) + 20, y + 7, lab, 'tl');
+      });
+      S('circle', { cx: X(ROOT), cy: yR, r: 11, class: 'area a' }, g);
+      const knob = S('circle', { cx: X(node), cy: yN, r: 17, class: 'knob grab' }, g);
+      knob.addEventListener('pointerdown', (ev) => {
+        ev.preventDefault(); ev.stopPropagation(); knob.setPointerCapture(ev.pointerId);
+        const mv = (m) => { const q = D.local(svg, m); const t = 172 - (q.x - PADL) / (W - PADL - PADR) * (172 - 66); node = Math.round(D.clamp(t, LO, HI)); draw(); };
+        const up = () => { knob.removeEventListener('pointermove', mv); knob.removeEventListener('pointerup', up); };
+        knob.addEventListener('pointermove', mv); knob.addEventListener('pointerup', up);
+      });
+      /* the two routes for that branch */
+      const ry = bot + 90, half = (W - PADL - PADR) / 2;
+      [[1, 'Over land', 'd × 1'], [0.0001, 'Across sea', 'd × 0.0001']].forEach(([m, lab, mult], i) => {
+        const x0 = PADL + i * half, cx = x0 + half / 2;
+        S('rect', { x: x0 + 10, y: ry, width: 70, height: 46, rx: 10, class: 'cont' }, g);
+        S('rect', { x: x0 + half - 80, y: ry, width: 70, height: 46, rx: 10, class: 'cont' }, g);
+        if (m === 1) S('rect', { x: x0 + 80, y: ry + 15, width: half - 160, height: 16, class: 'cont bridge' }, g);
+        else { let w = `M${x0 + 92},${ry + 23}`; for (let x = x0 + 92; x < x0 + half - 112; x += 40) w += ' q 10,-10 20,0 t 20,0'; S('path', { d: w, class: 'sea' }, g); }
+        txt(g, cx, ry + 100, lab + '  (' + mult + ')', 'ln', 'middle');
+        txt(g, cx, ry + 160, '', 'big', 'middle').innerHTML = 'P = ' + fmtP(P(m, T));
       });
     }
     draw();
-    return {};
+    return { reset() { node = TIP_SA + (def.T || 64); d = def.d || 0.0098; draw(); } };
   };
 
   /* ---------- resample ---------- */

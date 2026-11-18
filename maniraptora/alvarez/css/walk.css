@@ -156,3 +156,9 @@
 .mx-tag { position: absolute; text-align: center; font: 700 30px var(--font-ui); color: var(--accent-ink); opacity: 0; transition: opacity 0.35s; }
 .mx-tag.shown { opacity: 1; }
 .mx-cell { font-size: 24px; }
+
+/* disperse */
+.sim .brhot { stroke: var(--accent-ink); stroke-width: 6; stroke-linecap: round; }
+.sim .area { stroke: var(--ink); stroke-width: 2; }
+.sim .area.a { fill: #3b55a5; }
+.sim .area.c { fill: #d9b98c; }

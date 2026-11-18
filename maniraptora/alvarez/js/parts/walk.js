@@ -268,8 +268,9 @@
 
   /* ---------- matrix ---------- */
   /* Questions down the side, sources across the top. A column key that is a paper gets its
-   * citation; anything else is shown as written (for a blank template). focus: [{ at, col }
-   * or { at, row }, label]: from build at on, everything else dims and the label shows. */
+   * citation; anything else is shown as written (for a blank template). focus: [{ at, col?,
+   * row?, label }]: from build at on the label shows, and with a col or row everything else
+   * dims. cellsAt, labelsAt: the build the cells and the row labels appear on. */
   D.parts.matrix = function (def, host) {
     const BW = def.box[2], BH = def.box[3];
     const LW = def.labelW || 230, cols = def.cols, rows = def.rows;
@@ -298,11 +299,12 @@
     const tag = D.el('div', 'mx-tag', host);
     return {
       show(b) {
-        rowEls.forEach((r) => r.els.forEach((e) => e.classList.toggle('shown', b >= r.at)));
+        rowEls.forEach((r) => r.els.forEach((e) => e.classList.toggle('shown', b >= r.at && (e === r.lab ? b >= (def.labelsAt || 0) : b >= (def.cellsAt || 0)))));
         const f = (def.focus || []).filter((x) => x.at <= b).pop();
-        cells.forEach((c) => c.e.classList.toggle('dim', !!f && !(f.col != null ? cols[c.j] === f.col : c.i === f.row)));
-        colEls.forEach((e, j) => e.classList.toggle('dim', !!f && f.col != null && cols[j] !== f.col));
-        rowEls.forEach((r, i) => r.lab.classList.toggle('dim', !!f && f.row != null && i !== f.row));
+        const fc = !!f && f.col != null, fr = !!f && f.row != null;
+        cells.forEach((c) => c.e.classList.toggle('dim', (fc && cols[c.j] !== f.col) || (fr && c.i !== f.row)));
+        colEls.forEach((e, j) => e.classList.toggle('dim', fc && cols[j] !== f.col));
+        rowEls.forEach((r, i) => r.lab.classList.toggle('dim', fr && i !== f.row));
         tag.classList.toggle('shown', !!f);
         if (f) {
           tag.innerHTML = D.fmt(f.label || '');
