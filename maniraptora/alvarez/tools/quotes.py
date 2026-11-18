@@ -132,6 +132,8 @@ QUOTES = {
     'm-contrast':    ('mak26', 'However, in contrast to previous studies', 'Extended Data Fig. 9a'),
     'm-myrm-range':  ('mak26', 'within a constrained range at the lower end', 'mammalian myrmecophages'),
     'm-mosaic-s':    ('mak26', 'Nevertheless, Alnashetri exhibits patterns of', 'mosaic trait evolution'),
+    'l-dig-s':       ('lon09', 'they were most likely used to dig', 'into insect nests'),
+    'lu-eggs-s':     ('lu18', 'that alvarezsaurid dinosaurs', 'may be egg-eaters'),
     'l-sa-short':    ('lon09', 'consistent with the hypothesis that the alvarezsaurs originated in South America', 'via North America'),
     'x18-asia-short':('xu18', 'our analysis indicates that alvarezsaurians originated in Asia', 'throughout the Cretaceous'),
     'x18-mosaic-s':  ('xu18', 'evolved slowly and in', 'mosaic fashion during the Cretaceous'),

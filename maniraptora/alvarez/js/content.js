@@ -18,6 +18,10 @@
   const LEFT = [24, 124, 760, 662];
   const RIGHT = [812, 124, 764, 662];
   const FULL = [24, 124, 1552, 662];
+  /* The right half split: a short lens on top, a figure under it. */
+  const TOP = [812, 124, 764, 170];
+  const FIG = [812, 304, 764, 482];
+  const at = (box, item) => Object.assign(item, { box });
 
   /* A picture from img/ with an optional crop [l, t, r, b] and ring, both as fractions of the file. */
   const V = (name, cap, at, crop, ring) => ({ src: 'img/' + name, cap: cap || '', at: at || 0, crop, ring });
@@ -105,8 +109,12 @@
       crumb: 'Abstract', topic: 'Each Claim',
       left: [['m-abs-mini', 0], ['m-abs-grade', 1]],
       right: [
-        ref([['q-rapid-s', 0]], [0]),
-        ref([['x18-asia-short', 1]], [1])
+        at(TOP, ref([['q-rapid-s', 0]], [0])),
+        at(TOP, ref([['x18-asia-short', 1]], [1])),
+        at(FIG, pic([
+          V('qin-fig3.jpg', 'Mass on the tree, red then blue · Qin et al. 2021 Fig 3A', 0, [0, 0.17, 1, 0.735]),
+          V('xu18-fig3.jpg', 'Tree on time, forelimbs to scale · Xu et al. 2018 Fig 3', 1)
+        ]))
       ]
     }),
 
@@ -139,7 +147,12 @@
 
     walk('mosaic', 'One idea, three papers', 2, 3, {
       crumb: 'Three papers', topic: 'Mosaic',
-      right: [{ kind: 'quotes', cols: 1, size: 40, cards: [{ q: 'x11-mosaic-s', at: 0 }, { q: 'x18-mosaic-s', at: 1 }, { q: 'm-mosaic-s', at: 2 }] }]
+      right: [
+        at([24, 124, 1552, 190], { kind: 'quotes', cols: 3, size: 30, cards: [{ q: 'x11-mosaic-s', at: 0 }, { q: 'x18-mosaic-s', at: 1 }, { q: 'm-mosaic-s', at: 2 }] }),
+        at([24, 330, 500, 456], pic([V('xu11-fig4.jpg', 'Hands on the tree · Xu et al. 2011 Fig 4', 0)], [0, 1, 2])),
+        at([550, 330, 500, 456], pic([V('xu18-fig3.jpg', 'Forelimbs to scale · Xu et al. 2018 Fig 3', 1, [0.76, 0.22, 1, 0.66])], [1, 2])),
+        at([1076, 330, 500, 456], pic([V('mak-ed4.jpg', 'Humeri: _Alnashetri_ (h), _Mononykus_ (i), _Bannykus_ (j, k) · Makovicky et al. 2026 ED Fig 4', 2, [0.2, 0.52, 0.68, 0.78])], [2]))
+      ]
     }),
 
     /* ---------------------------------------------------------- 4 disagreeing */
@@ -147,7 +160,15 @@
 
     walk('origin', 'Origin', 1, 4, {
       crumb: 'Four papers', topic: 'Origin',
-      right: [{ kind: 'quotes', cols: 2, size: 40, cards: [{ q: 'l-sa-short', at: 0 }, { q: 'c-asia', at: 1 }, { q: 'x18-asia-short', at: 2 }, { q: 'm-abs-pan', at: 3 }] }]
+      right: [
+        at(LEFT, { kind: 'quotes', cols: 1, size: 26, cards: [{ q: 'l-sa-short', at: 0 }, { q: 'c-asia', at: 1 }, { q: 'x18-asia-short', at: 2 }, { q: 'm-abs-pan', at: 3 }] }),
+        at(RIGHT, pic([
+          V('lon09-fig12.jpg', '_Albertonykus_ · Longrich & Currie 2009 Fig 12', 0),
+          V('cho10-fig3.jpg', '_Haplocheirus_ on the tree · Choiniere et al. 2010 Fig 3A', 1, [0, 0, 0.63, 1]),
+          V('xu18-fig3.jpg', 'Tree on time · Xu et al. 2018 Fig 3', 2, [0, 0, 0.77, 1]),
+          V('mak-fig2b.jpg', 'Pan: Pangaea · Makovicky et al. 2026 Fig 2b', 3, [0.08, 0, 0.72, 0.5])
+        ]))
+      ]
     }),
 
     walk('why', 'Why it changed', 1, 4, {
@@ -163,10 +184,26 @@
       crumb: 'Two papers', topic: 'Body size',
       left: [['m-contrast', 0]],
       right: [
-        ref([['q-rapid-s', 0]], [0]),
-        ref([['q-corr-short', 1]], [1])
+        at(TOP, ref([['q-rapid-s', 0]], [0])),
+        at(TOP, ref([['q-corr-short', 1]], [1, 2])),
+        at(FIG, pic([
+          V('qin-fig3.jpg', 'Mass on the tree, red then blue · Qin et al. 2021 Fig 3A', 0, [0, 0.17, 1, 0.735]),
+          V('mak-fig2b.jpg', MAK2B, 2, [0.08, 0, 1, 0.74])
+        ]))
       ],
-      last: 1
+      last: 2
+    }),
+
+    walk('diet', 'Diet', 1, 3, {
+      crumb: 'Three papers', topic: 'Diet',
+      right: [
+        at(LEFT, { kind: 'quotes', cols: 1, size: 30, cards: [{ q: 'l-dig-s', at: 0 }, { q: 'lu-eggs-s', at: 1 }, { q: 'm-ecol', at: 2 }] }),
+        at(RIGHT, pic([
+          V('lon09-fig14.jpg', 'Bored wood, Horseshoe Canyon Formation · Longrich & Currie 2009 Fig 14', 0),
+          V('lu18-fig4.jpg', 'Life scene by Zhao Chuang · Lü et al. 2018 Fig 4', 1),
+          V('mak-fig2b.jpg', 'Top: _Alnashetri_. Bottom: _Shuvuuia_ · Makovicky et al. 2026 Fig 2b', 2, [0.62, 0, 1, 0.75])
+        ]))
+      ]
     }),
 
     walk('ancestor', 'Which data', 2, 4, {
@@ -179,8 +216,9 @@
       crumb: 'Macroevolution', topic: 'Other fields',
       left: [['m-dryo', 0], ['m-myrm-range', 1]],
       right: [
-        ref([['m-ref35', 0, 'ref 35']], [0]),
-        ref([['m-ref37', 1, 'ref 37']], [1])
+        at(TOP, ref([['m-ref35', 0, 'ref 35']], [0])),
+        at(TOP, ref([['m-ref37', 1, 'ref 37']], [1])),
+        at(FIG, pic([V('lon09-fig13.jpg', 'Ulna levers: alvarezsaurids, aardvark, pangolin, armadillo, mole · Longrich & Currie 2009 Fig 13B', 1, [0.41, 0, 1, 1])], [1]))
       ]
     }),
 

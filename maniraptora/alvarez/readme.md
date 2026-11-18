@@ -8,7 +8,7 @@ Per-paper notes are in `notes/`. PDFs are in `papers/` (gitignored).
 
 ## Levels
 
-Press **L** (or `#L1` `#L2` `#L3`). 19 / 23 / 28 slides, about 54 / 66 / 83 minutes before questions. Level 2 adds shared data, "mosaic" in three papers, which data go in, and what next. Level 3 adds an appendix of four method models.
+Press **L** (or `#L1` `#L2` `#L3`). 20 / 24 / 29 slides, about 57 / 69 / 86 minutes before questions. Level 2 adds shared data, "mosaic" in three papers, which data go in, and what next. Level 3 adds an appendix of four method models.
 
 ## The moves
 
@@ -17,16 +17,17 @@ Press **L** (or `#L1` `#L2` `#L3`). 19 / 23 / 28 slides, about 54 / 66 / 83 minu
 | 1 Reading a paper | The abstract | The abstract is the argument in five steps: Background, Prior Claims, New evidence, Result, New Claims |
 | | One figure | Fig 2 puts three results on one tree |
 | 2 Building on sources | Multiple sources = Multiple lines of evidence | One sentence, three sources (refs 1–3), cited together |
-| | Each Claim | A whole paper compressed to the one claim being tested (Qin 2021, Xu 2018) |
+| | Each Claim | A whole paper compressed to the one claim being tested (Qin 2021, Xu 2018), each beside its figure |
 | | New evidence | "Here we describe," and how the new specimen sent them back to old ones |
 | | Shared data (L2) | The analysis is built on a matrix other people started |
 | 3 Comparing | Compare | Every observation set against another animal: "in contrast to," "like" |
-| | Mosaic (L2) | Three papers reach the same word |
-| 4 Disagreeing | Origin | Four papers, three answers, by year |
+| | Mosaic (L2) | Three papers reach the same word, each over its own forelimb figure |
+| 4 Disagreeing | Origin | Four papers, three answers, by year; each paper's figure in turn |
 | | Why it changed | The paper says why earlier answers differ: which taxa they had |
-| | Body size | Name the earlier study, say how you differ ("However, in contrast to previous studies") |
+| | Body size | Name the earlier study, say how you differ ("However, in contrast to previous studies"); Qin Fig 3A, then Makovicky Fig 2b |
+| | Diet | Digging into insect nests (Longrich, bored wood), egg-eating (Lü, life scene), "different ecologies" (Makovicky Fig 2b forelimbs) |
 | | Which data (L2) | Same method, different taxa in, different ancestor out |
-| | Other fields | Mammals as support: dryolestoids, living ant-eaters |
+| | Other fields | Mammals as support: dryolestoids, living ant-eaters; Longrich's ulna levers beside aardvark, pangolin, armadillo, mole |
 | 5 Claims and limits | Sized claims | "likely," "presumably," "possible," "not necessarily" |
 | | What next (L2) | The last paragraph says what would change the answer |
 | End | Where claims came from | Five papers by three questions, in four builds: organize your reading by others' papers; find claims from your readings; structure your paper by claims; synthesize & evaluate by comparing a claim across papers |
