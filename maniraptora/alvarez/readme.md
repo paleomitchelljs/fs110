@@ -14,10 +14,10 @@ Press **L** (or `#L1` `#L2` `#L3`). 19 / 23 / 28 slides, about 54 / 66 / 83 minu
 
 | Part | Slide | The move |
 |---|---|---|
-| 1 Reading a paper | The abstract | The abstract is the argument in five steps: background, earlier view, new evidence, result, what changes |
+| 1 Reading a paper | The abstract | The abstract is the argument in five steps: Background, Prior Claims, New evidence, Result, New Claims |
 | | One figure | Fig 2 puts three results on one tree |
-| 2 Building on sources | Citing together | One sentence, three sources (refs 1–3), cited together |
-| | One claim each | A whole paper compressed to the one claim being tested (Qin 2021, Xu 2018) |
+| 2 Building on sources | Multiple sources = Multiple lines of evidence | One sentence, three sources (refs 1–3), cited together |
+| | Each Claim | A whole paper compressed to the one claim being tested (Qin 2021, Xu 2018) |
 | | New evidence | "Here we describe," and how the new specimen sent them back to old ones |
 | | Shared data (L2) | The analysis is built on a matrix other people started |
 | 3 Comparing | Compare | Every observation set against another animal: "in contrast to," "like" |

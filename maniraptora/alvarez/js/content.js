@@ -77,8 +77,8 @@
       crumb: 'Abstract', topic: 'The abstract',
       left: [['m-abs-clade', 0], ['m-abs-grade', 1], ['m-abs-alna', 2], ['m-abs-poly', 3], ['m-abs-size', 4]],
       right: [{ kind: 'moves', cards: [
-        { label: 'Background', at: 0 }, { label: 'Earlier view', at: 1 }, { label: 'New evidence', at: 2 },
-        { label: 'Result', at: 3 }, { label: 'What changes', at: 4 }] }]
+        { label: 'Background', at: 0 }, { label: 'Prior Claims', at: 1 }, { label: 'New evidence', at: 2 },
+        { label: 'Result', at: 3 }, { label: 'New Claims', at: 4 }] }]
     }),
 
     walk('figure', 'One figure', 1, 4, {
@@ -94,15 +94,15 @@
     /* ---------------------------------------------------------- 2 building on sources */
     partTitle('p-build', 'Building on sources'),
 
-    walk('together', 'Citing together', 1, 4, {
-      crumb: 'Abstract', topic: 'Citing together',
+    walk('together', 'Multiple sources', 1, 4, {
+      crumb: 'Abstract', topic: 'Multiple sources = Multiple lines of evidence',
       left: [['m-abs-clade', 0]],
       right: [{ kind: 'quotes', cols: 1, size: 26, cards: [{ q: 'm-ref1', at: 1, label: 'ref 1' }, { q: 'm-ref2', at: 1, label: 'ref 2' }, { q: 'm-ref3', at: 1, label: 'ref 3' }] }],
       last: 1
     }),
 
-    walk('compress', 'One claim per source', 1, 4, {
-      crumb: 'Abstract', topic: 'One claim each',
+    walk('compress', 'Each Claim', 1, 4, {
+      crumb: 'Abstract', topic: 'Each Claim',
       left: [['m-abs-mini', 0], ['m-abs-grade', 1]],
       right: [
         ref([['q-rapid-s', 0]], [0]),
@@ -145,7 +145,7 @@
     /* ---------------------------------------------------------- 4 disagreeing */
     partTitle('p-disagree', 'Disagreeing'),
 
-    walk('origin', 'Where they began', 1, 4, {
+    walk('origin', 'Origin', 1, 4, {
       crumb: 'Four papers', topic: 'Origin',
       right: [{ kind: 'quotes', cols: 2, size: 40, cards: [{ q: 'l-sa-short', at: 0 }, { q: 'c-asia', at: 1 }, { q: 'x18-asia-short', at: 2 }, { q: 'm-abs-pan', at: 3 }] }]
     }),
@@ -206,7 +206,7 @@
         kind: 'matrix', box: [24, 124, 1552, 662], labelW: 210,
         cols: ['lon09', 'cho10', 'xu18', 'qin21', 'mak26'],
         rows: [
-          { label: 'Where they began', cells: { lon09: '"originated in South America"', cho10: '"originated in Asia rather than South America"', xu18: '"originated in Asia and remained there"', mak26: '"a Pangaean ancestral distribution"' } },
+          { label: 'Origin', cells: { lon09: '"originated in South America"', cho10: '"originated in Asia rather than South America"', xu18: '"originated in Asia and remained there"', mak26: '"a Pangaean ancestral distribution"' } },
           { label: 'Body size', cells: { cho10: '"a pattern of miniaturization"', xu18: '"extreme arm reduction occurred late"', qin21: '"rapid miniaturization"', mak26: '"no support for evolutionary miniaturization"' } },
           { label: 'Diet', cells: { lon09: '"to dig into insect nests"', cho10: '"carnivory was the primitive condition"', qin21: '"myrmecophagous ecological niche"', mak26: '"under different ecologies"' } }
         ],
