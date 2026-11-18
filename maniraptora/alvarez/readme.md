@@ -1,37 +1,45 @@
 # Alvarezsaurs
 
-A lecture deck on the same engine as `spinos/`. It walks through one paper, Makovicky et al. 2026, in the order the paper is written. The point is synthesis: each slide puts a line of the paper beside the earlier work it rests on, so students watch a new report get built out of old data.
+A lecture deck on the method of a research paper, not on alvarezsaurs as such. Students will find five papers and write a report. Most will write an annotated bibliography: paragraph 1 is source 1, paragraph 2 is source 2. This deck walks through one real paper, Makovicky et al. 2026, to show the other way, where sources get combined, compared and argued with to reach a new result.
 
-Every walk slide has the same shape. The page sits on the left, with the lines highlighted on the printed page and blown up in a lens. The right side holds whatever those lines point at: a figure from this paper, another paper's own words, or a small model of the method. The words in a lens are cut out of the PDF a word at a time and set again at a readable size, so they can only be what the paper printed.
+Each slide is one move. The page sits on the left with the sentence that makes the move highlighted and blown up. The right shows the sources that sentence draws on, kept to a phrase, or the figure it points to. The words in a lens are cut out of the PDF a word at a time, so they can only be what the paper printed.
 
 Per-paper notes are in `notes/`. PDFs are in `papers/` (gitignored).
 
 ## Levels
 
-Press **L** (or `#L1` `#L2` `#L3`). 34 / 37 / 39 slides, about 103 / 113 / 119 minutes before questions. Level 2 adds the olecranon lever, the support model and up-and-down body size. Level 3 adds wildcards and time-scaling.
+Press **L** (or `#L1` `#L2` `#L3`). 19 / 23 / 28 slides, about 54 / 66 / 83 minutes before questions. Level 2 adds shared data, "mosaic" in three papers, which data go in, and what next. Level 3 adds an appendix of four method models.
 
-## How it is built
+## The moves
 
-| Part | Slides |
-|---|---|
-| No card | Cover; the eight papers by year, which ones Makovicky cites |
-| 1 Abstract and introduction | What they are; social insects (Longrich & Currie, Lü); miniaturization (Qin, with the ref-list entry); Qin Fig 3; dispersal (Xu 2011); the three claims |
-| 2 The new skeleton | Specimen; teeth; forelimb; olecranon (L2); hand; "mosaic" in three papers; growth lines |
-| 3 The tree | The tree; support (L2); wildcards (L3); *Haplocheirus*; two old Laurasian taxa; ghost lineages; time-scaling (L3) |
-| 4 Where they lived | Origin in four papers; back-and-forth dispersal; land and sea; Pangaea |
-| 5 Body size | Under 1 kg; size and diet; four models; Akaike weights; Qin's correction; the ancestor; up and down (L2) |
-| End | Who said what: seven papers by four questions, in their own words |
+| Part | Slide | The move |
+|---|---|---|
+| 1 Reading a paper | The abstract | The abstract is the argument in five steps: background, earlier view, new evidence, result, what changes |
+| | One figure | Fig 2 puts three results on one tree |
+| 2 Building on sources | Citing together | One sentence, three sources (refs 1–3), cited together |
+| | One claim each | A whole paper compressed to the one claim being tested (Qin 2021, Xu 2018) |
+| | New evidence | "Here we describe," and how the new specimen sent them back to old ones |
+| | Shared data (L2) | The analysis is built on a matrix other people started |
+| 3 Comparing | Compare | Every observation set against another animal: "in contrast to," "like" |
+| | Mosaic (L2) | Three papers reach the same word |
+| 4 Disagreeing | Origin | Four papers, three answers, by year |
+| | Why it changed | The paper says why earlier answers differ: which taxa they had |
+| | Body size | Name the earlier study, say how you differ ("However, in contrast to previous studies") |
+| | Which data (L2) | Same method, different taxa in, different ancestor out |
+| | Other fields | Mammals as support: dryolestoids, living ant-eaters |
+| 5 Claims and limits | Sized claims | "likely," "presumably," "possible," "not necessarily" |
+| | What next (L2) | The last paragraph says what would change the answer |
+| End | Synthesis matrix | Five papers by three questions. Read by paper, write by question |
+| | Your five papers | The empty matrix for their report |
+| Appendix (L3) | Four models, Akaike weights, ghost lineages, land and sea | The numbers behind the claims, as small models |
 
 ## The models
 
-None of them is the paper's analysis. Each shows what one number means.
+None of them is the paper's analysis. Each shows what one number means. The support, olecranon and growth-line models are still in `js/parts/sims.js`, unused.
 - **Four models.** One fixed tree, a trait run four ways. BM wanders. Lambda pulls the internal branches toward a star as λ drops. OU pulls toward θ, with α as a half-life. White noise ignores the tree. "Again" redraws.
 - **Akaike weights.** Drag an AICc score. weight ∝ e^(−Δ/2). The scores are made up.
-- **Support.** Characters for and against a group, each dropped or doubled at the same chance, 10,000 times. Bremer is for minus against in this toy, where every character costs one step.
 - **Ghost lineages.** First appearances read by eye from Makovicky Fig 2b. Node ages are the oldest descendant. MIG sums every branch. GER = 1 − (MIG − Gmin)/(Gmax − Gmin). This is GER, not GER*, which needs permutations.
 - **Land and sea.** P(at least one dispersal) = 1 − e^(−d·m·T), with d = 0.0098 from ED Fig 8d, m = 1 or 0.0001, and T dragged.
-- **Olecranon.** In-lever over out-lever, against the values printed in Longrich & Currie 2009 Fig 13.
-- **Growth lines.** A generic von Bertalanffy curve, fitted to no animal.
 - **Ancestor.** Brownian ML root (contrasts) on a toy tree. Polytomies wherever the papers disagree. Masses from Qin 2021 Table 1; *Alnashetri* 0.7 kg from Makovicky Fig 2; *Aorun*, the Morrison taxon and *Calamosaurus* read by eye from Makovicky ED Fig 9b. Ages from Makovicky Fig 2b, *Haplocheirus* from Choiniere 2010.
 
 Numbers the models give, checked in `tests/data.test.js`:
@@ -47,8 +55,6 @@ Numbers the models give, checked in `tests/data.test.js`:
 - **Ref 27 year.** Printed as "(Wiley-Blackwell, 1991)." I think *Dinosaurs of the Isle of Wight* came out in 2001 from the Palaeontological Association, but that's from memory, not from anything in the folder.
 - **"No support for a clade-wide trend."** None of the four models fitted is a trend model. The claim rests on OU (Qin's reading of miniaturization) losing to white noise and lambda.
 - **ED Fig 9a x-axis** runs to about 40,000; the caption says 41,200.
-- **Symmetric resampling P = 25%.** The model drops and doubles at 25% each. Check whether TNT's P splits between the two.
-- **Mosaic card, Xu 2011.** Xu numbers the digits II–IV; Makovicky numbers the same digits I–III.
 - **The 2009 abstract quote** ends "consistent with the hypothesis that the alvarezsaurs originated in South America." It's their reading of their own tree, not a separate analysis.
 
 ## Said aloud, not on the slides

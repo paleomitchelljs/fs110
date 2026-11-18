@@ -45,7 +45,7 @@
     return { id, title, tier, min, builds, items };
   }
   const pic = (views, builds) => ({ kind: 'pic', views, builds });
-  const ref = (steps, builds, refq) => ({ kind: 'page', lensOnly: true, steps: steps.map(([q, at]) => ({ q, at })), builds, ref: refq });
+  const ref = (steps, builds, refq) => ({ kind: 'page', lensOnly: true, steps: steps.map(([q, at, label]) => ({ q, at, label })), builds, ref: refq });
   const sim = (kind, builds, extra) => Object.assign({ kind, builds }, extra || {});
   const span = (a, b) => { const r = []; for (let i = a; i <= b; i++) r.push(i); return r; };
 
@@ -70,269 +70,170 @@
     /* ---------------------------------------------------------- cover */
     { id: 'title', title: 'Alvarezsaurs', min: 1, tier: 1, builds: [{}], items: [{ kind: 'cover', box: [0, 0, 1600, 790], pic: 'img/mak-fig1.jpg', title: 'Alvarezsaurs' }] },
 
-    /* ---------------------------------------------------------- the folder */
-    {
-      id: 'shelf', title: 'The papers', min: 3, tier: 1, builds: [{}, {}, {}],
-      items: [head('', 'Eight papers'), {
-        kind: 'shelf', box: [24, 124, 1552, 662], badgesAt: 1, focusAt: 2, thumbH: 300,
-        papers: [
-          { key: 'lon09', year: 2009 }, { key: 'cho10', year: 2010 }, { key: 'xu11', year: 2011, ref: 20 },
-          { key: 'xu18', year: 2018, ref: 11 }, { key: 'lu18', year: 2018 }, { key: 'lee19', year: 2019 },
-          { key: 'qin21', year: 2021, ref: 2 }, { key: 'mak26', year: 2026, ref: '' }
-        ]
-      }]
-    },
+    /* ---------------------------------------------------------- 1 reading the paper */
+    partTitle('p-read', 'Reading a paper'),
 
-    /* ---------------------------------------------------------- abstract */
-    partTitle('p-abs', 'Abstract and introduction'),
+    walk('abstract', 'The abstract', 1, 5, {
+      crumb: 'Abstract', topic: 'The abstract',
+      left: [['m-abs-clade', 0], ['m-abs-grade', 1], ['m-abs-alna', 2], ['m-abs-poly', 3], ['m-abs-size', 4]],
+      right: [{ kind: 'moves', cards: [
+        { label: 'Background', at: 0 }, { label: 'Earlier view', at: 1 }, { label: 'New evidence', at: 2 },
+        { label: 'Result', at: 3 }, { label: 'What changes', at: 4 }] }]
+    }),
 
-    walk('abs', 'What they are', 1, 4, {
-      crumb: 'Abstract', topic: 'Alvarezsauroids',
-      left: [['m-title', 0], ['m-abs-clade', 1], ['m-abs-dig', 2]],
+    walk('figure', 'One figure', 1, 4, {
+      crumb: 'Figure 2', topic: 'One figure',
+      left: [['m-fig2-title', 0]],
       right: [pic([
-        V('mak-fig1.jpg', MAK1, 0),
-        V('xu11-fig3.jpg', 'Taxa and continents · Xu et al. 2011 Fig 3', 1),
-        V('lon09-fig13.jpg', 'Ulna as a lever; numbers are mechanical advantage · Longrich & Currie 2009 Fig 13', 2)
+        V('mak-fig2a.jpg', 'Relationships · Makovicky et al. 2026 Fig 2a', 0),
+        V('mak-fig2b.jpg', 'Time and body mass, on the same tree · Makovicky et al. 2026 Fig 2b', 1, [0.08, 0, 1, 0.74]),
+        V('mak-fig2b.jpg', 'Letters: where each ancestor lived · Makovicky et al. 2026 Fig 2b', 2, [0.08, 0.05, 0.62, 0.45])
       ])]
     }),
 
-    walk('ants', 'Myrmecophagy', 1, 3, {
-      crumb: 'Introduction', topic: 'Social insects',
-      left: [['m-int-insects', 0]],
-      right: [ref([['l-conform', 0], ['l-ants', 1], ['lu-eggs', 2]], [0, 1, 2])]
+    /* ---------------------------------------------------------- 2 building on sources */
+    partTitle('p-build', 'Building on sources'),
+
+    walk('together', 'Citing together', 1, 4, {
+      crumb: 'Abstract', topic: 'Citing together',
+      left: [['m-abs-clade', 0]],
+      right: [{ kind: 'quotes', cols: 1, size: 26, cards: [{ q: 'm-ref1', at: 1, label: 'ref 1' }, { q: 'm-ref2', at: 1, label: 'ref 2' }, { q: 'm-ref3', at: 1, label: 'ref 3' }] }],
+      last: 1
     }),
 
-    walk('mini', 'Miniaturization', 1, 3, {
-      crumb: 'Abstract', topic: 'Miniaturization',
-      left: [['m-abs-mini', 0]],
-      right: [ref([['q-def', 0], ['q-rapid', 1]], [0, 1], 'm-ref2')]
-    }),
-
-    walk('qin3', 'Qin Fig 3', 1, 3, {
-      crumb: 'Reference 2', topic: 'Body mass',
-      left: [['q-anc', 0], ['q-plunge', 1]],
-      right: [pic([
-        V('qin-fig3.jpg', 'Body mass on the tree · Qin et al. 2021 Fig 3A', 0, [0, 0, 1, 0.66]),
-        V('qin-fig3.jpg', 'Red: to mid-Cretaceous. Blue: the drop · Qin et al. 2021 Fig 3A', 1, [0, 0.12, 1, 0.66])
-      ])]
-    }),
-
-    walk('grade', 'South American taxa', 1, 3, {
-      crumb: 'Abstract', topic: 'Dispersal',
-      left: [['m-abs-grade', 0]],
+    walk('compress', 'One claim per source', 1, 4, {
+      crumb: 'Abstract', topic: 'One claim each',
+      left: [['m-abs-mini', 0], ['m-abs-grade', 1]],
       right: [
-        pic([V('xu11-fig3.jpg', 'Arrows: dispersals · Xu et al. 2011 Fig 3', 0)], [0]),
-        ref([['x11-asia', 1]], [1], 'm-ref20')
+        ref([['q-rapid-s', 0]], [0]),
+        ref([['x18-asia-short', 1]], [1])
       ]
     }),
 
-    walk('claims', 'Three claims', 1, 3, {
-      crumb: 'Abstract', topic: 'The claims',
-      left: [['m-abs-alna', 0], ['m-abs-poly', 1], ['m-abs-pan', 2], ['m-abs-size', 3]],
+    walk('newdata', 'The new evidence', 1, 3, {
+      crumb: 'Introduction', topic: 'New evidence',
+      left: [['m-int-here', 0], ['m-int-spur', 1]],
       right: [pic([
         V('mak-fig1.jpg', MAK1, 0),
-        V('mak-fig2a.jpg', MAK2A, 1, [0.1, 0.05, 0.62, 0.62], [0.24, 0.2, 0.43, 0.33]),
-        V('mak-fig2b.jpg', MAK2B + '; letters are ancestral areas', 2, [0.08, 0.05, 0.62, 0.45]),
-        V('mak-fig2b.jpg', MAK2B, 3, [0.08, 0, 1, 0.74])
+        V('mak-ed5.jpg', 'Morrison Formation cervicals, first described in 1997 · Makovicky et al. 2026 ED Fig 5', 1)
       ])]
     }),
 
-    /* ---------------------------------------------------------- the skeleton */
-    partTitle('p-bones', 'The new skeleton'),
-
-    walk('specimen', 'MPCA Pv 377', 1, 3, {
-      crumb: 'Anatomy', topic: 'The specimen',
-      left: [['m-specimen', 0], ['m-missing', 1], ['m-assign', 2]],
-      right: [pic([
-        V('mak-ed1.jpg', 'Cerro Policía; Neuquén Group · Makovicky et al. 2026 ED Fig 1', 0, [0, 0, 1, 0.52]),
-        V('mak-ed1.jpg', 'Before preparation · Makovicky et al. 2026 ED Fig 1e', 1, [0, 0.52, 1, 1]),
-        V('mak-ed2.jpg', 'MPCA Pv 377 and Pv 477 against _Patagonykus_, _Alvarezsaurus_ · Makovicky et al. 2026 ED Fig 2', 2)
-      ])]
+    walk('shared', 'Shared data', 2, 3, {
+      crumb: 'Methods', topic: 'Shared data',
+      left: [['m-meth-matrix', 0]],
+      right: [pic([V('mak-ed7.jpg', 'The tree from that shared matrix · Makovicky et al. 2026 ED Fig 7a', 0, [0, 0, 1, 0.62])])]
     }),
 
-    walk('teeth', 'Teeth', 1, 3, {
-      crumb: 'Anatomy', topic: 'Teeth',
-      left: [['m-pmx', 0], ['m-teeth', 1]],
-      right: [
-        pic([V('mak-ed3.jpg', 'Rostrum, MPCA Pv 377 · Makovicky et al. 2026 ED Fig 3a,b', 0, [0, 0, 1, 0.42])], [0, 1]),
-        ref([['l-teeth', 2]], [2])
-      ],
-      last: 2
-    }),
+    /* ---------------------------------------------------------- 3 comparing */
+    partTitle('p-compare', 'Comparing'),
 
-    walk('forelimb', 'Forelimb', 1, 3, {
-      crumb: 'Anatomy', topic: 'Forelimb',
-      left: [['m-forelimb', 0], ['m-fig2-sil', 1]],
+    walk('contrast', 'Compare everything', 1, 4, {
+      crumb: 'Anatomy', topic: 'Compare',
+      left: [['m-teeth', 0], ['m-forelimb', 1]],
       right: [pic([
-        V('xu18-fig3.jpg', 'Forelimbs scaled to femur length · Xu et al. 2018 Fig 3', 0),
+        V('mak-ed3.jpg', 'Rostrum, MPCA Pv 377 · Makovicky et al. 2026 ED Fig 3a,b', 0, [0, 0, 1, 0.42]),
         V('mak-fig2b.jpg', 'Top: _Alnashetri_. Bottom: _Shuvuuia_ · Makovicky et al. 2026 Fig 2b', 1, [0.62, 0, 1, 0.75])
       ])]
     }),
 
-    walk('olecranon', 'Olecranon', 2, 3, {
-      crumb: 'Anatomy', topic: 'Olecranon',
-      left: [['m-olec', 0]],
-      right: [
-        pic([V('lon09-fig13.jpg', 'Longrich & Currie 2009 Fig 13', 0)], [0]),
-        sim('lever', [1])
-      ],
-      last: 1
-    }),
-
-    walk('manus', 'Hand', 1, 3, {
-      crumb: 'Anatomy', topic: 'Hand',
-      left: [['m-manus', 0], ['m-claw', 1]],
-      right: [pic([
-        V('mak-ed4.jpg', 'Manus, MPCA Pv 377 · Makovicky et al. 2026 ED Fig 4l', 0, [0.27, 0.78, 0.66, 1]),
-        V('xu11-fig4.jpg', 'Digit II gray · Xu et al. 2011 Fig 4', 1),
-        V('cho10-fig3.jpg', 'B _Allosaurus_ · C _Haplocheirus_ · D _Shuvuuia_ · E _Deinonychus_ · Choiniere et al. 2010 Fig 3', 2, [0.62, 0, 1, 1])
-      ])]
-    }),
-
-    walk('mosaic', 'Mosaic', 1, 3, {
+    walk('mosaic', 'One idea, three papers', 2, 3, {
       crumb: 'Three papers', topic: 'Mosaic',
-      right: [{ kind: 'quotes', cols: 3, cards: [{ q: 'x11-mosaic', at: 0 }, { q: 'x18-mosaic', at: 1 }, { q: 'm-mosaic', at: 2 }] }]
+      right: [{ kind: 'quotes', cols: 1, size: 40, cards: [{ q: 'x11-mosaic-s', at: 0 }, { q: 'x18-mosaic-s', at: 1 }, { q: 'm-mosaic-s', at: 2 }] }]
     }),
 
-    walk('histo', 'Growth lines', 1, 4, {
-      crumb: 'Histology', topic: 'Growth lines',
-      left: [['m-histo', 0], ['m-medul', 1], ['q-check', 2]],
-      right: [
-        pic([
-          V('mak-fig3.jpg', 'Humerus MPCA Pv 377 (a–c); femur, tibia MPCA Pv 477 (d–f) · Makovicky et al. 2026 Fig 3', 0),
-          V('mak-fig3.jpg', 'icl, inner circumferential layer; ewb, endosteal woven-fibred bone · Makovicky et al. 2026 Fig 3c', 1, [0, 0.34, 0.5, 0.68])
-        ], [0, 1]),
-        sim('growth', [2])
-      ]
+    /* ---------------------------------------------------------- 4 disagreeing */
+    partTitle('p-disagree', 'Disagreeing'),
+
+    walk('origin', 'Where they began', 1, 4, {
+      crumb: 'Four papers', topic: 'Origin',
+      right: [{ kind: 'quotes', cols: 2, size: 40, cards: [{ q: 'l-sa-short', at: 0 }, { q: 'c-asia', at: 1 }, { q: 'x18-asia-short', at: 2 }, { q: 'm-abs-pan', at: 3 }] }]
     }),
 
-    /* ---------------------------------------------------------- the tree */
-    partTitle('p-tree', 'The tree'),
-
-    walk('tree', 'Tree', 1, 4, {
-      crumb: 'Macroevolution', topic: 'The tree',
-      left: [['m-poly', 0], ['m-lacks', 1]],
+    walk('why', 'Why it changed', 1, 4, {
+      crumb: 'Macroevolution', topic: 'Why it changed',
+      left: [['m-dispersal', 0], ['m-widespread', 1]],
       right: [pic([
-        V('mak-fig2a.jpg', MAK2A, 0),
-        V('mak-fig2a.jpg', MAK2A, 1, [0.1, 0.05, 0.62, 0.62], [0.24, 0.2, 0.43, 0.33])
+        V('xu11-fig3.jpg', 'Arrows: dispersals · Xu et al. 2011 Fig 3', 0),
+        V('mak-fig2b.jpg', 'Pan: Pangaea · Makovicky et al. 2026 Fig 2b', 1, [0.08, 0.05, 0.62, 0.45])
       ])]
     }),
 
-    walk('support', 'Support', 2, 4, {
-      crumb: 'Methods', topic: 'Support',
-      left: [['m-meth-supp', 0]],
+    walk('size', 'Body size', 1, 4, {
+      crumb: 'Two papers', topic: 'Body size',
+      left: [['m-contrast', 0]],
       right: [
-        pic([V('mak-fig2a.jpg', 'Above: symmetric resampling. Below: Bremer · Makovicky et al. 2026 Fig 2a', 0, [0.1, 0.05, 0.75, 1])], [0]),
-        sim('resample', [1], { k: 5, c: 2, p: 0.25 })
+        ref([['q-rapid-s', 0]], [0]),
+        ref([['q-corr-short', 1]], [1])
       ],
       last: 1
     }),
 
-    walk('wild', 'Wildcards', 3, 3, {
-      crumb: 'Methods', topic: 'Wildcards',
-      left: [['m-meth-tnt', 0], ['m-meth-wild', 1]],
-      right: [pic([
-        V('mak-ed7.jpg', 'Equal weights; stippled lines are wildcards · Makovicky et al. 2026 ED Fig 7a', 0, [0, 0, 1, 0.62]),
-        V('mak-fig2a.jpg', 'Colored areas: where each wildcard can go · Makovicky et al. 2026 Fig 2a', 1)
-      ])]
+    walk('ancestor', 'Which data', 2, 4, {
+      crumb: 'Qin et al. 2021', topic: 'Which data',
+      left: [['q-remove', 0]],
+      right: [sim('root', [0])]
     }),
 
-    walk('haplo', 'Haplocheirus', 1, 4, {
-      crumb: 'Reference not cited', topic: '_Haplocheirus_',
-      left: [['c-abs', 0], ['x18-firm', 1]],
-      right: [pic([
-        V('cho10-fig3.jpg', 'Choiniere et al. 2010 Fig 3', 0, [0, 0, 0.62, 1], [0.1, 0.485, 0.4, 0.54]),
-        V('mak-ed7.jpg', 'Equal weights · Makovicky et al. 2026 ED Fig 7a', 2, [0.1, 0, 0.85, 0.45], [0.4, 0.205, 0.58, 0.25])
-      ])],
-      last: 2
-    }),
-
-    walk('laurasia', 'Morrison and Isle of Wight', 1, 3, {
-      crumb: 'Macroevolution', topic: 'Two old taxa',
-      left: [['m-twotaxa', 0], ['m-synap', 1]],
-      right: [pic([
-        V('mak-ed5.jpg', 'Morrison Formation cervicals YPM 1996, 1997 · Makovicky et al. 2026 ED Fig 5', 0),
-        V('mak-ed6.jpg', '_Calamosaurus foxi_ NHM UK R901 · Makovicky et al. 2026 ED Fig 6', 1),
-        V('mak-ed4.jpg', '_Xiyunykus_ cervical IVPP 22783 · Makovicky et al. 2026 ED Fig 4d', 2, [0.05, 0.24, 0.34, 0.52])
-      ])]
-    }),
-
-    walk('ghost', 'Ghost lineages', 1, 5, {
-      crumb: 'Three papers', topic: 'Ghost lineages',
-      left: [['c-ghost', 0], ['x18-gap', 1], ['m-dyad', 2], ['m-meth-ger', 3], ['c-fit', 4]],
-      right: [sim('ghost', span(0, 4))]
-    }),
-
-    walk('calib', 'Time-scaling', 3, 3, {
-      crumb: 'Methods', topic: 'Time-scaling',
-      left: [['m-meth-cal', 0]],
-      right: [pic([V('mak-fig2b.jpg', MAK2B, 0, [0.08, 0, 1, 1])])]
-    }),
-
-    /* ---------------------------------------------------------- biogeography */
-    partTitle('p-geo', 'Where they lived'),
-
-    walk('origin', 'Origin', 1, 4, {
-      crumb: 'Four papers', topic: 'Origin',
-      right: [{ kind: 'quotes', cols: 2, cards: [{ q: 'l-sa', at: 0 }, { q: 'c-asia', at: 1 }, { q: 'x18-dispersal', at: 2 }, { q: 'm-abs-pan', at: 3 }] }]
-    }),
-
-    walk('backforth', 'Back and forth', 1, 3, {
-      crumb: 'Macroevolution', topic: 'Dispersal',
-      left: [['m-dispersal', 0]],
+    walk('outside', 'Other fields', 1, 3, {
+      crumb: 'Macroevolution', topic: 'Other fields',
+      left: [['m-dryo', 0], ['m-myrm-range', 1]],
       right: [
-        pic([V('xu11-fig3.jpg', 'Xu et al. 2011 Fig 3', 0)], [0]),
-        ref([['x18-vicar', 1]], [1], 'm-ref11')
+        ref([['m-ref35', 0, 'ref 35']], [0]),
+        ref([['m-ref37', 1, 'ref 37']], [1])
       ]
     }),
 
-    walk('strat', 'Land and sea', 1, 4, {
-      crumb: 'Methods', topic: 'Dispersal rate',
-      left: [['m-meth-d', 0], ['m-meth-sa', 1]],
-      right: [
-        sim('disperse', [0], { T: 64, d: 0.0098 }),
-        pic([V('mak-ed8.jpg', 'S-DEC: a, open; b, South America cut off after the Aptian · Makovicky et al. 2026 ED Fig 8a,b', 1, [0, 0, 1, 0.5])], [1])
-      ]
+    /* ---------------------------------------------------------- 5 claims and limits */
+    partTitle('p-limits', 'Claims and limits'),
+
+    walk('hedges', 'Sized claims', 1, 3, {
+      crumb: 'Macroevolution', topic: 'Sized claims',
+      left: [['m-vicar', 0], ['m-medul', 1], ['m-limb2', 2]],
+      right: [{ kind: 'moves', cards: [{ label: 'likely', at: 0 }, { label: 'presumably', at: 0 }, { label: 'possible', at: 1 }, { label: 'not necessarily', at: 2 }] }]
     }),
 
-    walk('pangaea', 'Pangaea', 1, 3, {
-      crumb: 'Macroevolution', topic: 'Vicariance',
-      left: [['m-widespread', 0], ['m-vicar', 1]],
-      right: [pic([
-        V('mak-fig2b.jpg', 'Pan, Pangaea · A, Asia · E, Europe · S, South America · Makovicky et al. 2026 Fig 2b', 0, [0.08, 0.05, 0.62, 0.45]),
-        V('mak-ed8.jpg', 'Stratified BioGeoBEARS, best-fit tree · Makovicky et al. 2026 ED Fig 8d', 1, [0.42, 0.48, 1, 1])
-      ])]
+    walk('next', 'What next', 2, 2, {
+      crumb: 'Last paragraph', topic: 'What next',
+      left: [['m-anticipate', 0]],
+      right: [pic([V('mak-ed6.jpg', '_Calamosaurus foxi_ NHM UK R901 · Makovicky et al. 2026 ED Fig 6', 0)])]
     }),
 
-    /* ---------------------------------------------------------- body size */
-    partTitle('p-size', 'Body size'),
+    /* ---------------------------------------------------------- end: the matrix */
+    {
+      id: 'matrix', title: 'Synthesis matrix', min: 6, tier: 1, builds: [{}, {}, {}, {}],
+      items: [head('Five papers', 'Synthesis matrix'), {
+        kind: 'matrix', box: [24, 124, 1552, 662], labelW: 210,
+        cols: ['lon09', 'cho10', 'xu18', 'qin21', 'mak26'],
+        rows: [
+          { label: 'Where they began', cells: { lon09: '"originated in South America"', cho10: '"originated in Asia rather than South America"', xu18: '"originated in Asia and remained there"', mak26: '"a Pangaean ancestral distribution"' } },
+          { label: 'Body size', cells: { cho10: '"a pattern of miniaturization"', xu18: '"extreme arm reduction occurred late"', qin21: '"rapid miniaturization"', mak26: '"no support for evolutionary miniaturization"' } },
+          { label: 'Diet', cells: { lon09: '"to dig into insect nests"', cho10: '"carnivory was the primitive condition"', qin21: '"myrmecophagous ecological niche"', mak26: '"under different ecologies"' } }
+        ],
+        focus: [{ at: 1, col: 'qin21', label: 'Read by paper' }, { at: 2, row: 0, label: 'Write by question' }, { at: 3, row: 1, label: 'Write by question' }]
+      }]
+    },
 
-    walk('tiny', 'Under 1 kg', 1, 3, {
-      crumb: 'Macroevolution', topic: 'Body mass',
-      left: [['m-mass', 0], ['m-indep', 1]],
-      right: [pic([
-        V('qin-tab1.jpg', 'Qin et al. 2021 Table 1', 0),
-        V('mak-fig2b.jpg', MAK2B, 1, [0.08, 0, 1, 0.74], [0.45, 0.13, 0.7, 0.2])
-      ])]
-    }),
+    {
+      id: 'yours', title: 'Your five papers', min: 3, tier: 1, builds: [{}],
+      items: [head('Your report', 'Your five papers'), {
+        kind: 'matrix', box: [24, 124, 1552, 662], labelW: 210,
+        cols: ['Paper 1', 'Paper 2', 'Paper 3', 'Paper 4', 'Paper 5'],
+        rows: [{ label: 'Question 1' }, { label: 'Question 2' }, { label: 'Question 3' }]
+      }]
+    },
 
-    walk('ecology', 'Digging and size', 1, 4, {
-      crumb: 'Macroevolution', topic: 'Size and diet',
-      left: [['m-myrm', 0], ['m-limb2', 1], ['m-teeth2', 2], ['m-ecol', 3]],
-      right: [
-        ref([['q-driven', 0]], [0], 'm-ref2'),
-        pic([V('xu18-fig4.jpg', 'Forelimb length against body mass · Xu et al. 2018 Fig 4', 1)], [1, 2, 3])
-      ]
-    }),
+    /* ---------------------------------------------------------- appendix: the numbers (full level) */
+    partTitle('p-numbers', 'The numbers behind the claims', 3),
 
-    walk('models', 'Four models', 1, 5, {
+    walk('models', 'Four models', 3, 5, {
       crumb: 'Methods', topic: 'Four models',
       left: [['m-meth-models', 0]],
       right: [sim('models', span(0, 3), { model: 'BM', steps: [{ model: 'BM', at: 0 }, { model: 'Lambda', at: 1 }, { model: 'OU', at: 2 }, { model: 'WN', at: 3 }] })],
       last: 3
     }),
 
-    walk('weights', 'Model weights', 1, 4, {
+    walk('weights', 'Model weights', 3, 4, {
       crumb: 'Two papers', topic: 'Akaike weights',
       left: [['q-ou', 0], ['m-models', 1]],
       right: [
@@ -341,40 +242,20 @@
       ]
     }),
 
-    walk('correction', 'Correction', 1, 3, {
-      crumb: 'Qin et al. 2021, correction', topic: 'Branch lengths',
-      left: [['q-corr-ou', 0], ['q-corr-no', 1]],
-      right: [ref([['m-meth-cal', 0]], [0, 1])],
-      last: 1
+    walk('ghost', 'Ghost lineages', 3, 4, {
+      crumb: 'Three papers', topic: 'Ghost lineages',
+      left: [['c-ghost', 0], ['m-dyad', 1], ['m-meth-ger', 2]],
+      right: [sim('ghost', span(0, 2))]
     }),
 
-    walk('ancestor', 'The ancestor', 1, 5, {
-      crumb: 'Reference 2', topic: 'Ancestor size',
-      left: [['q-anc', 0], ['q-hatch', 1], ['q-remove', 2]],
-      right: [sim('root', span(0, 2))]
-    }),
-
-    walk('updown', 'Up and down', 2, 3, {
-      crumb: 'Macroevolution', topic: 'Up and down',
-      left: [['m-updown', 0], ['m-ed9-cap', 1]],
-      right: [pic([V('mak-ed9.jpg', 'Body mass on all 41,200 trees · Makovicky et al. 2026 ED Fig 9b', 0, [0.47, 0, 1, 1])])],
-      last: 1
-    }),
-
-    /* ---------------------------------------------------------- end */
-    {
-      id: 'matrix', title: 'Who said what', min: 5, tier: 1, builds: [{}, {}, {}, {}],
-      items: [head('Seven papers', 'Who said what'), {
-        kind: 'matrix', box: [24, 124, 1552, 662], labelW: 200,
-        cols: ['lon09', 'cho10', 'xu11', 'xu18', 'lu18', 'qin21', 'mak26'],
-        rows: [
-          { label: 'Where they began', at: 0, cells: { lon09: '"originated in South America"', cho10: '"originated in Asia rather than South America"', xu11: '"originated in Asia"', xu18: '"originated in Asia and remained there"', mak26: '"a Pangaean ancestral distribution"' } },
-          { label: '_Haplocheirus_', at: 1, cells: { cho10: '"the earliest diverging member"', xu18: '"firmly within Alvarezsauria"', qin21: '41 kg, juvenile (Table 1)', mak26: 'outside Alvarezsauroidea (ED Fig 7a)' } },
-          { label: 'Body size', at: 2, cells: { cho10: '"a pattern of miniaturization"', xu18: '"extreme arm reduction occurred late"', qin21: '"rapid miniaturization"; correction: "can no longer robustly support selective pressure"', mak26: '"no support for evolutionary miniaturization"' } },
-          { label: 'Diet', at: 3, cells: { lon09: '"the only plausible explanation"', cho10: '"carnivory was the primitive condition"', lu18: '"may be egg-eaters"', qin21: '"myrmecophagous ecological niche"', mak26: '"under different ecologies"' } }
-        ]
-      }]
-    }
+    walk('strat', 'Land and sea', 3, 4, {
+      crumb: 'Methods', topic: 'Dispersal rate',
+      left: [['m-meth-d', 0], ['m-meth-sa', 1]],
+      right: [
+        sim('disperse', [0], { T: 64, d: 0.0098 }),
+        pic([V('mak-ed8.jpg', 'S-DEC: a, open; b, South America cut off after the Aptian · Makovicky et al. 2026 ED Fig 8a,b', 1, [0, 0, 1, 0.5])], [1])
+      ]
+    })
   ];
 
   root.ALVZ = { papers, railTitle: '', rail: [], segments };

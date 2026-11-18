@@ -146,7 +146,7 @@
         D.svg('path', { class: 'pg-cone', d: `M${x0 - 6},${sy} L${x1 + 6},${sy} L${lx + lz.w},${ey} L${lx},${ey} Z` }, wire);
         D.svg('rect', { class: 'pg-ring', x: x0 - 6, y: y0 - 5, width: x1 - x0 + 12, height: y1 - y0 + 10, rx: 4 }, wire);
       } else {
-        label.innerHTML = cite(q.paper, q.page);
+        label.innerHTML = now.label ? `<b>${D.fmt(now.label)}</b>` : cite(q.paper, q.page);
         label.style.cssText = 'left:0;top:0;';
         lensBox.style.cssText = `left:${((BW - lz.w) / 2).toFixed(1)}px;top:56px;`;
         if (def.ref) {
@@ -199,7 +199,7 @@
       const q = L()[c.q];
       const e = D.el('div', 'qc', host);
       e.style.cssText = `left:${((i % cols) * (cw + G)).toFixed(1)}px;top:${(Math.floor(i / cols) * (chh + G)).toFixed(1)}px;width:${cw.toFixed(1)}px;height:${chh.toFixed(1)}px;`;
-      D.el('div', 'qc-cite', e, cite(q.paper, q.page));
+      D.el('div', 'qc-cite', e, c.label ? `<b>${D.fmt(c.label)}</b>` : cite(q.paper, q.page));
       const lz = D.lens(e, c.q, cw - 8, chh - 60, { size: def.size || 34 });
       lz.el.style.cssText += `left:${((cw - lz.w) / 2).toFixed(1)}px;top:54px;`;
       return { e, at: c.at || 0 };
@@ -241,29 +241,75 @@
     };
   };
 
+  /* ---------- moves ---------- */
+  /* The moves a paper is making, as plain labels that light up in step with the page.
+   * cards: [{ label, at }]; the newest shown is lit, earlier ones stay, later ones wait. */
+  D.parts.moves = function (def, host) {
+    const BH = def.box[3], n = def.cards.length, G = 18, ch = Math.min(96, (BH - G * (n - 1)) / n);
+    host.innerHTML = '';
+    const top = (BH - n * ch - G * (n - 1)) / 2;
+    const cards = def.cards.map((c, i) => {
+      const e = D.el('div', 'mv', host, D.fmt(c.label));
+      e.style.cssText = `top:${(top + i * (ch + G)).toFixed(1)}px;height:${ch.toFixed(1)}px;`;
+      return { e, at: c.at || 0 };
+    });
+    return {
+      show(b, how) {
+        const lit = Math.max(...cards.filter((k) => k.at <= b).map((k) => k.at));
+        cards.forEach((k) => {
+          const on = k.at <= b, was = k.e.classList.contains('shown');
+          k.e.classList.toggle('shown', on);
+          k.e.classList.toggle('lit', on && k.at === lit);
+          if (on && !was && how === 'step') D.replay(k.e, 'play');
+        });
+      }
+    };
+  };
+
   /* ---------- matrix ---------- */
+  /* Questions down the side, sources across the top. A column key that is a paper gets its
+   * citation; anything else is shown as written (for a blank template). focus: [{ at, col }
+   * or { at, row }, label]: from build at on, everything else dims and the label shows. */
   D.parts.matrix = function (def, host) {
     const BW = def.box[2], BH = def.box[3];
     const LW = def.labelW || 230, cols = def.cols, rows = def.rows;
-    const HH = 66, cw = (BW - LW) / cols.length, rh = (BH - HH) / rows.length;
+    const HH = 66, cw = (BW - LW) / cols.length, rh = (BH - HH - (def.focus ? 50 : 0)) / rows.length;
     host.innerHTML = '';
-    cols.forEach((c, j) => {
-      D.el('div', 'mx-col', host, cite(c, null).replace(/<span>.*<\/span>/, '')).style.cssText = `left:${(LW + j * cw).toFixed(1)}px;width:${cw.toFixed(1)}px;height:${HH}px;`;
+    const head = (c) => PAPER()[c] ? `<b>${D.fmt(PAPER()[c].cite)}</b>` : `<b>${D.fmt(c)}</b>`;
+    const colEls = cols.map((c, j) => {
+      const e = D.el('div', 'mx-col', host, head(c));
+      e.style.cssText = `left:${(LW + j * cw).toFixed(1)}px;width:${cw.toFixed(1)}px;height:${HH}px;`;
+      return e;
     });
+    const cells = [];
     const rowEls = rows.map((r, i) => {
       const y = HH + i * rh;
       const lab = D.el('div', 'mx-row', host, D.fmt(r.label));
       lab.style.cssText = `top:${y.toFixed(1)}px;width:${LW - 14}px;height:${(rh - 8).toFixed(1)}px;`;
-      const cells = cols.map((c, j) => {
-        const t = r.cells[c];
+      const cs = cols.map((c, j) => {
+        const t = (r.cells || {})[c];
         const e = D.el('div', 'mx-cell' + (t ? '' : ' empty'), host, t ? D.fmt(t) : '');
         e.style.cssText = `left:${(LW + j * cw + 4).toFixed(1)}px;top:${y.toFixed(1)}px;width:${(cw - 8).toFixed(1)}px;height:${(rh - 8).toFixed(1)}px;`;
+        cells.push({ e, i, j });
         return e;
       });
-      return { at: r.at || 0, els: [lab].concat(cells) };
+      return { at: r.at || 0, els: [lab].concat(cs), lab };
     });
+    const tag = D.el('div', 'mx-tag', host);
     return {
-      show(b) { rowEls.forEach((r) => r.els.forEach((e) => e.classList.toggle('shown', b >= r.at))); }
+      show(b) {
+        rowEls.forEach((r) => r.els.forEach((e) => e.classList.toggle('shown', b >= r.at)));
+        const f = (def.focus || []).filter((x) => x.at <= b).pop();
+        cells.forEach((c) => c.e.classList.toggle('dim', !!f && !(f.col != null ? cols[c.j] === f.col : c.i === f.row)));
+        colEls.forEach((e, j) => e.classList.toggle('dim', !!f && f.col != null && cols[j] !== f.col));
+        rowEls.forEach((r, i) => r.lab.classList.toggle('dim', !!f && f.row != null && i !== f.row));
+        tag.classList.toggle('shown', !!f);
+        if (f) {
+          tag.innerHTML = D.fmt(f.label || '');
+          if (f.col != null) { const j = cols.indexOf(f.col); tag.style.cssText = `left:${(LW + j * cw).toFixed(1)}px;width:${cw.toFixed(1)}px;top:${(HH + rows.length * rh + 6).toFixed(1)}px;`; }
+          else tag.style.cssText = `left:${LW}px;width:${(BW - LW).toFixed(1)}px;top:${(HH + rows.length * rh + 6).toFixed(1)}px;`;
+        }
+      }
     };
   };
 })();

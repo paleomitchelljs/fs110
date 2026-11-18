@@ -120,4 +120,22 @@ QUOTES = {
     # ---------------------------------------------------------------- Lü et al. 2018, Lee et al. 2019
     'lu-eggs':       ('lu18', 'The alvarezsaurid skeleton associated with eggshell fragments', 'may be egg-eaters'),
     'lee-origin':    ('lee19', 'It was initially suggested that alvarezsaurs originated in South America', 'Asian origin of this clade'),
+    # ---------------------------------------------------------------- short pulls for the synthesis deck
+    'm-ref1':        ('mak26', 'Altangerel, P., Norell, M. A., Chiappe', '(1993)', 5),
+    'm-ref35':       ('mak26', 'Rougier, G. W., Apesteguía, S. & Gaetano', '(2011)', 5),
+    'm-ref37':       ('mak26', 'Milewski, A. V.', '(1994)', 5),
+    'm-fig2-title':  ('mak26', 'Phylogenetic relationships, inferred body size evolution and', 'biogeographical history of alvarezsauroids', 3),
+    'm-int-here':    ('mak26', 'Here we describe a new specimen', 'alvarezsauroid skeleton from South America'),
+    'm-int-spur':    ('mak26', 'This discovery also spurred', 'this dinosaurian clade'),
+    'm-meth-matrix': ('mak26', 'We evaluated the phylogenetic relationships', 'initiated in ref. 44'),
+    'm-anticipate':  ('mak26', 'We anticipate that our increasing', 'in the known fossil record'),
+    'm-contrast':    ('mak26', 'However, in contrast to previous studies', 'Extended Data Fig. 9a'),
+    'm-myrm-range':  ('mak26', 'within a constrained range at the lower end', 'mammalian myrmecophages'),
+    'm-mosaic-s':    ('mak26', 'Nevertheless, Alnashetri exhibits patterns of', 'mosaic trait evolution'),
+    'l-sa-short':    ('lon09', 'consistent with the hypothesis that the alvarezsaurs originated in South America', 'via North America'),
+    'x18-asia-short':('xu18', 'our analysis indicates that alvarezsaurians originated in Asia', 'throughout the Cretaceous'),
+    'x18-mosaic-s':  ('xu18', 'evolved slowly and in', 'mosaic fashion during the Cretaceous'),
+    'x11-mosaic-s':  ('xu11', 'points to a complex mosaic pattern', 'evolution in alvarezsauroids'),
+    'q-rapid-s':     ('qin21', 'alvarezsauroid body mass underwent rapid miniaturization', 'from around 110 to 85 mya'),
+    'q-corr-short':  ('qin21', 'we can no longer robustly support selective pressure', 'smaller body sizes', 15),
 }

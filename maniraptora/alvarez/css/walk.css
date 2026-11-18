@@ -143,3 +143,16 @@
 .aic-bar { position: absolute; left: 0; top: 0; bottom: 0; background: var(--accent); border-radius: 8px; transition: width 0.15s; }
 .aic-w { position: absolute; right: 10px; top: 6px; font: 700 26px var(--font-ui); }
 .aic-rule { margin-top: 14px; font: 600 26px var(--font-ui); color: var(--ink-2); text-align: center; }
+
+/* ---------- moves ---------- */
+.mv { position: absolute; left: 60px; right: 60px; display: flex; align-items: center; justify-content: center; font: 600 34px var(--font-ui); color: var(--muted); background: var(--card); border: 2px solid var(--rule); border-radius: 48px; opacity: 0; transition: opacity 0.35s, background 0.35s, color 0.35s; }
+.mv.shown { opacity: 1; }
+.mv.lit { background: var(--accent); border-color: var(--accent-ink); color: #17211d; }
+.mv.play { animation: rise 0.45s ease both; }
+
+/* matrix focus */
+.mx-cell.dim, .mx-col.dim, .mx-row.dim { opacity: 0.22 !important; }
+.mx-col b { font-weight: 600; }
+.mx-tag { position: absolute; text-align: center; font: 700 30px var(--font-ui); color: var(--accent-ink); opacity: 0; transition: opacity 0.35s; }
+.mx-tag.shown { opacity: 1; }
+.mx-cell { font-size: 24px; }
