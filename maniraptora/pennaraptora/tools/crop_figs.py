@@ -114,6 +114,11 @@ FIGS = {
     'ami17-fig6':  ('ami17', 9, (0.515, 0.08, 0.93, 0.73)),
     'foth14-fig1': ('foth14', 1, (0.51, 0.58, 0.94, 0.875)),
     'foth14-fig3': ('foth14', 3, (0.06, 0.03, 0.94, 0.448)),
+    # fifth round, 2026-11-19
+    'xing18-fig5': ('xing18', 6, (0.08, 0.084, 0.937, 0.485)),
+    'xing24-fig1': ('xing24', 3, (0.236, 0.132, 0.763, 0.706)),
+    'xing24-fig3': ('xing24', 5, (0.236, 0.132, 0.763, 0.697)),
+    'xing24-fig4': ('xing24', 6, (0.188, 0.132, 0.811, 0.286)),
 }
 
 # Whole pages shown on the left of a walk slide (and as the source of each lens).

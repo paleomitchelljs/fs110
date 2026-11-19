@@ -93,6 +93,8 @@
     wz23: { cite: 'Wang & Zhou 2023', journal: '_Nature Ecology & Evolution_' },
     ami17: { cite: 'Amiot et al. 2017', journal: '_Palaeontology_' },
     foth14: { cite: 'Foth et al. 2014', journal: '_Nature_' },
+    xing18: { cite: 'Xing et al. 2018', journal: '_Cretaceous Research_' },
+    xing24: { cite: 'Xing et al. 2024', journal: '_iScience_' },
     zel08: { cite: 'Zelenitsky & Therrien 2008', journal: '_Palaeontology_' },
     vj16: { cite: 'Varricchio & Jackson 2016', journal: '_The Auk_' },
     fun16: { cite: 'Funston et al. 2016', journal: '_Scientific Reports_' },
@@ -204,13 +206,22 @@
     }),
 
     line('tracks', 'Trackways', 1, 4, 'Did they live in groups?', 'Trackways', {
-      claim: [['li-group', 0], ['li-single', 2], ['rb-shore', 3]],
+      claim: [['li-group', 0], ['li-single', 2], ['xing18-social', 3], ['rb-shore', 4]],
       chips: [['6', 'parallel trackways on one bedding plane, none overlapping', 1], ['< 1 stride', 'between neighboring trackways', 1],
-        ['6.1 or 4.6 km/h', 'one trackway\'s speed, if the maker was a dromaeosaurid or a troodontid (Tsukiji et al. 2021)', 2]],
+        ['4', 'parallel trackways at a second Shandong site, prints 7 cm long; two cross (Xing et al. 2018)', 3]],
       views: [V('li08-fig3.jpg', 'Six _Dromaeopodus_ trackways, D1–D6, all heading one way · Li et al. 2008 Fig 3', 0),
         V('li08-fig2.jpg', 'Two-toed prints: digit II held off the ground · Li et al. 2008 Fig 2', 1, [0, 0.012, 1, 0.975]),
-        V('tsu21-fig5.jpg', '_Velociraptorichnus_ print: photo, height map, outline · Tsukiji et al. 2021 Fig 5', 2),
-        V('rb07-fig6.jpg', 'Mount Tom theropod trackways, Massachusetts (Ostrom 1972) · Roach & Brinkman 2007 Fig 6', 3)]
+        V('xing18-fig5.jpg', 'Four small two-toed trackways, Houmotuan · Xing et al. 2018 Fig 5', 3, [0, 0, 0.56, 1]),
+        V('rb07-fig6.jpg', 'Mount Tom theropod trackways, Massachusetts (Ostrom 1972) · Roach & Brinkman 2007 Fig 6', 4)]
+    }),
+
+    line('maker', 'Trackmaker', 1, 4, 'Who made the tracks?', 'Trackmaker', {
+      claim: [['xing24-troo', 0], ['xing24-assume', 2]],
+      chips: [['36 cm', '_Fujianipus_ footprint, against 28 cm for _Dromaeopodus_', 0], ['156–197 cm', 'hip height, depending on whose leg proportions are assumed', 1],
+        ['6.1 or 4.6 km/h', 'one _Velociraptorichnus_ trackway\'s speed, for a dromaeosaurid or a troodontid maker (Tsukiji et al. 2021)', 2]],
+      views: [V('xing24-fig4.jpg', 'Two-toed tracks at one scale: A _Fujianipus_, J _Dromaeopodus_ · Xing et al. 2024 Fig 4', 0),
+        V('xing24-fig3.jpg', '_Fujianipus_ print: photo, shading, elevation; II–IV toe traces · Xing et al. 2024 Fig 3A', 1, [0, 0, 1, 0.335]),
+        V('tsu21-fig5.jpg', '_Velociraptorichnus_ print: photo, height map, outline · Tsukiji et al. 2021 Fig 5', 2)]
     }),
 
     line('pack', 'Pack hunting', 1, 5, 'Did they live in groups?', 'Pack hunting', {
@@ -525,7 +536,7 @@
           { label: 'Brooding', cells: { 'Skeletons and trees': 'adults on clutches', 'Eggs and nests': 'pores, color, clutch shape, embryos', 'Bone, teeth, brain': '74-day tooth, no medullary bone' } },
           { label: 'Flight', cells: { 'Skeletons and trees': 'arm/leg ratios', Feathers: 'number and asymmetry', 'Bone, teeth, brain': 'wing-bone walls', 'Physics models': 'wing loading, WAIR' } },
           { label: 'Bird brain', cells: { 'Bone, teeth, brain': 'endocast volume and shape', 'Skeletons and trees': 'size and rates on the stem' } },
-          { label: 'Groups and diet', cells: { 'Skeletons and trees': 'one bonebed, sleeping posture', 'Bone, teeth, brain': 'tooth isotopes, microwear', Tracks: 'six parallel trackways' } }
+          { label: 'Groups and diet', cells: { 'Skeletons and trees': 'one bonebed, sleeping posture', 'Bone, teeth, brain': 'tooth isotopes, microwear', Tracks: 'parallel trackways, two sites' } }
         ],
         focus: [{ at: 1, row: 2, label: 'One question, four kinds of evidence' }, { at: 2, col: 'Physics models', label: 'One kind of evidence, one question' }]
       }]

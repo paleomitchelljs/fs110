@@ -2,7 +2,7 @@
 
 One note per paper in `../papers/` (gitignored). Each note has: citation, file name, what was read and viewed, a **Claim** section with verbatim quotes, push-back where warranted, and a **Figures** section judging each figure for slide use and cropping.
 
-73 PDFs, 69 papers. Duplicates:
+75 PDFs, 71 papers. Duplicates:
 - `zheng2009.pdf` = `A_Short-Armed_Dromaeosaurid_from_the_Jehol_Group_o.pdf` (Zheng et al. 2010)
 - `auk0654.pdf` = `varricchio2016.pdf` (Varricchio & Jackson 2016; the second has a BioOne cover page)
 - `PIIS0960982220309994.pdf` = `PIIS0960982220309994 (1).pdf` (Pei et al. 2020; byte-identical)
@@ -13,7 +13,7 @@ Added 2026-11-19 (second round): Clark 1999, Fanti 2012, Varricchio 2008, Bircha
 
 Third round, 2026-11-19: Roach & Brinkman 2007, Xu & Barrett 2025, Wang & Zhou 2023, Gianechini et al. 2020 (two copies: `JOA-236-772.pdf` and `Journal of Anatomy - 2020 - Gianechini ...pdf`), Nebreda et al. 2021.
 
-Fourth round: Amiot et al. 2017, Foth et al. 2014. *Ambopteryx* (Wang et al. 2019) is in the deck as a life restoration only (`img/amb-life.jpg`, supplied by the user); no PDF.
+Fourth round: Amiot et al. 2017, Foth et al. 2014. Fifth: Xing et al. 2018, Xing et al. 2024. *Ambopteryx* (Wang et al. 2019) is in the deck as a life restoration only (`img/amb-life.jpg`, supplied by the user); no PDF.
 
 ## Phylogeny and the bird line
 
@@ -42,6 +42,8 @@ Fourth round: Amiot et al. 2017, Foth et al. 2014. *Ambopteryx* (Wang et al. 201
 | [roach-brinkman-2007](roach-brinkman-2007.md) | Roach & Brinkman 2007, solitary null and Komodo-style mobs | `Roach-Brinkman2007.pdf` |
 | [gianechini-2020](gianechini-2020.md) | Gianechini et al. 2020, unenlagiine vs eudromaeosaur feet | `JOA-236-772.pdf` |
 | [li-2008](li-2008.md) | Li et al. 2008, six parallel *Dromaeopodus* trackways | `Lietal2007Naturwissenschaften.pdf` |
+| [xing-2018](xing-2018.md) | Xing et al. 2018, four parallel small didactyl trackways, Shandong | `xingetal2018.pdf` |
+| [xing-2024](xing-2024.md) | Xing et al. 2024, *Fujianipus*, possible giant troodontid tracks | `xingetal2024.pdf` |
 | [tsukiji-2021](tsukiji-2021.md) | Tsukiji et al. 2021, one *Velociraptorichnus* trackway; gait depends on the assumed maker | `tsukiji2021.pdf` |
 
 ## Feathers, wings and flight
@@ -139,7 +141,7 @@ Fourth round: Amiot et al. 2017, Foth et al. 2014. *Ambopteryx* (Wang et al. 201
 - **Synchronous or asynchronous hatching?** Synchronous expected: [Varricchio 2002](varricchio-2002.md), [Varricchio 2018](varricchio-2018.md). Asynchronous: [Yang 2019](yang-2019.md), [Bi 2021](bi-2021.md).
 - **Paired eggs in *Troodon*:** accepted by [Varricchio & Jackson 2016](varricchio-jackson-2016.md) and [Zelenitsky & Therrien 2008](zelenitsky-therrien-2008.md), against Grellet-Tinner et al. 2006 (not in the folder).
 - **Who sat on the eggs?** Males, from clutch volume and no medullary bone ([Varricchio 2008](varricchio-2008.md)); clutch mass can't tell maternal from paternal, only precocial ([Birchard 2013](birchard-2013.md)); a female with eggs inside also lacked medullary bone ([Jin 2020](jin-2020.md)).
-- **Were dromaeosaurids gregarious?** Six parallel trackways ([Li 2008](li-2008.md)) vs solitary, agonistic mobbing ([Roach & Brinkman 2007](roach-brinkman-2007.md); answered in [Li 2008](li-2008.md) and [Frederickson 2020](frederickson-2020.md)).
+- **Were dromaeosaurids gregarious?** Six parallel trackways ([Li 2008](li-2008.md)), four more at a second site ([Xing 2018](xing-2018.md)) vs solitary, agonistic mobbing ([Roach & Brinkman 2007](roach-brinkman-2007.md); answered in [Li 2008](li-2008.md) and [Frederickson 2020](frederickson-2020.md)).
 - **Troodontid diet:** coded carnivore in [Pierossi 2025](pierossi-2025.md); reviewed as contested in [Fan 2026](fan-2026.md).
 
 ## Problems flagged in the notes

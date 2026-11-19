@@ -35,6 +35,8 @@ P = {
     'ma20':  'jevbio0178.pdf',                               # Ma et al. 2020, oviraptorosaur skulls
     'li08':  'Lietal2007Naturwissenschaften.pdf',            # Li et al. 2008, Dromaeopodus trackways
     'tsu21': 'tsukiji2021.pdf',
+    'xing18': 'xingetal2018.pdf',                            # Xing et al. 2018, four parallel didactyl trackways, Shandong
+    'xing24': 'xingetal2024.pdf',                            # Xing et al. 2024, Fujianipus, possible giant troodontid
     'rb07':  'Roach-Brinkman2007.pdf',                       # Roach & Brinkman 2007, solitary null for theropods
     'gia20': 'JOA-236-772.pdf',                              # Gianechini et al. 2020, dromaeosaurid hindlimbs                              # Tsukiji et al. 2021, Velociraptorichnus trackway
     'li12':  'li2012.pdf',                                   # Li et al. 2012, Microraptor iridescence
