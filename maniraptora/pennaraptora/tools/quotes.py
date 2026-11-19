@@ -7,6 +7,7 @@ A quote can't cross a page. Short ones read best: a clause, not a paragraph.
 QUOTES = {
     # ---------------------------------------------------------------- phylogeny
     'xia-shift':   ('xia11', 'adding the new taxon into a comprehensive phylogenetic analysis', 'to the Deinonychosauria'),
+    'xia-toe':     ('xia11', 'Previous studies noted the striking similarities between Archaeopteryx and other deinonychosaurs', 'other deinonychosaurs', 3),
     'xia-weak':    ('xia11', 'It should be noted that our phylogenetic hypothesis', 'weakly supported by the available data'),
     'xia-boot':    ('xia11', 'a bootstrap value less than 50%', 'including the Archaeopterygidae'),
     'bru-poly':    ('bru14', 'a TWiG analysis recovers a polytomy', 'cannot be clearly identified'),
@@ -64,6 +65,7 @@ QUOTES = {
     'tan15-open':  ('tan15', 'open nests first evolved among non-avian theropods', 'well before the appearance of birds'),
     'tan15-buried':('tan15', 'they still partially buried their eggs in sediment', 'only became widespread among Euornithes'),
     'wie-first':   ('wie17', 'the first record of the avian eggshell pigments', 'oviraptorid dinosaurs'),
+    'wie-open':    ('wie17', 'support an at least partially open nesting behavior', 'for oviraptorosaurs'),
     'wie-olive':   ('wie17', 'the visibly olive-green color range', 'olive-green color range'),
     'tan18-sat':   ('tan18', 'the smallest oviraptorosaurs probably sat directly on the eggs', 'in giant species'),
     'var18-74':    ('var18', 'Thus, this tooth age suggests a Troodon incubation period', 'Troodon egg mass (314 g)'),

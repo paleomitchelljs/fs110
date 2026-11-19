@@ -35,6 +35,9 @@
   const facts = (chips, builds) => ({ kind: 'facts', chips: chips.map(([n, l, at]) => ({ n, l, at: at || 0 })), builds });
   /* A silhouette beside a fossil: sil file, its credit, fossil file, crop, caption. */
   const pair = (sil, credit, fig, crop, cap, builds, o) => Object.assign({ kind: 'pair', sil: { src: 'img/' + sil, credit }, fig: { src: 'img/' + fig, crop }, cap, builds }, o);
+  const SK = { silW: 0.46 };  /* a skeletal diagram gets more of the row than a silhouette */
+  /* Right column split in two: a fossil and its reconstruction, seen together. */
+  const RT = [812, 124, 764, 322], RB = [812, 464, 764, 322];
   const span = (a, b) => { const r = []; for (let i = a; i <= b; i++) r.push(i); return r; };
 
   function slide(id, title, tier, min, crumb, topic, items, last) {
@@ -130,14 +133,14 @@
     partTitle('p-groups', 'Subgroups'),
 
     slide('groups', 'Subgroups', 1, 4, 'Pennaraptora', 'Four subgroups', [
-      at([24, 124, 764, 322], pair('sil-sinovenator.svg', '_Sinovenator_, a close relative · Tasman Dixon, PhyloPic, CC0',
-        'mei-fig1.jpg', [0, 0.655, 0.495, 0.975], '*Troodontid* · _Mei long_ IVPP V12733 · Xu & Norell 2004 Fig 1c', [0, 1, 2, 3])),
-      at([812, 124, 764, 322], pair('sil-tianyuraptor.svg', '_Tianyuraptor_, a close relative · Emily Willoughby, PhyloPic, CC BY-SA',
-        'zhen-fig1.jpg', null, '*Dromaeosaurid* · _Zhenyuanlong_ JPM-0008 · Lü & Brusatte 2015 Fig 1', [1, 2, 3])),
-      at([24, 464, 764, 322], pair('sil-citipati.svg', '_Citipati_, another oviraptorid · Emily Willoughby, PhyloPic, CC BY-SA',
-        'bi-fig1.jpg', [0, 0, 0.485, 0.512], '*Oviraptorosaur* · oviraptorid LDNHMF2008 on its eggs · Bi et al. 2021 Fig 1a', [2, 3])),
-      at([812, 464, 764, 322], pair('sil-archaeopteryx.svg', '_Archaeopteryx_ · Scott Hartman, PhyloPic, CC0',
-        'arch-fig1.jpg', [0, 0.17, 0.8, 0.63], '*Avialan* · _Archaeopteryx_ FMNH PA 830 · O\'Connor et al. 2025 Fig 1a', [3]))
+      at([24, 124, 764, 322], pair('skel-sinovenator.png', '_Sinovenator_ IVPP V12615, a close relative · Jaime Headden, Wikimedia Commons, CC BY 3.0',
+        'mei-fig1.jpg', [0, 0.655, 0.495, 0.975], '*Troodontid* · _Mei long_ IVPP V12733 · Xu & Norell 2004 Fig 1c', [0, 1, 2, 3], SK)),
+      at([812, 124, 764, 322], pair('skel-microraptor.png', '_Microraptor gui_ IVPP V13352, another dromaeosaurid · Jaime Headden, Wikimedia Commons, CC BY 3.0',
+        'zhen-fig1.jpg', null, '*Dromaeosaurid* · _Zhenyuanlong_ JPM-0008 · Lü & Brusatte 2015 Fig 1', [1, 2, 3], SK)),
+      at([24, 464, 764, 322], pair('skel-oviraptor.png', '_Oviraptor_, another oviraptorid, gaps filled from _Citipati_ · Ivan Iofrida, Wikimedia Commons, CC BY-SA 4.0',
+        'bi-fig1.jpg', [0, 0, 0.485, 0.512], '*Oviraptorosaur* · oviraptorid LDNHMF2008 on its eggs · Bi et al. 2021 Fig 1a', [2, 3], SK)),
+      at([812, 464, 764, 322], pair('skel-archaeopteryx.png', '_Archaeopteryx_, London specimen · Jaime Headden, Wikimedia Commons, CC BY 3.0',
+        'arch-fig1.jpg', [0, 0.17, 0.8, 0.63], '*Avialan* · _Archaeopteryx_ FMNH PA 830 · O\'Connor et al. 2025 Fig 1a', [3], SK))
     ]),
 
     slide('friends', 'And friends', 2, 2, 'Pennaraptora', 'And friends', [
@@ -149,95 +152,99 @@
     /* ---------------------------------------------------------- 2 phylogeny */
     partTitle('p-phylo', 'Phylogeny'),
 
-    slide('trees', 'Three trees', 1, 5, 'Which group is closest to birds?', 'Three trees', [
-      at([24, 124, 1552, 200], { kind: 'quotes', cols: 3, size: 24, cards: [{ q: 'xia-shift', at: 0 }, { q: 'bru-poly', at: 1 }, { q: 'pei-deino', at: 2 }] }),
-      at([24, 346, 500, 440], pic([V('xia-fig4.jpg', '_Archaeopteryx_ with deinonychosaurs · Xu et al. 2011 Fig 4', 0)], [0, 1, 2])),
-      at([550, 346, 500, 440], pic([V('bru-fig1.jpg', 'Troodontidae, Dromaeosauridae, Avialae unresolved · Brusatte et al. 2014 Fig 1', 1, [0, 0.6, 1, 1])], [1, 2])),
-      at([1076, 346, 500, 440], pic([V('pei-fig1.jpg', 'Anchiornithinae at the base of Avialae · Pei et al. 2020 Fig 1', 2, [0, 0.12, 1, 0.66])], [2]))
+    /* The contenders, then the second toe they share: why the trees disagree. */
+    slide('contenders', 'Contenders', 1, 3, 'Which group is closest to birds?', 'Contenders', [
+      at([24, 124, 370, 470], pic([V('skel-sinovenator.png', '*Troodontid* · _Sinovenator_ · Jaime Headden, CC BY 3.0', 0),
+        V('skel-sinovenator.png', '*Troodontid* · toe II raised', 1, null, [0.31, 0.87, 0.45, 1])])),
+      at([412, 124, 370, 470], pic([V('skel-microraptor.png', '*Dromaeosaurid* · _Microraptor_ · Jaime Headden, CC BY 3.0', 0),
+        V('skel-microraptor.png', '*Dromaeosaurid* · toe II raised', 1, null, [0.43, 0.85, 0.55, 1])])),
+      at([800, 124, 370, 470], pic([V('skel-austroraptor.png', '*Unenlagiid* · _Austroraptor_ · Jaime Headden, CC BY 3.0', 0),
+        V('skel-austroraptor.png', '*Unenlagiid* · toe II raised', 1, null, [0.41, 0.74, 0.51, 1])])),
+      at([1188, 124, 388, 470], pic([V('skel-archaeopteryx.png', '*Avialan* · _Archaeopteryx_ · Jaime Headden, CC BY 3.0', 0),
+        V('skel-archaeopteryx.png', '*Avialan* · toe II "highly extensible" (Xu et al. 2011)', 1, null, [0.61, 0.81, 0.77, 1])])),
+      at([24, 620, 1552, 166], { kind: 'quotes', cols: 1, size: 24, cards: [{ q: 'xia-toe', at: 2 }], builds: [2] })
     ]),
 
-    slide('support', 'Support', 1, 4, 'Which group is closest to birds?', 'Support', [
-      at(LEFT, { kind: 'quotes', cols: 1, size: 24, cards: [{ q: 'xia-boot', at: 0 }, { q: 'pei-support', at: 1 }, { q: 'har-step', at: 2 }] }),
-      at([812, 200, 764, 500], facts([
-        ['< 50%', 'bootstrap for _Archaeopteryx_ in Deinonychosauria', 0],
-        ['1–2', 'Bremer support for most paravian nodes', 1],
-        ['1 step', 'between several paravian trees', 2]]))
+    slide('trees', 'Four trees', 1, 5, 'Which group is closest to birds?', 'Four trees', [
+      at(FULL, {
+        kind: 'tree', focal: 'birds', tipW: 560,
+        tips: [
+          { id: 'ovi', label: 'Oviraptorosaurs', img: 'img/skel-oviraptor.png' },
+          { id: 'troo', label: 'Troodontids', img: 'img/skel-sinovenator.png' },
+          { id: 'drom', label: 'Dromaeosaurids', img: 'img/skel-microraptor.png' },
+          { id: 'unen', label: 'Unenlagiids', img: 'img/skel-austroraptor.png' },
+          { id: 'birds', label: 'Avialans', img: 'img/skel-archaeopteryx.png' }],
+        trees: [
+          { at: 0, t: ['ovi', ['birds', ['troo', ['unen', 'drom']]]], cap: '*Troodontids with dromaeosaurids* · Gianechini et al. 2017; Pei et al. 2020' },
+          { at: 1, t: ['ovi', [['unen', 'drom'], ['troo', 'birds']]], cap: '*Troodontids closest* · Godefroit et al. 2013; Cau et al. 2017 (as drawn in Agnolín et al. 2019 Fig 2)' },
+          { at: 2, t: ['ovi', ['troo', ['drom', ['unen', 'birds']]]], cap: '*Unenlagiids closest* · Agnolín & Novas 2013 (as drawn in Agnolín et al. 2019 Fig 2)' },
+          { at: 3, t: ['ovi', ['troo', ['unen', 'drom'], 'birds']], cap: '*Unresolved* · Brusatte et al. 2014' }]
+      })
+    ], 3),
+
+    slide('recode', 'Rescoring', 1, 4, 'Which group is closest to birds?', 'Rescoring', [
+      at([24, 124, 700, 662], { kind: 'quotes', cols: 1, size: 26, cards: [{ q: 'agn-recode', at: 1 }, { q: 'har-step', at: 2 }] }),
+      at([760, 124, 816, 662], {
+        kind: 'tree', focal: 'birds', tipW: 430,
+        tips: [
+          { id: 'ovi', label: 'Oviraptorosaurs', img: 'img/skel-oviraptor.png' },
+          { id: 'troo', label: 'Troodontids', img: 'img/skel-sinovenator.png' },
+          { id: 'drom', label: 'Dromaeosaurids', img: 'img/skel-microraptor.png' },
+          { id: 'unen', label: 'Unenlagiids', img: 'img/skel-austroraptor.png' },
+          { id: 'birds', label: 'Avialans', img: 'img/skel-archaeopteryx.png' }],
+        trees: [
+          { at: 0, t: ['ovi', ['birds', ['troo', ['unen', 'drom']]]], cap: 'TWiG matrix · Gianechini et al. 2017' },
+          { at: 1, t: ['ovi', 'troo', 'unen', 'drom', 'birds'], cap: 'Same matrix, unenlagiids rescored · Agnolín et al. 2019 Fig 8' }]
+      })
     ]),
-
-    line('recode', 'Recoding', 1, 4, 'Which group is closest to birds?', 'Recoding', {
-      claim: [['agn-cons', 0], ['agn-recode', 1], ['agn-optnot', 2]],
-      chips: [['1', 'group rescored: unenlagiids', 1], ['6', 'groups left in one polytomy at the base of Pennaraptora', 1]],
-      views: [V('agn19-fig2.jpg', 'Five published paravian trees · Agnolín et al. 2019 Fig 2', 0),
-        V('agn19-fig8.jpg', 'The TWiG matrix with unenlagiids rescored · Agnolín et al. 2019 Fig 8', 1)]
-    }),
-
-    slide('reuse', 'Shared matrices', 2, 3, 'Which group is closest to birds?', 'Shared matrices', [
-      at(FULL, { kind: 'quotes', cols: 1, size: 32, cards: [{ q: 'har-reuse', at: 0 }, { q: 'har-notall', at: 1 }] })
-    ]),
-
-    line('eggtree', 'Egg characters', 1, 4, 'Which group is closest to birds?', 'Egg characters', {
-      claim: [['zel-cong', 0], ['zel-assume', 2]],
-      chips: [['7', 'taxa', 1], ['12', 'egg and nest characters', 1], ['0', 'skeletal characters', 1]],
-      views: [V('zel-tf2.jpg', 'Egg tree: _Citipati_, _Troodon_, then the guineafowl _Numida_ · Zelenitsky & Therrien 2008 Text-fig 2', 0),
-        V('zel-tf1.jpg', 'Clutch layouts coded: massed, single layer, ring · Zelenitsky & Therrien 2008 Text-fig 1', 2)]
-    }),
 
     /* ---------------------------------------------------------- 3 behavior */
     partTitle('p-behave', 'Behavior'),
 
-    versus('sleep', 'Sleep posture', 1, 4, 'How did they rest?', 'Sleep posture', {
-      left: [['xn-sleep', 0]], lviews: [V('mei-fig1.jpg', '_Mei long_ IVPP V12733, photo and drawing · Xu & Norell 2004 Fig 1c, d', 0, [0, 0.655, 1, 0.975])],
-      right: [['gao-mirror', 1], ['gao-limit', 2]], rviews: [V('mei2-fig1.jpg', '_Mei long_, second specimen · Gao et al. 2012 Fig 1', 1, [0, 0, 1, 0.5])],
-      last: 2
-    }),
+    slide('sleep', 'Sleep posture', 1, 4, 'How did they rest?', 'Sleep posture', [
+      at(LTOP, ref([['xn-sleep', 0]])),
+      at(LFIG, pair('life-meilong.jpg', '_Mei long_ life restoration · Matt Martyniuk, Wikimedia Commons, CC BY-SA 3.0',
+        'mei-fig1.jpg', [0, 0.655, 0.495, 0.975], '_Mei long_ IVPP V12733 · Xu & Norell 2004 Fig 1c', [0, 1, 2], { silW: 0.42, life: true })),
+      at(RTOP, ref([['gao-mirror', 1], ['gao-limit', 2]], [1, 2])),
+      at(RFIG, pic([V('mei2-fig1.jpg', '_Mei long_, second specimen · Gao et al. 2012 Fig 1', 1, [0, 0, 1, 0.5])], [1, 2]))
+    ]),
 
     line('herd', 'Bonebed', 1, 4, 'Did they live in groups?', 'Bonebed', {
       claim: [['fun-greg', 0], ['fun-unclear', 2]],
-      chips: [['1', 'species: _Avimimus_', 1], ['17 of 33', 'tibiotarsi fused to the ankle: adults', 1], ['1 of 33', 'tibiae under 80% of the largest', 2]],
+      chips: [['17 of 33', 'adult tibiotarsi (fused to the ankle)', 1], ['1', 'small tibia', 2]],
       views: [V('fun-fig2.jpg', 'The _Avimimus_ bonebed, Nemegt Formation · Funston et al. 2016 Fig 2', 0),
         V('fun-fig7.jpg', 'Tibiotarsi by length: fused A–L, unfused M–W · Funston et al. 2016 Fig 7', 1)]
     }),
 
-    line('solitary', 'Solitary hunters', 1, 4, 'Did they live in groups?', 'Solitary hunters', {
-      claim: [['rb-null', 0], ['rb-none', 1], ['rb-part', 2]],
-      chips: [['4', '_Deinonychus_ with one _Tenontosaurus_ at the type quarry, YPM 64-75', 1], ['4 / 17', 'Komodo dragons at one kill: average, most seen', 2]],
-      views: [V('rb07-fig5.jpg', 'A _Deinonychus_ feeding mob, drawing signed BTR · Roach & Brinkman 2007 Fig 5', 0),
-        V('rb07-fig1.jpg', 'YPM 64-75: _Deinonychus_ and _Tenontosaurus_ bones · Roach & Brinkman 2007 Fig 1', 1)]
-    }),
-
     line('tracks', 'Trackways', 1, 4, 'Did they live in groups?', 'Trackways', {
       claim: [['li-group', 0], ['li-single', 2], ['xing18-social', 3], ['rb-shore', 4]],
-      chips: [['6', 'parallel trackways on one bedding plane, none overlapping', 1], ['< 1 stride', 'between neighboring trackways', 1],
-        ['4', 'parallel trackways at a second Shandong site, prints 7 cm long; two cross (Xing et al. 2018)', 3]],
+      chips: [['6', 'parallel trackways on one bedding plane, none overlapping', 1], ['< 1 stride', 'between neighboring trackways', 1]],
       views: [V('li08-fig3.jpg', 'Six _Dromaeopodus_ trackways, D1–D6, all heading one way · Li et al. 2008 Fig 3', 0),
         V('li08-fig2.jpg', 'Two-toed prints: digit II held off the ground · Li et al. 2008 Fig 2', 1, [0, 0.012, 1, 0.975]),
         V('xing18-fig5.jpg', 'Four small two-toed trackways, Houmotuan · Xing et al. 2018 Fig 5', 3, [0, 0, 0.56, 1]),
         V('rb07-fig6.jpg', 'Mount Tom theropod trackways, Massachusetts (Ostrom 1972) · Roach & Brinkman 2007 Fig 6', 4)]
     }),
 
-    line('maker', 'Trackmaker', 1, 4, 'Who made the tracks?', 'Trackmaker', {
-      claim: [['xing24-troo', 0], ['xing24-assume', 2]],
-      chips: [['36 cm', '_Fujianipus_ footprint, against 28 cm for _Dromaeopodus_', 0], ['156–197 cm', 'hip height, depending on whose leg proportions are assumed', 1],
-        ['6.1 or 4.6 km/h', 'one _Velociraptorichnus_ trackway\'s speed, for a dromaeosaurid or a troodontid maker (Tsukiji et al. 2021)', 2]],
-      views: [V('xing24-fig4.jpg', 'Two-toed tracks at one scale: A _Fujianipus_, J _Dromaeopodus_ · Xing et al. 2024 Fig 4', 0),
-        V('xing24-fig3.jpg', '_Fujianipus_ print: photo, shading, elevation; II–IV toe traces · Xing et al. 2024 Fig 3A', 1, [0, 0, 1, 0.335]),
-        V('tsu21-fig5.jpg', '_Velociraptorichnus_ print: photo, height map, outline · Tsukiji et al. 2021 Fig 5', 2)]
+    slide('maker', 'Trackmaker', 1, 4, 'Who made the tracks?', 'Trackmaker', [
+      at([24, 124, 760, 470], pic([V('xing24-ga.jpg', '_Fujianipus_ trackmaker as a giant troodontid, life reconstruction · Xing et al. 2024 graphical abstract', 0, [0.555, 0.005, 0.995, 0.475])])),
+      at([812, 124, 764, 470], pic([V('xing24-ga.jpg', '_Fujianipus_ tracks R5 and L5: photos and elevation images · Xing et al. 2024 graphical abstract', 0, [0.02, 0.737, 0.99, 0.995])])),
+      at([24, 620, 1552, 166], { kind: 'quotes', cols: 2, size: 24, cards: [{ q: 'xing24-troo', at: 1 }, { q: 'xing24-assume', at: 2 }], builds: [1, 2] })
+    ]),
+
+    line('solitary', 'Solitary hunters', 1, 4, 'Did they live in groups?', 'Solitary hunters', {
+      claim: [['rb-null', 0], ['rb-none', 1], ['rb-part', 2]],
+      chips: [['4', '_Deinonychus_ with one _Tenontosaurus_ at the type quarry, YPM 64-75', 1], ['4 / 17', 'Komodo dragons at one kill: average, most seen', 2]],
+      views: [V('rb07-fig1.jpg', 'YPM 64-75: _Deinonychus_ and _Tenontosaurus_ bones · Roach & Brinkman 2007 Fig 1', 0),
+        V('rb07-fig5.jpg', 'A _Deinonychus_ feeding mob, drawing signed BTR · Roach & Brinkman 2007 Fig 5', 1)]
     }),
 
-    line('pack', 'Pack hunting', 1, 5, 'Did they live in groups?', 'Pack hunting', {
-      claim: [['fre-diff', 0], ['fre-not', 1], ['fre-utah', 3]],
-      chips: [['10 + 10', 'teeth, small and large, from two sites', 2], ['≈ 28%', 'of the identified _Deinonychus_ material at each site, sampled', 2], ['2', '_Tenontosaurus_ individuals', 2], ['3', '_Utahraptor_ at one site: adult, juvenile, baby', 3]],
-      views: [V('fre-fig2.jpg', 'Carbon isotopes by tooth size: _Deinonychus_ (left), crocodiles (right) · Frederickson et al. 2020 Fig 2', 0)]
-    }),
-
-    slide('display', 'Display', 1, 4, 'What were tails and feathers for?', 'Display', [
-      at(LEFT, { kind: 'quotes', cols: 1, size: 24, cards: [{ q: 'per-display', at: 0 }, { q: 'li12-tail', at: 2 }, { q: 'cla-orn', at: 3 }] }),
-      at(RIGHT, pic([
-        V('per-fig11.jpg', '_Ajancingenia_ displaying, painting by Sydney Mohr · Persons et al. 2014 Fig 11', 0),
-        V('li-fig4.jpg', '_Anchiornis_ colors from melanosomes · Li et al. 2010 Fig 4', 1),
-        V('li12-fig4.jpg', '_Microraptor_, color from melanosomes of BMNHC PH881 · Li et al. 2012 Fig 4', 2),
-        V('cla-fig6.jpg', '_Plumadraco_, restoration by Ville Sinkkonen · Clark et al. 2026 Fig 6E', 3, [0.79, 0, 1, 1])
-      ]))
+    /* The test's two predictions as living animals, then the teeth. */
+    slide('pack', 'Pack hunting', 1, 5, 'Did they live in groups?', 'Pack hunting', [
+      at(LEFT, pic([V('pack-wolves.jpg', '*Pack* · wolves: young eat the adults\' prey · Patrick Bell, Wikimedia Commons, CC BY 2.0', 0)], [0])),
+      at(RIGHT, pic([V('pack-komodo.jpg', '*No pack* · Komodo dragons: young eat smaller prey · Mats Stafseng Einarsen, Wikimedia Commons, CC BY 2.5', 0)], [0])),
+      at(CLAIM, ref([['fre-diff', 1], ['fre-not', 2], ['fre-utah', 4]], span(1, 4))),
+      at(FACTS, facts([['10 + 10', 'teeth, small and large, from two sites', 3], ['2', '_Tenontosaurus_ individuals', 3], ['3', '_Utahraptor_ at one site: adult, juvenile, baby', 4]], span(1, 4))),
+      at(RIGHT, pic([V('fre-fig2.jpg', 'Carbon isotopes by tooth size: _Deinonychus_ (left), crocodiles (right) · Frederickson et al. 2020 Fig 2', 1)], span(1, 4)))
     ]),
 
     line('diet', 'Troodontid diet', 1, 5, 'What did troodontids eat?', 'Troodontid diet', {
@@ -250,84 +257,57 @@
     /* ---------------------------------------------------------- 4 reproduction */
     partTitle('p-repro', 'Reproduction'),
 
-    line('nests', 'Adults on nests', 1, 4, 'Did they brood their eggs?', 'Adults on nests', {
-      claim: [['cla-evoke', 0], ['cla-heat', 3]],
-      chips: [['4 of 17', 'adult oviraptorids from the Djadokhta sandstones found on nests, before 1996', 1], ['4', 'oviraptorid genera found on nests by 2012', 2], ['0', 'embryos in these nests', 2]],
-      views: [V('cla99-fig13.jpg', 'Reconstruction on the nest · Clark et al. 1999 Fig 13', 0),
-        V('cla99-fig1.jpg', '_Citipati_ IGM 100/979 on its nest · Clark et al. 1999 Fig 1', 1),
-        V('fan12-fig3.jpg', '_Nemegtomaia_ MPC-D 107/15 on its nest, with restoration (E) · Fanti et al. 2012 Fig 3', 2)]
-    }),
+    slide('nests', 'Adults on nests', 1, 4, 'Did they brood their eggs?', 'Adults on nests', [
+      at(CLAIM, ref([['cla-evoke', 0], ['cla-heat', 2]])),
+      at(FACTS, facts([['4 of 17', 'adult oviraptorids from the Djadokhta sandstones found on nests, before 1996', 0], ['4', 'oviraptorid genera found on nests by 2012', 1], ['0', 'embryos in these nests', 1]])),
+      at(RT, pic([V('cla99-fig1.jpg', '_Citipati_ IGM 100/979 on its nest · Clark et al. 1999 Fig 1', 0)], [0])),
+      at(RB, pic([V('cla99-fig13.jpg', 'Reconstruction of the same posture · Clark et al. 1999 Fig 13', 0)], [0])),
+      at(RIGHT, pic([V('fan12-fig3.jpg', '_Nemegtomaia_ MPC-D 107/15 on its nest, with restoration (E) · Fanti et al. 2012 Fig 3', 1)], [1, 2]))
+    ]),
 
     line('brood', 'Adult on eggs', 1, 4, 'Did they brood their eggs?', 'Adult on eggs', {
       claim: [['bi-brood', 0]],
       chips: [['1', 'adult, no skull', 1], ['≥ 24', 'eggs in three rings, some with embryos', 1]],
-      views: [V('bi-fig1.jpg', 'Skeletal restoration on the clutch · Bi et al. 2021 Fig 1c', 0, [0.045, 0.546, 1, 1]),
-        V('bi-fig1.jpg', 'Oviraptorid on its clutch, LDNHMF2008 · Bi et al. 2021 Fig 1a', 1, [0, 0, 0.485, 0.512])]
+      views: [V('bi-fig1.jpg', 'LDNHMF2008 on its clutch (a) and its skeletal restoration (c) · Bi et al. 2021 Fig 1', 0)]
     }),
 
-    versus('parent', 'Which parent', 1, 5, 'Did they brood their eggs?', 'Which parent', {
+    slide('clutch', 'Clutch size', 1, 3, 'Did they brood their eggs?', 'Clutch size', [
+      at(CLAIM, ref([['tan18-sat', 0]])),
+      at(FACTS, facts([['40', 'clutches', 1], ['3', 'giant _Macroelongatoolithus_ clutches', 1]])),
+      at(RT, pic([V('tan18-fig1.jpg', 'Small, medium and giant clutches · Tanaka et al. 2018 Fig 1a–c', 0, [0, 0, 1, 0.23])])),
+      at(RB, pic([V('tan18-fig2.jpg', 'Painting by Masato Hattori · Tanaka et al. 2018 Fig 2', 0)]))
+    ]),
+
+    /* Who sits on eggs today, before the fossil argument about which parent. */
+    slide('care', 'Care today', 1, 3, 'Which parent sat on the eggs?', 'Care today', [
+      at([24, 124, 500, 662], pic([V('care-croc.jpg', '*Mother guards* · saltwater crocodile at her nest · Eliza68, Wikimedia Commons, CC BY-SA 4.0', 0)])),
+      at([550, 124, 500, 662], pic([V('care-ostrich.jpg', '*Both parents sit* · ostrich, female on the nest · Joachim Huber, Wikimedia Commons, CC BY-SA 2.0', 1)], [1, 2])),
+      at([1076, 124, 500, 662], pic([V('care-rhea.jpg', '*Father sits* · rhea on its nest · Paul F. Kisak, Wikimedia Commons, CC BY-SA 4.0', 2)], [2]))
+    ]),
+
+    versus('parent', 'Which parent', 1, 5, 'Which parent sat on the eggs?', 'Which parent', {
       left: [['var08-pat', 0], ['var08-hist', 1]], lviews: [V('var08-fig1.jpg', 'Clutch volume vs body mass by care type; red diamonds: _Troodon_, _Oviraptor_, _Citipati_ · Varricchio et al. 2008 Fig 1B', 0, [0.395, 0, 1, 1])],
       right: [['bir-same', 2], ['bir-not', 3]], rviews: [V('bir13-fig1.jpg', '(a) paternal blue, maternal yellow, biparental squares; (b) altricial blue, precocial yellow; diamonds: dinosaurs · Birchard et al. 2013 Fig 1', 2, [0, 0, 1, 0.955])]
     }),
 
-    line('laying', 'Eggs inside', 2, 3, 'Did they brood their eggs?', 'Eggs inside', {
-      claim: [['jin-extrude', 1]],
-      chips: [['1', 'adult with eggs inside and beside it, ZMNH M8829', 0]],
-      views: [V('jin-fig1.jpg', 'ZMNH M8829 · Jin et al. 2020 Fig 1', 0), V('jin-fig7.jpg', 'Drowned cow, Yellowstone River · Jin et al. 2020 Fig 7', 1)]
+    /* Three kinds of evidence, one answer: partly buried, partly open. */
+    slide('open', 'Open or buried', 1, 5, 'Were the eggs buried?', 'Open or buried', [
+      at([24, 124, 1552, 200], { kind: 'quotes', cols: 3, size: 24, cards: [{ q: 'tan15-buried', at: 0 }, { q: 'wie-open', at: 1 }, { q: 'hog-weak', at: 2 }] }),
+      at([24, 346, 500, 440], pic([V('tan15-fig3.jpg', 'Pores · Tanaka et al. 2015 Fig 3', 0)], [0, 1, 2])),
+      at([550, 346, 500, 440], pic([V('wie-fig1.jpg', 'Pigment · Wiemann et al. 2017 Fig 1C, D', 1, [0, 0.53, 1, 1])], [1, 2])),
+      at([1076, 346, 500, 440], pic([V('hog-fig1.jpg', 'Partly buried clutches · Hogan & Varricchio 2023 Fig 1', 2)], [2]))
+    ]),
+
+    /* Same eggs' warmth from two methods, two answers. */
+    versus('warm', 'How warm, how long', 1, 5, 'Were the eggs warmed?', 'How warm, how long', {
+      left: [['ami-range', 0], ['ami-alter', 1]], lviews: [V('ami17-fig5.jpg', 'Eggshell vs embryo bone δ¹⁸O, 7 eggs; circled: possible alteration · Amiot et al. 2017 Fig 5', 0)],
+      right: [['var18-74', 2], ['var18-buried', 3]], rviews: [V('var18-fig1.jpg', 'Tooth of embryo MOR 246-11, section · Varricchio et al. 2018 Fig 1A', 2, [0, 0, 1, 0.37]),
+        V('var18-fig1.jpg', 'Buried to exposed eggs, artwork by Danny Anduza · Varricchio et al. 2018 Fig 1D', 3, [0.355, 0.395, 1, 0.97])]
     }),
 
-    line('pores', 'Eggshell pores', 1, 4, 'Did they brood their eggs?', 'Eggshell pores', {
-      claim: [['tan15-open', 0], ['tan15-buried', 2]],
-      chips: [['127', 'living birds and crocodiles', 1], ['29', 'fossil egg types', 1], ['0.513 / 0.487', 'open / covered for oviraptorosaur eggs, phylogenetic method', 1]],
-      views: [V('tan15-fig3.jpg', 'Pores vs egg mass: covered nests above, open below · Tanaka et al. 2015 Fig 3', 0),
-        V('tan15-fig6.jpg', 'Call for each fossil as a parameter changes · Tanaka et al. 2015 Fig 6', 1)]
-    }),
-
-    line('color', 'Egg color', 1, 3, 'Did they brood their eggs?', 'Egg color', {
-      claim: [['wie-first', 0], ['wie-olive', 1]],
-      chips: [['3', 'eggshells, three basins', 1], ['1', 'sediment control', 1]],
-      views: [V('wie-fig1.jpg', 'Clutch and reconstructed open nest · Wiemann et al. 2017 Fig 1C, D', 0, [0, 0.53, 1, 1]),
-        V('wie-fig4.jpg', 'Fossil pigment levels among bird eggs · Wiemann et al. 2017 Fig 4', 1)]
-    }),
-
-    line('clutch', 'Clutch size', 1, 3, 'Did they brood their eggs?', 'Clutch size', {
-      claim: [['tan18-sat', 0]],
-      chips: [['40', 'clutches', 1], ['3', 'giant _Macroelongatoolithus_ clutches', 1]],
-      views: [V('tan18-fig2.jpg', 'Painting by Masato Hattori · Tanaka et al. 2018 Fig 2', 0),
-        V('tan18-fig1.jpg', 'Small, medium and giant clutches · Tanaka et al. 2018 Fig 1a–c', 1, [0, 0, 1, 0.23])]
-    }),
-
-    line('incub', 'Incubation time', 1, 4, 'Did they brood their eggs?', 'Incubation time', {
-      claim: [['var18-74', 0], ['var18-buried', 2]],
-      chips: [['1', 'tooth, embryo MOR 246-11', 1], ['39', 'daily growth lines, 8 of them estimated', 1], ['47%', 'of incubation before teeth form: crocodile timing', 1]],
-      views: [V('var18-fig1.jpg', 'Buried to exposed eggs, artwork by Danny Anduza · Varricchio et al. 2018 Fig 1D', 0, [0.355, 0.395, 1, 0.97]),
-        V('var18-fig1.jpg', 'Tooth of embryo MOR 246-11, section · Varricchio et al. 2018 Fig 1A', 1, [0, 0, 1, 0.37]),
-        V('var18-fig1.jpg', 'Buried to exposed eggs, artwork by Danny Anduza · Varricchio et al. 2018 Fig 1D', 2, [0.355, 0.395, 1, 0.97])]
-    }),
-
-    line('temps', 'Egg temperature', 1, 4, 'Did they brood their eggs?', 'Egg temperature', {
-      claim: [['ami-range', 0], ['ami-alter', 1]],
-      chips: [['7', 'eggs with embryo bone, Nanxiong Formation, Jiangxi', 1], ['4', 'set aside: modeled temperatures above 45 °C', 1], ['1', 'of the 3 kept fits only if water loss is cut by two thirds', 2]],
-      views: [V('ami17-fig6.jpg', 'Model: embryo bone δ¹⁸O through incubation at 30–40 °C; dashed: measured · Amiot et al. 2017 Fig 6A', 0, [0, 0, 1, 0.325]),
-        V('ami17-fig5.jpg', 'Eggshell vs embryo bone δ¹⁸O, 7 eggs; circled: possible alteration · Amiot et al. 2017 Fig 5', 1),
-        V('ami17-fig6.jpg', 'NHMG10876: measured value (dashed) below the 40 °C line · Amiot et al. 2017 Fig 6C', 2, [0, 0.665, 1, 1])]
-    }),
-
-    line('embryo', 'Embryos', 1, 3, 'Did they brood their eggs?', 'Embryos', {
-      claim: [['var02-stage', 0], ['var02-proof', 1]],
-      chips: [['16', 'eggs in clutch MOR 246', 1], ['11', 'with bone', 1]],
-      views: [V('var02-fig1.jpg', 'Embryo leg in egg MOR 246-11 · Varricchio et al. 2002 Fig 1', 0)]
-    }),
-
-    versus('hatch', 'Hatching order', 1, 5, 'Did they brood their eggs?', 'Hatching order', {
+    versus('hatch', 'Hatching order', 1, 5, 'Were the eggs warmed?', 'Hatching order', {
       left: [['bi-async', 0]], lviews: [V('bi-fig4.jpg', 'Embryos at different stages · Bi et al. 2021 Fig 4', 0)],
       right: [['yan-excl', 1], ['yan-unique', 2]], rviews: [V('yan-fig9.jpg', 'Incubation by hatching mode · Yang et al. 2019 Fig 9', 1)]
-    }),
-
-    line('burial', 'Partly buried', 1, 3, 'Did they brood their eggs?', 'Partly buried', {
-      claim: [['hog-weak', 0]],
-      views: [V('hog-fig3.jpg', 'Guarding, warming through sediment, sitting on part-buried eggs, sitting on open eggs · Hogan & Varricchio 2023 Fig 3', 0),
-        V('hog-fig1.jpg', 'Partly buried clutches · Hogan & Varricchio 2023 Fig 1', 1)]
     }),
 
     line('stages', 'Five stages', 2, 3, 'Did they brood their eggs?', 'Five stages', {
@@ -354,9 +334,6 @@
       })
     ], 1),
 
-    /* ---------------------------------------------------------- break */
-    { id: 'break', title: 'Break', min: 0, tier: 1, builds: [{}], items: [{ kind: 'title', box: [100, 200, 1400, 500], text: 'Break' }] },
-
     /* ---------------------------------------------------------- 5 feathers */
     partTitle('p-feathers', 'Feathers'),
 
@@ -366,6 +343,16 @@
       views: [V('xb25-fig1.jpg', 'Filaments to vaned feathers, from _Tianyulong_ to _Confuciusornis_ · Xu & Barrett 2025 Fig 1', 0),
         V('xb25-fig2.jpg', 'Feather traits by clade; ? marks uncertain · Xu & Barrett 2025 Fig 2', 1)]
     }),
+
+    slide('display', 'Display', 1, 4, 'What were tails and feathers for?', 'Display', [
+      at(LEFT, { kind: 'quotes', cols: 1, size: 24, cards: [{ q: 'per-display', at: 0 }, { q: 'li12-tail', at: 2 }, { q: 'cla-orn', at: 3 }] }),
+      at(RIGHT, pic([
+        V('per-fig11.jpg', '_Ajancingenia_ displaying, painting by Sydney Mohr · Persons et al. 2014 Fig 11', 0),
+        V('li-fig4.jpg', '_Anchiornis_ colors from melanosomes · Li et al. 2010 Fig 4', 1),
+        V('li12-fig4.jpg', '_Microraptor_, color from melanosomes of BMNHC PH881 · Li et al. 2012 Fig 4', 2),
+        V('cla-fig6.jpg', '_Plumadraco_, restoration by Ville Sinkkonen · Clark et al. 2026 Fig 6E', 3, [0.79, 0, 1, 1])
+      ]))
+    ]),
 
     line('nofly', 'Feathered arms', 1, 4, 'What were vaned feathers for?', 'Feathered arms', {
       claim: [['tal-lift', 0], ['dec16-invest', 1], ['dec16-display', 2]],
@@ -532,7 +519,7 @@
         kind: 'matrix', box: [24, 124, 1552, 662], labelW: 230, cellsAt: 0, labelsAt: 0,
         cols: ['Skeletons and trees', 'Eggs and nests', 'Feathers', 'Bone, teeth, brain', 'Tracks', 'Physics models'],
         rows: [
-          { label: 'Closest to birds', cells: { 'Skeletons and trees': '3 trees, Bremer 1–2', 'Eggs and nests': 'egg tree: troodontids nearer birds' } },
+          { label: 'Closest to birds', cells: { 'Skeletons and trees': 'four trees; rescoring one group collapses the base' } },
           { label: 'Brooding', cells: { 'Skeletons and trees': 'adults on clutches', 'Eggs and nests': 'pores, color, clutch shape, embryos', 'Bone, teeth, brain': '74-day tooth, no medullary bone' } },
           { label: 'Flight', cells: { 'Skeletons and trees': 'arm/leg ratios', Feathers: 'number and asymmetry', 'Bone, teeth, brain': 'wing-bone walls', 'Physics models': 'wing loading, WAIR' } },
           { label: 'Bird brain', cells: { 'Bone, teeth, brain': 'endocast volume and shape', 'Skeletons and trees': 'size and rates on the stem' } },

@@ -3,6 +3,7 @@
  *   pair    sil: { src, credit }  fig: { src, crop: [l, t, r, b] }  cap
  *           silW: share of the width (or, with stack, the height) for the silhouette.
  *           stack: silhouette above the fossil instead of beside it.
+ *           life: the left picture is a color restoration, so dark mode leaves it alone.
  *           credit is the second, smaller caption line (silhouette taxon and artist).
  */
 (function () {
@@ -12,7 +13,7 @@
   D.parts.pair = function (def, host) {
     const BW = def.box[2], BH = def.box[3], G = 22, CAPH = def.sil.credit ? 58 : 34;
     const SW = Math.round(BW * (def.silW || 0.34)), H = BH - CAPH;
-    host.innerHTML = '<img class="pr-sil" draggable="false" alt=""><div class="pc-frame"><img draggable="false" alt=""></div><div class="pr-cap"></div>';
+    host.innerHTML = '<img class="pr-sil' + (def.life ? ' pr-life' : '') + '" draggable="false" alt=""><div class="pc-frame"><img draggable="false" alt=""></div><div class="pr-cap"></div>';
     const sil = host.querySelector('.pr-sil'), frame = host.querySelector('.pc-frame'), img = frame.querySelector('img'), cap = host.querySelector('.pr-cap');
 
     const [sw0, sh0] = dims(def.sil.src), [W, Hh] = dims(def.fig.src), c = def.fig.crop || [0, 0, 1, 1];

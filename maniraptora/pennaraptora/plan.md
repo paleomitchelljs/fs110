@@ -2,7 +2,7 @@
 
 Goal: show students how to combine several lines of evidence on one question: what each line can and can't show, where each is strong or thin, and how the lines support, constrain or contradict each other. Each section is built around one question, not around a paper.
 
-Length: about twice the alvarezsaur deck, with a break between Part 1 and Part 2.
+Length: about twice the alvarezsaur deck. No break slide: pacing is left to the room.
 
 ## How "strong/weak" gets shown without verdicts
 
@@ -51,7 +51,7 @@ Lines, each with its own figure:
 
 Interaction slide: Bi 2021 vs Yang 2019, same observation (asynchrony), opposite mechanism. Matrix: rows = lines, columns = "adult present / eggs warmed / eggs exposed / hatching timing".
 
-**Break**
+(No break slide.)
 
 ## Part 2
 

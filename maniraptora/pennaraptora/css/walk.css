@@ -178,3 +178,22 @@
 .pr-credit { font-size: 15px; margin-top: 3px; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .pr-sil { filter: invert(1); } }
 :root[data-theme="dark"] .pr-sil { filter: invert(1); }
+
+/* ---------- tree ---------- */
+.tr-svg { position: absolute; left: 0; top: 0; overflow: visible; }
+.tr-br { stroke: var(--ink-2); stroke-width: 4; stroke-linecap: round; }
+.tr-br.hot { stroke: var(--accent); stroke-width: 7; }
+.tr-br.focal { stroke: var(--ink); stroke-width: 6; }
+.tr-tip { position: absolute; display: flex; align-items: center; gap: 18px; cursor: grab; touch-action: none; transition: top 0.5s cubic-bezier(.6, 0, .3, 1); }
+.tr-tip.drag { transition: none; cursor: grabbing; z-index: 2; opacity: 0.85; }
+.tr-pic { display: flex; align-items: center; justify-content: flex-start; flex: none; }
+.tr-pic img { display: block; }
+.tr-lab { font: 600 30px var(--font-ui); color: var(--ink-2); }
+.tr-tip.hot .tr-lab { color: var(--accent-ink); }
+.tr-tip.focal .tr-lab { color: var(--ink); }
+.tr-cap { position: absolute; left: 0; right: 0; text-align: center; font: 400 22px/1.25 var(--font-ui); color: var(--muted); }
+.tr-cap b { color: var(--ink); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tr-pic img { filter: invert(1); } }
+:root[data-theme="dark"] .tr-pic img { filter: invert(1); }
+:root[data-theme="dark"] .pr-sil.pr-life { filter: none; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .pr-sil.pr-life { filter: none; } }

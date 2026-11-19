@@ -11,10 +11,6 @@ OUT = os.path.join(HERE, '..', 'img')
 
 # name: (PhyloPic image uuid, taxon, artist, license, mirror)
 SIL = {
-    'sinovenator':  ('5ac4b7b8-9b4a-4e6f-8df6-124016cac676', 'Sinovenator changii', 'Tasman Dixon', 'CC0', False),
-    'tianyuraptor': ('f9e142f8-a58b-43d7-b241-26a6f755e5b6', 'Tianyuraptor ostromi', 'Emily Willoughby', 'CC BY-SA 3.0', True),
-    'citipati':     ('b82711c1-4c4c-4fdd-b9ff-2bcd48aa4cd1', 'Citipati osmolskae', 'Emily Willoughby', 'CC BY-SA 3.0', False),
-    'archaeopteryx': ('5b18bbbd-516e-40ba-8f2a-3e77aad72230', 'Archaeopteryx lithographica', 'Scott Hartman', 'CC0', False),
     'yi':           ('97b7d025-5dfe-4f9e-ad8f-45f036080ede', 'Yi qi', 'Emily Willoughby', 'CC BY-SA 3.0', False),
 }
 
