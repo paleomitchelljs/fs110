@@ -22,6 +22,8 @@ P = {
     'lee14': 'Leeetal.2014sustainedminiaturizationandanatomicalinnovationinthedinosaurianancestryofbirds.pdf',  # Lee et al. 2014
     'har19': 'hartman2019.pdf',                              # Hartman et al. 2019, Hesperornithoides
     'pei20': 'PIIS0960982220309994.pdf',                     # Pei et al. 2020
+    'wz23':  'Low-morphological-disparity-and-decelerated-rate-of-limb-size-evolution-close-to-the-origin.pdf',  # Wang & Zhou 2023
+    'neb21': 's41513-021-00170-3.pdf',                       # Nebreda et al. 2021, locomotor modules review
     'agn19': 'feart-06-00252.pdf',                           # Agnolín et al. 2019, paravian phylogeny review
     # behavior
     'fun16': 'srep35782.pdf',                                # Funston et al. 2016, Avimimus bonebed
@@ -32,7 +34,9 @@ P = {
     'fan26': 'Biological Reviews - 2026 - Fan - Diet of bird‐like troodontid dinosaurs  synthesis of a contentious clade.pdf',  # Fan et al. 2026
     'ma20':  'jevbio0178.pdf',                               # Ma et al. 2020, oviraptorosaur skulls
     'li08':  'Lietal2007Naturwissenschaften.pdf',            # Li et al. 2008, Dromaeopodus trackways
-    'tsu21': 'tsukiji2021.pdf',                              # Tsukiji et al. 2021, Velociraptorichnus trackway
+    'tsu21': 'tsukiji2021.pdf',
+    'rb07':  'Roach-Brinkman2007.pdf',                       # Roach & Brinkman 2007, solitary null for theropods
+    'gia20': 'JOA-236-772.pdf',                              # Gianechini et al. 2020, dromaeosaurid hindlimbs                              # Tsukiji et al. 2021, Velociraptorichnus trackway
     'li12':  'li2012.pdf',                                   # Li et al. 2012, Microraptor iridescence
     # reproduction
     'cla99': '_v2_dspace_ingest_pdfSource_nov_N3265.pdf',    # Clark, Norell & Chiappe 1999, Citipati on nest
@@ -52,6 +56,7 @@ P = {
     'hog23': 'rstb.2022.0144.pdf',                           # Hogan & Varricchio 2023
     # feathers and flight
     'tal18': 's41598-018-35966-4.pdf',                       # Talori et al. 2018, Caudipteryx
+    'xb25':  'rsbl.2024.0517.pdf',                           # Xu & Barrett 2025, feather origins review
     'dec16': 'peerj-2159.pdf',                               # Dececchi et al. 2016, WAIR
     'dec20': 'dececchi2020.pdf',                             # Dececchi et al. 2020, Yi gliding
     'voe18': 'voeten2018.pdf',                               # Voeten et al. 2018, Archaeopteryx bones

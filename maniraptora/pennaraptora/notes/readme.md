@@ -2,7 +2,7 @@
 
 One note per paper in `../papers/` (gitignored). Each note has: citation, file name, what was read and viewed, a **Claim** section with verbatim quotes, push-back where warranted, and a **Figures** section judging each figure for slide use and cropping.
 
-65 PDFs, 62 papers. Duplicates:
+71 PDFs, 67 papers. Duplicates:
 - `zheng2009.pdf` = `A_Short-Armed_Dromaeosaurid_from_the_Jehol_Group_o.pdf` (Zheng et al. 2010)
 - `auk0654.pdf` = `varricchio2016.pdf` (Varricchio & Jackson 2016; the second has a BioOne cover page)
 - `PIIS0960982220309994.pdf` = `PIIS0960982220309994 (1).pdf` (Pei et al. 2020; byte-identical)
@@ -10,6 +10,8 @@ One note per paper in `../papers/` (gitignored). Each note has: citation, file n
 Downloaded open access on 2026-11-18: `voeten2018.pdf`, `hartman2019.pdf`, `torres2021.pdf`, `kiat-oconnor2024.pdf`, `pectoral2024.pdf`.
 
 Added 2026-11-19 (second round): Clark 1999, Fanti 2012, Varricchio 2008, Birchard 2013, Li 2008, Tsukiji 2021, Agnolín 2019, Li 2012.
+
+Third round, 2026-11-19: Roach & Brinkman 2007, Xu & Barrett 2025, Wang & Zhou 2023, Gianechini et al. 2020 (two copies: `JOA-236-772.pdf` and `Journal of Anatomy - 2020 - Gianechini ...pdf`), Nebreda et al. 2021.
 
 ## Phylogeny and the bird line
 
@@ -20,6 +22,8 @@ Added 2026-11-19 (second round): Clark 1999, Fanti 2012, Varricchio 2008, Bircha
 | [lee-2014](lee-2014.md) | Lee et al. 2014, sustained miniaturization on the bird stem | `Leeetal.2014sustained...pdf` |
 | [hartman-2019](hartman-2019.md) | Hartman et al. 2019, *Hesperornithoides*; 1-2 steps rearrange Paraves | `hartman2019.pdf` |
 | [pei-2020](pei-2020.md) | Pei et al. 2020, new tree and powered-flight potential | `PIIS0960982220309994.pdf` |
+| [wang-zhou-2023](wang-zhou-2023.md) | Wang & Zhou 2023, limb disparity and rate drop near Avialae | `Low-morphological-disparity-...pdf` |
+| [nebreda-2021](nebreda-2021.md) | Nebreda et al. 2021, locomotor modules review | `s41513-021-00170-3.pdf` |
 | [agnolin-2019](agnolin-2019.md) | Agnolín et al. 2019, review; recoding unenlagiids collapses the TWiG tree | `feart-06-00252.pdf` |
 
 ## Dromaeosaurids
@@ -33,6 +37,8 @@ Added 2026-11-19 (second round): Clark 1999, Fanti 2012, Varricchio 2008, Bircha
 | [jasinski-2020](jasinski-2020.md) | Jasinski et al. 2020, *Dineobellator*, end-Cretaceous New Mexico | `s41598-020-61480-7.pdf` |
 | [bindellini-2025](bindellini-2025.md) | Bindellini et al. 2025, *Velociraptor* review | `460.pdf` |
 | [frederickson-2020](frederickson-2020.md) | Frederickson et al. 2020, *Deinonychus* diet shift with age (isotopes) | `10172318.pdf` |
+| [roach-brinkman-2007](roach-brinkman-2007.md) | Roach & Brinkman 2007, solitary null and Komodo-style mobs | `Roach-Brinkman2007.pdf` |
+| [gianechini-2020](gianechini-2020.md) | Gianechini et al. 2020, unenlagiine vs eudromaeosaur feet | `JOA-236-772.pdf` |
 | [li-2008](li-2008.md) | Li et al. 2008, six parallel *Dromaeopodus* trackways | `Lietal2007Naturwissenschaften.pdf` |
 | [tsukiji-2021](tsukiji-2021.md) | Tsukiji et al. 2021, one *Velociraptorichnus* trackway; gait depends on the assumed maker | `tsukiji2021.pdf` |
 
@@ -40,6 +46,7 @@ Added 2026-11-19 (second round): Clark 1999, Fanti 2012, Varricchio 2008, Bircha
 
 | Note | Paper | File |
 |---|---|---|
+| [xu-barrett-2025](xu-barrett-2025.md) | Xu & Barrett 2025, feather origins review | `rsbl.2024.0517.pdf` |
 | [li-2010](li-2010.md) | Li et al. 2010, plumage color of *Anchiornis* | `Li-et-al-2010-Science.pdf` |
 | [li-2012](li-2012.md) | Li et al. 2012, iridescent *Microraptor*, narrow tail fan | `li2012.pdf` |
 | [xu-2015](xu-2015.md) | Xu et al. 2015, *Yi qi*, membranous wings | `Xuetal2015Yiqi.pdf` |
@@ -119,7 +126,8 @@ Added 2026-11-19 (second round): Clark 1999, Fanti 2012, Varricchio 2008, Bircha
 - **How many origins of flight?** ≥3 powered origins ([Pei 2020](pei-2020.md), though one origin + 6-11 losses costs the same tree length); one early origin with many losses ([Kiat & O'Connor 2024](kiat-oconnor-2024.md)); parallel experiments, bird flight late ([Hartman 2019](hartman-2019.md)).
 - **Could anchiornithines fly?** Pass wing loading ([Pei 2020](pei-2020.md)); flightless from feathers ([Kiat & O'Connor 2024](kiat-oconnor-2024.md)); short arms ([Hartman 2019](hartman-2019.md), *Anchiornis* H/F 0.96-1.04).
 - ***Caudipteryx*:** never flew ([Dececchi 2016](dececchi-2016.md); [Talori 2018](talori-2018.md), small forces) vs secondarily flightless ([Kiat & O'Connor 2024](kiat-oconnor-2024.md)).
-- **When the bird body plan arrived:** fast change concentrated at Avialae ([Brusatte 2014](brusatte-2014.md)) vs fast and shrinking along the whole stem ([Lee 2014](lee-2014.md)).
+- **When the bird body plan arrived:** fast change concentrated at Avialae ([Brusatte 2014](brusatte-2014.md)) vs fast and shrinking along the whole stem ([Lee 2014](lee-2014.md)); limb proportions slow down near Avialae ([Wang & Zhou 2023](wang-zhou-2023.md)).
+- **Where feathers start:** base of Avemetatarsalia (~245 Ma) or within Theropoda ([Xu & Barrett 2025](xu-barrett-2025.md) lay out both).
 - ***Archaeopteryx* wulst:** possible imprint ([Balanoff 2013](balanoff-2013.md)) later called a preservation artefact ([Torres 2021](torres-2021.md)).
 - ***Deinonychus* packs:** not wolf-like ([Frederickson 2020](frederickson-2020.md)); juveniles with adults elsewhere argue against Komodo-like solitude.
 
@@ -127,7 +135,7 @@ Added 2026-11-19 (second round): Clark 1999, Fanti 2012, Varricchio 2008, Bircha
 - **Synchronous or asynchronous hatching?** Synchronous expected: [Varricchio 2002](varricchio-2002.md), [Varricchio 2018](varricchio-2018.md). Asynchronous: [Yang 2019](yang-2019.md), [Bi 2021](bi-2021.md).
 - **Paired eggs in *Troodon*:** accepted by [Varricchio & Jackson 2016](varricchio-jackson-2016.md) and [Zelenitsky & Therrien 2008](zelenitsky-therrien-2008.md), against Grellet-Tinner et al. 2006 (not in the folder).
 - **Who sat on the eggs?** Males, from clutch volume and no medullary bone ([Varricchio 2008](varricchio-2008.md)); clutch mass can't tell maternal from paternal, only precocial ([Birchard 2013](birchard-2013.md)); a female with eggs inside also lacked medullary bone ([Jin 2020](jin-2020.md)).
-- **Were dromaeosaurids gregarious?** Six parallel trackways ([Li 2008](li-2008.md)) vs solitary, agonistic mobbing (Roach & Brinkman 2007, not in the folder; answered in [Li 2008](li-2008.md) and [Frederickson 2020](frederickson-2020.md)).
+- **Were dromaeosaurids gregarious?** Six parallel trackways ([Li 2008](li-2008.md)) vs solitary, agonistic mobbing ([Roach & Brinkman 2007](roach-brinkman-2007.md); answered in [Li 2008](li-2008.md) and [Frederickson 2020](frederickson-2020.md)).
 - **Troodontid diet:** coded carnivore in [Pierossi 2025](pierossi-2025.md); reviewed as contested in [Fan 2026](fan-2026.md).
 
 ## Problems flagged in the notes

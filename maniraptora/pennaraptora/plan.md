@@ -112,6 +112,6 @@ Optional:
 - Torres et al. 2021, *Science Advances*, bird brain and body mass across the K–Pg.
 - Amiot et al. 2017, *Palaeontology*, oviraptorosaur incubation temperatures from oxygen isotopes (a further line for the brooding matrix).
 
-Status 2026-11-19: second round in, notes written: Clark, Norell & Chiappe 1999 (*Citipati* on nest, the full description of Norell 1995), Fanti et al. 2012 (*Nemegtomaia*), Varricchio et al. 2008 and Birchard et al. 2013 (paternal care), Li et al. 2008 and Tsukiji et al. 2021 (trackways), Agnolín et al. 2019 (recoded TWiG), Li et al. 2012 (*Microraptor*). Still wanted: Wang 2019 (*Ambopteryx*), Foth 2014, Amiot 2017, Roach & Brinkman 2007 (the solitary-mobbing hypothesis Li 2008 and Frederickson 2020 answer), Xing et al. 2018 (second parallel deinonychosaur trackway site).
+Status 2026-11-19: second round in, notes written: Clark, Norell & Chiappe 1999 (*Citipati* on nest, the full description of Norell 1995), Fanti et al. 2012 (*Nemegtomaia*), Varricchio et al. 2008 and Birchard et al. 2013 (paternal care), Li et al. 2008 and Tsukiji et al. 2021 (trackways), Agnolín et al. 2019 (recoded TWiG), Li et al. 2012 (*Microraptor*). Third round in the same day: Roach & Brinkman 2007, Xu & Barrett 2025, Wang & Zhou 2023, Gianechini et al. 2020, Nebreda et al. 2021. Still wanted: Wang 2019 (*Ambopteryx*), Foth 2014, Amiot 2017, Xing et al. 2018 (second parallel deinonychosaur trackway site).
 
 Citations are from memory; check titles and years when downloading.

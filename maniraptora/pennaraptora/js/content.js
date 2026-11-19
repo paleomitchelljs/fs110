@@ -88,6 +88,9 @@
     cla99: { cite: 'Clark, Norell & Chiappe 1999', journal: '_American Museum Novitates_' },
     var08: { cite: 'Varricchio et al. 2008', journal: '_Science_' },
     bir13: { cite: 'Birchard et al. 2013', journal: '_Biology Letters_' },
+    rb07: { cite: 'Roach & Brinkman 2007', journal: '_Bull. Peabody Mus. Nat. Hist._' },
+    xb25: { cite: 'Xu & Barrett 2025', journal: '_Biology Letters_' },
+    wz23: { cite: 'Wang & Zhou 2023', journal: '_Nature Ecology & Evolution_' },
     zel08: { cite: 'Zelenitsky & Therrien 2008', journal: '_Palaeontology_' },
     vj16: { cite: 'Varricchio & Jackson 2016', journal: '_The Auk_' },
     fun16: { cite: 'Funston et al. 2016', journal: '_Scientific Reports_' },
@@ -191,13 +194,21 @@
         V('fun-fig7.jpg', 'Tibiotarsi by length: fused A–L, unfused M–W · Funston et al. 2016 Fig 7', 1)]
     }),
 
+    line('solitary', 'Solitary hunters', 1, 4, 'Did they live in groups?', 'Solitary hunters', {
+      claim: [['rb-null', 0], ['rb-none', 1], ['rb-part', 2]],
+      chips: [['4', '_Deinonychus_ with one _Tenontosaurus_ at the type quarry, YPM 64-75', 1], ['4 / 17', 'Komodo dragons at one kill: average, most seen', 2]],
+      views: [V('rb07-fig5.jpg', 'A _Deinonychus_ feeding mob, drawing signed BTR · Roach & Brinkman 2007 Fig 5', 0),
+        V('rb07-fig1.jpg', 'YPM 64-75: _Deinonychus_ and _Tenontosaurus_ bones · Roach & Brinkman 2007 Fig 1', 1)]
+    }),
+
     line('tracks', 'Trackways', 1, 4, 'Did they live in groups?', 'Trackways', {
-      claim: [['li-group', 0], ['li-single', 2]],
+      claim: [['li-group', 0], ['li-single', 2], ['rb-shore', 3]],
       chips: [['6', 'parallel trackways on one bedding plane, none overlapping', 1], ['< 1 stride', 'between neighboring trackways', 1],
         ['6.1 or 4.6 km/h', 'one trackway\'s speed, if the maker was a dromaeosaurid or a troodontid (Tsukiji et al. 2021)', 2]],
       views: [V('li08-fig3.jpg', 'Six _Dromaeopodus_ trackways, D1–D6, all heading one way · Li et al. 2008 Fig 3', 0),
         V('li08-fig2.jpg', 'Two-toed prints: digit II held off the ground · Li et al. 2008 Fig 2', 1, [0, 0.012, 1, 0.975]),
-        V('tsu21-fig5.jpg', '_Velociraptorichnus_ print: photo, height map, outline · Tsukiji et al. 2021 Fig 5', 2)]
+        V('tsu21-fig5.jpg', '_Velociraptorichnus_ print: photo, height map, outline · Tsukiji et al. 2021 Fig 5', 2),
+        V('rb07-fig6.jpg', 'Mount Tom theropod trackways, Massachusetts (Ostrom 1972) · Roach & Brinkman 2007 Fig 6', 3)]
     }),
 
     line('pack', 'Pack hunting', 1, 5, 'Did they live in groups?', 'Pack hunting', {
@@ -326,6 +337,13 @@
 
     /* ---------------------------------------------------------- 5 feathers */
     partTitle('p-feathers', 'Feathers'),
+
+    line('fstages', 'Feather stages', 1, 4, 'When did feathers appear?', 'Feather stages', {
+      claim: [['xb-stages', 0], ['xb-psitt', 1], ['xb-unknown', 2]],
+      chips: [['3', 'ornithischians with filaments: _Tianyulong_, _Kulindadromeus_, _Psittacosaurus_', 1], ['≈ 245 Ma or Early Jurassic', 'the two proposed starts for feathers', 2]],
+      views: [V('xb25-fig1.jpg', 'Filaments to vaned feathers, from _Tianyulong_ to _Confuciusornis_ · Xu & Barrett 2025 Fig 1', 0),
+        V('xb25-fig2.jpg', 'Feather traits by clade; ? marks uncertain · Xu & Barrett 2025 Fig 2', 1)]
+    }),
 
     line('nofly', 'Feathered arms', 1, 4, 'What were vaned feathers for?', 'Feathered arms', {
       claim: [['tal-lift', 0], ['dec16-invest', 1], ['dec16-display', 2]],
@@ -456,6 +474,12 @@
       claim: [['bru-jump', 0]],
       chips: [['150', 'coelurosaurs, 853 characters', 1], ['99,999', 'equally short trees', 1], ['100', 'dating runs for the rates', 1]],
       views: [V('bru-fig2.jpg', 'Rates on the tree: red high, blue low · Brusatte et al. 2014 Fig 2', 0)]
+    }),
+
+    line('limbrates', 'Limb rates', 1, 4, 'How did the bird body plan arise?', 'Limb rates', {
+      claim: [['wz-low', 0], ['wz-bias', 2]],
+      chips: [['109', 'taxa with all six limb bones complete', 1], ['55 / 17 / 37', 'avialans / other paravians / other theropods', 1], ['4', 'trees tried, moving _Anchiornis_ and scansoriopterygids', 1]],
+      views: [V('wz23-fig4.jpg', 'Limb rates on the tree: red fast, blue slow; Avialae at top · Wang & Zhou 2023 Fig 4a', 0, [0, 0, 0.62, 1])]
     }),
 
     versus('bias', 'Oversampled characters', 1, 4, 'How did the bird body plan arise?', 'Oversampled characters', {
