@@ -22,6 +22,7 @@ P = {
     'lee14': 'Leeetal.2014sustainedminiaturizationandanatomicalinnovationinthedinosaurianancestryofbirds.pdf',  # Lee et al. 2014
     'har19': 'hartman2019.pdf',                              # Hartman et al. 2019, Hesperornithoides
     'pei20': 'PIIS0960982220309994.pdf',                     # Pei et al. 2020
+    'agn19': 'feart-06-00252.pdf',                           # Agnolín et al. 2019, paravian phylogeny review
     # behavior
     'fun16': 'srep35782.pdf',                                # Funston et al. 2016, Avimimus bonebed
     'fre20': '10172318.pdf',                                 # Frederickson et al. 2020, Deinonychus isotopes
@@ -30,7 +31,14 @@ P = {
     'cla26': 'journal.pone.0347641.pdf',                     # Clark et al. 2026, Plumadraco
     'fan26': 'Biological Reviews - 2026 - Fan - Diet of bird‐like troodontid dinosaurs  synthesis of a contentious clade.pdf',  # Fan et al. 2026
     'ma20':  'jevbio0178.pdf',                               # Ma et al. 2020, oviraptorosaur skulls
+    'li08':  'Lietal2007Naturwissenschaften.pdf',            # Li et al. 2008, Dromaeopodus trackways
+    'tsu21': 'tsukiji2021.pdf',                              # Tsukiji et al. 2021, Velociraptorichnus trackway
+    'li12':  'li2012.pdf',                                   # Li et al. 2012, Microraptor iridescence
     # reproduction
+    'cla99': '_v2_dspace_ingest_pdfSource_nov_N3265.pdf',    # Clark, Norell & Chiappe 1999, Citipati on nest
+    'fan12': 'nemegtonia.pdf',                               # Fanti et al. 2012, Nemegtomaia on nest
+    'var08': 'varricchio2008.pdf',                           # Varricchio et al. 2008, paternal care
+    'bir13': 'rsbl20130036.pdf',                             # Birchard et al. 2013, clutch mass
     'bi21':  'Bi et al. accepted.pdf',                       # Bi et al. 2021, adult on embryo clutch
     'jin20': 'jin2019.pdf',                                  # Jin et al. 2020, adult with eggs, Jiangxi
     'var02': 'varricchio2002.pdf',                           # Varricchio et al. 2002, Troodon embryos

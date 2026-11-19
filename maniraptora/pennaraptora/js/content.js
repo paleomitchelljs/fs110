@@ -82,6 +82,12 @@
     lee14: { cite: 'Lee et al. 2014', journal: '_Science_' },
     har19: { cite: 'Hartman et al. 2019', journal: '_PeerJ_' },
     pei20: { cite: 'Pei et al. 2020', journal: '_Current Biology_' },
+    agn19: { cite: 'Agnolín et al. 2019', journal: '_Frontiers in Earth Science_' },
+    li08: { cite: 'Li et al. 2008', journal: '_Naturwissenschaften_' },
+    li12: { cite: 'Li et al. 2012', journal: '_Science_' },
+    cla99: { cite: 'Clark, Norell & Chiappe 1999', journal: '_American Museum Novitates_' },
+    var08: { cite: 'Varricchio et al. 2008', journal: '_Science_' },
+    bir13: { cite: 'Birchard et al. 2013', journal: '_Biology Letters_' },
     zel08: { cite: 'Zelenitsky & Therrien 2008', journal: '_Palaeontology_' },
     vj16: { cite: 'Varricchio & Jackson 2016', journal: '_The Auk_' },
     fun16: { cite: 'Funston et al. 2016', journal: '_Scientific Reports_' },
@@ -151,6 +157,13 @@
         ['1 step', 'between several paravian trees', 2]]))
     ]),
 
+    line('recode', 'Recoding', 1, 4, 'Which group is closest to birds?', 'Recoding', {
+      claim: [['agn-cons', 0], ['agn-recode', 1], ['agn-optnot', 2]],
+      chips: [['1', 'group rescored: unenlagiids', 1], ['6', 'groups left in one polytomy at the base of Pennaraptora', 1]],
+      views: [V('agn19-fig2.jpg', 'Five published paravian trees · Agnolín et al. 2019 Fig 2', 0),
+        V('agn19-fig8.jpg', 'The TWiG matrix with unenlagiids rescored · Agnolín et al. 2019 Fig 8', 1)]
+    }),
+
     slide('reuse', 'Shared matrices', 2, 3, 'Which group is closest to birds?', 'Shared matrices', [
       at(FULL, { kind: 'quotes', cols: 1, size: 32, cards: [{ q: 'har-reuse', at: 0 }, { q: 'har-notall', at: 1 }] })
     ]),
@@ -178,6 +191,15 @@
         V('fun-fig7.jpg', 'Tibiotarsi by length: fused A–L, unfused M–W · Funston et al. 2016 Fig 7', 1)]
     }),
 
+    line('tracks', 'Trackways', 1, 4, 'Did they live in groups?', 'Trackways', {
+      claim: [['li-group', 0], ['li-single', 2]],
+      chips: [['6', 'parallel trackways on one bedding plane, none overlapping', 1], ['< 1 stride', 'between neighboring trackways', 1],
+        ['6.1 or 4.6 km/h', 'one trackway\'s speed, if the maker was a dromaeosaurid or a troodontid (Tsukiji et al. 2021)', 2]],
+      views: [V('li08-fig3.jpg', 'Six _Dromaeopodus_ trackways, D1–D6, all heading one way · Li et al. 2008 Fig 3', 0),
+        V('li08-fig2.jpg', 'Two-toed prints: digit II held off the ground · Li et al. 2008 Fig 2', 1, [0, 0.012, 1, 0.975]),
+        V('tsu21-fig5.jpg', '_Velociraptorichnus_ print: photo, height map, outline · Tsukiji et al. 2021 Fig 5', 2)]
+    }),
+
     line('pack', 'Pack hunting', 1, 5, 'Did they live in groups?', 'Pack hunting', {
       claim: [['fre-diff', 0], ['fre-not', 1], ['fre-utah', 3]],
       chips: [['10 + 10', 'teeth, small and large, from two sites', 2], ['≈ 28%', 'of the identified _Deinonychus_ material at each site, sampled', 2], ['2', '_Tenontosaurus_ individuals', 2], ['3', '_Utahraptor_ at one site: adult, juvenile, baby', 3]],
@@ -185,11 +207,12 @@
     }),
 
     slide('display', 'Display', 1, 4, 'What were tails and feathers for?', 'Display', [
-      at(LEFT, { kind: 'quotes', cols: 1, size: 28, cards: [{ q: 'per-display', at: 0 }, { q: 'cla-orn', at: 2 }] }),
+      at(LEFT, { kind: 'quotes', cols: 1, size: 24, cards: [{ q: 'per-display', at: 0 }, { q: 'li12-tail', at: 2 }, { q: 'cla-orn', at: 3 }] }),
       at(RIGHT, pic([
         V('per-fig11.jpg', '_Ajancingenia_ displaying, painting by Sydney Mohr · Persons et al. 2014 Fig 11', 0),
         V('li-fig4.jpg', '_Anchiornis_ colors from melanosomes · Li et al. 2010 Fig 4', 1),
-        V('cla-fig6.jpg', '_Plumadraco_, restoration by Ville Sinkkonen · Clark et al. 2026 Fig 6E', 2, [0.79, 0, 1, 1])
+        V('li12-fig4.jpg', '_Microraptor_, color from melanosomes of BMNHC PH881 · Li et al. 2012 Fig 4', 2),
+        V('cla-fig6.jpg', '_Plumadraco_, restoration by Ville Sinkkonen · Clark et al. 2026 Fig 6E', 3, [0.79, 0, 1, 1])
       ]))
     ]),
 
@@ -203,11 +226,24 @@
     /* ---------------------------------------------------------- 4 reproduction */
     partTitle('p-repro', 'Reproduction'),
 
+    line('nests', 'Adults on nests', 1, 4, 'Did they brood their eggs?', 'Adults on nests', {
+      claim: [['cla-evoke', 0], ['cla-heat', 3]],
+      chips: [['4 of 17', 'adult oviraptorids from the Djadokhta sandstones found on nests, before 1996', 1], ['4', 'oviraptorid genera found on nests by 2012', 2], ['0', 'embryos in these nests', 2]],
+      views: [V('cla99-fig13.jpg', 'Reconstruction on the nest · Clark et al. 1999 Fig 13', 0),
+        V('cla99-fig1.jpg', '_Citipati_ IGM 100/979 on its nest · Clark et al. 1999 Fig 1', 1),
+        V('fan12-fig3.jpg', '_Nemegtomaia_ MPC-D 107/15 on its nest, with restoration (E) · Fanti et al. 2012 Fig 3', 2)]
+    }),
+
     line('brood', 'Adult on eggs', 1, 4, 'Did they brood their eggs?', 'Adult on eggs', {
       claim: [['bi-brood', 0]],
       chips: [['1', 'adult, no skull', 1], ['≥ 24', 'eggs in three rings, some with embryos', 1]],
       views: [V('bi-fig1.jpg', 'Skeletal restoration on the clutch · Bi et al. 2021 Fig 1c', 0, [0.045, 0.546, 1, 1]),
         V('bi-fig1.jpg', 'Oviraptorid on its clutch, LDNHMF2008 · Bi et al. 2021 Fig 1a', 1, [0, 0, 0.485, 0.512])]
+    }),
+
+    versus('parent', 'Which parent', 1, 5, 'Did they brood their eggs?', 'Which parent', {
+      left: [['var08-pat', 0], ['var08-hist', 1]], lviews: [V('var08-fig1.jpg', 'Clutch volume vs body mass by care type; red diamonds: _Troodon_, _Oviraptor_, _Citipati_ · Varricchio et al. 2008 Fig 1B', 0, [0.395, 0, 1, 1])],
+      right: [['bir-same', 2], ['bir-not', 3]], rviews: [V('bir13-fig1.jpg', '(a) paternal blue, maternal yellow, biparental squares; (b) altricial blue, precocial yellow; diamonds: dinosaurs · Birchard et al. 2013 Fig 1', 2, [0, 0, 1, 0.955])]
     }),
 
     line('laying', 'Eggs inside', 2, 3, 'Did they brood their eggs?', 'Eggs inside', {
@@ -273,6 +309,7 @@
         kind: 'matrix', labelW: 260, cellsAt: 0, labelsAt: 0,
         cols: ['Adult on the eggs', 'Eggs open to the air', 'Eggs warmed', 'Hatching'],
         rows: [
+          { label: 'Skeletons on nests · Clark 1999, Fanti 2012', cells: { 'Adult on the eggs': '4 of 17 adults; 4 genera', 'Eggs open to the air': '"not completely covered"' } },
           { label: 'Posture · Bi 2021', cells: { 'Adult on the eggs': 'one adult on ≥ 24 eggs', 'Eggs warmed': '"high estimated incubation temperatures"' } },
           { label: 'Pores · Tanaka 2015', cells: { 'Eggs open to the air': '"partially buried"' } },
           { label: 'Color · Wiemann 2017', cells: { 'Eggs open to the air': 'pigment; raw "olive-green"' } },
@@ -439,13 +476,13 @@
       id: 'matrix', title: 'Questions and evidence', min: 6, tier: 1, builds: [{}, {}, {}],
       items: [head('Five questions', 'Questions and evidence'), {
         kind: 'matrix', box: [24, 124, 1552, 662], labelW: 230, cellsAt: 0, labelsAt: 0,
-        cols: ['Skeletons and trees', 'Eggs and nests', 'Feathers', 'Bone, teeth, brain', 'Physics models'],
+        cols: ['Skeletons and trees', 'Eggs and nests', 'Feathers', 'Bone, teeth, brain', 'Tracks', 'Physics models'],
         rows: [
           { label: 'Closest to birds', cells: { 'Skeletons and trees': '3 trees, Bremer 1–2', 'Eggs and nests': 'egg tree: troodontids nearer birds' } },
-          { label: 'Brooding', cells: { 'Skeletons and trees': 'adults on clutches', 'Eggs and nests': 'pores, color, clutch shape, embryos', 'Bone, teeth, brain': '74-day tooth' } },
+          { label: 'Brooding', cells: { 'Skeletons and trees': 'adults on clutches', 'Eggs and nests': 'pores, color, clutch shape, embryos', 'Bone, teeth, brain': '74-day tooth, no medullary bone' } },
           { label: 'Flight', cells: { 'Skeletons and trees': 'arm/leg ratios', Feathers: 'number and asymmetry', 'Bone, teeth, brain': 'wing-bone walls', 'Physics models': 'wing loading, WAIR' } },
           { label: 'Bird brain', cells: { 'Bone, teeth, brain': 'endocast volume and shape', 'Skeletons and trees': 'size and rates on the stem' } },
-          { label: 'Groups and diet', cells: { 'Skeletons and trees': 'one bonebed, sleeping posture', 'Bone, teeth, brain': 'tooth isotopes, microwear' } }
+          { label: 'Groups and diet', cells: { 'Skeletons and trees': 'one bonebed, sleeping posture', 'Bone, teeth, brain': 'tooth isotopes, microwear', Tracks: 'six parallel trackways' } }
         ],
         focus: [{ at: 1, row: 2, label: 'One question, four kinds of evidence' }, { at: 2, col: 'Physics models', label: 'One kind of evidence, one question' }]
       }]
