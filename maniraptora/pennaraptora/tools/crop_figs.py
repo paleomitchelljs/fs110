@@ -109,6 +109,11 @@ FIGS = {
     'xb25-fig1':   ('xb25', 3, (0.294, 0.05, 0.706, 0.452)),
     'xb25-fig2':   ('xb25', 4, (0.05, 0.02, 0.905, 0.53)),
     'wz23-fig4':   ('wz23', 6, (0.06, 0.05, 0.94, 0.515)),
+    # fourth round, 2026-11-19
+    'ami17-fig5':  ('ami17', 9, (0.09, 0.08, 0.505, 0.33)),
+    'ami17-fig6':  ('ami17', 9, (0.515, 0.08, 0.93, 0.73)),
+    'foth14-fig1': ('foth14', 1, (0.51, 0.58, 0.94, 0.875)),
+    'foth14-fig3': ('foth14', 3, (0.06, 0.03, 0.94, 0.448)),
 }
 
 # Whole pages shown on the left of a walk slide (and as the source of each lens).

@@ -2,7 +2,7 @@
 
 One note per paper in `../papers/` (gitignored). Each note has: citation, file name, what was read and viewed, a **Claim** section with verbatim quotes, push-back where warranted, and a **Figures** section judging each figure for slide use and cropping.
 
-71 PDFs, 67 papers. Duplicates:
+73 PDFs, 69 papers. Duplicates:
 - `zheng2009.pdf` = `A_Short-Armed_Dromaeosaurid_from_the_Jehol_Group_o.pdf` (Zheng et al. 2010)
 - `auk0654.pdf` = `varricchio2016.pdf` (Varricchio & Jackson 2016; the second has a BioOne cover page)
 - `PIIS0960982220309994.pdf` = `PIIS0960982220309994 (1).pdf` (Pei et al. 2020; byte-identical)
@@ -12,6 +12,8 @@ Downloaded open access on 2026-11-18: `voeten2018.pdf`, `hartman2019.pdf`, `torr
 Added 2026-11-19 (second round): Clark 1999, Fanti 2012, Varricchio 2008, Birchard 2013, Li 2008, Tsukiji 2021, Agnolín 2019, Li 2012.
 
 Third round, 2026-11-19: Roach & Brinkman 2007, Xu & Barrett 2025, Wang & Zhou 2023, Gianechini et al. 2020 (two copies: `JOA-236-772.pdf` and `Journal of Anatomy - 2020 - Gianechini ...pdf`), Nebreda et al. 2021.
+
+Fourth round: Amiot et al. 2017, Foth et al. 2014. *Ambopteryx* (Wang et al. 2019) is in the deck as a life restoration only (`img/amb-life.jpg`, supplied by the user); no PDF.
 
 ## Phylogeny and the bird line
 
@@ -46,6 +48,7 @@ Third round, 2026-11-19: Roach & Brinkman 2007, Xu & Barrett 2025, Wang & Zhou 2
 
 | Note | Paper | File |
 |---|---|---|
+| [foth-2014](foth-2014.md) | Foth et al. 2014, 11th *Archaeopteryx*; vaned feathers for display first | `nature13467.pdf` |
 | [xu-barrett-2025](xu-barrett-2025.md) | Xu & Barrett 2025, feather origins review | `rsbl.2024.0517.pdf` |
 | [li-2010](li-2010.md) | Li et al. 2010, plumage color of *Anchiornis* | `Li-et-al-2010-Science.pdf` |
 | [li-2012](li-2012.md) | Li et al. 2012, iridescent *Microraptor*, narrow tail fan | `li2012.pdf` |
@@ -108,6 +111,7 @@ Third round, 2026-11-19: Roach & Brinkman 2007, Xu & Barrett 2025, Wang & Zhou 2
 | [varricchio-2008](varricchio-2008.md) | Varricchio et al. 2008, paternal care from clutch volume and histology | `varricchio2008.pdf` |
 | [fanti-2012](fanti-2012.md) | Fanti et al. 2012, *Nemegtomaia* on a nest | `nemegtonia.pdf` |
 | [birchard-2013](birchard-2013.md) | Birchard et al. 2013, clutch mass cannot show who incubated | `rsbl20130036.pdf` |
+| [amiot-2017](amiot-2017.md) | Amiot et al. 2017, incubation temperature from oxygen isotopes | `amiot2017.pdf` |
 | [varricchio-2002](varricchio-2002.md) | Varricchio et al. 2002, *Troodon* embryos and eggs | `varricchio2002.pdf` |
 | [zelenitsky-therrien-2008](zelenitsky-therrien-2008.md) | Zelenitsky & Therrien 2008, cladistics of egg traits | `Palaeontology - 2008 - ZELENITSKY ...pdf` |
 | [tanaka-2015](tanaka-2015.md) | Tanaka et al. 2015, eggshell porosity and nest type | `tanaka2015.pdf` |
@@ -131,7 +135,7 @@ Third round, 2026-11-19: Roach & Brinkman 2007, Xu & Barrett 2025, Wang & Zhou 2
 - ***Archaeopteryx* wulst:** possible imprint ([Balanoff 2013](balanoff-2013.md)) later called a preservation artefact ([Torres 2021](torres-2021.md)).
 - ***Deinonychus* packs:** not wolf-like ([Frederickson 2020](frederickson-2020.md)); juveniles with adults elsewhere argue against Komodo-like solitude.
 
-- **Did oviraptorids warm their eggs?** Yes: [Bi 2021](bi-2021.md) (36-38°C), [Tanaka 2018](tanaka-2018.md), [Hogan 2023](hogan-2023.md) ("weak contact incubation"). Probably not: [Yang 2019](yang-2019.md) ("contact incubation can probably be excluded").
+- **Did oviraptorids warm their eggs?** Yes: [Bi 2021](bi-2021.md) (36-38°C), [Amiot 2017](amiot-2017.md) (35-40°C, same method), [Tanaka 2018](tanaka-2018.md), [Hogan 2023](hogan-2023.md) ("weak contact incubation"). Probably not: [Yang 2019](yang-2019.md) ("contact incubation can probably be excluded").
 - **Synchronous or asynchronous hatching?** Synchronous expected: [Varricchio 2002](varricchio-2002.md), [Varricchio 2018](varricchio-2018.md). Asynchronous: [Yang 2019](yang-2019.md), [Bi 2021](bi-2021.md).
 - **Paired eggs in *Troodon*:** accepted by [Varricchio & Jackson 2016](varricchio-jackson-2016.md) and [Zelenitsky & Therrien 2008](zelenitsky-therrien-2008.md), against Grellet-Tinner et al. 2006 (not in the folder).
 - **Who sat on the eggs?** Males, from clutch volume and no medullary bone ([Varricchio 2008](varricchio-2008.md)); clutch mass can't tell maternal from paternal, only precocial ([Birchard 2013](birchard-2013.md)); a female with eggs inside also lacked medullary bone ([Jin 2020](jin-2020.md)).

@@ -43,6 +43,7 @@ P = {
     'fan12': 'nemegtonia.pdf',                               # Fanti et al. 2012, Nemegtomaia on nest
     'var08': 'varricchio2008.pdf',                           # Varricchio et al. 2008, paternal care
     'bir13': 'rsbl20130036.pdf',                             # Birchard et al. 2013, clutch mass
+    'ami17': 'amiot2017.pdf',                                # Amiot et al. 2017, incubation temperatures from oxygen isotopes
     'bi21':  'Bi et al. accepted.pdf',                       # Bi et al. 2021, adult on embryo clutch
     'jin20': 'jin2019.pdf',                                  # Jin et al. 2020, adult with eggs, Jiangxi
     'var02': 'varricchio2002.pdf',                           # Varricchio et al. 2002, Troodon embryos
@@ -56,6 +57,7 @@ P = {
     'hog23': 'rstb.2022.0144.pdf',                           # Hogan & Varricchio 2023
     # feathers and flight
     'tal18': 's41598-018-35966-4.pdf',                       # Talori et al. 2018, Caudipteryx
+    'foth14': 'nature13467.pdf',                             # Foth et al. 2014, 11th Archaeopteryx and pennaceous feathers
     'xb25':  'rsbl.2024.0517.pdf',                           # Xu & Barrett 2025, feather origins review
     'dec16': 'peerj-2159.pdf',                               # Dececchi et al. 2016, WAIR
     'dec20': 'dececchi2020.pdf',                             # Dececchi et al. 2020, Yi gliding

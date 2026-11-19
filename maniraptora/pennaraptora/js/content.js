@@ -91,6 +91,8 @@
     rb07: { cite: 'Roach & Brinkman 2007', journal: '_Bull. Peabody Mus. Nat. Hist._' },
     xb25: { cite: 'Xu & Barrett 2025', journal: '_Biology Letters_' },
     wz23: { cite: 'Wang & Zhou 2023', journal: '_Nature Ecology & Evolution_' },
+    ami17: { cite: 'Amiot et al. 2017', journal: '_Palaeontology_' },
+    foth14: { cite: 'Foth et al. 2014', journal: '_Nature_' },
     zel08: { cite: 'Zelenitsky & Therrien 2008', journal: '_Palaeontology_' },
     vj16: { cite: 'Varricchio & Jackson 2016', journal: '_The Auk_' },
     fun16: { cite: 'Funston et al. 2016', journal: '_Scientific Reports_' },
@@ -292,6 +294,14 @@
         V('var18-fig1.jpg', 'Buried to exposed eggs, artwork by Danny Anduza · Varricchio et al. 2018 Fig 1D', 2, [0.355, 0.395, 1, 0.97])]
     }),
 
+    line('temps', 'Egg temperature', 1, 4, 'Did they brood their eggs?', 'Egg temperature', {
+      claim: [['ami-range', 0], ['ami-alter', 1]],
+      chips: [['7', 'eggs with embryo bone, Nanxiong Formation, Jiangxi', 1], ['4', 'set aside: modeled temperatures above 45 °C', 1], ['1', 'of the 3 kept fits only if water loss is cut by two thirds', 2]],
+      views: [V('ami17-fig6.jpg', 'Model: embryo bone δ¹⁸O through incubation at 30–40 °C; dashed: measured · Amiot et al. 2017 Fig 6A', 0, [0, 0, 1, 0.325]),
+        V('ami17-fig5.jpg', 'Eggshell vs embryo bone δ¹⁸O, 7 eggs; circled: possible alteration · Amiot et al. 2017 Fig 5', 1),
+        V('ami17-fig6.jpg', 'NHMG10876: measured value (dashed) below the 40 °C line · Amiot et al. 2017 Fig 6C', 2, [0, 0.665, 1, 1])]
+    }),
+
     line('embryo', 'Embryos', 1, 3, 'Did they brood their eggs?', 'Embryos', {
       claim: [['var02-stage', 0], ['var02-proof', 1]],
       chips: [['16', 'eggs in clutch MOR 246', 1], ['11', 'with bone', 1]],
@@ -325,6 +335,7 @@
           { label: 'Pores · Tanaka 2015', cells: { 'Eggs open to the air': '"partially buried"' } },
           { label: 'Color · Wiemann 2017', cells: { 'Eggs open to the air': 'pigment; raw "olive-green"' } },
           { label: 'Clutch · Tanaka 2018', cells: { 'Adult on the eggs': '"sat directly on the eggs" (small species)' } },
+          { label: 'Isotopes · Amiot 2017', cells: { 'Eggs warmed': '35–40 °C; 4 of 7 eggs set aside' } },
           { label: 'Tooth · Varricchio 2018', cells: { 'Eggs warmed': '74 days: between reptile and bird' } },
           { label: 'Embryos · Yang 2019', cells: { 'Eggs warmed': '"can probably be excluded"', Hatching: 'asynchronous' } }
         ],
@@ -368,14 +379,22 @@
     }),
 
     /* ---------------------------------------------------------- 6 flight */
+    line('legfeathers', 'Leg feathers', 1, 4, 'What were vaned feathers for?', 'Leg feathers', {
+      claim: [['foth-trousers', 1], ['foth-display', 2]],
+      chips: [['11th', '_Archaeopteryx_ skeleton, with body and leg feathers', 0], ['3', 'separate origins of long feathers on the foot, on their tree', 1]],
+      views: [V('foth14-fig1.jpg', 'The 11th _Archaeopteryx_; ft: feather "trousers" · Foth et al. 2014 Fig 1', 0),
+        V('foth14-fig3.jpg', 'Feathers by body region on a maniraptoran tree · Foth et al. 2014 Fig 3', 1, [0, 0.05, 1, 1])]
+    }),
+
     partTitle('p-flight', 'Flight'),
 
     line('membrane', 'Membrane wings', 1, 4, 'How many times did flight evolve?', 'Membrane wings', {
-      claim: [['dec20-yi', 2]],
+      claim: [['dec20-yi', 3]],
       chips: [['2', 'membrane-winged species: _Yi_ and _Ambopteryx_', 1]],
       views: [V('yi-fig3.jpg', 'Skeletal restoration of _Yi qi_ · Xu et al. 2015 Fig 3', 0, [0.47, 0, 1, 0.245]),
-        V('yi-fig3.jpg', 'One of two proposed wings for _Yi_, from above · Xu et al. 2015 Fig 3', 1, [0.565, 0.295, 1, 0.572]),
-        V('dec20-fig6.jpg', 'Wing loading: gliders and _Yi_ / _Ambopteryx_ models · Dececchi et al. 2020 Fig 6', 2)]
+        V('amb-life.jpg', '_Ambopteryx longibrachium_, life restoration · released with Wang et al. 2019, _Nature_', 1),
+        V('yi-fig3.jpg', 'One of two proposed wings for _Yi_, from above · Xu et al. 2015 Fig 3', 2, [0.565, 0.295, 1, 0.572]),
+        V('dec20-fig6.jpg', 'Wing loading: gliders and _Yi_ / _Ambopteryx_ models · Dececchi et al. 2020 Fig 6', 3)]
     }),
 
     line('wair', 'Flapping on the ground', 1, 4, 'How many times did flight evolve?', 'Flapping on the ground', {

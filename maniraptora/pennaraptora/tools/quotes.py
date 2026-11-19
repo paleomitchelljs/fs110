@@ -48,6 +48,8 @@ QUOTES = {
     # ---------------------------------------------------------------- reproduction
     'bi-brood':    ('bi21', 'coupled with the advanced growth stages of the embryos', 'support for the brooding hypothesis'),
     'bi-async':    ('bi21', 'embryos in the clutch are at different developmental stages', 'in non-avialan theropods'),
+    'ami-range':   ('ami17', 'oviraptorosaurs incubated their eggs within a', 'these theropod dinosaurs'),
+    'ami-alter':   ('ami17', 'Pending additional analyses', 'will not be considered further'),
     'cla-evoke':   ('cla99', 'The position of IGM 100/979 strongly evokes the posture', 'sitting on their nests'),
     'cla-heat':    ('cla99', 'the assumption that the behavior associated with brooding', 'an untestable assumption'),
     'var08-pat':   ('var08', 'the relatively large clutch volumes of Troodon', 'bird-paternal care model'),
@@ -76,6 +78,8 @@ QUOTES = {
     'xb-stages':   ('xb25', 'Pennaceous feathers with symmetrical vanes and asymmetrical vanes', 'respectively'),
     'xb-unknown':  ('xb25', 'it remains unknown if', 'within Theropoda'),
     'xb-psitt':    ('xb25', 'This taxon is represented by hundreds of well-preserved specimens', 'monofilamentous integumentary appendages'),
+    'foth-trousers': ('foth14', 'an initial aerodynamic function', 'extremely variable within Paraves'),
+    'foth-display':  ('foth14', 'it seems plausible that the evolution', 'primarily driven by display functions'),
     'lu15-large':  ('lu15', 'the larger short-armed taxa were almost certainly incapable', 'advanced volant activity'),
     'xu17-asym':   ('xu17', 'Asymmetrical feathers have been associated with flight capability', 'species that do not fly'),
     'kia-prim':    ('kia24', 'Our data indicate that all volant neornithines have between nine and eleven primary feathers', 'eleven primary feathers'),
