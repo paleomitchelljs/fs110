@@ -68,8 +68,12 @@ def find(key, a, b, page=None):
         if w[3] / ph > 0.955 or w[5] / ph < 0.045: continue
         cy = (w[3] + w[5]) / 2
         k = min(range(len(merged)), key=lambda i: 0 if merged[i][1] - 1 <= cy <= merged[i][3] + 1 and merged[i][0] - 1 <= w[2] <= merged[i][2] + 1 else 1 + abs((merged[i][1] + merged[i][3]) / 2 - cy))
-        wl.append([round(w[2] / pw, 4), round(w[4] / pw, 4), k, w[6]])
+        pad = WORD_PAD.get(key, 0)
+        wl.append([round((w[2] - pad / 3) / pw, 4), round((w[4] + pad) / pw, 4), k, w[6]])
     return {'paper': key, 'page': pg, 'rects': rects, 'words': wl, 'text': ' '.join(w[6] for w in sel)}
+
+# Scanned papers whose OCR word boxes clip the last letter: widen each word by this many points.
+WORD_PAD = {'var02': 2.5}
 
 def main():
     out = {}

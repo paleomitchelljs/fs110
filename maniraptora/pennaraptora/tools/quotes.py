@@ -37,7 +37,7 @@ QUOTES = {
 
     # ---------------------------------------------------------------- reproduction
     'bi-brood':    ('bi21', 'coupled with the advanced growth stages of the embryos', 'support for the brooding hypothesis'),
-    'bi-async':    ('bi21', 'embryos in the clutch are at different developmental stages', 'asynchronous hatching'),
+    'bi-async':    ('bi21', 'embryos in the clutch are at different developmental stages', 'in non-avialan theropods'),
     'yan-excl':    ('yan19', 'As contact incubation can probably be excluded', 'preferred here'),
     'yan-unique':  ('yan19', 'oviraptorid dinosaurs presented a unique reproductive biology', 'modern crocodiles and birds'),
     'tan15-open':  ('tan15', 'open nests first evolved among non-avian theropods', 'well before the appearance of birds'),
@@ -86,5 +86,6 @@ QUOTES = {
     'tor-mass':    ('tor21', 'If these stem birds are included', 'ancestral body mass of 2.4 kg'),
     'lee-trend':   ('lee14', 'there is a prolonged, directional trend in size reduction', 'from Tetanurae onward'),
     'lee-bias':    ('lee14', 'Rates of innovation along the bird stem are potentially inflated', 'avian-centric researchers'),
+    'bru-artifact':('bru14', 'the high tyrannosauroid rates appear to be artifactual', 'well-studied theropods'),
     'bru-jump':    ('bru14', 'there was no great jump between nonbirds and birds in morphospace', 'rapid anatomical evolution', 1),
 }

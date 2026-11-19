@@ -6,7 +6,7 @@ Engine copied from `../alvarez` (deck.js, parts/util, intro, walk). New part: `j
 
 ## Order
 
-Part 1: the groups; phylogeny (three trees, support, egg characters); behavior (sleep, bonebed, pack hunting, display, troodontid diet); reproduction (adult on eggs, pores, color, clutch size, incubation time, embryos, hatching order, partial burial, matrix). **Break.** Part 2: feathers; flight (membrane wings, ground flapping, thresholds, feather counts, arm length, how many origins, equal tree length, wing bones, matrix); brains and the origin of birds (volume, shape, shrinking, rates); closing matrix; blank matrix for the students' report. Level 2 adds friends, shared matrices, eggs inside, five stages, shoulder girdle, wulst, ancestral size.
+Part 1: the groups; phylogeny (three trees, support, egg characters); behavior (sleep, bonebed, pack hunting, display, troodontid diet); reproduction (adult on eggs, pores, color, clutch size, incubation time, embryos, hatching order, partial burial, matrix). **Break.** Part 2: feathers; flight (membrane wings, ground flapping, thresholds, feather counts, arm length, how many origins, equal tree length, wing bones, matrix); brains and the origin of birds (volume, shape, shrinking, rates, oversampled characters); closing matrix; blank matrix for the students' report. Level 2 adds friends, shared matrices, eggs inside, five stages, shoulder girdle, wulst, ancestral size.
 
 ## Rebuilding
 
@@ -20,7 +20,7 @@ JSDOM=/path/to/jsdom node tests/deck.smoke.js
 ## Still to do
 
 - Bi et al. 2021 is a review manuscript; its lenses come from that copy. Swap in the published PDF if you get it.
-- Not yet checked on a projector; one screenshot pass done and fixed. `img/` is ~49 MB, mostly lens page images; lower `PAGE_DPI` if size matters.
+- Not yet checked on a projector; two screenshot passes done and fixed. `img/` is ~39 MB, mostly lens page images; lower `PAGE_DPI` if size matters.
 - No homepage card added.
 
 ## Said aloud, not on the slides
@@ -36,9 +36,9 @@ Slide ids are in brackets. The judgments ("thin," "one specimen") belong here, n
 **Behavior**
 - [sleep] Gao 2012: "three specimens representing two troodontid species in nearly identical positions suggests that the position of these animals is not random." The burial (volcanic, perhaps a lahar) is what makes sleep the reading. Gao: "Even a low energy lahar is likely to move a small animal out of a perimortem position," so they offer "sheltering within a burrow" as an alternative.
 - [herd] Funston is careful: lekking is "consistent with, but not indicative of." The adults-only age structure rests on size and fusion, with no histology. "the specific behaviour that the Avimimus death assemblage represents cannot be assessed."
-- [pack] Logic of the test: pack-hunting mammals' young eat what the adults eat; asocial reptiles' young eat smaller prey. Crocodiles are the control and shift with size "like their modern counterparts." Ten teeth per bin used up 28-29% of the identified material, so more samples aren't coming soon. My copy is an uncorrected proof: the abstract and results give different means for medium crocodile teeth.
+- [pack] Logic of the test: pack-hunting mammals' young eat what the adults eat; asocial reptiles' young eat smaller prey. Crocodiles are the control and shift with size "like their modern counterparts." Ten teeth per bin used up 28-29% of the identified material, so more samples aren't coming soon. My copy is an uncorrected proof: the abstract and results give different means for medium crocodile teeth. The last quote is about a different animal: the *Utahraptor* block with an adult, a juvenile and a baby. It argues against Komodo-style solitude, not for a mammal-style pack.
 - [display] The tail-fan argument rests on muscle models plus fans known in two early taxa (*Caudipteryx*, *Similicaudipteryx*). Persons: tails "may prove to be sexually dimorphic," untestable for now. Clark's sex call for *Plumadraco* is analogy to living birds; the specimen has no sex indicator of its own.
-- [diet] Fan's own words on gut contents and pellets: "a single data point," "the troodontid origin of these suspected gastric pellets cannot be confirmed." Each line in Fig 7 has a different sample size; the isotope line is N = 5.
+- [diet] Fan's own words on gut contents and pellets: "a single data point," "the troodontid origin of these suspected gastric pellets cannot be confirmed." Each box in Fig 7 rests on a different amount of material; the isotope box is N = 5 individuals (Cullen & Cousens 2024). The predation traits are the skeleton's; the plant evidence is mostly indirect.
 
 **Reproduction**
 - [brood] Bi 2021 is the first adult on a clutch with embryos inside. Embryos are late-stage, so "the adult clearly had tended the nest for an extended period and did not perish in the act of egg laying." No medullary bone, which "raises the possibility that the attending individual may have been male."
@@ -73,10 +73,11 @@ Slide ids are in brackets. The judgments ("thin," "one specimen") belong here, n
 - [brainvol] "bird-like encephalization indices evolved multiple times." The "flight-ready" brain argument borrows from the skeleton: "almost certainly the case given its postcranial morphology." Balanoff: "Endocranial volumes alone, of course, do not tell the whole story."
 - [brainshape] Torres: *Ichthyornis* "had an Archaeopteryx-like brain shape," so the last reshaping is at crown birds. Its endocast is crushed side to side.
 - [wulst] Balanoff called it a possible wulst in 2013; Torres 2021 says it was "later shown to be a taphonomic artefact." Good case of one line being withdrawn.
-- [shrink] Lee names his bias: "oversampling of characters on this lineage (by avian-centric researchers)." Brusatte dismissed high tyrannosaur rates for the same reason ("an overinflation of taxa and characters"). Ask why the same bias is dismissed in one group and accepted in the other.
+- [shrink] Ancestral sizes from Lee: tetanuran ~163 kg, coelurosaur ~27 kg, maniraptoran ~10 kg, paravian ~3 kg, bird ~0.8 kg. Femur length is the only size measure, used only up to Avialae.
+- [bias] Same worry, two uses. Lee names it for the bird stem and gives three reasons it is "at least partly real." Brusatte uses it to set aside fast tyrannosaur rates while keeping fast bird rates. Ask what evidence would let you treat the two cases differently.
 - [rates] Brusatte: "A Mesozoic naturalist would make no immediate distinction between a Velociraptor-type animal and an Archaeopteryx-type animal." Few characters separate birds from their relatives, which "may also help explain why so many alternative phylogenetic analyses have difficulty in placing certain taxa."
 - [mass] 10.9 to 2.4 kg depending only on which stem birds are sampled. The ancestral state is a product of the sample.
 
 **Putting lines together**
-- [matrix] Flight has four kinds of evidence; the physics models answer only one question. Brooding has the most lines but most are one or a few specimens.
+- [matrix] Flight has four kinds of evidence; the physics models answer only one question. Brooding has the most lines but most are one or a few specimens. Groups and diet rest on the fewest kinds.
 - [yours] Students fill this in for their own question.

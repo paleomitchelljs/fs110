@@ -123,14 +123,14 @@
     partTitle('p-groups', 'The groups'),
 
     slide('groups', 'Four groups', 1, 4, 'Pennaraptora', 'Four groups', [
-      at([24, 124, 370, 662], pic([V('mei-fig1.jpg', 'Troodontid · _Mei long_ IVPP V12733 · Xu & Norell 2004 Fig 1a', 0, [0, 0, 0.5, 0.52])], [0, 1, 2, 3])),
-      at([418, 124, 370, 662], pic([V('zhen-fig1.jpg', 'Dromaeosaurid · _Zhenyuanlong_ JPM-0008 · Lü & Brusatte 2015 Fig 1', 1)], [1, 2, 3])),
-      at([812, 124, 370, 662], pic([V('bi-fig1.jpg', 'Oviraptorosaur · oviraptorid LDNHMF2008 on its eggs · Bi et al. 2021 Fig 1a', 2, [0, 0, 0.52, 0.6])], [2, 3])),
-      at([1206, 124, 370, 662], pic([V('arch-fig1.jpg', 'Avialan · _Archaeopteryx_ FMNH PA 830 · O\'Connor et al. 2025 Fig 1a', 3, [0, 0.12, 1, 0.82])], [3]))
+      at([24, 124, 764, 322], pic([V('mei-fig1.jpg', 'Troodontid · _Mei long_ IVPP V12733 · Xu & Norell 2004 Fig 1a', 0, [0, 0, 0.5, 0.52])], [0, 1, 2, 3])),
+      at([812, 124, 764, 322], pic([V('zhen-fig1.jpg', 'Dromaeosaurid · _Zhenyuanlong_ JPM-0008 · Lü & Brusatte 2015 Fig 1', 1)], [1, 2, 3])),
+      at([24, 464, 764, 322], pic([V('bi-fig1.jpg', 'Oviraptorosaur · oviraptorid LDNHMF2008 on its eggs · Bi et al. 2021 Fig 1a', 2, [0, 0, 0.47, 0.52])], [2, 3])),
+      at([812, 464, 764, 322], pic([V('arch-fig1.jpg', 'Avialan · _Archaeopteryx_ FMNH PA 830 · O\'Connor et al. 2025 Fig 1a', 3, [0, 0.12, 1, 0.82])], [3]))
     ]),
 
     slide('friends', 'And friends', 2, 2, 'Pennaraptora', 'And friends', [
-      at(LEFT, pic([V('yi-fig1.jpg', 'Scansoriopterygid · _Yi qi_ STM 31-2 · Xu et al. 2015 Fig 1b', 0, [0, 0.45, 1, 1])])),
+      at(LEFT, pic([V('yi-fig1.jpg', 'Scansoriopterygid · _Yi qi_ STM 31-2 · Xu et al. 2015 Fig 1b', 0, [0, 0.53, 1, 0.83])])),
       at(RIGHT, pic([V('vel-fig10.jpg', '_Velociraptor_ cast MUST SN1140/BM and reconstruction · Bindellini et al. 2025 Fig 10', 0)]))
     ]),
 
@@ -181,7 +181,7 @@
 
     line('pack', 'Pack hunting', 1, 5, 'Did they live in groups?', 'Pack hunting', {
       claim: [['fre-diff', 0], ['fre-not', 1], ['fre-utah', 3]],
-      chips: [['10 + 10', 'teeth, small and large, from two sites', 2], ['≈ 28%', 'of the identified _Deinonychus_ material at each site, sampled', 2], ['2', '_Tenontosaurus_ individuals', 2]],
+      chips: [['10 + 10', 'teeth, small and large, from two sites', 2], ['≈ 28%', 'of the identified _Deinonychus_ material at each site, sampled', 2], ['2', '_Tenontosaurus_ individuals', 2], ['3', '_Utahraptor_ at one site: adult, juvenile, baby', 3]],
       views: [V('fre-fig2.jpg', 'Carbon isotopes by tooth size: _Deinonychus_ (left), crocodiles (right) · Frederickson et al. 2020 Fig 2', 0)]
     }),
 
@@ -195,9 +195,10 @@
     ]),
 
     line('diet', 'Troodontid diet', 1, 5, 'What did troodontids eat?', 'Troodontid diet', {
-      claim: [['fan-pred', 0], ['fan-troodon', 1]],
+      claim: [['fan-troodon', 0], ['fan-pred', 2]],
+      chips: [['1', 'specimen with gut contents, _Jinfengopteryx_', 1], ['5', 'troodontid individuals in the isotope study', 1], ['0', 'suspected pellets found with a skeleton', 1]],
       views: [V('fan-fig7.jpg', 'Every line on troodontid diet: green plants/omnivory, red meat, grey undecided · Fan et al. 2026 Fig 7', 0),
-        V('fan-fig7.jpg', 'Teeth and skull lines · Fan et al. 2026 Fig 7', 1, [0, 0.22, 1, 0.62])]
+        V('fan-fig7.jpg', 'Teeth, skull and limb lines · Fan et al. 2026 Fig 7', 2, [0, 0.27, 0.9, 0.9])]
     }),
 
     /* ---------------------------------------------------------- 4 reproduction */
@@ -226,7 +227,7 @@
     line('color', 'Egg color', 1, 3, 'Did they brood their eggs?', 'Egg color', {
       claim: [['wie-first', 0], ['wie-olive', 1]],
       chips: [['3', 'eggshells, three basins', 1], ['1', 'sediment control', 1]],
-      views: [V('wie-fig1.jpg', 'Clutch and reconstructed open nest · Wiemann et al. 2017 Fig 1C, D', 0, [0, 0.5, 1, 1]),
+      views: [V('wie-fig1.jpg', 'Clutch and reconstructed open nest · Wiemann et al. 2017 Fig 1C, D', 0, [0, 0.53, 1, 1]),
         V('wie-fig4.jpg', 'Fossil pigment levels among bird eggs · Wiemann et al. 2017 Fig 4', 1)]
     }),
 
@@ -240,7 +241,7 @@
     line('incub', 'Incubation time', 1, 4, 'Did they brood their eggs?', 'Incubation time', {
       claim: [['var18-74', 0], ['var18-buried', 2]],
       chips: [['1', 'tooth, embryo MOR 246-11', 1], ['39', 'daily growth lines, 8 of them estimated', 1], ['47%', 'of incubation before teeth form: crocodile timing', 1]],
-      views: [V('var18-fig1.jpg', 'Embryonic _Troodon_ tooth, growth lines (C) · Varricchio et al. 2018 Fig 1A–C', 0, [0, 0, 1, 0.62]),
+      views: [V('var18-fig1.jpg', 'Tooth of embryo MOR 246-11, section · Varricchio et al. 2018 Fig 1A', 0, [0, 0, 1, 0.37]),
         V('var18-fig1.jpg', 'Buried to exposed eggs, artwork by Danny Anduza · Varricchio et al. 2018 Fig 1D', 2, [0.355, 0.36, 1, 0.98])]
     }),
 
@@ -291,13 +292,14 @@
 
     line('nofly', 'Feathered arms', 1, 4, 'What were vaned feathers for?', 'Feathered arms', {
       claim: [['tal-lift', 0], ['dec16-invest', 1], ['dec16-display', 2]],
-      views: [V('caud-fig7.jpg', 'Robot with real feathered wings · Talori et al. 2018 Fig 7a', 0, [0, 0, 0.7, 1]),
+      chips: [['5 kg', 'one model _Caudipteryx_, running at 8 m/s', 0], ['0', 'flapping strokes modelled', 0], ['> 100 mm', 'arm feathers: _Caudipteryx_, _Similicaudipteryx_, _Yixianosaurus_', 1]],
+      views: [V('caud-fig7.jpg', 'Robot with real feathered wings · Talori et al. 2018 Fig 7a', 0, [0, 0, 0.655, 1]),
         V('caud-fig1.jpg', '_Caudipteryx_ IVPP V12430 · Talori et al. 2018 Fig 1', 1)]
     }),
 
     line('bigwings', 'Large and winged', 1, 3, 'What were vaned feathers for?', 'Large and winged', {
       claim: [['lu15-large', 0]],
-      chips: [['≈ 1.65 m', 'long, with the missing tail half', 1], ['short', 'arms, large vaned wing feathers', 1]],
+      chips: [['≈ 1.65 m', 'long, with the missing tail half', 1], ['0.48', 'arm / leg, shortest of any Liaoning dromaeosaurid', 1], ['≈ 10 + 20', 'primaries and secondaries, some asymmetric', 1]],
       views: [V('zhen-fig1.jpg', '_Zhenyuanlong suni_ JPM-0008 · Lü & Brusatte 2015 Fig 1', 0)]
     }),
 
@@ -315,7 +317,7 @@
     line('membrane', 'Membrane wings', 1, 4, 'How many times did flight evolve?', 'Membrane wings', {
       claim: [['dec20-yi', 1]],
       chips: [['2', 'membrane-winged species: _Yi_ and _Ambopteryx_', 0]],
-      views: [V('yi-fig3.jpg', 'Two possible wings for _Yi_ · Xu et al. 2015 Fig 3', 0, [0.55, 0, 1, 0.75]),
+      views: [V('yi-fig3.jpg', 'Two possible wings for _Yi_ · Xu et al. 2015 Fig 3', 0, [0.57, 0.28, 0.82, 0.75]),
         V('dec20-fig6.jpg', 'Wing loading: gliders and _Yi_ / _Ambopteryx_ models · Dececchi et al. 2020 Fig 6', 1)]
     }),
 
@@ -335,7 +337,7 @@
     line('feathcount', 'Feather counts', 1, 3, 'How many times did flight evolve?', 'Feather counts', {
       claim: [['kia-anch', 0], ['kia-single', 1]],
       chips: [['35', 'Mesozoic species, 66 specimens', 0]],
-      views: [V('kia-fig2.jpg', 'Primary vane asymmetry on the tree; flying vs flightless birds · Kiat & O\'Connor 2024 Fig 2A', 0, [0, 0, 1, 0.5])]
+      views: [V('kia-fig2.jpg', 'Primary vane asymmetry on the tree; flying vs flightless birds · Kiat & O\'Connor 2024 Fig 2A', 0, [0, 0, 1, 0.455])]
     }),
 
     line('arms', 'Arm length', 1, 4, 'How many times did flight evolve?', 'Arm length', {
@@ -352,13 +354,13 @@
     slide('origins', 'How many origins', 1, 5, 'How many times did flight evolve?', 'How many origins', [
       at([24, 124, 1552, 210], { kind: 'quotes', cols: 3, size: 24, cards: [{ q: 'pei-multi', at: 0 }, { q: 'kia-single', at: 1 }, { q: 'har-parallel', at: 2 }] }),
       at([24, 356, 500, 430], pic([V('pei-fig2.jpg', 'Wing loading and lift · Pei et al. 2020 Fig 2', 0)], [0, 1, 2])),
-      at([550, 356, 500, 430], pic([V('kia-fig2.jpg', 'Feather shape · Kiat & O\'Connor 2024 Fig 2A', 1, [0, 0, 1, 0.5])], [1, 2])),
+      at([550, 356, 500, 430], pic([V('kia-fig2.jpg', 'Feather shape · Kiat & O\'Connor 2024 Fig 2A', 1, [0, 0, 1, 0.455])], [1, 2])),
       at([1076, 356, 500, 430], pic([V('har-fig18.jpg', 'Arm length on the tree · Hartman et al. 2019 Fig 18', 2)], [2]))
     ]),
 
     line('tie', 'Equal length', 1, 3, 'How many times did flight evolve?', 'Equal length', {
       claim: [['pei-same', 0]],
-      chips: [['1', 'origin and 6–11 losses', 1], ['≥ 3', 'origins', 1], ['=', 'same tree length', 1]],
+      chips: [['1 + 6–11', 'one origin at Paraves, then 6 to 11 losses', 1], ['≥ 3', 'origins: birds and two dromaeosaurid lines', 1], ['same', 'tree length for both', 1]],
       views: [V('pei-fig2.jpg', 'Pei et al. 2020 Fig 2', 0)]
     }),
 
@@ -400,21 +402,26 @@
     }),
 
     versus('wulst', 'Wulst', 2, 3, 'When did the bird brain evolve?', 'Wulst', {
-      left: [['bal-wulst', 0]], lviews: [V('bal-fig1.jpg', '_Archaeopteryx_ endocast (c) · Balanoff et al. 2013 Fig 1', 0, [0.66, 0.35, 1, 0.6])],
+      left: [['bal-wulst', 0]], lviews: [V('bal-fig1.jpg', '_Archaeopteryx_ endocast (c) · Balanoff et al. 2013 Fig 1', 0, [0.785, 0.395, 1, 0.585])],
       right: [['tor-artefact', 1]], rviews: [V('tor-fig3.jpg', 'Torres et al. 2021 Fig 3', 1)]
     }),
 
     line('shrink', 'Shrinking', 1, 4, 'How did the bird body plan arise?', 'Shrinking', {
-      claim: [['lee-trend', 0], ['lee-bias', 2]],
-      chips: [['1549', 'characters, 120 species', 1], ['femur', 'length for body size', 1]],
-      views: [V('lee-fig2.jpg', 'Body size falling along the bird stem · Lee et al. 2014 Fig 2', 0),
-        V('lee-fig3.jpg', 'Rate of skeletal change; red: bird stem · Lee et al. 2014 Fig 3', 1)]
+      claim: [['lee-trend', 0]],
+      chips: [['1549', 'characters, 120 species', 1], ['femur', 'length as the size measure', 1], ['≈ 163 → 0.8 kg', 'tetanuran ancestor to bird ancestor', 1]],
+      views: [V('lee-fig2.jpg', 'Femur length along the bird stem, with body mass · Lee et al. 2014 Fig 2B', 0, [0.46, 0, 1, 1]),
+        V('lee-fig3.jpg', 'Rate of skeletal change; pink: bird stem · Lee et al. 2014 Fig 3', 1)]
     }),
 
     line('rates', 'Rates', 1, 4, 'How did the bird body plan arise?', 'Rates', {
       claim: [['bru-jump', 0]],
-      chips: [['150', 'coelurosaurs, 853 characters', 1], ['red', 'branches significantly fast', 1]],
+      chips: [['150', 'coelurosaurs, 853 characters', 1], ['99,999', 'equally short trees', 1], ['100', 'dating runs for the rates', 1]],
       views: [V('bru-fig2.jpg', 'Rates on the tree: red high, blue low · Brusatte et al. 2014 Fig 2', 0)]
+    }),
+
+    versus('bias', 'Oversampled characters', 1, 4, 'How did the bird body plan arise?', 'Oversampled characters', {
+      left: [['lee-bias', 0]], lviews: [V('lee-fig3.jpg', 'Bird stem fast · Lee et al. 2014 Fig 3', 0)],
+      right: [['bru-artifact', 1]], rviews: [V('bru-fig2.jpg', 'Red: high rates, tyrannosaurs and birds among them · Brusatte et al. 2014 Fig 2', 1)]
     }),
 
     line('mass', 'Ancestral size', 2, 3, 'How did the bird body plan arise?', 'Ancestral size', {
@@ -428,14 +435,15 @@
 
     {
       id: 'matrix', title: 'Questions and evidence', min: 6, tier: 1, builds: [{}, {}, {}],
-      items: [head('Four questions', 'Questions and evidence'), {
+      items: [head('Five questions', 'Questions and evidence'), {
         kind: 'matrix', box: [24, 124, 1552, 662], labelW: 230, cellsAt: 0, labelsAt: 0,
-        cols: ['Skeletons and trees', 'Eggs and nests', 'Feathers', 'Bone and brain', 'Physics models'],
+        cols: ['Skeletons and trees', 'Eggs and nests', 'Feathers', 'Bone, teeth, brain', 'Physics models'],
         rows: [
           { label: 'Closest to birds', cells: { 'Skeletons and trees': '3 trees, Bremer 1–2', 'Eggs and nests': 'egg tree: troodontids nearer birds' } },
-          { label: 'Brooding', cells: { 'Skeletons and trees': 'adults on clutches', 'Eggs and nests': 'pores, color, clutch shape, embryos', 'Bone and brain': '74-day tooth' } },
-          { label: 'Flight', cells: { 'Skeletons and trees': 'arm/leg ratios', Feathers: 'number and asymmetry', 'Bone and brain': 'wing-bone walls', 'Physics models': 'wing loading, WAIR' } },
-          { label: 'Bird brain', cells: { 'Bone and brain': 'endocast volume and shape', 'Skeletons and trees': 'size and rates on the stem' } }
+          { label: 'Brooding', cells: { 'Skeletons and trees': 'adults on clutches', 'Eggs and nests': 'pores, color, clutch shape, embryos', 'Bone, teeth, brain': '74-day tooth' } },
+          { label: 'Flight', cells: { 'Skeletons and trees': 'arm/leg ratios', Feathers: 'number and asymmetry', 'Bone, teeth, brain': 'wing-bone walls', 'Physics models': 'wing loading, WAIR' } },
+          { label: 'Bird brain', cells: { 'Bone, teeth, brain': 'endocast volume and shape', 'Skeletons and trees': 'size and rates on the stem' } },
+          { label: 'Groups and diet', cells: { 'Skeletons and trees': 'one bonebed, sleeping posture', 'Bone, teeth, brain': 'tooth isotopes, microwear' } }
         ],
         focus: [{ at: 1, row: 2, label: 'One question, four kinds of evidence' }, { at: 2, col: 'Physics models', label: 'One kind of evidence, one question' }]
       }]
