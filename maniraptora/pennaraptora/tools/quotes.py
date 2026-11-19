@@ -1,0 +1,90 @@
+"""The lines the deck blows up: id -> (paper, first words, last words[, page]).
+
+Copy the words from the paper exactly (punctuation and citation numbers don't
+matter; letters and digits do). tools/lines.py turns these into js/lines.js.
+A quote can't cross a page. Short ones read best: a clause, not a paragraph.
+"""
+QUOTES = {
+    # ---------------------------------------------------------------- phylogeny
+    'xia-shift':   ('xia11', 'adding the new taxon into a comprehensive phylogenetic analysis', 'to the Deinonychosauria'),
+    'xia-weak':    ('xia11', 'It should be noted that our phylogenetic hypothesis', 'weakly supported by the available data'),
+    'xia-boot':    ('xia11', 'a bootstrap value less than 50%', 'including the Archaeopterygidae'),
+    'bru-poly':    ('bru14', 'a TWiG analysis recovers a polytomy', 'cannot be clearly identified'),
+    'bru-anch':    ('bru14', 'The recently described Aurornis', 'not avialans'),
+    'pei-deino':   ('pei20', 'supports the grouping of dromaeosaurids', 'earliest diverging birds', 2),
+    'pei-support': ('pei20', 'Group support calculated by using symmetric resampling', 'high levels of character conflict'),
+    'har-step':    ('har19', 'a single step separates several different paravian phylogenies', 'exclusive of unenlagiids'),
+    'har-reuse':   ('har19', 'Given the propensity of authors to reuse', 'justified by constraint analyses'),
+    'har-notall':  ('har19', 'Yet this does not mean anything goes', 'rejected by our data'),
+    'zel-cong':    ('zel08', 'Our cladistic analysis of egg and reproductive characters produced', 'derived from skeletal characters'),
+    'zel-assume':  ('zel08', 'Maiasaura and Titanosauridae are coded as absent', 'did not sit on their eggs'),
+    'vj-troo':     ('vj16', 'Reproduction in troodontid theropods concurs', 'sister taxon to birds'),
+
+    # ---------------------------------------------------------------- behavior
+    'xn-sleep':    ('xn04', 'This posture is identical to the stereotypical', 'many living birds'),
+    'gao-mirror':  ('gao12', 'This Mei long specimen lies in a similar but mirrored', 'stereotypical life position'),
+    'gao-limit':   ('gao12', 'Like many Liaoning specimens, the new specimen', 'behavioral inference problematic'),
+    'fun-greg':    ('fun16', 'The taphonomic and sedimentological evidence suggests', 'perimortem gregarious assemblage'),
+    'fun-unclear': ('fun16', 'The near absence of juveniles in the bonebed', 'responsible for this assemblage is unclear'),
+    'fre-diff':    ('fre20', 'These differences suggest that juvenile and adult', 'likely consumed different prey'),
+    'fre-not':     ('fre20', 'these data add to the growing evidence', 'by modern mammalian standards'),
+    'fre-utah':    ('fre20', 'it is more probable that this site represents', 'likely related group'),
+    'fre-n':       ('fre20', 'The low sample size of D. antirrhopus teeth', 'further statistical analysis of this hypothesis'),
+    'per-display': ('per14', 'it is postulated that oviraptorosaur tails', 'intraspecific display structures'),
+    'cla-orn':     ('cla26', 'ornamental tail feathers that are typically attributed', 'sexually-dimorphic ones'),
+    'fan-pred':    ('fan26', 'However, troodontids still possessed multiple traits suited for predation', 'suited for predation'),
+    'fan-troodon': ('fan26', 'Environmental, morphological, and biogeochemical analyses suggest', 'hatched or unhatched'),
+
+    # ---------------------------------------------------------------- reproduction
+    'bi-brood':    ('bi21', 'coupled with the advanced growth stages of the embryos', 'support for the brooding hypothesis'),
+    'bi-async':    ('bi21', 'embryos in the clutch are at different developmental stages', 'asynchronous hatching'),
+    'yan-excl':    ('yan19', 'As contact incubation can probably be excluded', 'preferred here'),
+    'yan-unique':  ('yan19', 'oviraptorid dinosaurs presented a unique reproductive biology', 'modern crocodiles and birds'),
+    'tan15-open':  ('tan15', 'open nests first evolved among non-avian theropods', 'well before the appearance of birds'),
+    'tan15-buried':('tan15', 'they still partially buried their eggs in sediment', 'only became widespread among Euornithes'),
+    'wie-first':   ('wie17', 'the first record of the avian eggshell pigments', 'oviraptorid dinosaurs'),
+    'wie-olive':   ('wie17', 'the visibly olive-green color range', 'olive-green color range'),
+    'tan18-sat':   ('tan18', 'the smallest oviraptorosaurs probably sat directly on the eggs', 'in giant species'),
+    'var18-74':    ('var18', 'Thus, this tooth age suggests a Troodon incubation period', 'Troodon egg mass (314 g)'),
+    'var18-buried':('var18', 'However, the largely buried condition of Troodon clutches', 'fully exposed eggs'),
+    'var02-stage': ('var02', 'This degree of skeletonization best compares', 'through incubation'),
+    'var02-proof': ('var02', 'The uniformity of ontogenetic development within the MOR 246 clutch', 'although not proof of'),
+    'jin-extrude': ('jin20', 'were partially to fully extruded by postmortem gases', 'inside the coelom'),
+    'hog-weak':    ('hog23', 'weak contact incubation (contact incubating partially buried eggs', 'oviraptorosaurs and troodontids)'),
+    'zel-sit':     ('zel08', 'Oviraptorids found sitting on their eggs reveals', 'among nonavian theropods'),
+
+    # ---------------------------------------------------------------- feathers
+    'dec16-invest':('dec16', 'These structures represent a significant energetic investment', 'minimal locomotory benefits'),
+    'dec16-display':('dec16', 'This suggests other non-locomotory functions such as display or brooding', 'pennaceous feather growth'),
+    'tal-lift':    ('tal18', 'would have experienced a total lift force of only', 'estimated body weight of 49 N'),
+    'lu15-large':  ('lu15', 'the larger short-armed taxa were almost certainly incapable', 'advanced volant activity'),
+    'xu17-asym':   ('xu17', 'Asymmetrical feathers have been associated with flight capability', 'species that do not fly'),
+    'kia-prim':    ('kia24', 'Our data indicate that all volant neornithines have between nine and eleven primary feathers', 'eleven primary feathers'),
+    'kia-asym':    ('kia24', 'vane asymmetry is a more reliable predictor', 'volant ability in fossil taxa'),
+
+    # ---------------------------------------------------------------- flight
+    'dec20-yi':    ('dec20', 'We find that Yi and Ambopteryx were likely arboreal', 'limited gliding abilities'),
+    'dec16-none':  ('dec16', 'None of these behaviours were found to meet', 'before Paraves'),
+    'dec16-wair':  ('dec16', 'We find no support for widespread prevalence of WAIR', 'like Microraptor and Archaeopteryx'),
+    'pei-multi':   ('pei20', 'This study adds invaluable support for multiple origins', 'theropods', 2),
+    'pei-near':    ('pei20', 'we find a broad range of these ancestors neared', 'indicative of powered flight potential', 2),
+    'pei-same':    ('pei20', 'the trees obtained have the exact same length', 'between 6 to 11 times'),
+    'kia-single':  ('kia24', 'The results of these analyses support a single origin', 'currently available fossil record'),
+    'kia-anch':    ('kia24', 'that of anchiornithines deviate significantly', 'this clade was not volant'),
+    'har-flightless':('har19', 'All parsimonious results support the hypothesis that each early paravian clade', 'Late Jurassic or Early Cretaceous'),
+    'har-parallel':('har19', 'The most parsimonious interpretation of our results is a series of parallel', 'and scansoriopterygids'),
+    'voe-flap':    ('voe18', 'The three specimens of Archaeopteryx were found to unanimously ally', 'actively used its wings to take to the air'),
+    'voe-stroke':  ('voe18', 'We therefore interpret that Archaeopteryx actively employed wing flapping', 'than used by modern birds'),
+    'wu-motion':   ('wu24', 'These modifications suggest a change in forelimb range of motion', 'origin of flight in paravians'),
+
+    # ---------------------------------------------------------------- brains and the bird line
+    'bal-gen':     ('bal13', 'Our new data indicate that the relative size of the cranial cavity', 'than that of other non-avian dinosaurs'),
+    'bal-ready':   ('bal13', 'Thus, if Archaeopteryx has a', 'then so did other paravians'),
+    'bal-wulst':   ('bal13', 'Our re-examination of Archaeopteryx revealed a cerebral indentation', 'wulst of modern birds'),
+    'tor-artefact':('tor21', 'A similar feature was tentatively identified in Archaeopteryx', 'taphonomic artefact'),
+    'tor-shape':   ('tor21', 'Thus, the most recent phase of bird brain shape change', 'synapomorphic for, extant birds'),
+    'tor-mass':    ('tor21', 'If these stem birds are included', 'ancestral body mass of 2.4 kg'),
+    'lee-trend':   ('lee14', 'there is a prolonged, directional trend in size reduction', 'from Tetanurae onward'),
+    'lee-bias':    ('lee14', 'Rates of innovation along the bird stem are potentially inflated', 'avian-centric researchers'),
+    'bru-jump':    ('bru14', 'there was no great jump between nonbirds and birds in morphospace', 'rapid anatomical evolution', 1),
+}
