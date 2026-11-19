@@ -170,3 +170,11 @@
 .fx.play { animation: rise 0.45s ease both; }
 .fx b { flex: 0 0 auto; min-width: 120px; font: 700 34px var(--font-ui); color: var(--accent-ink); }
 .fx span { font: 400 24px/1.2 var(--font-ui); color: var(--ink); }
+
+/* pair: silhouette beside a fossil */
+.pr-sil { position: absolute; }
+.pr-cap { position: absolute; left: 0; right: 0; text-align: center; font: 400 19px/1.25 var(--font-ui); color: var(--muted); }
+.pr-cap b { font-weight: 700; color: var(--ink); }
+.pr-credit { font-size: 15px; margin-top: 3px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .pr-sil { filter: invert(1); } }
+:root[data-theme="dark"] .pr-sil { filter: invert(1); }

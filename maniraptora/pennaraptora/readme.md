@@ -2,26 +2,28 @@
 
 A lecture deck on troodontids, dromaeosaurids, oviraptorosaurs and early birds, built to show one skill: pulling several lines of evidence together on one question, and seeing where each line is strong, where it is thin, and how the lines interact. Each line slide puts one paper's claim (a lens cut from the printed page), that paper's own figure, and plain facts about how much material and what was assumed. Sections end on a matrix. Plan: `plan.md`. Paper notes: `notes/` (index `notes/readme.md`). PDFs: `papers/` (gitignored).
 
-Engine copied from `../alvarez` (deck.js, parts/util, intro, walk). New part: `js/parts/facts.js` (fact chips).
+Engine copied from `../alvarez` (deck.js, parts/util, intro, walk). New parts: `js/parts/facts.js` (fact chips), `js/parts/pair.js` (a silhouette beside a fossil, one caption under both).
 
 ## Order
 
-Part 1: the groups; phylogeny (three trees, support, egg characters); behavior (sleep, bonebed, pack hunting, display, troodontid diet); reproduction (adult on eggs, pores, color, clutch size, incubation time, embryos, hatching order, partial burial, matrix). **Break.** Part 2: feathers; flight (membrane wings, ground flapping, thresholds, feather counts, arm length, how many origins, equal tree length, wing bones, matrix); brains and the origin of birds (volume, shape, shrinking, rates, oversampled characters); closing matrix; blank matrix for the students' report. Level 2 adds friends, shared matrices, eggs inside, five stages, shoulder girdle, wulst, ancestral size.
+Part 1: subgroups (each fossil beside a silhouette); phylogeny (three trees, support, egg characters); behavior (sleep, bonebed, pack hunting, display, troodontid diet); reproduction (adult on eggs, pores, color, clutch size, incubation time, embryos, hatching order, partial burial, matrix). **Break.** Part 2: feathers; flight (membrane wings, ground flapping, thresholds, feather counts, arm length, how many origins, equal tree length, wing bones, matrix); brains and the origin of birds (volume, shape, shrinking, rates, oversampled characters); synthesis matrix; blank matrix for the students' report. Level 2 adds friends, shared matrices, eggs inside, five stages, shoulder girdle, wulst, ancestral size.
 
 ## Rebuilding
 
 ```
 python3 tools/lines.py        # tools/quotes.py -> js/lines.js
 python3 tools/crop_figs.py    # figures and lens pages -> img/, js/dims.js
+python3 tools/silhouettes.py  # PhyloPic silhouettes -> img/sil-*.svg, js/dims.js
 JSDOM=/path/to/jsdom node tests/deck.smoke.js
 ```
 `tools/find.py KEY 'regex'` searches a paper's text; `tools/figboxes.py key:page` prints image boxes for crops.
+
+Pictures: life restorations come before or beside the fossil, never after. Silhouettes are from PhyloPic, credited in the caption; where PhyloPic has no silhouette of the fossil's species, a close relative stands in and the caption says so (*Sinovenator* for *Mei long*, *Tianyuraptor* for *Zhenyuanlong*, *Citipati* for the Bi et al. oviraptorid). Measurements on slides need a job (a comparison or a scale); bones go by their names (tibiotarsus, not "shin").
 
 ## Still to do
 
 - Bi et al. 2021 is a review manuscript; its lenses come from that copy. Swap in the published PDF if you get it.
 - Not yet checked on a projector; two screenshot passes done and fixed. `img/` is ~39 MB, mostly lens page images; lower `PAGE_DPI` if size matters.
-- No homepage card added.
 
 ## Said aloud, not on the slides
 
@@ -78,6 +80,6 @@ Slide ids are in brackets. The judgments ("thin," "one specimen") belong here, n
 - [rates] Brusatte: "A Mesozoic naturalist would make no immediate distinction between a Velociraptor-type animal and an Archaeopteryx-type animal." Few characters separate birds from their relatives, which "may also help explain why so many alternative phylogenetic analyses have difficulty in placing certain taxa."
 - [mass] 10.9 to 2.4 kg depending only on which stem birds are sampled. The ancestral state is a product of the sample.
 
-**Putting lines together**
+**Synthesis**
 - [matrix] Flight has four kinds of evidence; the physics models answer only one question. Brooding has the most lines but most are one or a few specimens. Groups and diet rest on the fewest kinds.
 - [yours] Students fill this in for their own question.
