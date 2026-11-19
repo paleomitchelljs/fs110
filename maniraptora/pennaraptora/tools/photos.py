@@ -18,6 +18,7 @@ PHOTOS = {
     'care-rhea.jpg':    ("Rhea on nest at Kisak's Cinnamon Hill.jpg", 'Paul F. Kisak', 'CC BY-SA 4.0'),
     'pack-wolves.jpg':  ('Wolves Kill.jpg', 'Patrick Bell', 'CC BY 2.0'),  # two wolves at a deer carcass
     'pack-komodo.jpg':  ('Komodo Dragon Eating Rinca.jpg', 'Mats Stafseng Einarsen', 'CC BY 2.5'),  # young Komodo dragon at a water buffalo carcass
+    'life-zhenyuanlong.jpg': ('Zhenyuanlong life restoration.jpg', 'Emily Willoughby', 'CC BY-SA 4.0'),
 }
 
 

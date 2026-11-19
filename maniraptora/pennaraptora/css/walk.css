@@ -197,3 +197,23 @@
 :root[data-theme="dark"] .tr-pic img { filter: invert(1); }
 :root[data-theme="dark"] .pr-sil.pr-life { filter: none; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .pr-sil.pr-life { filter: none; } }
+.tr-mark circle { fill: var(--accent); stroke: var(--ink); stroke-width: 3; }
+.tr-mark.loss circle { fill: var(--board); stroke: var(--mk); }
+.tr-mark.loss path { stroke: var(--mk); stroke-width: 4; stroke-linecap: round; }
+.tr-legend { position: absolute; left: 0; top: -8px; font: 400 22px var(--font-ui); color: var(--muted); }
+
+/* ---------- dots ---------- */
+.dt-svg { position: absolute; left: 0; top: 0; overflow: visible; }
+.dt-grid { stroke: var(--rule); stroke-width: 1; }
+.dt-tick, .dt-axis { font: 400 18px var(--font-ui); fill: var(--muted); }
+.dt-group { font: 700 19px var(--font-ui); fill: var(--ink); }
+.dt-name { font: italic 400 18px var(--font-ui); fill: var(--ink-2); }
+.dt-range { stroke: var(--ink-2); stroke-width: 4; stroke-linecap: round; }
+.dt-dot { fill: var(--ink); stroke: var(--board); stroke-width: 2; }
+.dt-ref { stroke: var(--mk); stroke-width: 3; stroke-dasharray: 8 6; }
+.dt-reflab { font: 600 18px var(--font-ui); fill: var(--ink); }
+.tr-mark.fast rect { fill: var(--mk); }
+.tr-mark.slow rect { fill: #2f6fb0; }
+.tr-mark text { font: 700 22px var(--font-ui); fill: #fff; }
+:root[data-theme="dark"] .tr-mark.slow rect { fill: #4d8fd6; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .tr-mark.slow rect { fill: #4d8fd6; } }

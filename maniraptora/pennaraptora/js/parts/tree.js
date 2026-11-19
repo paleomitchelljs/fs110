@@ -3,7 +3,10 @@
  *   tree    tips: [{ id, label, img }]   the groups, each with a small picture
  *           trees: [{ at, t, cap }]      a published arrangement per build. t nests arrays of
  *                                        tip ids; an array of 3+ is a polytomy. cap names the source.
- *           focal: tip id (birds). Its sister group is drawn in the accent color.
+ *           focal: tip id (birds). Its sister group is drawn in the accent color. Optional.
+ *           marks on a tree: [{ tips: [ids], kind: 'gain' | 'loss' }] a symbol on the branch leading
+ *           to the clade with exactly those tips (all tips: the root); with text, a labeled pill
+ *           (kinds 'fast', 'slow'). legend: a line above the tree.
  *           Before the first tree's build the tips stand alone, with no branches.
  *
  * Drag one tip onto another to swap them; the tree redraws and the caption reads
@@ -24,6 +27,7 @@
     svg.setAttribute('class', 'tr-svg'); svg.setAttribute('width', TX); svg.setAttribute('height', H);
     host.appendChild(svg);
     const cap = D.el('div', 'tr-cap', host); cap.style.top = (H + 4) + 'px';
+    if (def.legend) { const lg = D.el('div', 'tr-legend', host); lg.innerHTML = D.fmt(def.legend); }
 
     const byId = {};
     def.tips.forEach((t) => {
@@ -36,13 +40,13 @@
       byId[t.id] = e;
     });
 
-    let cur = null, order = def.tips.map((t) => t.id);
+    let cur = null, marks = [], order = def.tips.map((t) => t.id);
     const leaves = (t) => (Array.isArray(t) ? t.flatMap(leaves) : [t]);
     const depth = (t) => (Array.isArray(t) ? 1 + Math.max(...t.map(depth)) : 0);
 
     /* The clade that sits next to the focal tip: its siblings at the focal tip's parent. */
     function sisters(t) {
-      if (!Array.isArray(t)) return null;
+      if (!def.focal || !Array.isArray(t)) return null;
       if (t.includes(def.focal)) return t.filter((c) => c !== def.focal);
       for (const c of t) { const s = sisters(c); if (s) return s; }
       return null;
@@ -66,6 +70,19 @@
         l.setAttribute('x1', x1); l.setAttribute('y1', y1); l.setAttribute('x2', x2); l.setAttribute('y2', y2);
         l.setAttribute('class', cls); svg.appendChild(l);
       };
+      const key = (c) => leaves(c).slice().sort().join(',');
+      const sym = (x1, x2, y, c) => {
+        marks.filter((m) => m.tips.slice().sort().join(',') === key(c)).forEach((m, i) => {
+          const cx = (x1 + x2) / 2 + i * 34, g = document.createElementNS(NS, 'g');
+          g.setAttribute('class', 'tr-mark ' + m.kind);
+          g.setAttribute('transform', `translate(${cx.toFixed(1)},${y.toFixed(1)})`);
+          if (m.text) {
+            const w = 16 + m.text.length * 13;
+            g.innerHTML = `<rect x="${-w / 2}" y="-18" width="${w}" height="36" rx="18"/><text y="8" text-anchor="middle">${m.text}</text>`;
+          } else g.innerHTML = m.kind === 'gain' ? '<circle r="14"/>' : '<circle r="14"/><path d="M-7,-7L7,7M7,-7L-7,7"/>';
+          svg.appendChild(g);
+        });
+      };
       /* returns [x, y] of the node; tips at the right edge, internal nodes by height */
       function node(c) {
         if (!Array.isArray(c)) return [TX - PAD, (order.indexOf(c) + 0.5) * row];
@@ -75,11 +92,13 @@
         c.forEach((k, i) => {
           const cls = isHot(k) ? 'tr-br hot' : (!Array.isArray(k) && k === def.focal ? 'tr-br focal' : 'tr-br');
           ln(x, kids[i][1], kids[i][0], kids[i][1], cls);
+          sym(x, kids[i][0], kids[i][1], k);
         });
         return [x, y];
       }
       const [rx, ry] = node(t);
       ln(PAD * 0.4, ry, rx, ry, 'tr-br');
+      sym(PAD * 0.4 - 30, rx + 30, ry, t);
       hot.forEach((id) => byId[id].classList.add('hot'));
       if (byId[def.focal]) byId[def.focal].classList.add('focal');
       cap.innerHTML = D.fmt(label || '');
@@ -88,6 +107,7 @@
     function swap(a, b) {
       const sw = (t) => (Array.isArray(t) ? t.map(sw) : t === a ? b : t === b ? a : t);
       cur = sw(cur);
+      marks = marks.map((m) => ({ kind: m.kind, text: m.text, tips: m.tips.map(sw) }));
       draw(cur, 'Rearranged');
     }
 
@@ -116,6 +136,7 @@
         let pick = null;
         def.trees.forEach((tr) => { if (tr.at <= b) pick = tr; });
         cur = pick ? JSON.parse(JSON.stringify(pick.t)) : null;
+        marks = pick && pick.marks ? pick.marks.map((m) => ({ kind: m.kind, text: m.text, tips: m.tips.slice() })) : [];
         draw(cur, pick && pick.cap);
       }
     };

@@ -338,111 +338,116 @@
     partTitle('p-feathers', 'Feathers'),
 
     line('fstages', 'Feather stages', 1, 4, 'When did feathers appear?', 'Feather stages', {
-      claim: [['xb-stages', 0], ['xb-psitt', 1], ['xb-unknown', 2]],
-      chips: [['3', 'ornithischians with filaments: _Tianyulong_, _Kulindadromeus_, _Psittacosaurus_', 1], ['≈ 245 Ma or Early Jurassic', 'the two proposed starts for feathers', 2]],
+      claim: [['xb-stages', 0], ['xb-unknown', 1]],
       views: [V('xb25-fig1.jpg', 'Filaments to vaned feathers, from _Tianyulong_ to _Confuciusornis_ · Xu & Barrett 2025 Fig 1', 0),
         V('xb25-fig2.jpg', 'Feather traits by clade; ? marks uncertain · Xu & Barrett 2025 Fig 2', 1)]
     }),
 
-    slide('display', 'Display', 1, 4, 'What were tails and feathers for?', 'Display', [
-      at(LEFT, { kind: 'quotes', cols: 1, size: 24, cards: [{ q: 'per-display', at: 0 }, { q: 'li12-tail', at: 2 }, { q: 'cla-orn', at: 3 }] }),
-      at(RIGHT, pic([
-        V('per-fig11.jpg', '_Ajancingenia_ displaying, painting by Sydney Mohr · Persons et al. 2014 Fig 11', 0),
-        V('li-fig4.jpg', '_Anchiornis_ colors from melanosomes · Li et al. 2010 Fig 4', 1),
-        V('li12-fig4.jpg', '_Microraptor_, color from melanosomes of BMNHC PH881 · Li et al. 2012 Fig 4', 2),
-        V('cla-fig6.jpg', '_Plumadraco_, restoration by Ville Sinkkonen · Clark et al. 2026 Fig 6E', 3, [0.79, 0, 1, 1])
-      ]))
+    /* Three papers, one answer: display. The fossil and its colors first. */
+    slide('display', 'Display', 1, 4, 'What were vaned feathers for?', 'Display', [
+      at(LEFT, { kind: 'quotes', cols: 1, size: 24, cards: [{ q: 'li12-tail', at: 0 }, { q: 'per-display', at: 1 }, { q: 'foth-display', at: 2 }] }),
+      at(RT, pic([V('li12-fig1.jpg', '_Microraptor_ BMNHC PH881 · Li et al. 2012 Fig 1A', 0, [0, 0, 1, 0.5])], [0])),
+      at(RB, pic([V('li12-fig4.jpg', 'Its colors from melanosomes · Li et al. 2012 Fig 4', 0)], [0])),
+      at(RIGHT, pic([V('per-fig11.jpg', '_Ajancingenia_ displaying, painting by Sydney Mohr · Persons et al. 2014 Fig 11', 1)], [1])),
+      at(RIGHT, pic([V('foth14-fig1.jpg', 'The 11th _Archaeopteryx_; ft: feather "trousers" · Foth et al. 2014 Fig 1', 2)], [2]))
     ]),
 
-    line('nofly', 'Feathered arms', 1, 4, 'What were vaned feathers for?', 'Feathered arms', {
-      claim: [['tal-lift', 0], ['dec16-invest', 1], ['dec16-display', 2]],
-      chips: [['5 kg', 'one model _Caudipteryx_, running at 8 m/s', 0], ['0', 'flapping strokes modelled', 0], ['3', 'non-paravians with vaned arm feathers: _Caudipteryx_, _Similicaudipteryx_, _Yixianosaurus_', 1]],
-      views: [V('caud-fig7.jpg', 'Robot with real feathered wings · Talori et al. 2018 Fig 7a', 0, [0, 0, 0.655, 1]),
-        V('caud-fig1.jpg', '_Caudipteryx_ IVPP V12430 · Talori et al. 2018 Fig 1', 1)]
-    }),
+    /* Two animals with vaned arm feathers that could not fly. */
+    slide('wings', 'Wings without flight', 1, 5, 'What were vaned feathers for?', 'Wings without flight', [
+      at(LTOP, ref([['tal-lift', 1]], [1, 2, 3])),
+      at(LFIG, pic([V('caud-fig1.jpg', '_Caudipteryx_ IVPP V12430 · Talori et al. 2018 Fig 1', 0),
+        V('caud-fig7.jpg', 'A robot _Caudipteryx_ with real feathered wings · Talori et al. 2018 Fig 7a', 1, [0, 0, 0.655, 1])])),
+      at(RTOP, ref([['lu15-large', 2], ['dec16-display', 3]], [2, 3])),
+      at(RFIG, pair('life-zhenyuanlong.jpg', '_Zhenyuanlong_ life restoration · Emily Willoughby, Wikimedia Commons, CC BY-SA 4.0',
+        'zhen-fig1.jpg', null, '_Zhenyuanlong suni_ JPM-0008 · Lü & Brusatte 2015 Fig 1', [2, 3], { silW: 0.45, life: true }))
+    ]),
 
-    line('bigwings', 'Large and winged', 1, 3, 'What were vaned feathers for?', 'Large and winged', {
-      claim: [['lu15-large', 0]],
-      chips: [['≈ 1.65 m', 'body length', 1], ['0.48', 'arm / leg, shortest of any Liaoning dromaeosaurid', 1], ['≈ 10 + 20', 'primaries and secondaries, some asymmetric', 1]],
-      views: [V('zhen-fig1.jpg', '_Zhenyuanlong suni_ JPM-0008 · Lü & Brusatte 2015 Fig 1', 0)]
-    }),
-
-    line('asym', 'Feather shape', 1, 4, 'What were vaned feathers for?', 'Feather shape', {
-      claim: [['xu17-asym', 0], ['kia-asym', 2], ['kia-prim', 3]],
-      chips: [['9–11', 'primaries in every living flier', 3], ['346', 'living species, all orders', 3]],
-      views: [V('xu17-fig7.jpg', '_Jianianhualong_, life reconstruction by Julius T. Csotonyi · Xu et al. 2017 Fig 7', 0),
-        V('xu17-fig5.jpg', 'Asymmetric tail feather, _Jianianhualong_ DLXH 1218 · Xu et al. 2017 Fig 5c, d', 1, [0, 0, 1, 0.42]),
-        V('kia-fig2.jpg', 'Flight feathers: flying birds, flightless birds, fossils · Kiat & O\'Connor 2024 Fig 2B', 2, [0, 0.53, 1, 1]),
-        V('kia-fig5.jpg', 'Living birds and fossils · Kiat & O\'Connor 2024 Fig 5', 3)]
-    }),
+    /* Asymmetric feathers: found in a non-flier, yet the best predictor of flight. */
+    slide('asym', 'Feather shape', 1, 4, 'What were vaned feathers for?', 'Feather shape', [
+      at(LTOP, ref([['xu17-asym', 0]])),
+      at(LFIG, pair('xu17-fig7.jpg', '_Jianianhualong_ life reconstruction by Julius T. Csotonyi · Xu et al. 2017 Fig 7',
+        'xu17-fig5.jpg', [0, 0, 1, 0.42], '_Jianianhualong_ DLXH 1218, asymmetric tail feather · Xu et al. 2017 Fig 5c, d', [0, 1], { silW: 0.5, life: true })),
+      at(RTOP, ref([['kia-asym', 1]], [1])),
+      at(RFIG, pic([V('kia-fig2.jpg', 'Primaries: flying birds, flightless birds, fossils · Kiat & O\'Connor 2024 Fig 2B', 1, [0, 0.53, 1, 1])], [1]))
+    ]),
 
     /* ---------------------------------------------------------- 6 flight */
-    line('legfeathers', 'Leg feathers', 1, 4, 'What were vaned feathers for?', 'Leg feathers', {
-      claim: [['foth-trousers', 1], ['foth-display', 2]],
-      chips: [['11th', '_Archaeopteryx_ skeleton, with body and leg feathers', 0], ['3', 'separate origins of long feathers on the foot, on their tree', 1]],
-      views: [V('foth14-fig1.jpg', 'The 11th _Archaeopteryx_; ft: feather "trousers" · Foth et al. 2014 Fig 1', 0),
-        V('foth14-fig3.jpg', 'Feathers by body region on a maniraptoran tree · Foth et al. 2014 Fig 3', 1, [0, 0.05, 1, 1])]
-    }),
-
     partTitle('p-flight', 'Flight'),
 
-    line('membrane', 'Membrane wings', 1, 4, 'How many times did flight evolve?', 'Membrane wings', {
-      claim: [['dec20-yi', 3]],
-      chips: [['2', 'membrane-winged species: _Yi_ and _Ambopteryx_', 1]],
-      views: [V('yi-fig3.jpg', 'Skeletal restoration of _Yi qi_ · Xu et al. 2015 Fig 3', 0, [0.47, 0, 1, 0.245]),
-        V('amb-life.jpg', '_Ambopteryx longibrachium_, life restoration · released with Wang et al. 2019, _Nature_', 1),
-        V('yi-fig3.jpg', 'One of two proposed wings for _Yi_, from above · Xu et al. 2015 Fig 3', 2, [0.565, 0.295, 1, 0.572]),
-        V('dec20-fig6.jpg', 'Wing loading: gliders and _Yi_ / _Ambopteryx_ models · Dececchi et al. 2020 Fig 6', 3)]
-    }),
-
-    line('wair', 'Flapping on the ground', 1, 4, 'How many times did flight evolve?', 'Flapping on the ground', {
-      claim: [['dec16-none', 0], ['dec16-wair', 1]],
-      chips: [['45', 'specimens, 24 non-avian species', 1], ['10%', 'of body mass as wing muscle, assumed', 1]],
-      views: [V('dec16-fig2.jpg', 'Body weight supported by flapping up a slope, along the tree · Dececchi et al. 2016 Fig 2', 0, [0, 0, 1, 0.62])]
-    }),
-
-    line('thresh', 'Flight thresholds', 1, 4, 'How many times did flight evolve?', 'Flight thresholds', {
-      claim: [['pei-multi', 0], ['pei-near', 1]],
-      chips: [['43', 'vane-feathered species', 1], ['1.6', 'maximum lift coefficient, assumed', 1], ['3', 'body mass and wing estimates for _Microraptor_', 1]],
-      views: [V('pei-fig2.jpg', 'Green: passes wing loading and lift thresholds · Pei et al. 2020 Fig 2', 0),
-        V('pei-fig4.jpg', 'From fail all to pass all · Pei et al. 2020 Fig 4', 1)]
-    }),
-
-    line('feathcount', 'Feather counts', 1, 3, 'How many times did flight evolve?', 'Feather counts', {
-      claim: [['kia-anch', 0], ['kia-single', 1]],
-      chips: [['35', 'Mesozoic species, 66 specimens', 0]],
-      views: [V('kia-fig2.jpg', 'Primary vane asymmetry on the tree; flying vs flightless birds · Kiat & O\'Connor 2024 Fig 2A', 0, [0, 0, 1, 0.455])]
-    }),
-
-    line('arms', 'Arm length', 1, 4, 'How many times did flight evolve?', 'Arm length', {
-      claim: [['har-flightless', 0], ['har-parallel', 2]],
-      chips: [['0.56', '_Hesperornithoides_ humerus / femur', 1], ['0.96–1.04', '_Anchiornis_', 1], ['1.12–1.24', '_Archaeopteryx_', 1]],
-      views: [V('har-fig18.jpg', 'Red: possibly flying taxa, nested among flightless ones (black) · Hartman et al. 2019 Fig 18', 0)]
-    }),
-
-    line('shoulder', 'Shoulder girdle', 2, 3, 'How many times did flight evolve?', 'Shoulder girdle', {
-      claim: [['wu-motion', 0]],
-      views: [V('wu-fig1.jpg', 'Coracoid green, scapula yellow, furcula red · Wu et al. 2024 Fig 1', 0)]
-    }),
-
-    slide('origins', 'How many origins', 1, 5, 'How many times did flight evolve?', 'How many origins', [
-      at([24, 124, 1552, 210], { kind: 'quotes', cols: 3, size: 24, cards: [{ q: 'pei-multi', at: 0 }, { q: 'kia-single', at: 1 }, { q: 'har-parallel', at: 2 }] }),
-      at([24, 356, 500, 430], pic([V('pei-fig2.jpg', 'Wing loading and lift · Pei et al. 2020 Fig 2', 0)], [0, 1, 2])),
-      at([550, 356, 500, 430], pic([V('kia-fig2.jpg', 'Feather shape · Kiat & O\'Connor 2024 Fig 2A', 1, [0, 0, 1, 0.455])], [1, 2])),
-      at([1076, 356, 500, 430], pic([V('har-fig18.jpg', 'Arm length on the tree · Hartman et al. 2019 Fig 18', 2)], [2]))
+    slide('membrane', 'Membrane wings', 1, 4, 'How many times did flight evolve?', 'Membrane wings', [
+      at([24, 124, 760, 322], pic([V('yi-fig1.jpg', '_Yi qi_ STM 31-2 · Xu et al. 2015 Fig 1a', 0, [0, 0, 1, 0.33])], [0, 1])),
+      at([24, 464, 760, 322], pic([V('yi-fig3.jpg', 'Its skeletal restoration · Xu et al. 2015 Fig 3', 0, [0.47, 0, 1, 0.245])], [0, 1])),
+      at(RIGHT, pic([V('amb-life.jpg', '_Ambopteryx longibrachium_, life restoration · released with Wang et al. 2019, _Nature_', 1)], [1])),
+      at(CLAIM, ref([['dec20-yi', 2]], [2])),
+      at(FACTS, facts([['2', 'membrane-winged species: _Yi_ and _Ambopteryx_', 2]], [2])),
+      at(RIGHT, pic([V('dec20-fig6.jpg', 'Wing loading: gliders and _Yi_ / _Ambopteryx_ models · Dececchi et al. 2020 Fig 6', 2)], [2]))
     ]),
 
-    line('tie', 'Equal length', 1, 3, 'How many times did flight evolve?', 'Equal length', {
-      claim: [['pei-same', 0]],
-      chips: [['1 + 6–11', 'one origin at Paraves, then 6 to 11 losses', 1], ['≥ 3', 'origins: birds and two dromaeosaurid lines', 1], ['same', 'tree length for both', 1]],
-      views: [V('pei-fig2.jpg', 'Pei et al. 2020 Fig 2', 0)]
-    }),
+    /* Two physics models agree: nothing before Paraves; some paravians near the line. */
+    slide('models', 'Physics models', 1, 5, 'How many times did flight evolve?', 'Physics models', [
+      at(CLAIM, ref([['dec16-none', 0], ['pei-near', 2]])),
+      at(FACTS, facts([['10%', 'of body mass as wing muscle, assumed (Dececchi)', 1], ['1.6', 'maximum lift coefficient, assumed (Pei)', 3]])),
+      at(RIGHT, pic([V('dec16-fig2.jpg', 'Body weight supported by flapping up a slope, along the tree · Dececchi et al. 2016 Fig 2', 0, [0, 0, 1, 0.62]),
+        V('pei-fig4.jpg', 'From fail all to pass all · Pei et al. 2020 Fig 4', 2)]))
+    ]),
+
+    /* Two anatomical lines agree: anchiornithines did not fly. */
+    slide('anatomy', 'Feathers and arms', 1, 4, 'How many times did flight evolve?', 'Feathers and arms', [
+      at(LTOP, ref([['kia-anch', 0]])),
+      at(LFIG, pic([V('kia-fig2.jpg', 'Primary vane asymmetry on the tree; flying vs flightless birds · Kiat & O\'Connor 2024 Fig 2A', 0, [0, 0, 1, 0.455])])),
+      at(RTOP, ref([['har-flightless', 1]], [1])),
+      at(RFIG, {
+        kind: 'dots', builds: [1], min: 0.4, max: 1.6, groupW: 170, labelW: 180,
+        axis: 'Humerus length / femur length', line: { at: 0.7, label: '0.70: too short for thrust' },
+        cap: 'Redrawn from Hartman et al. 2019 Table 3 (selected taxa)',
+        groups: [
+          { name: 'Oviraptorosaurs', items: [{ name: 'Caudipteryx', lo: 0.47 }] },
+          { name: 'Troodontids', items: [{ name: 'Mei', lo: 0.52, hi: 0.55 }, { name: 'Sinovenator', lo: 0.68 }, { name: 'Hesperornithoides', lo: 0.56 }] },
+          { name: 'Dromaeosaurids', items: [{ name: 'Zhenyuanlong', lo: 0.63 }, { name: 'Microraptor', lo: 0.79, hi: 0.92 }, { name: 'Deinonychus', lo: 0.76, hi: 0.80 }] },
+          { name: 'Unenlagiids', items: [{ name: 'Austroraptor', lo: 0.47 }, { name: 'Buitreraptor', lo: 0.91 }] },
+          { name: 'Anchiornithines', items: [{ name: 'Eosinopteryx', lo: 0.78 }, { name: 'Anchiornis', lo: 0.96, hi: 1.04 }] },
+          { name: 'Avialans', items: [{ name: 'Archaeopteryx', lo: 1.12, hi: 1.24 }, { name: 'Confuciusornis', lo: 1.14, hi: 1.27 }, { name: 'Jeholornis', lo: 1.40, hi: 1.47 }] }]
+      })
+    ]),
+
+    /* One tree (Pei's, simplified), four readings of where flight began. */
+    slide('origins', 'How many origins', 1, 5, 'How many times did flight evolve?', 'How many origins', [
+      at(FULL, {
+        kind: 'tree', tipW: 540, legend: '● flight gained · ✕ flight lost',
+        tips: [
+          { id: 'ovi', label: 'Oviraptorosaurs', img: 'img/skel-oviraptor.png' },
+          { id: 'troo', label: 'Troodontids', img: 'img/skel-sinovenator.png' },
+          { id: 'unen', label: 'Unenlagiines', img: 'img/skel-austroraptor.png' },
+          { id: 'micro', label: 'Microraptorines', img: 'img/skel-microraptor.png' },
+          { id: 'eudro', label: 'Eudromaeosaurs', img: 'img/skel-velociraptor.png' },
+          { id: 'anch', label: 'Anchiornithines', img: 'img/skel-anchiornis.png' },
+          { id: 'avi', label: '_Archaeopteryx_ and later birds', img: 'img/skel-archaeopteryx.png' }],
+        trees: [
+          { at: 0, t: ['ovi', [['troo', ['unen', ['micro', 'eudro']]], ['anch', 'avi']]],
+            marks: [{ tips: ['unen'], kind: 'gain' }, { tips: ['micro'], kind: 'gain' }, { tips: ['anch', 'avi'], kind: 'gain' }],
+            cap: '*Three or more origins* · Pei et al. 2020' },
+          { at: 1, t: ['ovi', [['troo', ['unen', ['micro', 'eudro']]], ['anch', 'avi']]],
+            marks: [{ tips: ['troo', 'unen', 'micro', 'eudro', 'anch', 'avi'], kind: 'gain' }, { tips: ['troo'], kind: 'loss' }, { tips: ['eudro'], kind: 'loss' }],
+            cap: '*One origin, then 6–11 losses: the same tree length* · Pei et al. 2020' },
+          { at: 2, t: ['ovi', [['troo', ['unen', ['micro', 'eudro']]], ['anch', 'avi']]],
+            marks: [{ tips: ['ovi', 'troo', 'unen', 'micro', 'eudro', 'anch', 'avi'], kind: 'gain' }, { tips: ['ovi'], kind: 'loss' }, { tips: ['anch'], kind: 'loss' }],
+            cap: '*One origin, below Pennaraptora* · Kiat & O\'Connor 2024, marked on Pei\'s tree' },
+          { at: 3, t: ['ovi', [['troo', ['unen', ['micro', 'eudro']]], ['anch', 'avi']]],
+            marks: [{ tips: ['unen'], kind: 'gain' }, { tips: ['micro'], kind: 'gain' }, { tips: ['avi'], kind: 'gain' }],
+            cap: '*Parallel origins; anchiornithines flightless* · Hartman et al. 2019, marked on Pei\'s tree' }]
+      })
+    ], 3),
 
     line('arch', 'Wing bones', 1, 4, 'How many times did flight evolve?', 'Wing bones', {
       claim: [['voe-flap', 0], ['voe-stroke', 2]],
       chips: [['3', '_Archaeopteryx_ specimens', 1], ['69', 'comparison species', 1]],
       views: [V('voe-fig1.jpg', 'Humerus and ulna cross-sections, three _Archaeopteryx_ · Voeten et al. 2018 Fig 1', 0),
         V('voe-fig2.jpg', 'Stars: _Archaeopteryx_ among flapping birds · Voeten et al. 2018 Fig 2', 1, [0, 0, 1, 0.5])]
+    }),
+
+    line('shoulder', 'Shoulder girdle', 2, 3, 'How many times did flight evolve?', 'Shoulder girdle', {
+      claim: [['wu-motion', 0]],
+      views: [V('wu-fig1.jpg', 'Coracoid green, scapula yellow, furcula red · Wu et al. 2024 Fig 1', 0)]
     }),
 
     slide('flight-matrix', 'Flight: synthesis', 1, 5, 'Who could fly?', 'Synthesis', [
@@ -463,51 +468,42 @@
     /* ---------------------------------------------------------- 7 brains and the bird line */
     partTitle('p-brains', 'Brains and the origin of birds'),
 
-    line('brainvol', 'Brain volume', 1, 4, 'When did the bird brain evolve?', 'Brain volume', {
-      claim: [['bal-gen', 0], ['bal-ready', 1]],
-      chips: [['1', 'endocast per species', 1], ['femur', 'length for body mass', 1]],
-      views: [V('bal-fig1.jpg', 'Endocasts: _Citipati_, troodontid, _Archaeopteryx_, ostrich, woodpecker · Balanoff et al. 2013 Fig 1', 0),
-        V('bal-fig2.jpg', 'Brain volume vs body mass; green: _Archaeopteryx_ · Balanoff et al. 2013 Fig 2', 1)]
+    /* Volume and shape, and the wulst one paper saw and the other withdrew. */
+    versus('brain', 'Brain', 1, 5, 'When did the bird brain evolve?', 'Brain', {
+      left: [['bal-gen', 0], ['bal-wulst', 2]], lviews: [V('bal-fig1.jpg', 'Endocasts: _Citipati_, troodontid, _Archaeopteryx_, ostrich, woodpecker · Balanoff et al. 2013 Fig 1', 0),
+        V('bal-fig1.jpg', '_Archaeopteryx_ endocast (c) · Balanoff et al. 2013 Fig 1', 2, [0.785, 0.395, 1, 0.585])],
+      right: [['tor-shape', 1], ['tor-artefact', 3]], rviews: [V('tor-fig3.jpg', 'Four stages of brain shape · Torres et al. 2021 Fig 3', 1)]
     }),
 
-    line('brainshape', 'Brain shape', 1, 3, 'When did the bird brain evolve?', 'Brain shape', {
-      claim: [['tor-shape', 0]],
-      views: [V('tor-fig3.jpg', 'Four stages of brain shape · Torres et al. 2021 Fig 3', 0)]
-    }),
-
-    versus('wulst', 'Wulst', 2, 3, 'When did the bird brain evolve?', 'Wulst', {
-      left: [['bal-wulst', 0]], lviews: [V('bal-fig1.jpg', '_Archaeopteryx_ endocast (c) · Balanoff et al. 2013 Fig 1', 0, [0.785, 0.395, 1, 0.585])],
-      right: [['tor-artefact', 1]], rviews: [V('tor-fig3.jpg', 'Torres et al. 2021 Fig 3', 1)]
-    }),
-
+    /* Two papers agree the line shrank; the second shows the endpoint depends on the sample. */
     line('shrink', 'Shrinking', 1, 4, 'How did the bird body plan arise?', 'Shrinking', {
-      claim: [['lee-trend', 0]],
-      chips: [['1549', 'characters, 120 species', 1], ['femur', 'length as the size measure', 1], ['≈ 163 → 0.8 kg', 'tetanuran ancestor to bird ancestor', 1]],
+      claim: [['lee-trend', 0], ['tor-mass', 1]],
+      chips: [['≈ 163 → 0.8 kg', 'tetanuran ancestor to bird ancestor (Lee)', 0], ['10.9 or 2.4 kg', 'bird ancestor, depending on which stem birds are sampled (Torres)', 1]],
       views: [V('lee-fig2.jpg', 'Femur length along the bird stem, with body mass · Lee et al. 2014 Fig 2B', 0, [0.46, 0, 1, 1]),
-        V('lee-fig3.jpg', 'Rate of skeletal change; pink: bird stem · Lee et al. 2014 Fig 3', 1)]
+        V('tor-fig5.jpg', 'Ancestral body mass under three samples · Torres et al. 2021 Fig 5', 1)]
     }),
 
-    line('rates', 'Rates', 1, 4, 'How did the bird body plan arise?', 'Rates', {
-      claim: [['bru-jump', 0]],
-      chips: [['150', 'coelurosaurs, 853 characters', 1], ['99,999', 'equally short trees', 1], ['100', 'dating runs for the rates', 1]],
-      views: [V('bru-fig2.jpg', 'Rates on the tree: red high, blue low · Brusatte et al. 2014 Fig 2', 0)]
-    }),
+    /* Same transition, opposite rates: all characters vs limb proportions. Redrawn. */
+    slide('rates', 'Rates', 1, 5, 'How did the bird body plan arise?', 'Rates', [
+      at([24, 124, 700, 662], { kind: 'quotes', cols: 1, size: 24, cards: [{ q: 'bru-jump', at: 0 }, { q: 'wz-low', at: 1 }, { q: 'wz-bias', at: 2 }] }),
+      at([760, 124, 816, 662], {
+        kind: 'tree', tipW: 420,
+        tips: [
+          { id: 'ovi', label: 'Oviraptorosaurs', img: 'img/skel-oviraptor.png' },
+          { id: 'troo', label: 'Troodontids', img: 'img/skel-sinovenator.png' },
+          { id: 'drom', label: 'Dromaeosaurids', img: 'img/skel-microraptor.png' },
+          { id: 'birds', label: 'Avialans', img: 'img/skel-archaeopteryx.png' }],
+        trees: [
+          { at: 0, t: ['ovi', ['troo', 'drom', 'birds']], marks: [{ tips: ['birds'], kind: 'fast', text: 'fast' }],
+            cap: '*All characters* · Brusatte et al. 2014' },
+          { at: 1, t: ['ovi', ['troo', 'drom', 'birds']], marks: [{ tips: ['birds'], kind: 'slow', text: 'slow' }],
+            cap: '*Six limb-bone lengths* · Wang & Zhou 2023' }]
+      })
+    ]),
 
-    line('limbrates', 'Limb rates', 1, 4, 'How did the bird body plan arise?', 'Limb rates', {
-      claim: [['wz-low', 0], ['wz-bias', 2]],
-      chips: [['109', 'taxa with all six limb bones complete', 1], ['55 / 17 / 37', 'avialans / other paravians / other theropods', 1], ['4', 'trees tried, moving _Anchiornis_ and scansoriopterygids', 1]],
-      views: [V('wz23-fig4.jpg', 'Limb rates on the tree: red fast, blue slow; Avialae at top · Wang & Zhou 2023 Fig 4a', 0, [0, 0, 0.62, 1])]
-    }),
-
-    versus('bias', 'Oversampled characters', 1, 4, 'How did the bird body plan arise?', 'Oversampled characters', {
+    versus('bias', 'Oversampled characters', 2, 4, 'How did the bird body plan arise?', 'Oversampled characters', {
       left: [['lee-bias', 0]], lviews: [V('lee-fig3.jpg', 'Bird stem fast · Lee et al. 2014 Fig 3', 0)],
       right: [['bru-artifact', 1]], rviews: [V('bru-fig2.jpg', 'Red: high rates, tyrannosaurs and birds among them · Brusatte et al. 2014 Fig 2', 1)]
-    }),
-
-    line('mass', 'Ancestral size', 2, 3, 'How did the bird body plan arise?', 'Ancestral size', {
-      claim: [['tor-mass', 0]],
-      chips: [['10.9 kg', 'with only _Archaeopteryx_ as a stem bird', 0], ['7.7 kg', 'with well-placed stem birds', 0], ['2.4 kg', 'with every stem bird', 0]],
-      views: [V('tor-fig5.jpg', 'Ancestral body mass under three samples · Torres et al. 2021 Fig 5', 0)]
     }),
 
     /* ---------------------------------------------------------- end */

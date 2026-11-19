@@ -37,6 +37,12 @@ SKEL = {
     # Austroraptor cabazai, top of Headden's sheet of four unenlagiines
     'austroraptor': (C + '7/7b/Unenlagiinae.jpg', 'Jaime Headden', 'CC BY 3.0',
                      (0, 0.08, 1, 0.595), [(0, 0, 1, 0.1), (0.40, 0.10, 0.60, 0.18), (0.13, 0.52, 0.31, 0.585), (0.69, 0.40, 1, 0.65)], False),
+    # Anchiornis huxleyi, IVPP V14378 and LPM-B00169 (labels on the drawing)
+    'anchiornis': (C + '4/47/Anchiornis_by_Qilong.jpg', 'Jaime Headden', 'CC BY 3.0',
+                   (0, 0.04, 0.96, 0.93), [(0.68, 0.36, 1, 0.72)], False),
+    # Velociraptor, bottom of Headden's sheet of velociraptorines
+    'velociraptor': (C + '3/38/Velociraptorines.jpg', 'Jaime Headden', 'CC BY 3.0',
+                     (0, 0.66, 0.86, 0.985), [(0.5, 0.9, 1, 1)], False),
 }
 
 
